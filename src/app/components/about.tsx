@@ -5,8 +5,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 const About = () => {
   return (
     <div className="text-white flex flex-col items-center justify-center max-w-[1400px]">
@@ -17,7 +18,9 @@ const About = () => {
         <Card className="w-[588px] h-[400px]">
           <CardHeader>
             <CardDescription>
-              The status quo
+              <Badge size="sm" variant="tertiary">
+                The status quo
+              </Badge>
             </CardDescription>
             <CardTitle className="text-3xl">
               Manually building and update your rewards engine in months
@@ -40,7 +43,10 @@ const About = () => {
         <Card className="w-[588px] h-[400px]">
           <CardHeader>
             <CardDescription>
-              With TORQUE
+              <Badge size="sm" variant="primary">
+                <div className='mr-2'>With TORQUE</div>
+                <Image src="/blue-logo.svg" alt="TORQUE" width={18} height={18} />
+              </Badge>
             </CardDescription>
             <CardTitle className="text-3xl">
               Launch onchain offers based on detailed user activity in minutes

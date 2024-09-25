@@ -6,7 +6,7 @@ const ImproveYourKPIs = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-4 max-w-[1400px]">
       <div >
-        <Badge variant="outline" className='mb-4'>Improve your KPIs</Badge>
+        <Badge className='mb-4'>Improve your KPIs</Badge>
       </div>
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[1000px] leading-56 font-sans">
         <span className="bg-custom-gradient bg-clip-text text-transparent">Boost your core metrics</span> by incentivizing users to do the things you want.
@@ -51,20 +51,20 @@ const ImproveYourKPIs = () => {
             <p>Actions</p>
             <div className='flex flex-col gap-4 justify-between h-[230px]'>
               <div className='flex flex-row gap-4'>
-                <Badge variant="outline">Trade</Badge>
-                <Badge variant="outline">Deposit Liquidity</Badge>
+                <Badge >Trade</Badge>
+                <Badge >Deposit Liquidity</Badge>
               </div>
               <div className='flex flex-row gap-4'>
-                <Badge variant="outline">Buy</Badge>
-                <Badge variant="outline">Bid</Badge>
+                <Badge>Buy</Badge>
+                <Badge>Bid</Badge>
               </div>
               <div className='flex flex-row gap-4'>
-                <Badge variant="outline">Sign-up</Badge>
-                <Badge variant="outline">Stake</Badge>
+                <Badge>Sign-up</Badge>
+                <Badge>Stake</Badge>
               </div>
               <div className='flex flex-row gap-4'>
-                <Badge variant="outline">Sign-up</Badge>
-                <Badge variant="outline">Play</Badge>
+                <Badge>Sign-up</Badge>
+                <Badge>Play</Badge>
               </div>
             </div>
           </div>

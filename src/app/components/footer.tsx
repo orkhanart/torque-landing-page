@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomShapedButton } from "@/components/ui/customShapeButton";
+import { CustomButton } from "@/components/ui/customButton";
 import Image from "next/image";
 
 
@@ -19,8 +19,7 @@ const Footer = () => {
           <p>Community</p>
           <p>Docs</p>
         </div>
-        
-        <CustomShapedButton>Launch App</CustomShapedButton>
+        <CustomButton>Launch App</CustomButton>
       </div>
       <div className="flex flex-row gap-4 md:hidden items-center">
         <Image src="/blue-logo.svg" alt="Torque" width={28} height={28} />

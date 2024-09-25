@@ -1,7 +1,7 @@
 "use client"
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button } from "@/components/ui/button";
+import { CustomButton } from "@/components/ui/customButton";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -47,10 +47,11 @@ export default function Navbar() {
               </Link>
             </NavigationMenuItem>
           ))}
+          <div className='w-4'></div>
           <NavigationMenuItem>
-            <Button variant={'default'}>
+            <CustomButton>
               Launch app
-            </Button>
+            </CustomButton>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
@@ -70,9 +71,9 @@ export default function Navbar() {
                 </NavigationMenuItem>
               ))}
               <NavigationMenuItem>
-                <Button className="w-full bg-[#b3f5ff] text-black hover:bg-[#80eeff]">
+                <CustomButton>
                   Launch app
-                </Button>
+                </CustomButton>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomShapedButton } from "@/components/ui/customShapeButton";
+import { CustomButton } from "@/components/ui/customButton";
 import Image from 'next/image';
 
 const brands = [
@@ -23,15 +23,30 @@ const brands = [
     name: 'stripe',
     size: 52.174
   }
-]
+];
+
+const Divider = () => {
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '1px',
+        background: 'linear-gradient(to right, transparent, hsla(198, 100%, 60%, 0.5) 10%, hsla(198, 100%, 60%, 0.5) 70%, transparent)',
+        backgroundImage: 'linear-gradient(to right, hsla(198, 100%, 60%, 0.4) 16.67%, rgba(255,255,255,0) 0%)',
+        backgroundPosition: 'center',
+        backgroundSize: '60px 1px', // Adjusted to account for the new ratio
+        backgroundRepeat: 'repeat-x',
+        margin: '40px 0',
+        maskImage: 'linear-gradient(to right, transparent, white 20%, white 80%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, white 20%, white 80%, transparent)',
+      }}
+    />
+  );
+};
 
 const Hero = () => {
   return (
     <div className="text-white min-h-[80vh] flex flex-col w-full items-center justify-between pt-14">
-      {/* <div className="absolute inset-0 overflow-hidden top-24">
-        <div className="absolute top-24 inset-0 bg-[url('/path-to-your-pattern-image.svg')] bg-center bg-no-repeat opacity-20"></div>
-      </div> */}
-
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
         <h1 className="text-5xl sm:text-6xl lg:text-8xl font-semibold mb-6 font-sans">
           The growth protocol
@@ -39,12 +54,13 @@ const Hero = () => {
         <p className="text-2xl mb-10 text-gray-300">
           Tenete ergo quod si servitus quae natura liber, et aliena tua tunc
         </p>
-        <CustomShapedButton className="bg-cyan-300 text-gray-900 hover:bg-cyan-400 transition-colors">
+        <CustomButton customVariant="big">
           Try out Torque
-        </CustomShapedButton>
+        </CustomButton>
       </div>
-        <div>
-        <div className="flex flex-row items-center gap-6">
+
+      <div className='flex flex-col w-full items-center'>
+        <div className="flex flex-row items-center gap-6 mb-8">
           <p className="text-sm text-tertiary">Trusted by</p>
           <div className="flex flex-row space-x-8 items-center">
             {brands.map((brand) => (
@@ -54,20 +70,13 @@ const Hero = () => {
                 alt={`${brand.name} logo`}
                 width={brand.size}
                 height={brand.size}
-                className="opacity-70"
+                className="opacity-60"
               />
             ))}
           </div>
         </div>
-        <div className="z-50 inset-0 overflow-hidden">
-          <div 
-            className="inset-0 bg-[url('/grid-pattern.svg')] bg-repeat"
-            style={{ 
-              backgroundSize: '1000px 1000px',
-              opacity: 0.2
-            }}
-          ></div>
-        </div>
+        
+        <Divider />
       </div>
     </div>
   );

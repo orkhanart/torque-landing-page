@@ -29,7 +29,7 @@ body {
     --primary-focus: 180, 100%, 77%, 1;
     
     /* Accent color */
-    --accent: 2, 74%, 79%, 0.5;
+    --accent: 2, 74%, 79%, 1;
     --accent-hover: 2, 74%, 79%, 0.7;
     --accent-focus: 2, 74%, 74%, 1;
     
@@ -39,7 +39,7 @@ body {
     --white-button-focus: 0, 0%, 95%, 1;
     
     /* Tertiary color */
-    --tertiary: 180, 10%, 80%, 0.5;
+    --tertiary: 180, 10%, 80%;
     
     /* Other existing variables */
     --secondary: 240 3.7% 15.9%;
