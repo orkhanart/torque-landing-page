@@ -4,12 +4,12 @@ import Image from 'next/image'
 
 const ImproveYourKPIs = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4 max-w-[1400px]">
       <div >
         <Badge variant="outline" className='mb-4'>Improve your KPIs</Badge>
       </div>
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-semibold mb-12 text-center max-w-[900px]">
-        Boost your core metrics by incentivizing users to do the things you want.
+      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[1000px] leading-56 font-sans">
+        <span className="bg-custom-gradient bg-clip-text text-transparent">Boost your core metrics</span> by incentivizing users to do the things you want.
       </h1>
       <div className='flex flex-row items-center gap-8 h-[488px]'>
         <div className='flex flex-col gap-8'>

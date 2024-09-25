@@ -5,11 +5,11 @@ import React from "react"
 
 const Impact = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4 max-w-[1400px]">
       <div >
         <Badge variant="outline" className='mb-4'>Impact</Badge>
       </div>
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-semibold mb-12 text-center max-w-[900px]">
+      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[1000px] leading-56 font-sans">
         Torque gives marketers the reward system they need to massively scale usage 
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2">

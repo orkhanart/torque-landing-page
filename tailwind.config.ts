@@ -21,20 +21,28 @@ const config: Config = {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
+          DEFAULT: "hsl(var(--primary))",
+          hover: "hsl(var(--primary-hover))",
+          focus: "hsl(var(--primary-focus))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          hover: "hsl(var(--accent-hover))",
+          focus: "hsl(var(--accent-focus))",
+        },
+        whiteButton: {
+          DEFAULT: "hsl(var(--white-button))",
+          hover: "hsl(var(--white-button-hover))",
+          focus: "hsl(var(--white-button-focus))",
+        },
+        tertiary: "hsl(var(--tertiary))",
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
   				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
   			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',
@@ -77,9 +85,18 @@ const config: Config = {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+			fontFamily: {
+        sans: ['Instrument Sans', 'sans-serif'],
+      },
+      lineHeight: {
+        '56': '56px',
+      },
+			backgroundImage: {
+				'custom-gradient': 'linear-gradient(90deg, #FFFFFF -7.54%, #ABFFFF 60.87%, #F1A3A1 100%)',
+      },
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  // plugins: [require("tailwindcss-animate")],
 };
 export default config;

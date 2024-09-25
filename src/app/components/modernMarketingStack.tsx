@@ -6,12 +6,12 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const ModernMarketingStack = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4 max-w-[1000px]">
       <div >
         <Badge variant="outline" className='mb-4'>Modern Marketing Stack</Badge>
       </div>
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-semibold mb-12 text-center max-w-[900px]">
-        Track users across campaigns and provide incentives never before possible
+      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[1000px] leading-56 font-sans">
+        Track users across campaigns and provide incentives <span className="bg-custom-gradient bg-clip-text text-transparent">never before possible</span>
       </h1>
       <Card className="bg-gray-900 text-white p-4 w-80">
         <CardContent className="space-y-2">

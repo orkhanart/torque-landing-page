@@ -9,12 +9,15 @@ import Media from "./components/media";
 import GetStarted from "./components/getStarted";
 import Faq from "./components/faq";
 import Footer from "./components/footer";
+import Navbar from "./components/navbar";
 
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-items-center min-h-screen p-8 pb-20 gap-10 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-10 p-4 px-8 pb-24">
+      <Navbar />
       <Hero />
+      <div className="h-12"></div>
       <About />
       <div className="h-8"></div>
       <DataDrivenIncentives />

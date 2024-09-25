@@ -9,9 +9,9 @@ import {
 
 const About = () => {
   return (
-    <div className="text-white flex flex-col">
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-semibold mb-20 text-center">
-        Torque makes crypto&apos;s user data actionable, allowing growth hackers to reward power users and scale their protocol
+    <div className="text-white flex flex-col items-center justify-center max-w-[1400px]">
+      <h1 className="text-4xl sm:text-3xl lg:text-5xl mb-20 font-medium text-center max-w-[1100px] leading-56 font-sans">
+        Torque makes crypto&apos;s user data actionable, allowing growth hackers to <span className="bg-custom-gradient bg-clip-text text-transparent">reward power users</span> and <span className="bg-custom-gradient bg-clip-text text-transparent">scale</span> their protocol
       </h1>
       <div className="flex lg:flex-row flex-col justify-center items-center gap-4">
         <Card className="w-[588px] h-[400px]">

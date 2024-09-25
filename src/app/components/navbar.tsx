@@ -9,8 +9,9 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Hexagon, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { CustomShapeButton } from "@/components/ui/customShapeButton";
+import Image from 'next/image';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -21,10 +22,9 @@ export default function Navbar() {
   ]
 
   return (
-    <header className="flex justify-between items-center py-4 px-6 bg-[#0a0a0a] text-white">
+    <header className="flex justify-between items-center py-4 px-6 bg-[#0a0a0a] text-white max-w-[1400px] w-full">
       <Link href="/" className="flex items-center space-x-2">
-        <Hexagon className="h-8 w-8" />
-        <span className="text-xl font-bold">TORQUE</span>
+        <Image src="/Logotype.svg" alt="Torque logo" width={110} height={32} />
       </Link>
       
       {/* Mobile menu button */}

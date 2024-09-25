@@ -31,7 +31,7 @@ const posts = [
 const Media = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-semibold mb-12 text-center max-w-[900px]">
+      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] leading-56 font-sans">
         What founders & marketers are saying
       </h1>
       <div className="flex flex-row gap-4">
