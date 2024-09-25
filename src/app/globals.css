@@ -24,22 +24,22 @@ body {
     --popover-foreground: 0 0% 98%;
     
     /* Primary color */
-    --primary: 180 37% 100%;
-    --primary-hover: 180 46% 100%;
-    --primary-focus: 180 37% 100%;
+    --primary: 180, 100%, 82%, 1;
+    --primary-hover: 180, 100%, 77%, 1;
+    --primary-focus: 180, 100%, 77%, 1;
     
     /* Accent color */
-    --accent: 2 33% 95%;
-    --accent-hover: 2 41% 93%;
-    --accent-focus: 2 41% 93%;
+    --accent: 2, 74%, 79%, 0.5;
+    --accent-hover: 2, 74%, 79%, 0.7;
+    --accent-focus: 2, 74%, 74%, 1;
     
     /* White button color */
     --white-button: 0 0% 100%;
-    --white-button-hover: 0 0% 95%;
-    --white-button-focus: 0 0% 100%;
+    --white-button-hover: 0, 0%, 100%, 0.6;
+    --white-button-focus: 0, 0%, 95%, 1;
     
     /* Tertiary color */
-    --tertiary: 180 5% 82%;
+    --tertiary: 180, 10%, 80%, 0.5;
     
     /* Other existing variables */
     --secondary: 240 3.7% 15.9%;

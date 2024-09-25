@@ -10,7 +10,6 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Menu, X } from 'lucide-react';
-import { CustomShapeButton } from "@/components/ui/customShapeButton";
 import Image from 'next/image';
 
 export default function Navbar() {
@@ -49,9 +48,9 @@ export default function Navbar() {
             </NavigationMenuItem>
           ))}
           <NavigationMenuItem>
-            <CustomShapeButton>
+            <Button variant={'default'}>
               Launch app
-            </CustomShapeButton>
+            </Button>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomShapeButton } from "@/components/ui/customShapeButton";
+import { CustomShapedButton } from "@/components/ui/customShapeButton";
 import Image from 'next/image';
 
 const brands = [
@@ -39,9 +39,9 @@ const Hero = () => {
         <p className="text-2xl mb-10 text-gray-300">
           Tenete ergo quod si servitus quae natura liber, et aliena tua tunc
         </p>
-        <CustomShapeButton className="bg-cyan-300 text-gray-900 hover:bg-cyan-400 transition-colors">
+        <CustomShapedButton className="bg-cyan-300 text-gray-900 hover:bg-cyan-400 transition-colors">
           Try out Torque
-        </CustomShapeButton>
+        </CustomShapedButton>
       </div>
         <div>
         <div className="flex flex-row items-center gap-6">

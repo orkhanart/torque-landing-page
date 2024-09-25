@@ -1,47 +1,51 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import React from 'react'
+import { Button, ButtonProps } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
-import { cn } from "@/lib/utils"
 
-const customButtonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        // Add more variants as needed
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        // Add more sizes as needed
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
+interface CustomShapedButtonProps extends ButtonProps {
+  children: React.ReactNode
+}
 
-export interface CustomButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof customButtonVariants> {}
-
-const CustomShapeButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+const CustomShapedButton = React.forwardRef<HTMLButtonElement, CustomShapedButtonProps>(
+  ({ className, children, ...props }, ref) => {
     return (
-      <button
-        className={cn(
-          customButtonVariants({ variant, size, className }),
-          'before:content-[""] before:absolute before:top-0 before:left-0 before:w-4 before:h-full before:bg-black before:transform before:skew-x-[20deg] before:-translate-x-4',
-          'after:content-[""] after:absolute after:top-0 after:right-0 after:w-4 after:h-full after:bg-black after:transform after:skew-x-[20deg] after:translate-x-4 bg-[#b3f5ff] text-black hover:bg-[#80eeff]'
-        )}
-        ref={ref}
-        {...props}
-      />
+      <div className="relative inline-flex items-center">
+        {/* Left column */}
+        <div className="flex flex-col">
+          <div className="w-[10px] h-[54px] bg-primary" />
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path id="Corner" d="M10 10L0 0H10V10Z" fill="#A1FFFF"/>
+          </svg>
+
+        </div>
+
+        {/* Middle section (button content) */}
+        <Button
+          ref={ref}
+          variant="default"
+          className={cn(
+            "h-[64px] rounded-none px-4 py-2 !bg-primary !shadow-none",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </Button>
+
+        {/* Right column */}
+        <div className="flex flex-col">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path id="Corner" d="M0 0L10 10H0V0Z" fill="#A1FFFF"/>
+        </svg>
+
+          <div className="w-[10px] h-[54px] bg-primary" />
+        </div>
+      </div>
     )
   }
 )
-CustomShapeButton.displayName = "CustomShapeButton"
 
-export { CustomShapeButton, customButtonVariants }
+CustomShapedButton.displayName = 'CustomShapedButton'
+
+export { CustomShapedButton }

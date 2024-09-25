@@ -1,4 +1,4 @@
-import { CustomShapeButton } from "@/components/ui/customShapeButton";
+import { CustomShapedButton } from "@/components/ui/customShapeButton";
 import React from "react";
 
 const GetStarted = () => {
@@ -10,7 +10,7 @@ const GetStarted = () => {
       <p className="text-lg text-center max-w-[900px]">
         Tenete ergo quod si servitus quae natura liber, et aliena tua tunc
       </p>
-      <CustomShapeButton>Try out Torque</CustomShapeButton>
+      <CustomShapedButton>Try out Torque</CustomShapedButton>
     </div>
   );
 };
