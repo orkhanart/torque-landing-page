@@ -8,16 +8,34 @@ import { cn } from "@/lib/utils"
 
 const Accordion = AccordionPrimitive.Root
 
+
 const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={cn("border-b", className)}
-    {...props}
-  />
-))
+>(({ className, ...props }, ref) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  return (
+    <AccordionPrimitive.Item
+      ref={ref}
+      className={cn(
+        "w-full transition-all duration-300 ease-in-out",
+        isOpen ? "bg-[hsla(180,100%,82%,0.12)]" : "bg-[hsla(183,41%,9%,0.45)]",
+        "mb-6 px-8 py-5",
+        "border-2 border-solid",
+        className
+      )}
+      style={{
+        borderImageSource: isOpen
+          ? "linear-gradient(180deg, rgba(161, 255, 255, 0.8) 0%, rgba(161, 255, 255, 0.03) 100%)"
+          : "linear-gradient(180deg, rgba(161, 255, 255, 0.08) 0%, rgba(161, 255, 255, 0.03) 100%)",
+        borderImageSlice: 1,
+      }}
+      onClick={() => setIsOpen(!isOpen)}
+      {...props}
+    />
+  )
+})
 AccordionItem.displayName = "AccordionItem"
 
 const AccordionTrigger = React.forwardRef<

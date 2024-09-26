@@ -4,7 +4,10 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
+import Frame from "@/components/ui/frame";
+import { Card } from "@/components/ui/card";
+
 
 const qa = [
   {
@@ -35,15 +38,18 @@ const Faq = () => {
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] leading-56 font-sans">
         Frequently Asked Questions
       </h1>
-
-      {qa.map((qa, index) => (
-        <Accordion key={index} type="single" className="!w-800" collapsible>
-          <AccordionItem value="item-1" className="!w-800">
-            <AccordionTrigger className="text-lg font-medium !w-800">{qa.question}</AccordionTrigger>
-            <AccordionContent className="text-base !w-800">{qa.answer}</AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      ))}
+      <Card className="p-2 w-[1060px]">
+        <Frame className="p-6">
+          {qa.map((qa, index) => (
+            <Accordion key={index} type="single" className="!w-800" collapsible>
+              <AccordionItem value="item-1" className="!w-800 ">
+                <AccordionTrigger className="text-2xl font-medium !w-800">{qa.question}</AccordionTrigger>
+                <AccordionContent className="text-base !w-800 text-tertiary">{qa.answer}</AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          ))}
+        </Frame>
+      </Card>
     </div>
   );
 };
