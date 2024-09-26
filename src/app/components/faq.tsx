@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,7 +8,6 @@ import {
 } from "@/components/ui/accordion";
 import Frame from "@/components/ui/frame";
 import { Card } from "@/components/ui/card";
-
 
 const qa = [
   {
@@ -33,6 +33,15 @@ const qa = [
 ];
 
 const Faq = () => {
+  const [openItems, setOpenItems] = useState({});
+
+  const toggleItem = (index) => {
+    setOpenItems(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-24">
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] leading-56 font-sans">
@@ -40,11 +49,27 @@ const Faq = () => {
       </h1>
       <Card className="p-2 w-[1060px]">
         <Frame className="p-6">
-          {qa.map((qa, index) => (
+          {qa.map((item, index) => (
             <Accordion key={index} type="single" className="!w-800" collapsible>
-              <AccordionItem value="item-1" className="!w-800 ">
-                <AccordionTrigger className="text-2xl font-medium !w-800">{qa.question}</AccordionTrigger>
-                <AccordionContent className="text-base !w-800 text-tertiary">{qa.answer}</AccordionContent>
+              <AccordionItem 
+                value={`item-${index}`} 
+                className={`!w-800 ${openItems[index] ? "bg-[hsla(180,100%,82%,0.12)]" : "bg-[hsla(183,41%,9%,0.45)]"}`}
+                style={{
+                  borderImageSource: openItems[index]
+                    ? "linear-gradient(180deg, rgba(161, 255, 255, 0.8) 0%, rgba(161, 255, 255, 0.03) 100%)"
+                    : "linear-gradient(180deg, rgba(161, 255, 255, 0.08) 0%, rgba(161, 255, 255, 0.03) 100%)",
+                  borderImageSlice: 1,
+                }}
+              >
+                <AccordionTrigger 
+                  onClick={() => toggleItem(index)} 
+                  className="text-2xl font-medium !w-800"
+                >
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-base !w-800 text-tertiary">
+                  {item.answer}
+                </AccordionContent>
               </AccordionItem>
             </Accordion>
           ))}
