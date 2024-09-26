@@ -18,7 +18,7 @@ body {
   :root {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
+    --card: 183, 41%, 5%, 1;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
@@ -39,7 +39,7 @@ body {
     --white-button-focus: 0, 0%, 95%, 1;
     
     /* Tertiary color */
-    --tertiary: 180, 10%, 80%;
+    --tertiary: 180, 10%, 80%, 1;
     
     /* Other existing variables */
     --secondary: 240 3.7% 15.9%;

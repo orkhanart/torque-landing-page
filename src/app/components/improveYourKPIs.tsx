@@ -13,12 +13,12 @@ const ImproveYourKPIs = () => {
       </h1>
       <div className='flex flex-row items-center gap-8 h-[488px]'>
         <div className='flex flex-col gap-8'>
-          <p>Category</p>
+          <p className='text-primary text-[18px] font-medium'>Category</p>
           <div className='flex flex-col gap-4 justify-between h-[230px]'>
-            <p>DeFi/Dex</p>
-            <p>NFT Marketplace</p>
-            <p>Infrastructure</p>
-            <p>Consumer</p>
+            <p className='text-lg font-medium'>DeFi/Dex</p>
+            <p className='text-lg font-medium'>NFT Marketplace</p>
+            <p className='text-lg font-medium'>Infrastructure</p>
+            <p className='text-lg font-medium'>Consumer</p>
           </div>
         </div>
         <Image
@@ -30,12 +30,12 @@ const ImproveYourKPIs = () => {
         />
         <div className='flex flex-col gap-4'>
           <div className='flex flex-col gap-8'>
-            <p>KPIs</p>
+            <p className='text-primary text-[18px] font-medium'>KPIs</p>
             <div className='flex flex-col gap-4 justify-between h-[230px]'>
-              <p>Trading volume & TVL</p>
-              <p>Trading volume</p>
-              <p>Users & TVL</p>
-              <p>Users & Usage</p>
+              <p className='text-lg font-medium'>Trading volume & TVL</p>
+              <p className='text-lg font-medium'>Trading volume</p>
+              <p className='text-lg font-medium'>Users & TVL</p>
+              <p className='text-lg font-medium'>Users & Usage</p>
             </div>
           </div>
         </div>
@@ -48,23 +48,23 @@ const ImproveYourKPIs = () => {
         />
         <div className='flex flex-col gap-4'>
         <div className='flex flex-col gap-8'>
-            <p>Actions</p>
+            <p className='text-primary text-[18px] font-medium'>Actions</p>
             <div className='flex flex-col gap-4 justify-between h-[230px]'>
               <div className='flex flex-row gap-4'>
-                <Badge >Trade</Badge>
-                <Badge >Deposit Liquidity</Badge>
+                <Badge variant={'white'}>Trade</Badge>
+                <Badge variant={'white'}>Deposit Liquidity</Badge>
               </div>
               <div className='flex flex-row gap-4'>
-                <Badge>Buy</Badge>
-                <Badge>Bid</Badge>
+                <Badge variant={'white'}>Buy</Badge>
+                <Badge variant={'white'}>Bid</Badge>
               </div>
               <div className='flex flex-row gap-4'>
-                <Badge>Sign-up</Badge>
-                <Badge>Stake</Badge>
+                <Badge variant={'white'}>Sign-up</Badge>
+                <Badge variant={'white'}>Stake</Badge>
               </div>
               <div className='flex flex-row gap-4'>
-                <Badge>Sign-up</Badge>
-                <Badge>Play</Badge>
+                <Badge variant={'white'}>Sign-up</Badge>
+                <Badge variant={'white'}>Play</Badge>
               </div>
             </div>
           </div>

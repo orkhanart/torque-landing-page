@@ -37,9 +37,9 @@ function Badge({ className, variant, size, children, ...props }: BadgeProps) {
       case 'accent':
         return 'hsla(2, 74%, 79%, 1)';
       case 'tertiary':
-        return 'hsl(180, 10%, 80%)';
+        return 'hsl(180, 10%, 80%, 1)';
       case 'white':
-        return 'hsl(0, 0%, 100%)';
+        return 'hsl(0, 0%, 100%, 1)';
       default:
         return 'hsla(2, 74%, 79%, 1)'; // Default to accent color
     }
