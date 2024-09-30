@@ -46,8 +46,8 @@ const Divider = () => {
 
 const Hero = () => {
   return (
-    <div className="text-white min-h-[80vh] flex flex-col w-full items-center justify-between pt-14">
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
+    <div className="text-white min-h-[90vh] flex flex-col w-full items-center justify-between pt-14">
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 pt-12">
         <h1 className="text-[56px] lg:text-8xl font-semibold mb-6 font-sans leading-56">
           The growth protocol
         </h1>
@@ -60,8 +60,8 @@ const Hero = () => {
       </div>
 
       <div className='flex flex-col w-full items-center md:mt-0 mt-24'>
-        <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
-          <p className="text-sm text-tertiary">Trusted by</p>
+        <div className="flex flex-col sm:flex-row items-center gap-8 mb-8">
+          <p className="text-sm text-tertiary font-medium">Trusted by</p>
           <div className="grid grid-cols-3 gap-4 sm:flex sm:flex-row sm:space-x-8 items-center justify-center">
             {brands.map((brand) => (
               <Image 

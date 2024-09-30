@@ -29,7 +29,7 @@ const About = () => {
               </Badge>
             </CardDescription>
             <CardTitle className="text-3xl">
-              Manually building and update your rewards engine in months
+              Manually building and update your rewards engine <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">in months</span>
             </CardTitle>
             <CardContent className='p-0'>
               <ul className='flex flex-col gap-2'>
@@ -60,7 +60,7 @@ const About = () => {
               </Badge>
             </CardDescription>
             <CardTitle className="text-3xl">
-              Launch onchain offers based on detailed user activity in minutes
+              Launch onchain offers based on detailed user activity <span className="text-primary">in minutes</span>
             </CardTitle>
             
             <CardContent className='p-0'>
