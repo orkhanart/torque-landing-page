@@ -14,35 +14,47 @@ import Navbar from "./components/navbar";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen gap-10 p-4 md:px-8 px-4">
+    <div className="min-h-screen w-full">
       <Image 
           src="/hero-illustration.svg" 
           alt="Hero Background" 
           width={1300} 
           height={1300} 
-          className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-60" 
+          className="absolute top-0 left-0 w-full h-full object-cover z-0" 
         />
-      <Navbar />
+        <Image 
+          src="/overlay.svg" 
+          alt="Hero Background" 
+          width={1300} 
+          height={1300} 
+          className="absolute top-0 left-0 w-full h-full object-cover z-0" 
+        />
+      <div className="flex justify-center w-full">
+        {/* <div className="flex justify-center  bg-gradient-to-b from-black to-transparent w-full h-32 z-[999]"> */}
+          <Navbar />
+        {/* </div> */}
+        
+      </div>
 
       <div className="flex flex-col items-center justify-start gap-10 p-4 p-4 md:px-8 px-4">
-      <Hero />
-      <div className="h-12"></div>
-      <About />
-      <div className="h-8"></div>
-      <DataDrivenIncentives />
-      <div className="h-12"></div>
-      <ImproveYourKPIs />
-      <div className="h-12"></div>
-      <ModernMarketingStack />
-      <div className="h-12"></div>
-      <Impact />
-      <div className="h-12"></div>
-      <Media />
-      <div className="h-6"></div>
-      <GetStarted />
-      <div className="h-6"></div>
-      <Faq />
-      <div className="h-24"></div>
+        <Hero />
+        <div className="h-12"></div>
+        <About />
+        <div className="h-8"></div>
+        <DataDrivenIncentives />
+        <div className="h-12"></div>
+        <ImproveYourKPIs />
+        <div className="h-12"></div>
+        <ModernMarketingStack />
+        <div className="h-12"></div>
+        <Impact />
+        <div className="h-12"></div>
+        <Media />
+        {/* <div className="h-6"></div> */}
+        <GetStarted />
+        {/* <div className="h-6"></div> */}
+        <Faq />
+        <div className="h-24"></div>
 
       {/* <div className="relative "> */}
         {/* <Image 
@@ -55,7 +67,11 @@ export default function Home() {
          */}
       {/* </div> */}
       </div>
-      <Footer />
+      
+
+      <div className="flex flex-col items-center justify-start w-full">
+        <Footer />
+      </div>
       
     </div>
   );

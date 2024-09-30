@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const GetStarted = () => {
   return (
-    <div className="relative flex flex-col items-center justify-center gap-4 w-full min-h-[760px]">
+    <div className="relative flex flex-col items-center justify-center gap-4 w-full min-h-[1000px] -mt-24 -mb-24">
       <Image
         src="/Illustration-hexagons2.svg"
         alt="Illustration hexagons"

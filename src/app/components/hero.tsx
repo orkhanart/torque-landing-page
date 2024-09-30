@@ -36,7 +36,7 @@ const Divider = () => {
         backgroundPosition: 'center',
         backgroundSize: '60px 1px', // Adjusted to account for the new ratio
         backgroundRepeat: 'repeat-x',
-        margin: '40px 0',
+        margin: '',
         maskImage: 'linear-gradient(to right, transparent, white 20%, white 80%, transparent)',
         WebkitMaskImage: 'linear-gradient(to right, transparent, white 20%, white 80%, transparent)',
       }}
@@ -60,7 +60,7 @@ const Hero = () => {
       </div>
 
       <div className='flex flex-col w-full items-center md:mt-0 mt-24'>
-        <div className="flex flex-col sm:flex-row items-center gap-8 mb-8">
+        <div className="flex flex-col sm:flex-row items-center gap-8 mb-16">
           <p className="text-sm text-tertiary font-medium">Trusted by</p>
           <div className="grid grid-cols-3 gap-4 sm:flex sm:flex-row sm:space-x-8 items-center justify-center">
             {brands.map((brand) => (

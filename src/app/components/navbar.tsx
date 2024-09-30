@@ -21,8 +21,8 @@ export default function Navbar() {
   ]
 
   return (
-    <header className="flex justify-between items-center py-4 px-6 bg-[#0a0a0a] text-white max-w-[1400px] w-full ">
-      <Link href="/" className="flex items-center space-x-2">
+    <header className="flex justify-between items-center lg:pt-6 pt-12 text-white max-w-[1400px] w-full px-8 lg:px-8 z-[999]">
+      <Link href="/" className="flex items-center space-x-2 z-[999]">
         <Image src="/Logotype.svg" alt="Torque logo" width={110} height={32} />
       </Link>
       
