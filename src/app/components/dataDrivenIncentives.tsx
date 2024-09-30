@@ -41,7 +41,7 @@ const DataDrivenIncentives = () => {
       <div >
         <Badge className='mb-4'>Data Driven Incentives</Badge>
       </div>
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl  mb-12 text-center max-w-[800px] font-medium leading-56 font-sans ">
+      <h1 className="text-4xl sm:text-3xl lg:text-5xl  mb-12 text-center max-w-[800px] font-medium md:leading-56 font-sans ">
         <span className="bg-custom-gradient bg-clip-text text-transparent">Reward users</span> with airdrops, points, quests, and grants based on their onchain and offchain activity
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-3">
@@ -50,7 +50,7 @@ const DataDrivenIncentives = () => {
           const noLeftBorder = (index !== 2 && index !== 5) ? '!border-r-0' : '';
 
           return (
-            <Card key={index} className='h-[324px] w-[416px] !border-0'>
+            <Card key={index} className='md:h-[324px] h-auto  md:w-[416px] w-[300px] !border-0'>
               <Frame 
                 className={`flex flex-col justify-end pb-6 ${noTopBorder} ${noLeftBorder}`}
                 upperRightCorner={index !== 0 && index !== 1}

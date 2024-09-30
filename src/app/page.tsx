@@ -14,7 +14,7 @@ import Navbar from "./components/navbar";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-10 p-4 px-8 pb-24">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-10 p-4 md:px-8 px-4 pb-24">
       <Navbar />
       <Hero />
       <div className="h-12"></div>

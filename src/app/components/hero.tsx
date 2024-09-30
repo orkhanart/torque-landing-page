@@ -48,10 +48,10 @@ const Hero = () => {
   return (
     <div className="text-white min-h-[80vh] flex flex-col w-full items-center justify-between pt-14">
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl sm:text-6xl lg:text-8xl font-semibold mb-6 font-sans">
+        <h1 className="text-[56px] lg:text-8xl font-semibold mb-6 font-sans leading-56">
           The growth protocol
         </h1>
-        <p className="text-2xl mb-10 text-gray-300">
+        <p className="md:text-2xl text-lg mb-10 text-gray-300">
           Tenete ergo quod si servitus quae natura liber, et aliena tua tunc
         </p>
         <CustomButton customVariant="big">
@@ -59,10 +59,10 @@ const Hero = () => {
         </CustomButton>
       </div>
 
-      <div className='flex flex-col w-full items-center'>
-        <div className="flex flex-row items-center gap-6 mb-8">
+      <div className='flex flex-col w-full items-center md:mt-0 mt-24'>
+        <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
           <p className="text-sm text-tertiary">Trusted by</p>
-          <div className="flex flex-row space-x-8 items-center">
+          <div className="grid grid-cols-3 gap-4 sm:flex sm:flex-row sm:space-x-8 items-center justify-center">
             {brands.map((brand) => (
               <Image 
                 key={brand.name}

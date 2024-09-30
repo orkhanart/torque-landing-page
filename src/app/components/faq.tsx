@@ -33,9 +33,9 @@ const qa = [
 ];
 
 const Faq = () => {
-  const [openItems, setOpenItems] = useState({});
+  const [openItems, setOpenItems] = useState<{ [key: number]: boolean }>({});
 
-  const toggleItem = (index) => {
+  const toggleItem = (index: number) => {
     setOpenItems(prev => ({
       ...prev,
       [index]: !prev[index]
@@ -44,13 +44,13 @@ const Faq = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-24">
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] leading-56 font-sans">
+      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] md:leading-56 font-sans">
         Frequently Asked Questions
       </h1>
-      <Card className="p-2 w-[1060px]">
+      <Card className="p-2 md:w-[1060px] w-full">
         <Frame className="p-6">
           {qa.map((item, index) => (
-            <Accordion key={index} type="single" className="!w-800" collapsible>
+            <Accordion key={index} type="single" className="md:!w-800 !w-full" collapsible>
               <AccordionItem 
                 value={`item-${index}`} 
                 className={`!w-800 ${openItems[index] ? "bg-[hsla(180,100%,82%,0.12)]" : "bg-[hsla(183,41%,9%,0.45)]"}`}
@@ -63,7 +63,7 @@ const Faq = () => {
               >
                 <AccordionTrigger 
                   onClick={() => toggleItem(index)} 
-                  className="text-2xl font-medium !w-800"
+                  className="md:text-2xl text-[18px] text-start font-medium md:!w-800 !w-full"
                 >
                   {item.question}
                 </AccordionTrigger>
