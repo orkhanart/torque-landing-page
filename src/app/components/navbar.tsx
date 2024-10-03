@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CustomButton } from "@/components/ui/customButton";
 import {
@@ -13,12 +13,32 @@ import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuHeight, setMenuHeight] = useState(0);
 
   const menuItems = [
     { href: '/community', label: 'Community' },
     { href: '/docs', label: 'Docs' },
-  ]
+  ];
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      const menuElement = document.getElementById('mobile-menu');
+      if (menuElement) {
+        setMenuHeight(menuElement.scrollHeight);
+      }
+    } else {
+      setMenuHeight(0);
+    }
+  }, [isMenuOpen]);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="flex justify-between items-center lg:pt-6 pt-12 text-white max-w-[1400px] w-full px-8 lg:px-8 z-[999]">
@@ -29,7 +49,7 @@ export default function Navbar() {
       {/* Mobile menu button */}
       <button
         className="md:hidden"
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        onClick={toggleMenu}
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
       >
         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -57,28 +77,39 @@ export default function Navbar() {
       </NavigationMenu>
 
       {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-[#0a0a0a]/10 p-4 md:hidden z-50 backdrop-blur-lg w-full flex flex-col space-y-2 justify-end items-end pt-2 !pb-10 mt-4">
+      <div
+        id="mobile-menu"
+        className="absolute top-16 left-0 right-0 bg-[#0a0a0a]/10 
+        md:hidden z-50 backdrop-blur-lg w-full overflow-hidden 
+        transition-[max-height] duration-300 ease-in-out mt-4
+        "
+        style={{ maxHeight: `${menuHeight}px` }}
+      >
+        <div className="p-4 flex flex-col space-y-2 justify-end items-end pt-8 pb-12 ">
           <NavigationMenu>
             <NavigationMenuList className="flex flex-col space-y-8 justify-end items-end w-full">
               {menuItems.map((item) => (
-                <NavigationMenuItem key={item.href} className=''>
+                <NavigationMenuItem key={item.href}>
                   <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()} !text-3xl !font-sans`}>
+                    <NavigationMenuLink 
+                      className={`${navigationMenuTriggerStyle()} !text-3xl !font-sans`}
+                      onClick={closeMenu}
+                    >
                       {item.label}
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
               ))}
               <NavigationMenuItem>
-                <CustomButton customVariant="big">
+                <CustomButton customVariant="big" onClick={closeMenu}>
                   Launch app
                 </CustomButton>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
+          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[rgba(142,233,233,0)] via-[rgba(142,233,233,1)] to-[rgba(142,233,233,0)]"></div>
         </div>
-      )}
+      </div>
     </header>
-  )
+  );
 }

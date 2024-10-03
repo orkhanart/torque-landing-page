@@ -13,19 +13,19 @@ const ModernMarketingStack = () => {
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[1000px] md:leading-56 font-sans">
         Track users across campaigns and provide incentives <span className="bg-custom-gradient bg-clip-text text-transparent">never before possible</span>
       </h1>
-      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute top-[650px] -left-[50px] z-[99]" />
-      <Image src="/sparkle.png" alt="sparkle" width={5} height={5} className="absolute top-[300px] -left-[100px] z-[99]" />
-      <Image src="/sparkle.svg" alt="sparkle" width={5} height={5} className="absolute top-[600px] left-[90px] z-[99]" />
+      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute top-[650px] -left-[50px] z-[99] lg:block hidden" />
+      <Image src="/sparkle.png" alt="sparkle" width={5} height={5} className="absolute top-[300px] -left-[100px] z-[99] lg:block hidden" />
+      <Image src="/sparkle.svg" alt="sparkle" width={5} height={5} className="absolute top-[600px] left-[90px] z-[99] lg:block hidden" />
 
-      <Image src="/sparkle.svg" alt="sparkle" width={5} height={5} className="absolute top-[320px] -right-[50px] z-[99]" />
-      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute top-[250px] right-[100px] z-[99]" />
-      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute top-[0px] right-[150px] z-[99]" />
-      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute top-[300px] right-[200px] z-[99]" />
+      <Image src="/sparkle.svg" alt="sparkle" width={5} height={5} className="absolute top-[320px] -right-[50px] z-[99] md:block hidden" />
+      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute top-[250px] right-[100px] z-[99] md:block hidden" />
+      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute top-[0px] right-[150px] z-[99] md:block hidden" />
+      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute top-[300px] right-[200px] z-[99] md:block hidden" />
 
-      <Image src="/sparkle.svg" alt="sparkle" width={5} height={5} className="absolute bottom-[120px] right-[0px] z-[99]" />
-      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute bottom-[30px] right-[100px] z-[99]" />
-      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute bottom-[0px] right-[150px] z-[99]" />
-      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute bottom-[150px] right-[200px] z-[99]" />
+      <Image src="/sparkle.svg" alt="sparkle" width={5} height={5} className="absolute bottom-[120px] right-[0px] z-[99] md:block hidden" />
+      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute bottom-[30px] right-[100px] z-[99] md:block hidden" />
+      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute bottom-[0px] right-[150px] z-[99] md:block hidden" />
+      <Image src="/sparkle-dim.svg" alt="sarkle" width={5} height={5} className="absolute bottom-[150px] right-[200px] z-[99] md:block hidden" />
 
       <div className="flex flex-col items-start justify-start md:w-[1025px] w-full md:mb-16 mb-0 ">
         {/* <div className='border border-[#1E293B]/20 p-2'> */}
