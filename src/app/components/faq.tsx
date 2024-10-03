@@ -43,7 +43,7 @@ const Faq = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4 z-10">
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] md:leading-56 font-sans">
         Frequently Asked Questions
       </h1>

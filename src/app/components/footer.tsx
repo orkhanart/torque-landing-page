@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="w-full flex flex-col md:flex-row md:justify-between justify-start items-center gap-6 max-w-[1400px] pb-12">
-      <div className="flex flex-row gap-4 md:visible invisible items-center z-50 bg-transparent">
+    <footer className="w-full flex flex-col md:flex-row md:justify-between justify-center items-center gap-6 max-w-[1400px] pb-12">
+      <div className="flex flex-row gap-4 md:visible invisible lg:items-center items-start justify-start  z-50 bg-transparent ">
         <Image src="/blue-logo.svg" alt="Torque" width={28} height={28} />
         <p className="text-tertiary">© 2024 Torque</p>
         <p>Privacy Policy</p>
@@ -19,7 +19,7 @@ const Footer = () => {
           <p>Community</p>
           <p>Docs</p>
         </div>
-        <CustomButton>Launch App</CustomButton>
+        <CustomButton className="ml-0 ">Launch App</CustomButton>
       </div>
       <div className="flex flex-row gap-4 md:hidden items-center z-50 bg-transparent">
         <Image src="/blue-logo.svg" alt="Torque" width={28} height={28} />
@@ -27,7 +27,7 @@ const Footer = () => {
         <p>Privacy Policy</p>
         <p>Legal</p>
       </div>
-      
+      {/* <Image src="/Glowing.png" alt="sparkle" width={1400} height={1400} className=" absolute bottom-0 left-0 w-full h-full" /> */}
     </footer>
   )
 }

@@ -2,29 +2,6 @@ import React from 'react';
 import { CustomButton } from "@/components/ui/customButton";
 import Image from 'next/image';
 
-const brands = [
-  {
-    name: 'jump',
-    size: 86
-  },
-  {
-    name: 'meta',
-    size: 93
-  },
-  {
-    name: 'discord-type',
-    size: 108
-  },
-  {
-    name: 'brave',
-    size: 74
-  },
-  {
-    name: 'stripe',
-    size: 52.174
-  }
-];
-
 const Divider = () => {
   return (
     <div
@@ -60,19 +37,48 @@ const Hero = () => {
       </div>
 
       <div className='flex flex-col w-full items-center md:mt-0 mt-24'>
-        <div className="flex flex-col sm:flex-row items-center gap-8 mb-16">
-          <p className="text-sm text-tertiary font-medium">Trusted by</p>
-          <div className="grid grid-cols-3 gap-4 sm:flex sm:flex-row sm:space-x-8 items-center justify-center">
-            {brands.map((brand) => (
+        <div className="flex flex-col sm:flex-row items-center gap-8 mb-16 mt-24 lg:mt-0">
+          <p className="text-sm text-tertiary font-medium mt-10 lg:mt-0">Trusted by</p>
+          <div className="flex lg:flex-row flex-col items-center justify-start gap-4">
+            <div className='flex flex-row items-center justify-center gap-4'>
               <Image 
-                key={brand.name}
-                src={`/${brand.name}-logo.png`}
-                alt={`${brand.name} logo`}
-                width={brand.size}
-                height={brand.size}
+                src={`/jump-logo.png`}
+                alt={`jump logo`}
+                width={86}
+                height={70}
                 className="opacity-60"
               />
-            ))}
+              <Image 
+                src={`/meta-logo.png`}
+                alt={`meta logo`}
+                width={93}
+                height={70}
+                className="opacity-60"
+              />
+              <Image 
+                src={`/discord-type-logo.png`}
+                alt={`discord logo`}
+                width={108}
+                height={108}
+                className="opacity-60"
+              />
+            </div>
+            <div className='flex flex-row items-center justify-center  gap-4'>
+              <Image 
+                src={`/brave-logo.png`}
+                alt={`brave logo`}
+                width={74}
+                height={74}
+                className="opacity-60"
+              />
+              <Image 
+                src={`/stripe-logo.png`}
+                alt={`stripe logo`}
+                width={52.174}
+                height={52.174}
+                  className="opacity-60"
+                />
+            </div>
           </div>
         </div>
         
