@@ -6,14 +6,21 @@ import Image from "next/image";
 
 const Impact = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 max-w-[1280px]">
+    <div className="flex flex-col items-center justify-center gap-4 max-w-[1280px] p-4">
       <div >
         <Badge className='mb-4'>Impact</Badge>
       </div>
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[1000px] md:leading-56 font-sans">
         Torque gives marketers the reward system they need to massively scale usage 
       </h1>
-      <Card className="p-4 !border-0">
+      <Card 
+        className="p-4"
+        style={{
+          border: '1px solid transparent',
+          borderImage: 'linear-gradient(to top, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)) 1',
+          borderImageSlice: '1'
+        }}
+      >
       <div className="grid grid-cols-1 md:grid-cols-2">
         
         <Card className="!border-0">

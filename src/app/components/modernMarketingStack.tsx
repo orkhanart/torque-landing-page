@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 const ModernMarketingStack = () => {
   return (
-    <div className="relative flex flex-col items-center justify-center gap-4 max-w-[1200px]">
+    <div className="relative flex flex-col items-center justify-center gap-4 max-w-[1200px] p-4">
       <div >
         <Badge className='mb-4'>Modern Marketing Stack</Badge>
       </div>
@@ -36,7 +36,7 @@ const ModernMarketingStack = () => {
             </CardContent>
           </Card>
           <div className='w-2 h-2 bg-primary absolute top-24 -right-1 md:block hidden'></div>
-          <div className='absolute -bottom-1 w-full flex justify-center'>
+          <div className='absolute -bottom-1 ml-1 w-full flex justify-center'>
             <div className='w-2 h-2 bg-primary md:hidden block'></div>
           </div>
         </Card>
@@ -56,7 +56,8 @@ const ModernMarketingStack = () => {
             Reward <SelectBadge variant="red">only</SelectBadge> <SelectBadge variant="blue">long-term stakers</SelectBadge> who continued to stake <SelectBadge variant="red">after</SelectBadge> the previous <SelectBadge variant="blue">promotional period</SelectBadge> has ended.
           </CardContent>
           </Card>
-          <div className='w-2 h-2 bg-primary absolute top-[94px] -left-1 md:block hidden'></div>
+          <div className='w-2 h-2 bg-primary absolute top-[97px] -left-1 md:block hidden'></div>
+          <div className='w-2 h-2 bg-primary absolute -bottom-1 left-[255px] md:block hidden'></div>
           <div className='absolute -bottom-1 w-full flex justify-center'>
             <div className='w-2 h-2 bg-primary md:hidden block'></div>
           </div>
