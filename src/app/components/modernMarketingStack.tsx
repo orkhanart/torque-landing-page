@@ -43,7 +43,7 @@ const ModernMarketingStack = () => {
         {/* </div> */}
         
       </div>
-      <Image src="/dotted-line-1.png" alt="dotted-line-1" width={384} height={500} className='absolute top-[325px] left-[220px] md:block hidden'/>
+      <Image src="/dotted-line-1.png" alt="dotted-line-1" width={384} height={500} className='absolute top-[342px] left-[232px] md:block hidden'/>
       {/* <div className='absolute w-full flex justify-center'> */}
         <Image src="/dotted-line-3.png" alt="dotted-line-1" width={20} height={500} className='-mt-6 -mb-6 ml-2 md:hidden block'/>
       {/* </div> */}
@@ -71,7 +71,7 @@ const ModernMarketingStack = () => {
       </div> */}
 
       <Image src="/dotted-line-3.png" alt="dotted-line-1" width={20} height={500} className='-mt-6 -mb-6 ml-2 md:hidden block'/>
-      <Image src="/dotted-line-2.png" alt="dotted-line-2" width={384} height={500} className='absolute top-[715px] left-[390px] md:block hidden'/>
+      <Image src="/dotted-line-2.png" alt="dotted-line-2" width={384} height={500} className='absolute top-[732px] left-[406px] md:block hidden'/>
       <div className="flex flex-col items-start justify-end gap-4 md:w-[740px] w-full md:mt-3 mt-0">
         <Card className="border-1 p-1 pt-0 relative">
           <Card className="text-tertiary pt-0 md:w-[500px] w-full border-1" style={{ border: '2px solid', borderImageSource: 'linear-gradient(180deg, rgba(161, 255, 255, 0.08) 0%, rgba(161, 255, 255, 0.03) 100%)' }}>
