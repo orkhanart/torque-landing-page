@@ -58,20 +58,20 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-[#0a0a0a] p-4 md:hidden z-50">
+        <div className="absolute top-16 left-0 right-0 bg-[#0a0a0a]/10 p-4 md:hidden z-50 backdrop-blur-lg w-full flex flex-col space-y-2 justify-end items-end pt-2 !pb-10 mt-4">
           <NavigationMenu>
-            <NavigationMenuList className="flex flex-col space-y-2">
+            <NavigationMenuList className="flex flex-col space-y-8 justify-end items-end w-full">
               {menuItems.map((item) => (
-                <NavigationMenuItem key={item.href}>
+                <NavigationMenuItem key={item.href} className=''>
                   <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()} !text-3xl !font-sans`}>
                       {item.label}
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
               ))}
               <NavigationMenuItem>
-                <CustomButton>
+                <CustomButton customVariant="big">
                   Launch app
                 </CustomButton>
               </NavigationMenuItem>
