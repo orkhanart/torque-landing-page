@@ -1,6 +1,12 @@
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Image from 'next/image';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel"
+
 const posts = [
   {
     author: 'Sheldon',
@@ -38,27 +44,29 @@ const Media = () => {
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] font-sans">
         What founders & marketers are saying
       </h1>
-      <div className="w-full overflow-x-auto pb-4">
-        <div className="flex flex-row gap-4 items-start min-w-min md:max-w-[1000px] mx-auto">
+      <Carousel className="w-full max-w-[1250px] !overflow-visible">
+        <CarouselContent className="lg:-ml-4">
           {posts.map((post, index) => (
-            <Card key={index} className="!h-auto w-[300px] flex-shrink-0">
-              <CardHeader className="flex flex-row justify-between items-start">
-                <div className="flex flex-row gap-4 items-start">
-                  <Image className="rounded-full" src={post.image} alt={post.author} width={44} height={44} />
-                  <div className="flex flex-col gap-2">
-                    <CardTitle className="my-0 -mt-1 py-0 text-lg font-medium">{post.author}</CardTitle>  
-                    <CardDescription className="-mt-2 text-sm text-primary">{post.role}</CardDescription>
+            <CarouselItem key={index} className="lg:basis-1/4 basis-[330px]">
+              <Card className="lg:h-auto lg:w-[300px] ">
+                <CardHeader className="flex flex-row justify-between items-start">
+                  <div className="flex flex-row gap-4 items-start">
+                    <Image className="rounded-full" src={post.image} alt={post.author} width={44} height={44} />
+                    <div className="flex flex-col gap-2">
+                      <CardTitle className="my-0 -mt-1 py-0 text-lg font-medium">{post.author}</CardTitle>  
+                      <CardDescription className="-mt-2 text-sm text-primary">{post.role}</CardDescription>
+                    </div>
                   </div>
-                </div>
-                <Image className="mt-4" src="x-gray-logo.svg" alt={post.author} width={32} height={32} />
-              </CardHeader>
-              <CardContent className="text-sm">
-                <p>{post.content}</p>
-              </CardContent>
-            </Card>
+                  <Image className="mt-4" src="x-gray-logo.svg" alt={post.author} width={32} height={32} />
+                </CardHeader>
+                <CardContent className="lg:text-sm text-base">
+                  <p>{post.content}</p>
+                </CardContent>
+              </Card>
+            </CarouselItem>
           ))}
-        </div>
-      </div>
+        </CarouselContent>
+      </Carousel>
     </div>
   )
 }
