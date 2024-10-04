@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
-export const ComparisonCard = ({ title, subtitle, items, isTorque = true }) => {
+export const ComparisonCard = ({ title, subtitle, items, isTorque = true }: { title: string, subtitle: string, items: string[], isTorque?: boolean }) => {
   return (
     <Card className={`w-full max-w-md ${isTorque ? 'bg-[#0D2321]' : 'bg-[#1D1D1D]'}`}>
       <CardHeader className="space-y-2">
