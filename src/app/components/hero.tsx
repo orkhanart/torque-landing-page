@@ -25,7 +25,7 @@ const Hero = () => {
   return (
     <div className="relative text-white min-h-[90vh] flex flex-col w-full items-center justify-between pt-14 px-4 ">
       <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-8pt-0">
-        <h1 className=" sm:text-[56px] text-5xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-56">
+        <h1 className=" sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-56">
           The growth protocol
         </h1>
         <p className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300">
