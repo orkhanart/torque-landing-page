@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Badge } from "@/components/ui/badge"
 import Image from 'next/image'
 import { Progress } from "@/components/ui/progress"
@@ -7,6 +7,16 @@ import { Progress } from "@/components/ui/progress"
 const ImproveYourKPIs = () => {
   const [progressValue, setProgressValue] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const debouncedSetProgressValue = useCallback((value: number) => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    debounceTimerRef.current = setTimeout(() => {
+      setProgressValue(value);
+    }, 200);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,7 +24,7 @@ const ImproveYourKPIs = () => {
         const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
         const maxScrollLeft = scrollWidth - clientWidth;
         const scrollPercentage = (scrollLeft / maxScrollLeft) * 100; // 70 is the range from 30 to 100
-        setProgressValue(scrollPercentage);
+        debouncedSetProgressValue(scrollPercentage);
       }
     };
 
@@ -27,8 +37,11 @@ const ImproveYourKPIs = () => {
       if (scrollContainer) {
         scrollContainer.removeEventListener('scroll', handleScroll);
       }
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
     };
-  }, []);
+  }, [debouncedSetProgressValue]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 max-w-[1400px] p-4">
