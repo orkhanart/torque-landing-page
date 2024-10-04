@@ -23,11 +23,11 @@ const About = () => {
         <Card className="md:w-[588px] w-full md:h-[400px] h-auto p-4">
           <Frame gray={true}>
             <CardHeader>
-              <CardDescription>
+              <div>
               <Badge size="sm" variant="tertiary">
                 The status quo
               </Badge>
-            </CardDescription>
+            </div>
             <CardTitle className="text-3xl">
               Manually building and update your rewards engine <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">in months</span>
             </CardTitle>
@@ -53,12 +53,12 @@ const About = () => {
         <Card className="md:w-[588px] w-full md:h-[400px] h-auto p-4">
           <Frame>
             <CardHeader>
-            <CardDescription>
+            <div>
               <Badge size="sm" variant="primary">
                 <div className='mr-2'>With TORQUE</div>
                 <Image src="/blue-logo.svg" alt="TORQUE" width={18} height={18} />
               </Badge>
-            </CardDescription>
+            </div>
             <CardTitle className="text-3xl">
               Launch onchain offers based on detailed user activity <span className="text-primary">in minutes</span>
             </CardTitle>
