@@ -1,17 +1,47 @@
-import React from 'react'
+"use client"
+import React, { useState, useEffect, useRef } from 'react'
 import { Badge } from "@/components/ui/badge"
 import Image from 'next/image'
+import { Progress } from "@/components/ui/progress"
 
 const ImproveYourKPIs = () => {
+  const [progressValue, setProgressValue] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollContainerRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+        const maxScrollLeft = scrollWidth - clientWidth;
+        const scrollPercentage = (scrollLeft / maxScrollLeft) * 100; // 70 is the range from 30 to 100
+        setProgressValue(scrollPercentage);
+      }
+    };
+
+    console.log(progressValue)
+
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center gap-4 max-w-[1400px]">
-      <div >
+      <div>
         <Badge className='mb-4'>Improve your KPIs</Badge>
       </div>
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[1000px] md:leading-56 font-sans">
         <span className="bg-custom-gradient bg-clip-text text-transparent">Boost your core metrics</span> by incentivizing users to do the things you want.
       </h1>
-      <div className='md:w-auto w-[330px] overflow-x-auto'>
+      <Progress value={progressValue} className='w-[45px] h-1 md:invisible visible mb-6' />
+      <div ref={scrollContainerRef} className='md:w-auto w-[330px] overflow-x-auto'>
         <div className='flex flex-row items-center gap-8 h-[488px]'>
           <div className='flex flex-col gap-8'>
             <p className='text-primary text-[18px] font-medium'>Category</p>
@@ -53,7 +83,7 @@ const ImproveYourKPIs = () => {
               <div className='flex flex-col gap-4 justify-between h-[230px]'>
                 <div className='flex flex-row gap-4'>
                   <Badge variant={'white'}>Trade</Badge>
-                  <Badge variant={'white'} className='!w-auto'>Deposit Liquidity</Badge>
+                  <Badge variant={'white'} className='!w-auto !w-[200px]'>Deposit Liquidity</Badge>
                 </div>
                 <div className='flex flex-row gap-4'>
                   <Badge variant={'white'}>Buy</Badge>

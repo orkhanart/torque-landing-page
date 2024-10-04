@@ -33,7 +33,7 @@ const DataDrivenIncentives = () => {
           borderImageSlice: '1'
         }}
       >
-        <Card className='md:h-[324px] h-auto  md:w-[416px] w-full !border-0'>
+        <Card className='md:h-[324px] h-auto  lg:w-[416px] w-full !border-0'>
           <div 
             className='relative p-4 rounded-lg h-full w-full flex flex-col justify-end pb-6 lg:!border-r-0'
             style={{

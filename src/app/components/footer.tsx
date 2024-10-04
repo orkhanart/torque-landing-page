@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="w-full flex flex-col md:flex-row md:justify-between justify-center items-center gap-6 max-w-[1400px] pb-12">
+    <footer className="w-full flex flex-col md:flex-row md:justify-between justify-center items-center gap-6 max-w-[1400px] pb-12 px-8">
       <div className="flex flex-row gap-4 md:visible invisible lg:items-center items-start justify-start  z-50 bg-transparent ">
         <Image src="/blue-logo.svg" alt="Torque" width={28} height={28} />
         <p className="text-tertiary">© 2024 Torque</p>
