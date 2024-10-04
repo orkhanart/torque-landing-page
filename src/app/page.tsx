@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="w-full relative top-0 min-h-screen">
       <Image 
-          src="/hero-illustration.svg" 
+          src="/hero-Illustration.svg" 
           alt="Hero Background" 
           width={1300} 
           height={1300} 

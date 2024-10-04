@@ -18,8 +18,6 @@ const ImproveYourKPIs = () => {
       }
     };
 
-    console.log(progressValue)
-
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
       scrollContainer.addEventListener('scroll', handleScroll);
