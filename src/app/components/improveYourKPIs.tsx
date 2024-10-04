@@ -37,11 +37,11 @@ const ImproveYourKPIs = () => {
       <div>
         <Badge className='mb-4'>Improve your KPIs</Badge>
       </div>
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[1000px] md:leading-56 font-sans">
+      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-6 text-center xl:max-w-[900px] sm:max-w-[680px] md:leading-56 font-sans">
         <span className="bg-custom-gradient bg-clip-text text-transparent">Boost your core metrics</span> by incentivizing users to do the things you want.
       </h1>
       <Progress value={progressValue} className='w-[45px] h-1 md:invisible visible mb-6' />
-      <div ref={scrollContainerRef} className='md:w-auto w-[330px] overflow-x-auto'>
+      <div ref={scrollContainerRef} className='md:w-auto sm:w-[590px] w-[330px] overflow-x-auto'>
         <div className='flex flex-row items-center gap-8 h-[488px]'>
           <div className='flex flex-col gap-8'>
             <p className='text-primary text-[18px] font-medium'>Category</p>
@@ -59,10 +59,10 @@ const ImproveYourKPIs = () => {
             height={488}
             priority
           />
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-4 '>
             <div className='flex flex-col gap-8'>
               <p className='text-primary text-[18px] font-medium'>KPIs</p>
-              <div className='flex flex-col gap-4 justify-between h-[230px]'>
+              <div className='flex flex-col gap-4 justify-between h-[230px] min-w-32'>
                 <p className='text-lg font-medium'>Trading volume & TVL</p>
                 <p className='text-lg font-medium'>Trading volume</p>
                 <p className='text-lg font-medium'>Users & TVL</p>
@@ -77,7 +77,7 @@ const ImproveYourKPIs = () => {
             height={488}
             priority
           />
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-4 '>
             <div className='flex flex-col gap-8'>
               <p className='text-primary text-[18px] font-medium'>Actions</p>
               <div className='flex flex-col gap-4 justify-between h-[230px]'>

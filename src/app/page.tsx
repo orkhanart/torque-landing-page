@@ -19,7 +19,7 @@ export default function Home() {
           alt="Hero Background" 
           width={1300} 
           height={1300} 
-          className="absolute top-0 left-0 w-full min-h-screen object-cover z-0" 
+          className="absolute top-0 left-0 w-full md:min-h-screen min-h-[90vh] object-cover z-0" 
       />
       <Image 
           src="/overlay.svg" 
@@ -34,18 +34,18 @@ export default function Home() {
 
       <div className="flex flex-col items-center justify-start gap-10 p-4 md:px-8 px-0">
         <Hero />
-        <div className="h-12"></div>
+        <div className="h-20"></div>
         <About />
       </div>
 
-      <div className="h-12"></div>
+      <div className="h-20"></div>
 
       <div className="flex flex-col items-center justify-start lg:px-8 px-0">
         <DataDrivenIncentives />
       </div>
       
 
-      <div className="h-12"></div>
+      <div className="h-20"></div>
 
       <div className="flex flex-col items-center justify-start gap-10 p-4 lg:px-8 px-0">
         <ImproveYourKPIs />
@@ -53,7 +53,7 @@ export default function Home() {
         <ModernMarketingStack />
         <div className="h-12"></div>
         <Impact />
-        <div className="h-12"></div>
+        <div className="h-20"></div>
         <Media />
       </div>
 

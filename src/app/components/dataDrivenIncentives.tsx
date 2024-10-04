@@ -26,14 +26,14 @@ const DataDrivenIncentives = () => {
         <span className="bg-custom-gradient bg-clip-text text-transparent">Reward users</span> with airdrops, points, quests, and grants based on their onchain and offchain activity
       </h1>
       <Card 
-        className="grid grid-cols-1 md:grid-cols-3 z-50 p-4 border border-[rgba(100, 100, 100, 0.01)] " 
+        className="grid grid-cols-1 lg:grid-cols-3 z-50 p-4 border border-[rgba(100, 100, 100, 0.01)] " 
         style={{
           border: '1px solid transparent',
           borderImage: 'linear-gradient(to top, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)) 1',
           borderImageSlice: '1'
         }}
       >
-        <Card className='md:h-[324px] h-auto  lg:w-[416px] w-full !border-0'>
+        <Card className='md:h-[324px] h-auto  xl:w-[410px] md:w-[350px] w-full !border-0'>
           <div 
             className='relative p-4 rounded-lg h-full w-full flex flex-col justify-end pb-6 lg:!border-r-0'
             style={{
@@ -65,7 +65,7 @@ const DataDrivenIncentives = () => {
           </div>
         </Card>
 
-        <Card className='md:h-[324px] h-auto  md:w-[416px] w-full !border-0'>
+        <Card className='md:h-[324px] h-auto  xl:w-[410px] md:w-[350px] w-full !border-0'>
           <div 
             className='relative p-4 rounded-lg h-full w-full flex flex-col justify-end pb-6 lg:!border-r-0 '
             style={{
@@ -90,7 +90,7 @@ const DataDrivenIncentives = () => {
           </div>
         </Card>
 
-        <Card className='md:h-[324px] h-auto  md:w-[416px] w-full !border-0'>
+        <Card className='md:h-[324px] h-auto  xl:w-[410px] md:w-[350px] w-full !border-0'>
           <div 
             className='relative p-4 rounded-lg h-full w-full flex flex-col justify-end pb-6'
             style={{
@@ -138,7 +138,7 @@ const DataDrivenIncentives = () => {
           </div>
         </Card>
 
-        <Card className='md:h-[324px] h-auto  md:w-[416px] w-full !border-0'>
+        <Card className='md:h-[324px] h-auto  xl:w-[410px] md:w-[350px] w-full !border-0'>
           {/* <Frame className="flex flex-col justify-end pb-6 !border-t-0 !border-r-0"
             upperRightCorner={true}
             lowerLeftCorner={false}
@@ -189,7 +189,7 @@ const DataDrivenIncentives = () => {
             </CardHeader>
           </div>
         </Card>
-        <Card className='md:h-[324px] h-auto  md:w-[416px] w-full !border-0'>
+        <Card className='md:h-[324px] h-auto  xl:w-[410px] md:w-[350px] w-full !border-0'>
           <div 
             className='relative p-4 rounded-lg h-full w-full flex flex-col justify-end pb-6 !border-t-0 lg:!border-r-0'
             style={{
@@ -213,7 +213,7 @@ const DataDrivenIncentives = () => {
             </CardHeader>
           </div>
         </Card>
-        <Card className='md:h-[324px] h-auto md:w-[416px] w-full !border-0'>
+        <Card className='md:h-[324px] h-auto xl:w-[410px] md:w-[350px] w-full !border-0'>
       <div 
         className='relative p-4 rounded-lg h-full w-full flex flex-col justify-end pb-6 !border-t-0'
         style={{

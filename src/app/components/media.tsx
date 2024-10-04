@@ -49,7 +49,9 @@ const Media = () => {
     if (!emblaApi) return
     onSelect()
     emblaApi.on('select', onSelect)
-    return () => emblaApi.off('select', onSelect)
+    return () => {
+      emblaApi.off('select', onSelect)
+    }
   }, [emblaApi, onSelect])
 
   return (
@@ -74,7 +76,7 @@ const Media = () => {
           <div className="flex flex-row justify-start">
             {posts.map((post, index) => (
               <div key={index} className="flex-[0_0_100%] min-w-0 lg:flex-[0_0_25%] basis-[330px]">
-                <Card className="h-full lg:w-[300px] w-[315px]">
+                <Card className="h-auto xl:w-[300px] lg:w-[265px] w-[315px]">
                   <CardHeader className="flex flex-row justify-between items-start">
                     <div className="flex flex-row gap-4 items-start">
                       <Image className="rounded-full" src={post.image} alt={post.author} width={44} height={44} />
@@ -85,7 +87,7 @@ const Media = () => {
                     </div>
                     <Image className="mt-4" src="x-gray-logo.svg" alt={post.author} width={32} height={32} />
                   </CardHeader>
-                  <CardContent className="lg:text-sm text-base">
+                  <CardContent className="md:text-sm text-sm">
                     <p>{post.content}</p>
                   </CardContent>
                 </Card>

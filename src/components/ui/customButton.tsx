@@ -14,7 +14,7 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
     const buttonHeight = isBig ? 'h-[64px] text-[20px] px-3' : 'h-[48px] text-[16px]'
 
     return (
-      <div className="relative inline-flex items-center group">
+      <div className="relative inline-flex items-center group" >
         {/* Left column */}
         <div className="flex flex-col">
           <div className={cn("w-[10px] bg-primary group-hover:bg-primary-hover transition-colors", rectangleHeight)} />
@@ -24,17 +24,24 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
         </div>
 
         {/* Middle section (button content) */}
-        <Button
-          ref={ref}
-          variant="default"
-          className={cn(
-            buttonHeight, "rounded-none px-2 py-2 !bg-primary !shadow-none group-hover:!bg-primary-hover transition-colors !font-semibold",
-            className
-          )}
-          {...props}
-        >
-          {children}
-        </Button>
+          <div 
+            style={{
+              boxShadow: '0px 0px 40px 0px rgba(161, 255, 255, 0.4)'
+            }}
+          >
+          <Button
+            ref={ref}
+            variant="default"
+            className={cn(
+              buttonHeight, "rounded-none px-2 py-2 !bg-primary !shadow-none group-hover:!bg-primary-hover transition-colors !font-semibold",
+              className
+            )}
+            
+            {...props}
+          >
+            {children}
+          </Button>
+        </div>
 
         {/* Right column */}
         <div className="flex flex-col">

@@ -16,10 +16,10 @@ import Frame from "@/components/ui/frame";
 const About = () => {
   return (
     <div className="text-white flex flex-col items-center justify-center max-w-[1400px] px-4">
-      <h1 className="text-4xl text-3xl lg:text-5xl mb-20 font-medium text-center max-w-[1100px] md:leading-56 font-sans">
+      <h1 className="text-4xl text-3xl lg:text-5xl mb-20 font-medium text-center xl:max-w-[1100px] md:max-w-[800px] md:leading-56 font-sans">
         Torque makes crypto&apos;s user data actionable, allowing growth hackers to <span className="bg-custom-gradient bg-clip-text text-transparent">reward power users</span> and <span className="bg-custom-gradient bg-clip-text text-transparent">scale</span> their protocol
       </h1>
-      <div className="flex lg:flex-row flex-col justify-center items-center lg:gap-12 gap-8">
+      <div className="flex xl:flex-row flex-col justify-center items-center lg:gap-12 gap-8">
         <Card className="md:w-[588px] w-full md:h-[400px] h-auto p-4">
           <Frame gray={true}>
             <CardHeader>

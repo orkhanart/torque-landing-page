@@ -44,13 +44,13 @@ const Faq = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 z-[99] p-4">
-      <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] md:leading-56 font-sans">
+      <h1 className="text-4xl lg:text-5xl font-medium mb-12 text-center max-w-[900px] md:leading-56 font-sans">
         Frequently Asked Questions
       </h1>
-      <Card className="p-2 md:w-[1060px] w-full">
+      <Card className="p-2 xl:w-[1064px] w-full">
         <Frame className="p-6">
           {qa.map((item, index) => (
-            <Accordion key={index} type="single" className="md:!w-800 !w-full" collapsible>
+            <Accordion key={index} type="single" className="lg:!w-800 !w-full" collapsible>
               <AccordionItem 
                 value={`item-${index}`} 
                 className={`!w-800 ${openItems[index] ? "bg-[hsla(180,100%,82%,0.12)]" : "bg-[hsla(183,41%,9%,0.45)]"}`}
