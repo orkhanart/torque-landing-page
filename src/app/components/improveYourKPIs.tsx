@@ -31,7 +31,7 @@ const ImproveYourKPIs = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 max-w-[1400px]">
+    <div className="flex flex-col items-center justify-center gap-4 max-w-[1400px] p-4">
       <div>
         <Badge className='mb-4'>Improve your KPIs</Badge>
       </div>

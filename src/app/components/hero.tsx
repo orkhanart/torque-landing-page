@@ -23,8 +23,8 @@ const Divider = () => {
 
 const Hero = () => {
   return (
-    <div className="relative text-white min-h-[90vh] flex flex-col w-full items-center justify-between pt-14">
-      <div className="absolute top-[8%] z-10 text-center px-4 sm:px-6 lg:px-8 lg:pt-12 pt-8">
+    <div className="relative text-white min-h-[90vh] flex flex-col w-full items-center justify-between pt-14 px-4 ">
+      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 pt-8">
         <h1 className=" text-[56px] lg:text-8xl font-semibold mb-6 font-sans leading-56">
           The growth protocol
         </h1>
