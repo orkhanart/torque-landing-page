@@ -3,6 +3,7 @@
 import React from "react";
 import { CustomButton } from "@/components/ui/customButton";
 import { motion, useAnimation } from "framer-motion";
+import { SelectBadge } from "@/components/ui/selectBadge";
 
 const Divider = () => {
   return (
@@ -15,7 +16,7 @@ const Divider = () => {
         backgroundImage:
           "linear-gradient(to right, hsla(198, 100%, 60%, 0.4) 16.67%, rgba(255,255,255,0) 0%)",
         backgroundPosition: "center",
-        backgroundSize: "60px 1px", // Adjusted to account for the new ratio
+        backgroundSize: "60px 1px",
         backgroundRepeat: "repeat-x",
         margin: "",
         maskImage:
@@ -29,7 +30,7 @@ const Divider = () => {
 
 const Hero = () => {
   const titleText = "The growth protocol";
-  const subtitleText = "incentivize any user for any action in seconds";
+  const subtitleText = "incentivize";
 
   const controls = useAnimation();
 
@@ -113,7 +114,7 @@ const Hero = () => {
             </motion.span>
           ))}
         </motion.h1>
-        <motion.p
+        <motion.div
           className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300"
           variants={subtitleContainer}
           initial="hidden"
@@ -128,7 +129,31 @@ const Hero = () => {
               {word}
             </motion.span>
           ))}
-        </motion.p>
+          <motion.span
+            variants={subtitleChild}
+            style={{ display: "inline-block", marginRight: "0.3em" }}
+          >
+            <SelectBadge variant="blue">any user</SelectBadge>
+          </motion.span>
+          <motion.span
+            variants={subtitleChild}
+            style={{ display: "inline-block", marginRight: "0.3em" }}
+          >
+            for
+          </motion.span>
+          <motion.span
+            variants={subtitleChild}
+            style={{ display: "inline-block", marginRight: "0.3em" }}
+          >
+            <SelectBadge variant="red">any action</SelectBadge>
+          </motion.span>
+          <motion.span
+            variants={subtitleChild}
+            style={{ display: "inline-block", marginRight: "0.3em" }}
+          >
+            in seconds
+          </motion.span>
+        </motion.div>
         <CustomButton customVariant="big">Try out Torque</CustomButton>
       </div>
 
