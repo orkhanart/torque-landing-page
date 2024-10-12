@@ -12,35 +12,81 @@ import Image from "next/image";
 
 const posts = [
   {
-    author: "Sheldon",
-    role: "Founder",
+    author: "Ian",
+    role: "Tiplink",
     platform: "X",
     content:
-      "DeFi native, self-appointed tokenomist. Started as a consultant in web3 back in early 2020, and quickly realized he wanted to build his own systems. Always keen on engaging.",
+      "TipLink is an incredible tool for onboarding the average person into crypto and Torque is an incredible tool for creating the economic incentives to make that a reality.",
     image: "/sheldon-pfp.png",
   },
   {
-    author: "Sheldon",
-    role: "Founder",
+    author: "Sting",
+    role: "Growth | Tensor Labs",
     platform: "X",
     content:
-      "DeFi native, self-appointed tokenomist. Started as a consultant in web3 back in early 2020, and quickly realized he wanted to build his own systems. Always keen on engaging. DeFi native, self-appointed tokenomist. Started as a consultant in web3 back in early 2020, and quickly realized he wanted to build his own systems. Always keen on engaging. DeFi native, self-appointed tokenomist.",
+      "Torque would enable us to incentivize users more effectively towards our products, conduct numerous trading contests, and concentrate rewards on quality users",
     image: "/sheldon-pfp.png",
   },
   {
-    author: "Sheldon",
-    role: "Founder",
+    author: "Pedro",
+    role: "Solana Foundation",
     platform: "X",
-    content:
-      "DeFi native, self-appointed tokenomist. Started as a consultant in web3 back in early 2020, and quickly realized he wanted to build his own systems. Always keen on engaging. Wanted to build his own systems. Always keen on engaging. quickly realized he wanted to build",
+    content: "This is hype!",
     image: "/sheldon-pfp.png",
   },
   {
-    author: "Sheldon",
-    role: "Founder",
+    author: "Daeshawn",
+    role: "Shaga",
     platform: "X",
     content:
-      "DeFi native, self-appointed tokenomist. Started as a consultant in web3 back in early 2020, and quickly realized he wanted to build his own systems.",
+      "We see Torque as one of the best ways to discover and reward early contributors with their advanced targeting features.",
+    image: "/sheldon-pfp.png",
+  },
+  {
+    author: "Kyle",
+    role: "CEO & Founder",
+    platform: "Hedgehog Markets",
+    content:
+      "Visibility and attention is always the challenge for builders. Once this launches we see no reason not to try it",
+    image: "/sheldon-pfp.png",
+  },
+  {
+    author: "Joey",
+    role: "Founder | Stockpile Labs",
+    platform: "X",
+    content:
+      "In our context, I can see this truly revolutionizing developer onboarding for protocols on Solana",
+    image: "/sheldon-pfp.png",
+  },
+
+  {
+    author: "Brandon",
+    role: "Truffle",
+    platform: "X",
+    content:
+      "We see this as something creators could use to gain distribution by launching campaigns and rewarding for their nft mints",
+    image: "/sheldon-pfp.png",
+  },
+  {
+    author: "Frank",
+    role: "eBlockchain",
+    platform: "X",
+    content:
+      "This is something that I need. As soon as you're launched I will be your first user",
+    image: "/sheldon-pfp.png",
+  },
+  {
+    author: "Pedro",
+    role: "Solana Foundation",
+    platform: "X",
+    content: "This is hype!",
+    image: "/sheldon-pfp.png",
+  },
+  {
+    author: "Pedro",
+    role: "Solana Foundation",
+    platform: "X",
+    content: "This is hype!",
     image: "/sheldon-pfp.png",
   },
   // ... other posts

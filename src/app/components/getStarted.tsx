@@ -20,7 +20,6 @@ const GetStarted = () => {
           Tenete ergo quod si servitus quae natura liber, et aliena tua tunc
         </p>
         <CustomButton
-          href="https://app.torque.so"
           customVariant="big"
           className="shadow-[0px_0px_40px_0px_rgba(161,255,255,0.4)] z-50"
         >

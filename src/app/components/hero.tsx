@@ -129,9 +129,7 @@ const Hero = () => {
             </motion.span>
           ))}
         </motion.p>
-        <CustomButton href="https://app.torque.so" customVariant="big">
-          Try out Torque
-        </CustomButton>
+        <CustomButton customVariant="big">Try out Torque</CustomButton>
       </div>
 
       <div className="absolute bottom-0 z-10 flex flex-col w-full items-center md:mt-0 mt-24">

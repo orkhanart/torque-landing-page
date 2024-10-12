@@ -69,7 +69,7 @@ export default function Navbar() {
           ))}
           <div className="w-4"></div>
           <NavigationMenuItem>
-            <CustomButton href="https://app.torque.so">Launch app</CustomButton>
+            <CustomButton>Launch app</CustomButton>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
@@ -99,11 +99,7 @@ export default function Navbar() {
                 </NavigationMenuItem>
               ))}
               <NavigationMenuItem>
-                <CustomButton
-                  href="https://app.torque.so"
-                  customVariant="big"
-                  onClick={closeMenu}
-                >
+                <CustomButton customVariant="big" onClick={closeMenu}>
                   Launch app
                 </CustomButton>
               </NavigationMenuItem>

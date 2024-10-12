@@ -18,9 +18,7 @@ const Footer = () => {
           <p>Community</p>
           <p>Docs</p>
         </div>
-        <CustomButton href="https://app.torque.so" className="ml-0 ">
-          Launch App
-        </CustomButton>
+        <CustomButton className="ml-0 ">Launch App</CustomButton>
       </div>
       <div className="flex flex-row gap-4 md:hidden items-start sm:items-center sm:w-auto w-full z-50 bg-transparent">
         <Image src="/blue-logo.svg" alt="Torque" width={28} height={28} />
