@@ -1,6 +1,6 @@
-"use client"
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { CustomButton } from "@/components/ui/customButton";
 import {
   NavigationMenu,
@@ -9,21 +9,21 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Menu, X } from 'lucide-react';
-import Image from 'next/image';
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuHeight, setMenuHeight] = useState(0);
 
   const menuItems = [
-    { href: '/community', label: 'Community' },
-    { href: '/docs', label: 'Docs' },
+    // { href: "/community", label: "Community" },
+    { href: "/docs.torque.so", label: "Docs" },
   ];
 
   useEffect(() => {
     if (isMenuOpen) {
-      const menuElement = document.getElementById('mobile-menu');
+      const menuElement = document.getElementById("mobile-menu");
       if (menuElement) {
         setMenuHeight(menuElement.scrollHeight);
       }
@@ -45,7 +45,7 @@ export default function Navbar() {
       <Link href="/" className="flex items-center space-x-2 z-[999]">
         <Image src="/Logotype.svg" alt="Torque logo" width={110} height={32} />
       </Link>
-      
+
       {/* Mobile menu button */}
       <button
         className="md:hidden"
@@ -67,11 +67,9 @@ export default function Navbar() {
               </Link>
             </NavigationMenuItem>
           ))}
-          <div className='w-4'></div>
+          <div className="w-4"></div>
           <NavigationMenuItem>
-            <CustomButton>
-              Launch app
-            </CustomButton>
+            <CustomButton href="https://app.torque.so">Launch app</CustomButton>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
@@ -91,7 +89,7 @@ export default function Navbar() {
               {menuItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
                   <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink 
+                    <NavigationMenuLink
                       className={`${navigationMenuTriggerStyle()} !text-3xl !font-sans`}
                       onClick={closeMenu}
                     >
@@ -101,7 +99,11 @@ export default function Navbar() {
                 </NavigationMenuItem>
               ))}
               <NavigationMenuItem>
-                <CustomButton customVariant="big" onClick={closeMenu}>
+                <CustomButton
+                  href="https://app.torque.so"
+                  customVariant="big"
+                  onClick={closeMenu}
+                >
                   Launch app
                 </CustomButton>
               </NavigationMenuItem>

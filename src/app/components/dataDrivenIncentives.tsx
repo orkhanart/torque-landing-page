@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -7,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const DataDrivenIncentives = () => {
   return (
@@ -25,11 +28,11 @@ const DataDrivenIncentives = () => {
         <span className="bg-custom-gradient bg-clip-text text-transparent">
           Reward users
         </span>{" "}
-        with tokens, points, quests, and grants based on their onchain and
+        with tokens, points, offers, and grants based on their onchain and
         offchain activity
       </h1>
       <Card
-        className="grid grid-cols-1 lg:grid-cols-3 z-50 p-4 border border-[rgba(100, 100, 100, 0.01)] "
+        className="grid grid-cols-1 lg:grid-cols-3 z-50 p-4 border border-[rgba(100, 100, 100, 0.01)] relative overflow-hidden"
         style={{
           border: "1px solid transparent",
           borderImage:
@@ -37,6 +40,12 @@ const DataDrivenIncentives = () => {
           borderImageSlice: "1",
         }}
       >
+        <motion.div
+          className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent"
+          initial={{ x: "-100%" }}
+          animate={{ x: "100%" }}
+          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+        />
         {[
           {
             title: "Precision-Targeted Offers",
@@ -71,7 +80,7 @@ const DataDrivenIncentives = () => {
         ].map((item, index) => (
           <Card
             key={index}
-            className="md:h-[324px] h-auto xl:w-[410px] md:w-[350px] w-full !border-0"
+            className="md:h-[324px] h-auto xl:w-[410px] md:w-[350px] w-full !border-0 relative"
           >
             <div
               className="relative p-4 rounded-lg h-full w-full flex flex-col justify-between"

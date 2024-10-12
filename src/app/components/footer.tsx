@@ -2,7 +2,6 @@ import React from "react";
 import { CustomButton } from "@/components/ui/customButton";
 import Image from "next/image";
 
-
 const Footer = () => {
   return (
     <footer className="w-full flex flex-col md:flex-row md:justify-between justify-center items-center gap-6 max-w-[1400px] pb-12 px-8">
@@ -19,7 +18,9 @@ const Footer = () => {
           <p>Community</p>
           <p>Docs</p>
         </div>
-        <CustomButton className="ml-0 ">Launch App</CustomButton>
+        <CustomButton href="https://app.torque.so" className="ml-0 ">
+          Launch App
+        </CustomButton>
       </div>
       <div className="flex flex-row gap-4 md:hidden items-start sm:items-center sm:w-auto w-full z-50 bg-transparent">
         <Image src="/blue-logo.svg" alt="Torque" width={28} height={28} />
@@ -29,7 +30,7 @@ const Footer = () => {
       </div>
       {/* <Image src="/Glowing.png" alt="sparkle" width={1400} height={1400} className=" absolute bottom-0 left-0 w-full h-full" /> */}
     </footer>
-  )
-}
+  );
+};
 
 export default Footer;
