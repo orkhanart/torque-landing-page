@@ -7,7 +7,7 @@ import ModernMarketingStack from "./components/modernMarketingStack";
 import Impact from "./components/impact";
 import Media from "./components/media";
 import GetStarted from "./components/getStarted";
-import Faq from "./components/faq";
+// import Faq from "./components/faq";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 

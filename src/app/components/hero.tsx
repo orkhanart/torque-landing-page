@@ -1,6 +1,5 @@
 import React from "react";
 import { CustomButton } from "@/components/ui/customButton";
-import Image from "next/image";
 
 const Divider = () => {
   return (
