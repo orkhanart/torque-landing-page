@@ -108,10 +108,9 @@ const ModernMarketingStack = () => {
             }}
           >
             <CardContent className="space-y-2 text-2xl text-medium py-6">
-              Reward <SelectBadge variant="red">only</SelectBadge>{" "}
-              <SelectBadge variant="blue">long-term stakers</SelectBadge> who
-              continued to stake <SelectBadge variant="red">after</SelectBadge>{" "}
-              the previous{" "}
+              Reward <SelectBadge variant="blue">long-term stakers</SelectBadge>{" "}
+              who continued to stake{" "}
+              <SelectBadge variant="red">after</SelectBadge> the previous{" "}
               <SelectBadge variant="blue">promotional period</SelectBadge> has
               ended.
             </CardContent>
@@ -156,7 +155,7 @@ const ModernMarketingStack = () => {
                 signed up & deposited 5 sol
               </SelectBadge>{" "}
               with a <SelectBadge variant="blue">single entry</SelectBadge> into
-              a <SelectBadge variant="red">weekly giveaway</SelectBadge>.
+              a <SelectBadge variant="red">weekly giveaway</SelectBadge>
             </CardContent>
           </Card>
           <div className="w-2 h-2 bg-primary absolute top-[97px] -left-1 xl:block hidden"></div>
@@ -198,12 +197,10 @@ const ModernMarketingStack = () => {
             }}
           >
             <CardContent className="space-y-2 text-2xl text-medium py-6">
-              Reward <SelectBadge variant="red">only</SelectBadge>{" "}
-              <SelectBadge variant="blue">long-term stakers</SelectBadge> who
-              continued to stake <SelectBadge variant="red">after</SelectBadge>{" "}
-              the previous{" "}
-              <SelectBadge variant="blue">promotional period</SelectBadge> has
-              ended.
+              Reward <SelectBadge variant="blue">whales</SelectBadge> who{" "}
+              <SelectBadge variant="red">have 1000+ SOL staked</SelectBadge>{" "}
+              with a <SelectBadge variant="blue">boosted yield</SelectBadge> in{" "}
+              <SelectBadge variant="red">6 months</SelectBadge>
             </CardContent>
           </Card>
           <div className="w-2 h-2 bg-primary absolute -top-1 left-[250px] xl:block hidden"></div>

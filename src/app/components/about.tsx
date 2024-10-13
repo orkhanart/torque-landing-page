@@ -9,7 +9,7 @@ const About = () => {
   return (
     <div className="text-white flex flex-col items-center justify-center max-w-[1400px] px-4">
       <h1 className="text-4xl text-3xl lg:text-5xl mb-20 font-medium text-center xl:max-w-[1100px] md:max-w-[800px] md:leading-56 font-sans">
-        Torque makes crypto&apos;s user data actionable, allowing builders to{" "}
+        Torque makes crypto&apos;s user data actionable, enabling builders to{" "}
         <span className="bg-custom-gradient bg-clip-text text-transparent">
           reward power users
         </span>{" "}
@@ -17,7 +17,7 @@ const About = () => {
         <span className="bg-custom-gradient bg-clip-text text-transparent">
           scale
         </span>{" "}
-        their protocol
+        their protocols
       </h1>
       <div className="flex xl:flex-row flex-col justify-center items-center lg:gap-12 gap-8">
         <Card className="md:w-[588px] w-full md:h-[400px] h-auto p-4">
@@ -44,7 +44,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    No ability to microtarget users
+                    Requires continuous upkeep from your dev team
                   </li>
                   <li className="flex items-start">
                     <Image
@@ -54,7 +54,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    Easy to game airdrop mechanisms
+                    Rigid campaigns that do not encourage iterations
                   </li>
                   <li className="flex items-start">
                     <Image
@@ -64,7 +64,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    Requires continuous upkeep and hours from your dev team
+                    Limited in targeting and token distribution
                   </li>
                 </ul>
               </CardContent>
@@ -100,8 +100,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    Microtarget users based on type & track performance across
-                    campaigns
+                    Hyper-target users and track performance across campaigns
                   </li>
                   <li className="flex items-start">
                     <Image
@@ -111,7 +110,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    Update mechanisms in a few clicks, to thwart airdrop farmers
+                    Flexible mechanics that enable rapid iteration
                   </li>
                   <li className="flex items-start">
                     <Image
@@ -121,7 +120,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    No continuous upkeep from your dev team needed
+                    No-code platform with no need for dev team
                   </li>
                 </ul>
               </CardContent>

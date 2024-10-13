@@ -30,15 +30,13 @@ const Divider = () => {
 
 const Hero = () => {
   const titleText = "The growth protocol";
-  const subtitleText = "incentivize";
-
   const controls = useAnimation();
 
   const titleContainer = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.04, delayChildren: 0.02 * i },
+      transition: { staggerChildren: 0.06, delayChildren: 0.02 * i },
     }),
   };
 
@@ -47,23 +45,16 @@ const Hero = () => {
       opacity: 1,
       x: 0,
       y: 0,
-      scale: 1,
-      color: "#FFFFFF",
-      filter: "blur(0px)",
       transition: {
         type: "spring",
         damping: 12,
         stiffness: 200,
-        duration: 0.3,
       },
     },
     hidden: {
       opacity: 0,
       x: -20,
       y: 10,
-      scale: 0.9,
-      color: "#4FD1C5",
-      filter: "blur(10px)",
     },
   };
 
@@ -71,7 +62,7 @@ const Hero = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.01 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
     },
   };
 
@@ -79,26 +70,23 @@ const Hero = () => {
     visible: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
       transition: {
         type: "spring",
         damping: 20,
         stiffness: 100,
-        duration: 0.2,
       },
     },
     hidden: {
       opacity: 0,
       y: 20,
-      filter: "blur(5px)",
     },
   };
 
   return (
-    <div className="relative text-white min-h-[90vh] flex flex-col w-full items-center justify-between pt-14 px-4 ">
-      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-8pt-0">
+    <div className="relative text-white min-h-[90vh] flex flex-col w-full items-center justify-between pt-14 px-4">
+      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-8 pt-0">
         <motion.h1
-          className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-56"
+          className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-tight"
           variants={titleContainer}
           initial="hidden"
           animate="visible"
@@ -115,41 +103,38 @@ const Hero = () => {
           ))}
         </motion.h1>
         <motion.div
-          className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300"
+          className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300 flex flex-wrap justify-center items-center"
           variants={subtitleContainer}
           initial="hidden"
           animate={controls}
         >
-          {subtitleText.split(" ").map((word, index) => (
-            <motion.span
-              key={index}
-              variants={subtitleChild}
-              style={{ display: "inline-block", marginRight: "0.3em" }}
-            >
-              {word}
-            </motion.span>
-          ))}
           <motion.span
             variants={subtitleChild}
-            style={{ display: "inline-block", marginRight: "0.3em" }}
+            className="whitespace-nowrap mr-2 mb-2"
+          >
+            incentivize
+          </motion.span>
+          <motion.span
+            variants={subtitleChild}
+            className="whitespace-nowrap mr-2 mb-2"
           >
             <SelectBadge variant="blue">any user</SelectBadge>
           </motion.span>
           <motion.span
             variants={subtitleChild}
-            style={{ display: "inline-block", marginRight: "0.3em" }}
+            className="whitespace-nowrap mr-2 mb-2"
           >
             for
           </motion.span>
           <motion.span
             variants={subtitleChild}
-            style={{ display: "inline-block", marginRight: "0.3em" }}
+            className="whitespace-nowrap mr-2 mb-2"
           >
             <SelectBadge variant="red">any action</SelectBadge>
           </motion.span>
           <motion.span
             variants={subtitleChild}
-            style={{ display: "inline-block", marginRight: "0.3em" }}
+            className="whitespace-nowrap mr-2 mb-2"
           >
             in seconds
           </motion.span>
