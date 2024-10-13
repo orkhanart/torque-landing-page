@@ -13,7 +13,8 @@ import { motion } from "framer-motion";
 import { PiTarget, PiTreasureChest } from "react-icons/pi";
 import { RiNodeTree } from "react-icons/ri";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
-import { MdOutlineStackedLineChart } from "react-icons/md";
+
+import { FaChartBar } from "react-icons/fa";
 
 // Custom NoCode icon component
 const NoCodeIcon: React.FC = () => (
@@ -54,7 +55,7 @@ const NoCodeIcon: React.FC = () => (
 const DataDrivenIncentives: React.FC = () => {
   const features = [
     {
-      title: "Precision-Targeted Offers",
+      title: "Targeted Offers",
       description:
         "Target specific wallets using no-code audience segmentation tools, custom lists or data from previous campaigns",
       icon: PiTarget,
@@ -66,28 +67,28 @@ const DataDrivenIncentives: React.FC = () => {
       icon: PiTreasureChest,
     },
     {
-      title: "Any Asset, Any Action",
+      title: "Outcome Driven",
       description:
-        "Reward any onchain or offchain action with any token or point to drive most useful behavior.",
+        "Reward any onchain or offchain action based on the conditional triggers of your choice.",
       icon: RiNodeTree,
     },
     {
-      title: "Power Your Product",
+      title: "Plug and Play",
       description:
         "Integrate Torque into your product for users to create growth-driven offers directly within your platform.",
       icon: IoExtensionPuzzleOutline,
     },
     {
-      title: "No-Code Simplicity",
+      title: "No-Code Client",
       description:
         "Empower your team to launch, manage, and experiment with campaigns—no developers needed.",
       icon: NoCodeIcon,
     },
     {
-      title: "Measure Everything",
+      title: "Verifiable Analytics",
       description:
         "Track real-time performance, optimize offers, and refine rewards based on user behavior and engagement.",
-      icon: MdOutlineStackedLineChart,
+      icon: FaChartBar,
     },
   ];
 
@@ -107,8 +108,10 @@ const DataDrivenIncentives: React.FC = () => {
         <span className="bg-custom-gradient bg-clip-text text-transparent">
           Reward users
         </span>{" "}
-        with tokens, points, offers, and grants based on their onchain and
-        offchain activity
+        with tokens, points, and grants based on their{" "}
+        <span className="bg-custom-gradient bg-clip-text text-transparent">
+          onchain and offchain activity
+        </span>
       </h1>
       <Card
         className="grid grid-cols-1 lg:grid-cols-3 z-50 p-4 border border-[rgba(100, 100, 100, 0.01)] relative overflow-hidden"

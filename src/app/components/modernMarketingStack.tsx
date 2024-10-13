@@ -11,9 +11,9 @@ const ModernMarketingStack = () => {
         <Badge className="mb-4">Modern Marketing Stack</Badge>
       </div>
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center xl:max-w-[1000px] md:max-w-[700px] md:leading-56 font-sans">
-        Track users across campaigns and provide incentives{" "}
+        Design and launch growth strategies{" "}
         <span className="bg-custom-gradient bg-clip-text text-transparent">
-          never before possible
+          based on tangible results
         </span>
       </h1>
       <Image
@@ -108,13 +108,15 @@ const ModernMarketingStack = () => {
             }}
           >
             <CardContent className="space-y-2 text-2xl text-medium py-6">
-              Reward <SelectBadge variant="blue">long-term stakers</SelectBadge>{" "}
-              who continued to stake{" "}
-              <SelectBadge variant="red">after</SelectBadge> the previous{" "}
-              <SelectBadge variant="blue">promotional period</SelectBadge> has
-              ended.
+              Reward <SelectBadge variant="blue">new users</SelectBadge> who{" "}
+              <SelectBadge variant="red">
+                signed up & deposited 5+ SOL
+              </SelectBadge>{" "}
+              with a <SelectBadge variant="blue">single entry</SelectBadge> into
+              a <SelectBadge variant="red">weekly giveaway</SelectBadge>
             </CardContent>
           </Card>
+
           <div className="w-2 h-2 bg-primary absolute top-24 -right-1 xl:block hidden"></div>
           <div className="absolute -bottom-1 ml-1 w-full flex justify-center">
             <div className="w-2 h-2 bg-primary xl:hidden block"></div>
@@ -150,12 +152,11 @@ const ModernMarketingStack = () => {
             }}
           >
             <CardContent className="space-y-2 text-2xl text-medium py-6">
-              Reward <SelectBadge variant="blue">new users</SelectBadge> who{" "}
-              <SelectBadge variant="red">
-                signed up & deposited 5 sol
-              </SelectBadge>{" "}
-              with a <SelectBadge variant="blue">single entry</SelectBadge> into
-              a <SelectBadge variant="red">weekly giveaway</SelectBadge>
+              Reward <SelectBadge variant="blue">stakers</SelectBadge> who{" "}
+              <SelectBadge variant="red">continued to stake</SelectBadge> after
+              the promotional period with a{" "}
+              <SelectBadge variant="blue">power-user NFT</SelectBadge> at the{" "}
+              <SelectBadge variant="red">end of the month</SelectBadge>{" "}
             </CardContent>
           </Card>
           <div className="w-2 h-2 bg-primary absolute top-[97px] -left-1 xl:block hidden"></div>

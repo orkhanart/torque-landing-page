@@ -13,11 +13,10 @@ const About = () => {
         <span className="bg-custom-gradient bg-clip-text text-transparent">
           reward power users
         </span>{" "}
-        and{" "}
+        &{" "}
         <span className="bg-custom-gradient bg-clip-text text-transparent">
           scale
         </span>{" "}
-        their protocols
       </h1>
       <div className="flex xl:flex-row flex-col justify-center items-center lg:gap-12 gap-8">
         <Card className="md:w-[588px] w-full md:h-[400px] h-auto p-4">
@@ -29,7 +28,7 @@ const About = () => {
                 </Badge>
               </div>
               <CardTitle className="text-3xl">
-                Manually building and update your rewards engine{" "}
+                Manually build static reward mechanisms,{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
                   in months
                 </span>
@@ -86,7 +85,7 @@ const About = () => {
                 </Badge>
               </div>
               <CardTitle className="text-3xl">
-                Launch onchain offers based on detailed user activity{" "}
+                Execute on robust growth strategies,{" "}
                 <span className="text-primary">in seconds</span>
               </CardTitle>
 
@@ -100,7 +99,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    Hyper-target users and track performance across campaigns
+                    Target specific users and track performance
                   </li>
                   <li className="flex items-start">
                     <Image
@@ -110,7 +109,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    Flexible mechanics that enable rapid iteration
+                    Flexible reward engine for rapid iteration
                   </li>
                   <li className="flex items-start">
                     <Image
@@ -120,7 +119,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    No-code platform with no need for dev team
+                    No-code client for marketers, not devs
                   </li>
                 </ul>
               </CardContent>
