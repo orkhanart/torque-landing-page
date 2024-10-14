@@ -62,12 +62,16 @@ const Impact = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
+                <p className="text-2xl text-medium mb-4">
+                  A multi-offer campaign to drive NFT trading volume to the
+                  Top-10 collections.
+                </p>
+                <p className="text-2xl text-medium mb-4">
+                  5,000 conversions & 3,000 SOL in volume.
+                </p>
                 <p className="text-2xl text-medium">
-                  Multi-offers campaign over the course of a week to drive more
-                  trading volume and mindshare to Tensor’s NFT marketplace. The
-                  campaign drove 5K conversions and ~3K SOL in volume across
-                  Top-10 collections. Tensor has added Torque as a go-to market
-                  partner for all NFT launches
+                  Torque is now an official go-to market partner to
+                  Tensor&apos;s launchpad.
                 </p>
               </CardContent>
             </div>
@@ -108,8 +112,7 @@ const Impact = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-2xl text-medium">
-                    Giveaway for buyers of Gen3, resulting in 1.2K conversions
-                    and 20% floor-price increase
+                    1,200 conversions & 20% floor-price increase.
                   </p>
                 </CardContent>
               </div>
@@ -141,8 +144,7 @@ const Impact = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-2xl text-medium">
-                    Memecoin giveaway for user sign-ups, driving 1.7K new users
-                    at under $1.5 per sign-up
+                    1,700 new users, for under $1.50 per sign-up.
                   </p>
                 </CardContent>
               </div>
@@ -182,8 +184,7 @@ const Impact = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-2xl text-medium">
-                    More than 35 campaigns launched by builders, with 5K
-                    conversions
+                    5,000 Conversions across 35 campaigns.
                   </p>
                 </CardContent>
               </div>

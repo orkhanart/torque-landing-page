@@ -57,7 +57,7 @@ const DataDrivenIncentives: React.FC = () => {
     {
       title: "Targeted Offers",
       description:
-        "Target specific wallets using no-code audience segmentation tools, custom lists or data from previous campaigns",
+        "Target specific wallets using no-code audience segmentation tools, custom lists or data from previous campaigns.",
       icon: PiTarget,
     },
     {
