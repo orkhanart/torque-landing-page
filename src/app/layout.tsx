@@ -22,12 +22,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Torque - The Growth Protocol",
-    description: "Building Solana's onchain attention economy.",
+    description: "The SVM growth engine.",
     url: "https://torque.so",
     siteName: "Torque",
     images: [
       {
-        url: "/og-image.png", // Replace with your actual image path
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Torque - The Growth Protocol",
