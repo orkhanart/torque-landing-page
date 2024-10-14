@@ -13,83 +13,83 @@ import Image from "next/image";
 const posts = [
   {
     author: "Ian",
-    role: "Tiplink",
+    role: "CEO | Tiplink",
     platform: "X",
     content:
       "TipLink is an incredible tool for onboarding the average person into crypto and Torque is an incredible tool for creating the economic incentives to make that a reality.",
-    image: "/sheldon-pfp.png",
+    image: "/quotes/ian.png",
   },
   {
     author: "Sting",
-    role: "Growth | Tensor Labs",
+    role: "Growth & Partnerships | Tensor",
     platform: "X",
     content:
       "Torque would enable us to incentivize users more effectively towards our products, conduct numerous trading contests, and concentrate rewards on quality users",
-    image: "/sheldon-pfp.png",
+    image: "/quotes/sting.png",
   },
   {
     author: "Pedro",
-    role: "Solana Foundation",
+    role: "BD |Solana Foundation",
     platform: "X",
     content: "This is hype!",
-    image: "/sheldon-pfp.png",
+    image: "/quotes/pedro.png",
   },
   {
     author: "Daeshawn",
-    role: "Shaga",
+    role: "COO | Shaga",
     platform: "X",
     content:
       "We see Torque as one of the best ways to discover and reward early contributors with their advanced targeting features.",
-    image: "/sheldon-pfp.png",
+    image: "/quotes/daeshawn.png",
   },
   {
     author: "Kyle",
-    role: "CEO & Founder",
+    role: "CEO | Hedgehog Markets",
     platform: "Hedgehog Markets",
     content:
       "Visibility and attention is always the challenge for builders. Once this launches we see no reason not to try it",
-    image: "/sheldon-pfp.png",
+    image: "/quotes/kyle_hedgehog.png",
   },
   {
     author: "Joey",
-    role: "Founder | Stockpile Labs",
+    role: "Devrel | Squads",
     platform: "X",
     content:
       "In our context, I can see this truly revolutionizing developer onboarding for protocols on Solana",
-    image: "/sheldon-pfp.png",
+    image: "/quotes/joey.png",
   },
-
   {
     author: "Brandon",
-    role: "Truffle",
+    role: "CTO | Truffle",
     platform: "X",
     content:
       "We see this as something creators could use to gain distribution by launching campaigns and rewarding for their nft mints",
-    image: "/sheldon-pfp.png",
+    image: "/quotes/brandon.png",
   },
   {
     author: "Frank",
-    role: "eBlockchain",
+    role: "CEO | eBlockchain",
     platform: "X",
     content:
       "This is something that I need. As soon as you're launched I will be your first user",
-    image: "/sheldon-pfp.png",
+    image: "/quotes/frank.png",
   },
   {
-    author: "Pedro",
-    role: "Solana Foundation",
+    author: "Blockiosaurus",
+    role: "Dev | Metaplex",
     platform: "X",
-    content: "This is hype!",
-    image: "/sheldon-pfp.png",
+    content:
+      "People understand the issues with fractured liquidity, but don't realize we have the same issue with the attention economy. Torque  is fixing this, giving founders and creators a more powerful way to reach users.",
+    image: "/quotes/keith.png",
   },
   {
-    author: "Pedro",
-    role: "Solana Foundation",
+    author: "Bob",
+    role: "Founder | Arena.fun",
     platform: "X",
-    content: "This is hype!",
-    image: "/sheldon-pfp.png",
+    content:
+      "A disruptive go-to advertisement platform that uses web3 rails really should exist. Just a matter of finding the right execution for it, which is extremely difficult. But boolish on Top S🫡",
+    image: "/quotes/bob.png",
   },
-  // ... other posts
 ];
 
 const Media = () => {
@@ -149,13 +149,6 @@ const Media = () => {
                       </CardDescription>
                     </div>
                   </div>
-                  <Image
-                    className="mt-4"
-                    src="x-gray-logo.svg"
-                    alt={post.author}
-                    width={32}
-                    height={32}
-                  />
                 </CardHeader>
                 <CardContent className="md:text-sm text-sm">
                   <p>{post.content}</p>

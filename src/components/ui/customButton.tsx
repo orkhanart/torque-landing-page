@@ -1,21 +1,23 @@
 import React from "react";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface CustomButtonProps extends Omit<ButtonProps, "variant"> {
   children: React.ReactNode;
   customVariant?: "default" | "big";
+  href?: string;
 }
 
 const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
-  ({ className, children, customVariant = "default", ...props }, ref) => {
+  ({ className, children, customVariant, href = "default", ...props }, ref) => {
     const isBig = customVariant === "big";
     const rectangleHeight = isBig ? "h-[54px]" : "h-[38px]";
     const buttonHeight = isBig
       ? "h-[64px] text-[20px] px-3"
       : "h-[48px] text-[16px]";
 
-    return (
+    const buttonContent = (
       <div className="relative inline-flex items-center group">
         {/* Left column */}
         <div className="flex flex-col">
@@ -84,6 +86,14 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
         </div>
       </div>
     );
+    if (href) {
+      return (
+        <Link href={href} className="relative inline-flex items-center group">
+          {buttonContent}
+        </Link>
+      );
+    }
+    return buttonContent;
   }
 );
 

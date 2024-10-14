@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { CustomButton } from "@/components/ui/customButton";
 import { motion } from "framer-motion";
 import { SelectBadge } from "@/components/ui/selectBadge";
@@ -27,6 +28,14 @@ const Divider = () => {
     />
   );
 };
+
+const trustedCompanies = [
+  { name: "Metaplex", logo: "/logos/metaplex.png", width: 158, height: 53 },
+  { name: "Drift", logo: "/logos/drift-grey.png", width: 100, height: 50 },
+  { name: "Tensor", logo: "/logos/tensor.png", width: 110, height: 45 },
+  { name: "AssetDash", logo: "/logos/assetdash.png", width: 130, height: 40 },
+  { name: "MonkeDao", logo: "/logos/md.png", width: 100, height: 60 },
+];
 
 const Hero = () => {
   const titleText = "The growth protocol";
@@ -92,7 +101,34 @@ const Hero = () => {
             <SelectBadge variant="red">any action</SelectBadge>
           </motion.span>
         </motion.div>
-        <CustomButton customVariant="big">Try out Torque</CustomButton>
+        <CustomButton customVariant="big" href="https://app.torque.so">
+          Try out Torque
+        </CustomButton>
+      </div>
+
+      <div className="trusted-by w-full text-center">
+        <h2 className="text-2xl font-semibold mb-4">Trusted By</h2>
+        <div className="logo-wall flex justify-center flex-wrap gap-8 items-center">
+          {trustedCompanies.map((company, index) => (
+            <div
+              key={index}
+              className="logo-placeholder flex items-center justify-center"
+              style={{ width: "120px", height: "60px" }}
+            >
+              {company.logo ? (
+                <Image
+                  src={company.logo}
+                  alt={company.name}
+                  width={company.width}
+                  height={company.height}
+                  objectFit="contain"
+                />
+              ) : (
+                <span className="text-gray-300">{company.name}</span>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="absolute bottom-0 z-10 flex flex-col w-full items-center md:mt-0 mt-24">

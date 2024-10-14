@@ -14,13 +14,11 @@ const GetStarted = () => {
       />
       <div className="flex flex-col items-center justify-start gap-4 z-50 pb-24 px-4">
         <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-2 text-center max-w-[900px] md:leading-56 font-sans">
-          Get started with Torque
+          Get started with our no-code client
         </h1>
-        <p className="text-lg text-center max-w-[900px] mb-8 text-tertiary">
-          Tenete ergo quod si servitus quae natura liber, et aliena tua tunc
-        </p>
         <CustomButton
           customVariant="big"
+          href="https://app.torque.so"
           className="shadow-[0px_0px_40px_0px_rgba(161,255,255,0.4)] z-50"
         >
           Try out Torque

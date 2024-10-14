@@ -85,7 +85,7 @@ const About = () => {
                 </Badge>
               </div>
               <CardTitle className="text-3xl">
-                Execute on robust growth strategies,{" "}
+                Execute on scalable growth strategies,{" "}
                 <span className="text-primary">in seconds</span>
               </CardTitle>
 
