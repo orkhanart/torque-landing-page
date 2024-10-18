@@ -18,7 +18,10 @@ export default function Navbar() {
 
   const menuItems = [
     // { href: "/community", label: "Community" },
-    { href: "/docs.torque.so", label: "Docs" },
+    {
+      href: "https://docs.torque.so/docs/intro",
+      label: "Docs",
+    },
   ];
 
   useEffect(() => {
