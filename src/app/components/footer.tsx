@@ -23,7 +23,7 @@ const Footer = () => {
           {/* <Image src="/discord-logo.svg" alt="Discord" width={19} height={19} /> */}
           {/* <p>Community</p> */}
           <a
-            href="https://docs.torque.so/docs/intro"
+            href="https://docs.torque.so/"
             target="_blank"
             rel="noopener noreferrer"
           >
