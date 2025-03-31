@@ -26,7 +26,7 @@ const GetStarted = () => {
         </h1>
         <p className="text-lg text-center text-gray-300 max-w-[600px] mb-8">
           We&apos;re bringing on a few select teams to shape the future of
-          onc-chain growth. Request access now to secure your spot.
+          onchain growth. Request access now to secure your spot.
         </p>
         <CustomButton
           customVariant="big"
