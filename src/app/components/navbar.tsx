@@ -16,13 +16,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuHeight, setMenuHeight] = useState(0);
 
-  const menuItems = [
-    // { href: "/community", label: "Community" },
-    {
-      href: "https://docs.torque.so/",
-      label: "Docs",
-    },
-  ];
+  const menuItems = [];
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -72,7 +66,9 @@ export default function Navbar() {
           ))}
           <div className="w-4"></div>
           <NavigationMenuItem>
-            <CustomButton href="https://app.torque.so">Launch app</CustomButton>
+            <CustomButton href="https://platform.torque.so">
+              Client Login
+            </CustomButton>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>

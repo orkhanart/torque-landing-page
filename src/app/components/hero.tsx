@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { CustomButton } from "@/components/ui/customButton";
 import { motion } from "framer-motion";
 import { SelectBadge } from "@/components/ui/selectBadge";
+import { ContactModal } from "./ContactModal";
 
 const Divider = () => {
   return (
@@ -38,6 +39,7 @@ const trustedCompanies = [
 ];
 
 const Hero = () => {
+  const [showModal, setShowModal] = useState(false);
   const titleText = "The growth protocol";
 
   const subtitleContainer = {
@@ -101,8 +103,8 @@ const Hero = () => {
             <SelectBadge variant="red">any action</SelectBadge>
           </motion.span>
         </motion.div>
-        <CustomButton customVariant="big" href="https://app.torque.so">
-          Try out Torque
+        <CustomButton customVariant="big" onClick={() => setShowModal(true)}>
+          Request Access
         </CustomButton>
       </div>
 
@@ -134,6 +136,8 @@ const Hero = () => {
       <div className="absolute bottom-0 z-10 flex flex-col w-full items-center md:mt-0 mt-24">
         <Divider />
       </div>
+
+      <ContactModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 };

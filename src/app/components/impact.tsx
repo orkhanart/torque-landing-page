@@ -10,8 +10,11 @@ const Impact = () => {
         <Badge className="mb-4">Impact</Badge>
       </div>
       <h1 className="text-4xl sm:text-3xl lg:text-5xl font-medium mb-12 text-center xl:max-w-[1100px] md:max-w-[800px] md:leading-56 font-sans">
-        Torque gives marketers the reward system they need to massively scale
-        usage
+        Torque{" "}
+        <span className="bg-custom-gradient bg-clip-text text-transparent">
+          gives marketers the reward system they need
+        </span>{" "}
+        to massively scale their growth
       </h1>
       <Card
         className="p-4"
