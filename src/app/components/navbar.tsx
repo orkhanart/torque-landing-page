@@ -12,11 +12,16 @@ import {
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
+interface MenuItem {
+  label: string;
+  href: string;
+}
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuHeight, setMenuHeight] = useState(0);
 
-  const menuItems = [];
+  const menuItems: MenuItem[] = [];
 
   useEffect(() => {
     if (isMenuOpen) {
