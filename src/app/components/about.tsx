@@ -119,7 +119,7 @@ const About = () => {
                       height={16}
                       className="mr-2 mt-1"
                     />
-                    No-code client for marketers, not devs
+                    No-code client for marketers
                   </li>
                 </ul>
               </CardContent>

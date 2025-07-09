@@ -30,9 +30,6 @@ const Footer = () => {
             Docs
           </a> */}
         </div>
-        <CustomButton className="ml-0" href="https://.torque.so">
-          Client Login
-        </CustomButton>
       </div>
       <div className="flex flex-row gap-4 md:hidden items-start sm:items-center sm:w-auto w-full z-50 bg-transparent">
         <Image src="/blue-logo.svg" alt="Torque" width={28} height={28} />

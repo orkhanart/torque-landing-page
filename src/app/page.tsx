@@ -11,69 +11,70 @@ import GetStarted from "./components/getStarted";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 
+function BlurredLines() {
+  return (
+    <>
+      {/* <Image
+        src="/hero-Illustration.svg"
+        alt="Blurred Lines Background"
+        width={1300}
+        height={1300}
+        className="absolute top-0 left-0 w-full md:min-h-screen min-h-[90vh] object-cover z-0 pointer-events-none select-none"
+        priority
+      /> */}
+      <Image
+        src="/blurred-lines.jpg"
+        alt="Blurred Lines Overlay"
+        width={1300}
+        height={1300}
+        className="absolute top-0 left-0 w-full min-h-screen object-cover z-0 pointer-events-none select-none"
+        priority
+      />
+    </>
+  );
+}
+
 export default function Home() {
   return (
     <div className="w-full relative top-0 min-h-screen">
-      <Image
-        src="/hero-Illustration.svg"
-        alt="Hero Background"
-        width={1300}
-        height={1300}
-        className="absolute top-0 left-0 w-full md:min-h-screen min-h-[90vh] object-cover z-0"
-      />
-      <Image
-        src="/overlay.svg"
-        alt="Hero Background"
-        width={1300}
-        height={1300}
-        className="absolute top-0 left-0 w-full min-h-screen object-cover z-0"
-      />
+      <BlurredLines />
       <div className="flex justify-center w-full">
         <Navbar />
       </div>
-
       <div className="flex flex-col items-center justify-start gap-10 p-4 md:px-8 px-0">
         <Hero />
-        <div className="h-20"></div>
+        <div className="h-10"></div>
         <About />
       </div>
-
-      <div className="h-20"></div>
-
-      <div className="flex flex-col items-center justify-start lg:px-8 px-0">
+      <div className="h-10"></div>
+      {/* <div className="flex flex-col items-center justify-start lg:px-8 px-0">
         <DataDrivenIncentives />
-      </div>
-
-      <div className="h-20"></div>
-
+      </div> */}
+      <div className="h-10"></div>
       <div className="flex flex-col items-center justify-start gap-10 p-4 lg:px-8 px-0">
-        <ImproveYourKPIs />
-        <div className="h-12"></div>
+        {/* <ImproveYourKPIs /> */}
+        {/* <div className="h-6"></div> */}
         <ModernMarketingStack />
-        <div className="h-12"></div>
-        <Impact />
-        <div className="h-20"></div>
-        <Media />
+        <div className="h-6"></div>
+        {/* <Impact /> */}
+        {/* <div className="h-10"></div>
+        <Media /> */}
       </div>
-
       <GetStarted />
-
       {/* <div className="flex flex-col items-center justify-start gap-10 p-4 md:px-8 px-0">
         <Faq />
       </div>
       <div className="h-24"></div> */}
-
       <div className="flex flex-col items-center justify-start w-full">
         <Footer />
       </div>
-
-      <Image
+      {/* <Image
         src="/bottom-glow.svg"
         alt="Bottom Glow"
         width={1300}
         height={1300}
         className="absolute bottom-0 left-0 w-full  h-auto z-0"
-      />
+      /> */}
     </div>
   );
 }
