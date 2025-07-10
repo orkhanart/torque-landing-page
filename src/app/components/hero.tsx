@@ -76,7 +76,7 @@ const Hero = () => {
 
   return (
     <div className="relative text-white flex flex-col w-full items-center justify-between pt-14">
-      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-8 pt-0 min-h-[80vh] flex flex-col items-center justify-center">
+      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-8 pt-0 min-h-[70vh] flex flex-col items-center justify-center">
         <h1 className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-tight">
           {titleText}
         </h1>
