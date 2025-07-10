@@ -75,8 +75,8 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative text-white min-h-[90vh] flex flex-col w-full items-center justify-between pt-14 px-4">
-      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-8 pt-0">
+    <div className="relative text-white flex flex-col w-full items-center justify-between pt-14">
+      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-8 pt-0 min-h-[80vh] flex flex-col items-center justify-center">
         <h1 className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-tight">
           {titleText}
         </h1>
@@ -126,35 +126,55 @@ const Hero = () => {
       </div>
 
       <div className="w-full mt-12 space-y-4">
-        {/* Stats Row */}
-        <div className="bg-[#10181F]/80 border border-[#A1FFFF]/30 rounded-xl px-8 py-5 flex items-center justify-center backdrop-blur-md">
-          <div className="text-lg text-gray-400 font-medium text-center">
-            <span className="text-[#A1FFFF] font-bold text-2xl">220M+</span> in
-            Trading Volume generated across{" "}
-            <span className="text-[#F1A3A1] font-bold text-2xl">300+</span>{" "}
-            campaigns
+        <div className="relative mb-8">
+          <div className="">
+            {/* Border accents */}
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-400 via-white to-red-500"></div>
+            <div className="absolute top-0 left-0 bottom-0 h-full w-[1px] bg-gradient-to-b from-cyan-400 via-white to-red-500"></div>
+            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-red-500 via-white to-cyan-400"></div>
+            <div className="absolute top-0 right-0 bottom-0 h-full w-[1px] bg-gradient-to-b to-cyan-400 via-white from-red-500"></div>
+
+            <div className="p-6 text-center">
+              <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-16">
+                <div className="flex items-center gap-4">
+                  <span className="text-3xl md:text-5xl font-black text-cyan-400 tracking-tight">
+                    220M+
+                  </span>
+                  <span className="text-xl font-medium">Trading Volume</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-3xl md:text-5xl font-black text-red-500 tracking-tight">
+                    300+
+                  </span>
+                  <span className="text-xl font-medium">Campaigns</span>
+                </div>
+              </div>
+              <div className="mt-6 text-lg font-medium tracking-wide">
+                GENERATED ACROSS THE SOLANA ECOSYSTEM
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Customers & Audit Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-black/40 rounded-xl px-8 py-5">
-            <h3 className="text-[#A1FFFF] text-lg font-medium mb-4 text-center">
+          <div className="bg-black/40 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
+            <div className="absolute top-0 left-0 bottom-0 h-full w-2 bg-[#A1FFFF] "></div>
+            <h3 className="text-[#A1FFFF] text-xl font-semibold mb-4 text-left uppercase">
               Trusted By
             </h3>
-            <div className="flex flex-wrap items-center justify-center gap-8">
+            <div className="grid grid-cols-2 2xl:grid-cols-4 gap-4 md:gap-8 lg:gap-4 2xl:gap-8 items-center justify-center">
               {trustedCompanies.map((company, index) => (
                 <div
                   key={index}
-                  className="logo-placeholder flex items-center justify-center"
-                  style={{ width: "120px", height: "65px" }}
+                  className=" overflow-hidden logo-placeholder flex items-center justify-center aspect-[120/65] object-contain object-center"
                 >
                   {company.logo ? (
                     <Image
                       src={company.logo}
                       alt={company.name}
-                      width={company.width}
-                      height={company.height}
+                      width={120}
+                      height={65}
                       objectFit="contain"
                     />
                   ) : (
@@ -167,16 +187,16 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="bg-black/40 rounded-xl px-8 py-5">
-            <h3 className="text-[#F1A3A1] text-lg font-medium mb-4 text-center">
+          <div className="bg-black/40 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
+            <div className="absolute top-0 right-0 bottom-0 h-full w-2 bg-red-500 "></div>
+            <h3 className="text-red-500 text-xl font-semibold mb-4 text-right uppercase">
               Backed By
             </h3>
-            <div className="flex flex-wrap items-center justify-center gap-8">
+            <div className="grid grid-cols-2 2xl:grid-cols-4 gap-4 md:gap-8 lg:gap-4 2xl:gap-8 items-center justify-center">
               {backers.map((company, index) => (
                 <div
                   key={index}
-                  className="logo-placeholder flex items-center justify-center"
-                  style={{ width: "120px", height: "60px" }}
+                  className=" overflow-hidden logo-placeholder flex items-center justify-center aspect-[120/65] object-contain object-center"
                 >
                   {company.logo ? (
                     <Image
@@ -198,7 +218,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 z-10 flex flex-col w-full items-center md:mt-0 mt-24">
+      <div className="flex flex-col w-full items-center mt-16">
         <Divider />
       </div>
 

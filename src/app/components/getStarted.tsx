@@ -9,7 +9,7 @@ const GetStarted = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="relative flex flex-col items-center justify-center gap-4 w-full min-h-[500px] -mt-12 -mb-12">
+    <div className="relative flex flex-col items-center justify-center gap-4 w-full min-h-[500px]">
       {/* <Image
         src="/Illustration-hexagons2.svg"
         alt="Illustration hexagons"
