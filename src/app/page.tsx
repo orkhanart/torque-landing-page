@@ -11,6 +11,7 @@ import GetStarted from "./components/getStarted";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import { PlatformFeatures } from "./components/PlatformFeatures";
+import { AuditSection } from "./components/AuditSection";
 
 function BlurredLines() {
   return (
@@ -42,14 +43,16 @@ export default function Home() {
       <div className="flex justify-center w-full">
         <Navbar />
       </div>
-      <div className="flex flex-col items-center justify-start gap-10 my-4">
+      <div className="flex flex-col items-center justify-center gap-10 my-4">
         <Hero />
         {/* <div className="h-10"></div> */}
         {/* <About /> */}
       </div>
       <div className="h-10"></div>
       <PlatformFeatures />
-
+      <div className="h-10"></div>
+      <AuditSection />
+      <div className="h-10"></div>
       <GetStarted />
       {/* <div className="flex flex-col items-center justify-start gap-10 p-4 md:px-8 px-0">
         <Faq />

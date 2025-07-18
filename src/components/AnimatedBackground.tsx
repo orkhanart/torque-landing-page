@@ -52,24 +52,35 @@ export default function AnimatedBackground() {
 
       {/* Floating Geometric Shapes */}
       <div
-        className="absolute top-20 left-20 w-4 h-4 border-2 border-[#A1FFFF] rotate-45 animate-spin"
+        className="absolute top-20 left-20 w-4 h-4 border-2 border-[#A1FFFF] rotate-45 animate-spin -z-10"
         style={{ animationDuration: "8s" }}
       />
-      <div className="absolute top-40 right-32 w-6 h-6 border-2 border-[#F1A3A1] animate-bounce" />
-      <div className="absolute bottom-32 left-40 w-3 h-3 bg-[#A1FFFF] rounded-full animate-pulse" />
+      <div className="absolute top-40 right-32 w-6 h-6 border-2 border-[#F1A3A1] animate-bounce -z-10" />
       <div
-        className="absolute bottom-20 right-20 w-5 h-5 border-2 border-[#F1A3A1] rotate-12 animate-spin"
+        className="absolute bottom-20 right-20 w-5 h-5 border-2 border-[#F1A3A1] rotate-12 animate-spin -z-10"
         style={{ animationDuration: "6s" }}
       />
-      <div className="absolute top-1/2 left-10 w-2 h-2 bg-[#F1A3A1] rounded-full animate-ping" />
       <div
-        className="absolute top-1/3 right-10 w-4 h-4 border border-[#A1FFFF] animate-spin"
+        className="absolute top-1/3 right-10 w-4 h-4 border border-[#A1FFFF] animate-spin -z-10"
         style={{ animationDuration: "10s" }}
       />
-
-      {/* Additional floating elements */}
-      <div className="absolute top-60 left-1/4 w-1 h-8 bg-gradient-to-b from-[#A1FFFF] to-transparent animate-pulse" />
-      <div className="absolute bottom-40 right-1/4 w-8 h-1 bg-gradient-to-r from-[#F1A3A1] to-transparent animate-pulse" />
+      <div
+        className="absolute top-1/4 left-1/3 w-5 h-5 border-2 border-[#A1FFFF] rotate-30 animate-spin -z-10"
+        style={{ animationDuration: "7s" }}
+      />
+      <div className="absolute bottom-40 left-32 w-6 h-6 border-2 border-[#F1A3A1] animate-bounce -z-10" />
+      <div
+        className="absolute top-20 right-1/4 w-4 h-4 border-2 border-[#F1A3A1] rotate-20 animate-spin -z-10"
+        style={{ animationDuration: "9s" }}
+      />
+      <div
+        className="absolute bottom-1/3 left-10 w-5 h-5 border border-[#A1FFFF] animate-spin -z-10"
+        style={{ animationDuration: "11s" }}
+      />
+      <div
+        className="absolute top-2/3 left-1/4 w-4 h-4 border-2 border-[#A1FFFF] rotate-15 animate-spin -z-10"
+        style={{ animationDuration: "8.5s" }}
+      />
     </div>
   );
 }

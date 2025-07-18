@@ -8,13 +8,20 @@ type TitleParts = {
 interface SectionTitleProps {
   title: string | TitleParts[];
   className?: string;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "div" | "span";
 }
 
-export function SectionTitle({ title, className }: SectionTitleProps) {
+export function SectionTitle({
+  title,
+  className,
+  as = "h2",
+}: SectionTitleProps) {
   const titleParts = typeof title === "string" ? [{ text: title }] : title;
 
+  const Component = as;
+
   return (
-    <h2
+    <Component
       className={cn(
         "text-4xl lg:text-5xl font-medium text-center xl:max-w-[1100px] md:max-w-[800px] leading-tight font-sans",
         className
@@ -36,6 +43,6 @@ export function SectionTitle({ title, className }: SectionTitleProps) {
           </>
         );
       })}
-    </h2>
+    </Component>
   );
 }
