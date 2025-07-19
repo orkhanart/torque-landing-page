@@ -59,7 +59,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="fixed inset-0 -top-20 z-0">
+        <div className="fixed inset-0 top-0 z-0 w-full h-full overflow-hidden">
           <Hyperspeed />
         </div>
         <div className="relative z-10">{children}</div>

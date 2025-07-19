@@ -1,7 +1,3 @@
-/*
-	Installed from https://reactbits.dev/ts/tailwind/
-*/
-
 "use client";
 
 import { useEffect, useRef, FC } from "react";
@@ -973,8 +969,10 @@ function resizeRendererToDisplaySize(
   setSize: (width: number, height: number, updateStyle: boolean) => void
 ) {
   const canvas = renderer.domElement;
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
+
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
   const needResize = canvas.width !== width || canvas.height !== height;
   if (needResize) {
     setSize(width, height, false);
@@ -1005,6 +1003,8 @@ class App {
   timeOffset: number;
 
   constructor(container: HTMLElement, options: HyperspeedOptions) {
+    console.log(container);
+
     this.options = options;
     if (!this.options.distortion) {
       this.options.distortion = {
@@ -1012,13 +1012,20 @@ class App {
         getDistortion: distortion_vertex,
       };
     }
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
     this.container = container;
+    this.container.style.width = `${width}px`;
+    this.container.style.height = `${height}px`;
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: false,
       alpha: true,
     });
-    this.renderer.setSize(container.offsetWidth, container.offsetHeight, false);
+
+    this.renderer.setSize(width, height, true);
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     this.composer = new EffectComposer(this.renderer);
@@ -1026,7 +1033,7 @@ class App {
 
     this.camera = new THREE.PerspectiveCamera(
       options.fov,
-      container.offsetWidth / container.offsetHeight,
+      width / height,
       0.1,
       10000
     );
@@ -1086,8 +1093,9 @@ class App {
   }
 
   onWindowResize() {
-    const width = this.container.offsetWidth;
-    const height = this.container.offsetHeight;
+    console.log("resize");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
     this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
@@ -1166,6 +1174,12 @@ class App {
     this.leftSticks.mesh.position.setX(
       -(options.roadWidth + options.islandWidth / 2)
     );
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    this.container.style.width = `${window.innerWidth}px`;
+    this.container.style.height = `${window.innerHeight}px`;
 
     this.container.addEventListener("mousedown", this.onMouseDown);
     this.container.addEventListener("mouseup", this.onMouseUp);
@@ -1262,7 +1276,7 @@ class App {
     if (this.disposed || !this) return;
     if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
       const canvas = this.renderer.domElement;
-      this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
     }
     const delta = this.clock.getDelta();
@@ -1293,6 +1307,12 @@ const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
 
     const container = hyperspeed.current;
     if (!container) return;
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    container.style.width = `${width}px`;
+    container.style.height = `${height}px`;
 
     const options = { ...mergedOptions };
     if (typeof options.distortion === "string") {
