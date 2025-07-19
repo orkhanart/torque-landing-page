@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { CustomButton } from "@/components/ui/customButton";
 import { motion } from "framer-motion";
@@ -48,6 +48,8 @@ const backers = [
 
 const Hero = () => {
   const [showModal, setShowModal] = useState(false);
+  const [tradingVolume, setTradingVolume] = useState(0);
+  const [campaigns, setCampaigns] = useState(0);
   const titleText = "Solana's Incentive Protocol";
 
   const subtitleContainer = {
@@ -74,49 +76,49 @@ const Hero = () => {
     },
   };
 
+  useEffect(() => {
+    const animateNumbers = () => {
+      // Animate Trading Volume (220M)
+      const tradingInterval = setInterval(() => {
+        setTradingVolume((prev) => {
+          if (prev >= 220) return 220;
+          return prev + 2;
+        });
+      }, 15);
+
+      // Animate Campaigns (300)
+      const campaignsInterval = setInterval(() => {
+        setCampaigns((prev) => {
+          if (prev >= 300) return 300;
+          return prev + 3;
+        });
+      }, 15);
+
+      return () => {
+        clearInterval(tradingInterval);
+        clearInterval(campaignsInterval);
+      };
+    };
+
+    // Start animation when component mounts
+    const timeout = setTimeout(animateNumbers, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
-    <div className="relative text-white flex flex-col w-full items-center justify-between pt-14">
-      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-8 pt-0 min-h-[70vh] flex flex-col items-center justify-center">
+    <div className="relative text-white flex flex-col w-full items-center justify-between pt-8 md:pt-14">
+      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-4 pt-0 min-h-[60vh] md:min-h-[70vh] flex flex-col items-center justify-center">
         <h1 className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-tight">
           {titleText}
         </h1>
-        <motion.div
-          className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300 flex flex-wrap justify-center items-center"
-          variants={subtitleContainer}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.span
-            variants={subtitleChild}
-            className="whitespace-nowrap mr-2 mb-2"
-          >
-            Incentivize
-          </motion.span>
-          <motion.span
-            variants={subtitleChild}
-            className="whitespace-nowrap mr-2 mb-2 text-[#A1FFFF]"
-          >
-            any user
-          </motion.span>
-          <motion.span
-            variants={subtitleChild}
-            className="whitespace-nowrap mr-2 mb-2"
-          >
-            for
-          </motion.span>
-          <motion.span
-            variants={subtitleChild}
-            className="whitespace-nowrap mr-2 mb-2 text-[#F1A3A1]"
-          >
-            any action
-          </motion.span>
-          <motion.span
-            variants={subtitleChild}
-            className="whitespace-nowrap mr-2 mb-2"
-          >
-            in seconds.
-          </motion.span>
-        </motion.div>
+        <div className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300 flex flex-wrap justify-center items-center">
+          <span className="whitespace-nowrap mr-2 mb-2">
+            Incentivize any user for any action in{" "}
+          </span>
+          <span className="whitespace-nowrap mr-2 mb-2 text-[#A1FFFF] font-semibold">
+            seconds
+          </span>
+        </div>
 
         <CustomButton customVariant="big" onClick={() => setShowModal(true)}>
           Request Access
@@ -125,7 +127,7 @@ const Hero = () => {
         {/* Stat Cards */}
       </div>
 
-      <div className="w-full mt-12 space-y-4">
+      <div className="w-full mt-8 space-y-4">
         <div className="relative mb-8">
           <div className="">
             {/* Border accents */}
@@ -135,23 +137,55 @@ const Hero = () => {
             <div className="absolute top-0 right-0 bottom-0 h-full w-[1px] bg-gradient-to-b to-cyan-400 via-white from-red-500"></div>
 
             <div className="p-6 text-center">
-              <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-16">
-                <div className="flex items-center gap-4">
-                  <span className="text-3xl md:text-5xl font-black text-cyan-400 tracking-tight">
-                    220M+
-                  </span>
-                  <span className="text-xl font-medium">Trading Volume</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-3xl md:text-5xl font-black text-red-500 tracking-tight">
-                    300+
-                  </span>
-                  <span className="text-xl font-medium">Campaigns</span>
-                </div>
+              <div className="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
+                {/* Component 1 - Trading Volume */}
+                <motion.div
+                  className="flex flex-col items-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <motion.div
+                    className="text-5xl md:text-7xl font-black text-cyan-400 tracking-tight mb-2"
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    {tradingVolume}M+
+                  </motion.div>
+                  <div className="text-xl md:text-2xl font-medium text-white">
+                    Trading Volume
+                  </div>
+                </motion.div>
+
+                {/* Component 2 - Campaigns */}
+                <motion.div
+                  className="flex flex-col items-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                  <motion.div
+                    className="text-5xl md:text-7xl font-black text-red-500 tracking-tight mb-2"
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    {campaigns}+
+                  </motion.div>
+                  <div className="text-xl md:text-2xl font-medium text-white">
+                    Campaigns
+                  </div>
+                </motion.div>
               </div>
-              <div className="mt-6 text-lg font-medium tracking-wide">
+              <motion.div
+                className="mt-6 text-lg font-medium tracking-wide"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
                 GENERATED ACROSS THE SOLANA ECOSYSTEM
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
