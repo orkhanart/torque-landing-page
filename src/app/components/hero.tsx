@@ -31,19 +31,67 @@ const Divider = () => {
 };
 
 const trustedCompanies = [
-  { name: "Raydium", logo: "/logos/raydium.png", width: 150, height: 60 },
-  { name: "Metaplex", logo: "/logos/metaplex.png", width: 158, height: 53 },
+  {
+    name: "Raydium",
+    logo: "/logos/raydium.png",
+    width: 200,
+    height: 80,
+    url: "https://raydium.io",
+  },
+  {
+    name: "Metaplex",
+    logo: "/logos/metaplex.png",
+    width: 210,
+    height: 71,
+    url: "https://metaplex.com",
+  },
   // { name: "Drift", logo: "/logos/drift-grey.png", width: 100, height: 50 },
-  { name: "Tensor", logo: "/logos/tensor.png", width: 110, height: 45 },
+  {
+    name: "Tensor",
+    logo: "/logos/tensor.png",
+    width: 145,
+    height: 59,
+    url: "https://tensor.so",
+  },
   // { name: "AssetDash", logo: "/logos/assetdash.png", width: 130, height: 40 },
-  { name: "MonkeDao", logo: "/logos/md.png", width: 100, height: 60 },
+  {
+    name: "MonkeDao",
+    logo: "/logos/md.png",
+    width: 75,
+    height: 45,
+    url: "https://monkedao.io/",
+  },
 ];
 
 const backers = [
-  { name: "6MV", logo: "/logos/6mv.png", width: 100, height: 60 },
-  { name: "Solana Ventures", logo: "/logos/sv.png", width: 100, height: 60 },
-  { name: "Colosseum", logo: "/logos/colosseum.png", width: 100, height: 60 },
-  { name: "Advancit", logo: "/logos/advancit.png", width: 100, height: 60 },
+  {
+    name: "Sixth Man Ventures",
+    logo: "/logos/6mv.png",
+    width: 100,
+    height: 60,
+    url: "https://6thman.ventures/",
+  },
+  {
+    name: "Solana Ventures",
+    logo: "/logos/sv-white.png",
+    width: 100,
+    height: 60,
+    url: "https://solana.ventures/",
+  },
+  {
+    name: "Colosseum",
+    logo: "/logos/colosseum.png",
+    width: 100,
+    height: 60,
+    url: "https://www.colosseum.com/",
+  },
+  {
+    name: "Advancit",
+    logo: "/logos/advancit.png",
+    width: 100,
+    height: 60,
+    url: "https://www.advancitcapital.com/",
+  },
 ];
 
 const Hero = () => {
@@ -76,13 +124,22 @@ const Hero = () => {
     },
   };
 
+  // Helper function to format trading volume
+  const formatTradingVolume = (value: number) => {
+    if (value >= 1000) {
+      return `$${(value / 1000).toFixed(1)}B`;
+    } else {
+      return `$${value}M`;
+    }
+  };
+
   useEffect(() => {
     const animateNumbers = () => {
-      // Animate Trading Volume (220M)
+      // Animate Trading Volume to 3500 (which represents 3.5B)
       const tradingInterval = setInterval(() => {
         setTradingVolume((prev) => {
-          if (prev >= 220) return 220;
-          return prev + 2;
+          if (prev >= 3500) return 3500;
+          return prev + 30;
         });
       }, 15);
 
@@ -129,7 +186,7 @@ const Hero = () => {
 
       <div className="w-full mt-8 space-y-4">
         <div className="relative mb-8">
-          <div className="">
+          <div className="backdrop-blur-sm bg-black/20 border border-white/10">
             {/* Border accents */}
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-400 via-white to-red-500"></div>
             <div className="absolute top-0 left-0 bottom-0 h-full w-[1px] bg-gradient-to-b from-cyan-400 via-white to-red-500"></div>
@@ -151,7 +208,7 @@ const Hero = () => {
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
-                    {tradingVolume}M+
+                    {formatTradingVolume(tradingVolume)}+
                   </motion.div>
                   <div className="text-xl md:text-2xl font-medium text-white">
                     Trading Volume
@@ -192,7 +249,7 @@ const Hero = () => {
 
         {/* Customers & Audit Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-black/40 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
+          <div className="backdrop-blur-sm bg-black/20 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
             <div className="absolute top-0 left-0 bottom-0 h-full w-2 bg-[#A1FFFF] "></div>
             <h3 className="text-[#A1FFFF] text-xl font-semibold mb-4 text-left uppercase">
               Trusted By
@@ -201,16 +258,38 @@ const Hero = () => {
               {trustedCompanies.map((company, index) => (
                 <div
                   key={index}
-                  className=" overflow-hidden logo-placeholder flex items-center justify-center aspect-[120/65] object-contain object-center"
+                  className={`logo-placeholder flex items-center justify-center ${
+                    company.name === 'MonkeDao' ? 'ml-[-20px] md:ml-[-40px] lg:ml-[-20px] 2xl:ml-[-40px]' : ''
+                  }`}
+                  style={{ minHeight: "65px" }}
                 >
                   {company.logo ? (
-                    <Image
-                      src={company.logo}
-                      alt={company.name}
-                      width={120}
-                      height={65}
-                      objectFit="contain"
-                    />
+                    company.url ? (
+                      <a
+                        href={company.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-all duration-300 hover:drop-shadow-[0_0_8px_#A1FFFF] hover:brightness-110"
+                      >
+                        <Image
+                          src={company.logo}
+                          alt={company.name}
+                          width={company.width}
+                          height={company.height}
+                          objectFit="contain"
+                          priority={index < 2}
+                        />
+                      </a>
+                    ) : (
+                      <Image
+                        src={company.logo}
+                        alt={company.name}
+                        width={company.width}
+                        height={company.height}
+                        objectFit="contain"
+                        priority={index < 2}
+                      />
+                    )
                   ) : (
                     <span className="text-gray-300 text-lg">
                       {company.name}
@@ -221,7 +300,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="bg-black/40 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
+          <div className="backdrop-blur-sm bg-black/20 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
             <div className="absolute top-0 right-0 bottom-0 h-full w-2 bg-red-500 "></div>
             <h3 className="text-red-500 text-xl font-semibold mb-4 text-right uppercase">
               Backed By
@@ -230,16 +309,46 @@ const Hero = () => {
               {backers.map((company, index) => (
                 <div
                   key={index}
-                  className=" overflow-hidden logo-placeholder flex items-center justify-center aspect-[120/65] object-contain object-center"
+                  className="logo-placeholder flex items-center justify-center"
+                  style={{ minHeight: "80px" }}
                 >
                   {company.logo ? (
-                    <Image
-                      src={company.logo}
-                      alt={company.name}
-                      width={company.width}
-                      height={company.height}
-                      objectFit="contain"
-                    />
+                    company.url ? (
+                      <a
+                        href={company.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-all duration-300 hover:drop-shadow-[0_0_8px_#ef4444] hover:brightness-110"
+                      >
+                        <Image
+                          src={company.logo}
+                          alt={company.name}
+                          width={company.width}
+                          height={company.height}
+                          style={{
+                            maxWidth: "150px",
+                            maxHeight: "80px",
+                            width: "auto",
+                            height: "auto",
+                          }}
+                          objectFit="contain"
+                        />
+                      </a>
+                    ) : (
+                      <Image
+                        src={company.logo}
+                        alt={company.name}
+                        width={company.width}
+                        height={company.height}
+                        style={{
+                          maxWidth: "150px",
+                          maxHeight: "80px",
+                          width: "auto",
+                          height: "auto",
+                        }}
+                        objectFit="contain"
+                      />
+                    )
                   ) : (
                     <span className="text-gray-300 text-lg">
                       {company.name}

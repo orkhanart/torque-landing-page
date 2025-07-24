@@ -1,0 +1,6 @@
+TO-DOs:
+1. 220M should be dollar sign
+2. Trading Volume based on launching with Raydium
+3. Logos should be larger versus MonkeDao
+4. Move the feature list above 
+5. Make video larger 

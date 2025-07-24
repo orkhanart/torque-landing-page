@@ -24,6 +24,7 @@ export function SectionTitle({
     <Component
       className={cn(
         "text-4xl lg:text-5xl font-medium text-center xl:max-w-[1100px] md:max-w-[800px] leading-tight font-sans",
+        "backdrop-blur-sm bg-black/20 rounded-3xl px-8 py-6",
         className
       )}
     >
