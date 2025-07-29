@@ -137,7 +137,7 @@ const Hero = () => {
   // Helper function to format rewards distributed
   const formatRewardsDistributed = (value: number) => {
     if (value >= 1000) {
-      return `$${(value / 1000).toFixed(1)}M`;
+      return `$${Math.round(value / 1000)}M`;
     } else {
       return `$${Math.round(value)}K`;
     }
@@ -250,14 +250,14 @@ const Hero = () => {
                 </motion.div>
 
                 {/* Component 3 - Rewards Distributed */}
-                {/* <motion.div
+                <motion.div
                   className="flex flex-col items-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
                   <motion.div
-                    className="text-4xl md:text-6xl font-black text-green-400 tracking-tight mb-2"
+                    className="text-4xl md:text-6xl font-black text-white tracking-tight mb-2"
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
@@ -267,7 +267,7 @@ const Hero = () => {
                   <div className="text-lg md:text-xl font-medium text-white">
                     Rewards Distributed
                   </div>
-                </motion.div> */}
+                </motion.div>
               </div>
             </div>
           </div>
