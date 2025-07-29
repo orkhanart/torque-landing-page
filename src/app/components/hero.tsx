@@ -98,6 +98,7 @@ const Hero = () => {
   const [showModal, setShowModal] = useState(false);
   const [tradingVolume, setTradingVolume] = useState(0);
   const [campaigns, setCampaigns] = useState(0);
+  const [rewardsDistributed, setRewardsDistributed] = useState(0);
   const titleText = "Solana's Incentive Protocol";
 
   const subtitleContainer = {
@@ -133,6 +134,15 @@ const Hero = () => {
     }
   };
 
+  // Helper function to format rewards distributed
+  const formatRewardsDistributed = (value: number) => {
+    if (value >= 1000) {
+      return `$${(value / 1000).toFixed(1)}M`;
+    } else {
+      return `$${Math.round(value)}K`;
+    }
+  };
+
   useEffect(() => {
     const animateNumbers = () => {
       // Animate Trading Volume to 3500 (which represents 3.5B)
@@ -151,9 +161,18 @@ const Hero = () => {
         });
       }, 15);
 
+      // Animate Rewards Distributed (5000 which represents 5M)
+      const rewardsInterval = setInterval(() => {
+        setRewardsDistributed((prev) => {
+          if (prev >= 5000) return 5000;
+          return prev + 50;
+        });
+      }, 15);
+
       return () => {
         clearInterval(tradingInterval);
         clearInterval(campaignsInterval);
+        clearInterval(rewardsInterval);
       };
     };
 
@@ -168,14 +187,9 @@ const Hero = () => {
         <h1 className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-tight">
           {titleText}
         </h1>
-        <div className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300 flex flex-wrap justify-center items-center">
-          <span className="whitespace-nowrap mr-2 mb-2">
-            Incentivize any user for any action in{" "}
-          </span>
-          <span className="whitespace-nowrap mr-2 mb-2 text-[#A1FFFF] font-semibold">
-            seconds
-          </span>
-        </div>
+        {/* <div className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300 text-center">
+          Fuel intelligent incentives to accelerate your growth
+        </div> */}
 
         <CustomButton customVariant="big" onClick={() => setShowModal(true)}>
           Request Access
@@ -194,7 +208,7 @@ const Hero = () => {
             <div className="absolute top-0 right-0 bottom-0 h-full w-[1px] bg-gradient-to-b to-cyan-400 via-white from-red-500"></div>
 
             <div className="p-6 text-center">
-              <div className="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
+              <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
                 {/* Component 1 - Trading Volume */}
                 <motion.div
                   className="flex flex-col items-center"
@@ -203,15 +217,15 @@ const Hero = () => {
                   transition={{ duration: 0.6 }}
                 >
                   <motion.div
-                    className="text-5xl md:text-7xl font-black text-cyan-400 tracking-tight mb-2"
+                    className="text-4xl md:text-6xl font-black text-cyan-400 tracking-tight mb-2"
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
                     {formatTradingVolume(tradingVolume)}+
                   </motion.div>
-                  <div className="text-xl md:text-2xl font-medium text-white">
-                    Trading Volume
+                  <div className="text-lg md:text-xl font-medium text-white">
+                    Trading Volume Generated
                   </div>
                 </motion.div>
 
@@ -223,26 +237,38 @@ const Hero = () => {
                   transition={{ duration: 0.6, delay: 0.1 }}
                 >
                   <motion.div
-                    className="text-5xl md:text-7xl font-black text-red-500 tracking-tight mb-2"
+                    className="text-4xl md:text-6xl font-black text-red-500 tracking-tight mb-2"
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                   >
                     {campaigns}+
                   </motion.div>
-                  <div className="text-xl md:text-2xl font-medium text-white">
+                  <div className="text-lg md:text-xl font-medium text-white">
                     Campaigns
                   </div>
                 </motion.div>
+
+                {/* Component 3 - Rewards Distributed */}
+                {/* <motion.div
+                  className="flex flex-col items-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <motion.div
+                    className="text-4xl md:text-6xl font-black text-green-400 tracking-tight mb-2"
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                  >
+                    {formatRewardsDistributed(rewardsDistributed)}+
+                  </motion.div>
+                  <div className="text-lg md:text-xl font-medium text-white">
+                    Rewards Distributed
+                  </div>
+                </motion.div> */}
               </div>
-              <motion.div
-                className="mt-6 text-lg font-medium tracking-wide"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-              >
-                GENERATED ACROSS THE SOLANA ECOSYSTEM
-              </motion.div>
             </div>
           </div>
         </div>
@@ -259,7 +285,9 @@ const Hero = () => {
                 <div
                   key={index}
                   className={`logo-placeholder flex items-center justify-center ${
-                    company.name === 'MonkeDao' ? 'ml-[-20px] md:ml-[-40px] lg:ml-[-20px] 2xl:ml-[-40px]' : ''
+                    company.name === "MonkeDao"
+                      ? "ml-[-20px] md:ml-[-40px] lg:ml-[-20px] 2xl:ml-[-40px]"
+                      : ""
                   }`}
                   style={{ minHeight: "65px" }}
                 >
