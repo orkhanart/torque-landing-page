@@ -37,7 +37,7 @@ const videoTitle = "Flexible rewards system using a no-code interface";
 
 const titleParts = [
   {
-    text: "Enabling protocols to user their tokens as",
+    text: "Enabling protocols to use their tokens as",
   },
   {
     text: "fuel for growth,",
@@ -54,8 +54,8 @@ const titleParts = [
 
 export function PlatformFeatures({ className }: { className?: string }) {
   const videoRef = useRef(null);
-  const [currentVideo, setCurrentVideo] = useState("/flowchart-builder.mp4"); // Default video
-  const [activeFeature, setActiveFeature] = useState<string | null>(null);
+  const [currentVideo, setCurrentVideo] = useState("/leaderboards.mp4"); // Start with leaderboards
+  const [activeFeature, setActiveFeature] = useState<string>("Leaderboards"); // Start with leaderboards active
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll({
@@ -73,17 +73,12 @@ export function PlatformFeatures({ className }: { className?: string }) {
   const handleFeatureHover = (feature: (typeof features)[0]) => {
     setHoveredFeature(feature.title);
     setCurrentVideo(feature.video);
+    setActiveFeature(feature.title); // Make hovered feature the new active one
   };
 
   const handleFeatureLeave = () => {
     setHoveredFeature(null);
-    // Return to active video if one is selected, otherwise default
-    if (activeFeature) {
-      const activeFeatureData = features.find(f => f.title === activeFeature);
-      setCurrentVideo(activeFeatureData?.video || "/flowchart-builder.mp4");
-    } else {
-      setCurrentVideo("/flowchart-builder.mp4");
-    }
+    // Keep the current video - don't revert
   };
 
   return (
@@ -113,7 +108,8 @@ export function PlatformFeatures({ className }: { className?: string }) {
       </div>
       <div className="text-center mb-8">
         <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-          Flexible rewards system with SDK-first architecture and no-code interface. No data indexing required.
+          Flexible rewards system with SDK-first architecture and no-code
+          interface. No data indexing required.
         </p>
       </div>
       <div className="w-full flex justify-center mb-20" ref={videoRef}>
