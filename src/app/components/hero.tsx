@@ -202,10 +202,10 @@ const Hero = () => {
         <div className="relative mb-8">
           <div className="backdrop-blur-sm bg-black/20 border border-white/10">
             {/* Border accents */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-400 via-white to-red-500"></div>
-            <div className="absolute top-0 left-0 bottom-0 h-full w-[1px] bg-gradient-to-b from-cyan-400 via-white to-red-500"></div>
-            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-red-500 via-white to-cyan-400"></div>
-            <div className="absolute top-0 right-0 bottom-0 h-full w-[1px] bg-gradient-to-b to-cyan-400 via-white from-red-500"></div>
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-400 via-white to-[#F1A3A1]"></div>
+            <div className="absolute top-0 left-0 bottom-0 h-full w-[1px] bg-gradient-to-b from-cyan-400 via-white to-[#F1A3A1]"></div>
+            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#F1A3A1] via-white to-cyan-400"></div>
+            <div className="absolute top-0 right-0 bottom-0 h-full w-[1px] bg-gradient-to-b to-cyan-400 via-white from-[#F1A3A1]"></div>
 
             <div className="p-6 text-center">
               <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
@@ -237,7 +237,7 @@ const Hero = () => {
                   transition={{ duration: 0.6, delay: 0.1 }}
                 >
                   <motion.div
-                    className="text-4xl md:text-6xl font-black text-red-500 tracking-tight mb-2"
+                    className="text-4xl md:text-6xl font-black text-[#F1A3A1] tracking-tight mb-2"
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
@@ -329,8 +329,8 @@ const Hero = () => {
           </div>
 
           <div className="backdrop-blur-sm bg-black/20 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
-            <div className="absolute top-0 right-0 bottom-0 h-full w-2 bg-red-500 "></div>
-            <h3 className="text-red-500 text-xl font-semibold mb-4 text-right uppercase">
+            <div className="absolute top-0 right-0 bottom-0 h-full w-2 bg-[#F1A3A1] "></div>
+            <h3 className="text-[#F1A3A1] text-xl font-semibold mb-4 text-right uppercase">
               Backed By
             </h3>
             <div className="grid grid-cols-2 2xl:grid-cols-4 gap-4 md:gap-8 lg:gap-4 2xl:gap-8 items-center justify-center">
@@ -346,7 +346,7 @@ const Hero = () => {
                         href={company.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="transition-all duration-300 hover:drop-shadow-[0_0_8px_#ef4444] hover:brightness-110"
+                        className="transition-all duration-300 hover:drop-shadow-[0_0_8px_#F1A3A1] hover:brightness-110"
                       >
                         <Image
                           src={company.logo}

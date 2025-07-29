@@ -1,13 +1,21 @@
 import React from "react";
 import { useForm } from "@formspree/react";
 import { CustomButton } from "@/components/ui/customButton";
+import { Select } from "@/components/ui/select";
 
 interface ContactFormProps {
   onSuccess?: () => void;
 }
 
+const entityTypeOptions = [
+  { value: "token", label: "Token" },
+  { value: "protocol-with-token", label: "Protocol/Product with token" },
+  { value: "protocol-no-token", label: "Protocol/Product no token" },
+];
+
 export function ContactForm({ onSuccess }: ContactFormProps) {
   const [state, handleSubmit] = useForm("mqapdody");
+  const [entityType, setEntityType] = React.useState("");
 
   React.useEffect(() => {
     if (state.succeeded && onSuccess) {
@@ -43,6 +51,38 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           id="email"
           name="email"
           type="email"
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <label
+          className="block text-sm font-medium text-gray-300"
+          htmlFor="telegram"
+        >
+          Telegram Username
+        </label>
+        <input
+          className="w-full h-10 px-3 rounded-md bg-transparent border border-gray-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+          id="telegram"
+          name="telegram"
+          placeholder="@username"
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <label
+          className="block text-sm font-medium text-gray-300"
+          htmlFor="entity-type"
+        >
+          What best describes you?
+        </label>
+        <Select
+          id="entity-type"
+          name="entity-type"
+          options={entityTypeOptions}
+          value={entityType}
+          onValueChange={setEntityType}
+          placeholder="Select an option"
           required
         />
       </div>

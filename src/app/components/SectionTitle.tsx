@@ -1,3 +1,4 @@
+import React from "react";
 import { cn } from "@/lib/utils";
 
 type TitleParts = {
@@ -29,10 +30,9 @@ export function SectionTitle({
     >
       {titleParts.map((part, index) => {
         return (
-          <>
+          <React.Fragment key={`${index}-${part.text}`}>
             {index > 0 && <span>&nbsp;</span>}
             <span
-              key={`${index}-${part.text}`}
               className={cn(
                 part.gradient &&
                   "bg-custom-gradient bg-clip-text text-transparent"
@@ -40,7 +40,7 @@ export function SectionTitle({
             >
               {part.text}
             </span>
-          </>
+          </React.Fragment>
         );
       })}
     </Component>
