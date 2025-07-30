@@ -8,7 +8,7 @@ interface ContactFormProps {
 }
 
 const entityTypeOptions = [
-  { value: "token", label: "Token" },
+  { value: "memecoin", label: "Memecoin" },
   { value: "protocol-with-token", label: "Protocol/Product with token" },
   { value: "protocol-no-token", label: "Protocol/Product no token" },
 ];
@@ -74,7 +74,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           className="block text-sm font-medium text-gray-300"
           htmlFor="entity-type"
         >
-          What best describes you?
+          What best describes your project?
         </label>
         <Select
           id="entity-type"
@@ -99,9 +99,6 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           name="message"
           required
         />
-        <p className="text-sm text-gray-400">
-          We usually respond within 1-2 business days.
-        </p>
       </div>
       <div className="flex justify-end">
         <CustomButton type="submit" disabled={state.submitting}>

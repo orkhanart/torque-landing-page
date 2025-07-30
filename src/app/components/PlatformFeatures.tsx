@@ -84,7 +84,8 @@ export function PlatformFeatures({ className }: { className?: string }) {
   return (
     <div className={cn("flex flex-col items-center justify-center", className)}>
       <SectionTitle title={titleParts} className="mb-20" />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full mb-16">
+      {/* Desktop: Traditional card grid */}
+      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4 w-full mb-16">
         {features.map((feature) => (
           <div
             key={feature.title}
@@ -106,11 +107,44 @@ export function PlatformFeatures({ className }: { className?: string }) {
           </div>
         ))}
       </div>
-      <div className="text-center mb-8">
+
+      {/* Desktop: Text above video */}
+      <div className="hidden md:block text-center mb-8">
         <p className="text-xl text-gray-300 max-w-2xl mx-auto">
           Flexible rewards system with SDK-first architecture and no-code
           interface. No data indexing required.
         </p>
+      </div>
+
+      {/* Mobile: Horizontal cards above video */}
+      <div className="md:hidden mb-6">
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {features.map((feature) => (
+            <button
+              key={feature.title}
+              onClick={() => handleFeatureClick(feature)}
+              className={`p-4 rounded-lg border transition-all duration-200 text-left ${
+                activeFeature === feature.title
+                  ? "border-cyan-400 bg-cyan-400/10"
+                  : "border-gray-700 bg-black/20"
+              }`}
+            >
+              <h3 className="text-white font-semibold text-sm mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-400 text-xs leading-tight">
+                {feature.description}
+              </p>
+            </button>
+          ))}
+        </div>
+        {/* Mobile: Text below cards */}
+        <div className="text-center mb-6">
+          <p className="text-lg text-gray-300 max-w-xl mx-auto">
+            Flexible rewards system with SDK-first architecture and no-code
+            interface. No data indexing required.
+          </p>
+        </div>
       </div>
       <div className="w-full flex justify-center mb-20" ref={videoRef}>
         <motion.video

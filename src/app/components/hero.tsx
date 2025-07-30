@@ -45,21 +45,12 @@ const trustedCompanies = [
     height: 71,
     url: "https://metaplex.com",
   },
-  // { name: "Drift", logo: "/logos/drift-grey.png", width: 100, height: 50 },
   {
     name: "Tensor",
     logo: "/logos/tensor.png",
     width: 145,
     height: 59,
     url: "https://tensor.so",
-  },
-  // { name: "AssetDash", logo: "/logos/assetdash.png", width: 130, height: 40 },
-  {
-    name: "MonkeDao",
-    logo: "/logos/md.png",
-    width: 75,
-    height: 45,
-    url: "https://monkedao.io/",
   },
 ];
 
@@ -84,13 +75,6 @@ const backers = [
     width: 100,
     height: 60,
     url: "https://www.colosseum.com/",
-  },
-  {
-    name: "Advancit",
-    logo: "/logos/advancit.png",
-    width: 100,
-    height: 60,
-    url: "https://www.advancitcapital.com/",
   },
 ];
 
@@ -280,15 +264,11 @@ const Hero = () => {
             <h3 className="text-[#A1FFFF] text-xl font-semibold mb-4 text-left uppercase">
               Trusted By
             </h3>
-            <div className="grid grid-cols-2 2xl:grid-cols-4 gap-4 md:gap-8 lg:gap-4 2xl:gap-8 items-center justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center justify-center">
               {trustedCompanies.map((company, index) => (
                 <div
                   key={index}
-                  className={`logo-placeholder flex items-center justify-center ${
-                    company.name === "MonkeDao"
-                      ? "ml-[-20px] md:ml-[-40px] lg:ml-[-20px] 2xl:ml-[-40px]"
-                      : ""
-                  }`}
+                  className="logo-placeholder flex items-center justify-center"
                   style={{ minHeight: "65px" }}
                 >
                   {company.logo ? (
@@ -333,7 +313,7 @@ const Hero = () => {
             <h3 className="text-[#F1A3A1] text-xl font-semibold mb-4 text-right uppercase">
               Backed By
             </h3>
-            <div className="grid grid-cols-2 2xl:grid-cols-4 gap-4 md:gap-8 lg:gap-4 2xl:gap-8 items-center justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center justify-center">
               {backers.map((company, index) => (
                 <div
                   key={index}
@@ -353,12 +333,7 @@ const Hero = () => {
                           alt={company.name}
                           width={company.width}
                           height={company.height}
-                          style={{
-                            maxWidth: "150px",
-                            maxHeight: "80px",
-                            width: "auto",
-                            height: "auto",
-                          }}
+                          className="max-w-[120px] md:max-w-[100px] lg:max-w-[120px] xl:max-w-[150px] max-h-[60px] md:max-h-[50px] lg:max-h-[60px] xl:max-h-[80px] w-auto h-auto"
                           objectFit="contain"
                         />
                       </a>
@@ -368,12 +343,7 @@ const Hero = () => {
                         alt={company.name}
                         width={company.width}
                         height={company.height}
-                        style={{
-                          maxWidth: "150px",
-                          maxHeight: "80px",
-                          width: "auto",
-                          height: "auto",
-                        }}
+                        className="max-w-[120px] md:max-w-[100px] lg:max-w-[120px] xl:max-w-[150px] max-h-[60px] md:max-h-[50px] lg:max-h-[60px] xl:max-h-[80px] w-auto h-auto"
                         objectFit="contain"
                       />
                     )
