@@ -111,7 +111,9 @@ const Hero = () => {
 
   // Helper function to format trading volume
   const formatTradingVolume = (value: number) => {
-    if (value >= 1000) {
+    if (value >= 4000) {
+      return `$4B`;
+    } else if (value >= 1000) {
       return `$${(value / 1000).toFixed(1)}B`;
     } else {
       return `$${value}M`;
@@ -120,8 +122,10 @@ const Hero = () => {
 
   // Helper function to format rewards distributed
   const formatRewardsDistributed = (value: number) => {
-    if (value >= 1000) {
-      return `$${Math.round(value / 1000)}M`;
+    if (value >= 5000) {
+      return `$5M`;
+    } else if (value >= 1000) {
+      return `$${(value / 1000).toFixed(1)}M`;
     } else {
       return `$${Math.round(value)}K`;
     }
@@ -129,29 +133,29 @@ const Hero = () => {
 
   useEffect(() => {
     const animateNumbers = () => {
-      // Animate Trading Volume to 3500 (which represents 3.5B)
+      // Animate Trading Volume to 4000 (which represents 4B)
       const tradingInterval = setInterval(() => {
         setTradingVolume((prev) => {
-          if (prev >= 3500) return 3500;
+          if (prev >= 4000) return 4000;
           return prev + 30;
         });
       }, 15);
 
-      // Animate Campaigns (300)
+      // Animate Campaigns (300) - adjusted to finish in ~2000ms
       const campaignsInterval = setInterval(() => {
         setCampaigns((prev) => {
           if (prev >= 300) return 300;
-          return prev + 3;
+          return prev + 10;
         });
-      }, 15);
+      }, 80);
 
-      // Animate Rewards Distributed (5000 which represents 5M)
+      // Animate Rewards Distributed (5000 which represents 5M) - adjusted to finish in ~2000ms
       const rewardsInterval = setInterval(() => {
         setRewardsDistributed((prev) => {
           if (prev >= 5000) return 5000;
-          return prev + 50;
+          return prev + 40;
         });
-      }, 15);
+      }, 16);
 
       return () => {
         clearInterval(tradingInterval);
@@ -168,12 +172,12 @@ const Hero = () => {
   return (
     <div className="relative text-white flex flex-col w-full items-center justify-between pt-8 md:pt-14">
       <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-4 pt-0 min-h-[60vh] md:min-h-[70vh] flex flex-col items-center justify-center">
-        <h1 className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-8 mb-4 font-sans leading-tight">
+        <h1 className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-6 mb-4 font-sans leading-tight">
           {titleText}
         </h1>
-        {/* <div className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300 text-center">
-          Fuel intelligent incentives to accelerate your growth
-        </div> */}
+        <div className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300 text-center">
+          Instantly Launch Smart Incentives that Drive Growth
+        </div>
 
         <CustomButton customVariant="big" onClick={() => setShowModal(true)}>
           Request Access

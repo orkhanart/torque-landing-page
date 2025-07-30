@@ -10,25 +10,25 @@ const features = [
   {
     title: "Leaderboards",
     description:
-      "Instantly create dynamic, real-time leaderboards to spark competition and engagement.",
+      "Ignite engagement with real-time, competitive leaderboards.",
     video: "/leaderboards.mp4", // Add your leaderboards video here
   },
   {
     title: "Raffles",
     description:
-      "Effortlessly run randomized reward giveaways to boost user growth and retention.",
+      "Run automated giveaways to attract and reward users.",
     video: "/raffles.mp4", // Add your raffles video here
   },
   {
     title: "Airdrops / Claims",
     description:
-      "Distribute rewards instantly to your best users without ATA fees or hassle.",
+      "Deliver tokens and points to top users—automatically.",
     video: "/airdrops.mp4", // Add your airdrops video here
   },
   {
     title: "Rebates",
     description:
-      "Easily launch rebate and loyalty programs to reward and retain your community.",
+      "Launch loyalty programs that reward activity and drive retention.",
     video: "/rebates.mp4", // Add your rebates video here
   },
 ];
