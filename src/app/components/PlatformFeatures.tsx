@@ -99,12 +99,9 @@ export function PlatformFeatures({ className }: { className?: string }) {
       
       {/* Flexible rewards system text */}
       <div className="text-center mb-12">
-        <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-3">
+        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
           Flexible rewards system with SDK-first architecture and no-code
           interface. No data indexing required.
-        </p>
-        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-          Don't take our word for it, check out the live feature demos below.
         </p>
       </div>
       
@@ -167,7 +164,7 @@ export function PlatformFeatures({ className }: { className?: string }) {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-4 py-2 rounded-full shadow-lg"
+                  className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-4 py-2 rounded-full shadow-lg"
                 >
                   <span className="text-sm font-medium text-white">
                     {activeFeature} Demo
@@ -201,50 +198,76 @@ export function PlatformFeatures({ className }: { className?: string }) {
             <button
               key={feature.title}
               onClick={() => handleFeatureClick(feature)}
-              className={`p-4 rounded-lg border transition-all duration-200 text-left ${
+              className={`p-4 rounded-lg border transition-all duration-300 text-left ${
                 activeFeature === feature.title
-                  ? "border-primary bg-primary/10 shadow-lg shadow-primary/25"
-                  : "border-gray-700 bg-black/20"
+                  ? "border-primary bg-primary/10 shadow-lg shadow-primary/40 ring-1 ring-primary/50 scale-102"
+                  : "border-gray-700 bg-black/20 hover:border-gray-600"
               }`}
             >
-              <h3 className="text-white font-semibold text-sm mb-2">
+              <h3 className={`font-semibold text-sm mb-2 ${
+                activeFeature === feature.title ? "text-primary" : "text-white"
+              }`}>
                 {feature.title}
               </h3>
-              <p className="text-gray-400 text-xs leading-tight mb-2">
+              <p className="text-gray-400 text-xs leading-tight">
                 {feature.description}
               </p>
-              <span className="text-primary text-xs font-medium opacity-70">
-                ▶ Tap to preview
-              </span>
             </button>
           ))}
-        </div>
-        {/* Mobile: Text below cards */}
-        <div className="text-center mb-6">
-          <p className="text-lg text-gray-300 max-w-xl mx-auto">
-            Flexible rewards system with SDK-first architecture and no-code
-            interface. No data indexing required.
-          </p>
         </div>
       </div>
       
       {/* Mobile: Keep original layout */}
-      <div className="md:hidden w-full flex justify-center mb-20">
+      <div className="md:hidden w-full flex justify-center mb-20 relative">
         <motion.video
-          key={currentVideo}
+          ref={videoElementRef}
           autoPlay
           loop
           muted
           playsInline
           controls
-          className="rounded-xl shadow-lg w-full h-auto border border-primary/20"
+          className={`rounded-xl shadow-lg w-full h-auto border border-primary/20 transition-opacity duration-300 ${
+            videoLoading ? "opacity-30" : "opacity-100"
+          }`}
           preload="metadata"
           style={{ scale }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          src={currentVideo}
+          onLoadStart={() => setVideoLoading(true)}
+          onCanPlay={() => setVideoLoading(false)}
+          onError={() => setVideoLoading(false)}
         >
-          <source src={currentVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </motion.video>
+        
+        {/* Mobile: Video title badge */}
+        {!videoLoading && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-4 py-2 rounded-full shadow-lg"
+          >
+            <span className="text-sm font-medium text-white">
+              {activeFeature} Demo
+            </span>
+          </motion.div>
+        )}
+
+        {/* Mobile: Loading skeleton overlay */}
+        {videoLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 flex items-center justify-center bg-gray-900/50 rounded-xl backdrop-blur-sm"
+          >
+            <div className="flex flex-col items-center space-y-3">
+              <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>
+              <p className="text-sm text-gray-300">Loading {activeFeature}...</p>
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
