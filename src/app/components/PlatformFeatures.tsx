@@ -11,25 +11,25 @@ const features = [
     title: "Leaderboards",
     description:
       "Ignite engagement with real-time, competitive leaderboards.",
-    video: "/leaderboards.mp4", // Add your leaderboards video here
+    video: "https://onnyx-poc-audience-images.s3.us-east-1.amazonaws.com/leaderboards.mp4",
   },
   {
     title: "Raffles",
     description:
       "Run automated giveaways to attract and reward users.",
-    video: "/raffles.mp4", // Add your raffles video here
+    video: "https://onnyx-poc-audience-images.s3.us-east-1.amazonaws.com/raffles.mp4",
   },
   {
     title: "Airdrops / Claims",
     description:
       "Deliver tokens and points to top users—automatically.",
-    video: "/airdrops.mp4", // Add your airdrops video here
+    video: "https://onnyx-poc-audience-images.s3.us-east-1.amazonaws.com/airdrops.mp4",
   },
   {
     title: "Rebates",
     description:
       "Launch loyalty programs that reward activity and drive retention.",
-    video: "/rebates.mp4", // Add your rebates video here
+    video: "https://onnyx-poc-audience-images.s3.us-east-1.amazonaws.com/rebates.mp4",
   },
 ];
 
