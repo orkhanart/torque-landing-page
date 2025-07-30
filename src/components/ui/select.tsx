@@ -98,7 +98,7 @@ export function Select({
                 className={cn(
                   "w-full px-3 py-2 text-left text-white hover:bg-gray-800 transition-colors",
                   "focus:outline-none focus:bg-gray-800",
-                  selectedValue === option.value && "bg-gray-800 text-cyan-400"
+                  selectedValue === option.value && "bg-gray-800 text-primary"
                 )}
                 onClick={() => handleSelect(option.value)}
               >

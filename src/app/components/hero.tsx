@@ -186,10 +186,10 @@ const Hero = () => {
         <div className="relative mb-8">
           <div className="backdrop-blur-sm bg-black/20 border border-white/10">
             {/* Border accents */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-400 via-white to-[#F1A3A1]"></div>
-            <div className="absolute top-0 left-0 bottom-0 h-full w-[1px] bg-gradient-to-b from-cyan-400 via-white to-[#F1A3A1]"></div>
-            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#F1A3A1] via-white to-cyan-400"></div>
-            <div className="absolute top-0 right-0 bottom-0 h-full w-[1px] bg-gradient-to-b to-cyan-400 via-white from-[#F1A3A1]"></div>
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-primary via-white to-[#F1A3A1]"></div>
+            <div className="absolute top-0 left-0 bottom-0 h-full w-[1px] bg-gradient-to-b from-primary via-white to-[#F1A3A1]"></div>
+            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#F1A3A1] via-white to-primary"></div>
+            <div className="absolute top-0 right-0 bottom-0 h-full w-[1px] bg-gradient-to-b to-primary via-white from-[#F1A3A1]"></div>
 
             <div className="p-6 text-center">
               <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
@@ -201,7 +201,7 @@ const Hero = () => {
                   transition={{ duration: 0.6 }}
                 >
                   <motion.div
-                    className="text-4xl md:text-6xl font-black text-cyan-400 tracking-tight mb-2"
+                    className="text-4xl md:text-6xl font-black text-primary tracking-tight mb-2"
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
@@ -333,7 +333,7 @@ const Hero = () => {
                           alt={company.name}
                           width={company.width}
                           height={company.height}
-                          className="max-w-[120px] md:max-w-[100px] lg:max-w-[120px] xl:max-w-[150px] max-h-[60px] md:max-h-[50px] lg:max-h-[60px] xl:max-h-[80px] w-auto h-auto"
+                          className="max-w-[160px] md:max-w-[140px] lg:max-w-[160px] xl:max-w-[180px] max-h-[80px] md:max-h-[70px] lg:max-h-[80px] xl:max-h-[100px] w-auto h-auto"
                           objectFit="contain"
                         />
                       </a>

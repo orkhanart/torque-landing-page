@@ -94,9 +94,9 @@ export function PlatformFeatures({ className }: { className?: string }) {
             onMouseLeave={handleFeatureLeave}
             className={`cursor-pointer transition-all duration-200 hover:scale-105 ${
               activeFeature === feature.title
-                ? "ring-2 ring-cyan-400 ring-opacity-50"
+                ? "ring-2 ring-primary ring-opacity-50"
                 : hoveredFeature === feature.title
-                ? "ring-2 ring-cyan-200 ring-opacity-30"
+                ? "ring-2 ring-primary ring-opacity-30"
                 : ""
             }`}
           >
@@ -125,7 +125,7 @@ export function PlatformFeatures({ className }: { className?: string }) {
               onClick={() => handleFeatureClick(feature)}
               className={`p-4 rounded-lg border transition-all duration-200 text-left ${
                 activeFeature === feature.title
-                  ? "border-cyan-400 bg-cyan-400/10"
+                  ? "border-primary bg-primary/10"
                   : "border-gray-700 bg-black/20"
               }`}
             >
