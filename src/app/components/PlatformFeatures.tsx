@@ -54,7 +54,7 @@ const titleParts = [
 
 export function PlatformFeatures({ className }: { className?: string }) {
   const videoRef = useRef(null);
-  const [currentVideo, setCurrentVideo] = useState("/leaderboards.mp4"); // Start with leaderboards
+  const [currentVideo, setCurrentVideo] = useState(features[0].video); // Start with first video
   const [activeFeature, setActiveFeature] = useState<string>("Leaderboards"); // Start with leaderboards active
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null);
 
