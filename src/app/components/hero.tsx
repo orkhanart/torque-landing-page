@@ -7,28 +7,6 @@ import { motion } from "framer-motion";
 import { SelectBadge } from "@/components/ui/selectBadge";
 import { ContactModal } from "./ContactModal";
 
-const Divider = () => {
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "1px",
-        background:
-          "linear-gradient(to right, transparent, hsla(198, 100%, 60%, 0.5) 10%, hsla(198, 100%, 60%, 0.5) 70%, transparent)",
-        backgroundImage:
-          "linear-gradient(to right, hsla(198, 100%, 60%, 0.4) 16.67%, rgba(255,255,255,0) 0%)",
-        backgroundPosition: "center",
-        backgroundSize: "60px 1px",
-        backgroundRepeat: "repeat-x",
-        margin: "",
-        maskImage:
-          "linear-gradient(to right, transparent, white 20%, white 80%, transparent)",
-        WebkitMaskImage:
-          "linear-gradient(to right, transparent, white 20%, white 80%, transparent)",
-      }}
-    />
-  );
-};
 
 const trustedCompanies = [
   {
@@ -363,9 +341,6 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="flex flex-col w-full items-center mt-16">
-        <Divider />
-      </div>
 
       <ContactModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>

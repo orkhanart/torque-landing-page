@@ -37,41 +37,53 @@ const videoTitle = "Flexible rewards system using a no-code interface";
 
 const titleParts = [
   {
-    text: "Enabling protocols to use their tokens as",
+    text: "Enabling top Solana protocols to use their tokens and points as",
   },
   {
     text: "fuel for growth,",
     gradient: true,
   },
   {
-    text: "by launching and iterating on",
+    text: "by launching",
   },
   {
-    text: "large-scale incentive campaigns.",
+    text: "smart incentive campaigns in seconds.",
     gradient: true,
   },
 ];
 
 export function PlatformFeatures({ className }: { className?: string }) {
   const videoRef = useRef(null);
+  const videoElementRef = useRef<HTMLVideoElement>(null);
   const [currentVideo, setCurrentVideo] = useState(features[0].video); // Start with first video
   const [activeFeature, setActiveFeature] = useState<string>("Leaderboards"); // Start with leaderboards active
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null);
+  const [videoLoading, setVideoLoading] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: videoRef,
     offset: ["start end", "end start"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.7, 1, 0.9]);
+  const scale = useTransform(scrollYProgress, [0, 0.3, 1], [0.7, 1, 0.9]);
 
   const handleFeatureClick = (feature: (typeof features)[0]) => {
+    if (videoElementRef.current && feature.video !== currentVideo) {
+      setVideoLoading(true);
+      videoElementRef.current.src = feature.video;
+      videoElementRef.current.load();
+    }
     setCurrentVideo(feature.video);
     setActiveFeature(feature.title);
   };
 
   const handleFeatureHover = (feature: (typeof features)[0]) => {
     setHoveredFeature(feature.title);
+    if (videoElementRef.current && feature.video !== currentVideo) {
+      setVideoLoading(true);
+      videoElementRef.current.src = feature.video;
+      videoElementRef.current.load();
+    }
     setCurrentVideo(feature.video);
     setActiveFeature(feature.title); // Make hovered feature the new active one
   };
@@ -83,37 +95,103 @@ export function PlatformFeatures({ className }: { className?: string }) {
 
   return (
     <div className={cn("flex flex-col items-center justify-center", className)}>
-      <SectionTitle title={titleParts} className="mb-20" />
-      {/* Desktop: Traditional card grid */}
-      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4 w-full mb-16">
-        {features.map((feature) => (
-          <div
-            key={feature.title}
-            onClick={() => handleFeatureClick(feature)}
-            onMouseEnter={() => handleFeatureHover(feature)}
-            onMouseLeave={handleFeatureLeave}
-            className={`cursor-pointer transition-all duration-200 hover:scale-105 ${
-              activeFeature === feature.title
-                ? "ring-2 ring-primary ring-opacity-50"
-                : hoveredFeature === feature.title
-                ? "ring-2 ring-primary ring-opacity-30"
-                : ""
-            }`}
-          >
-            <GeometricCard
-              title={feature.title}
-              description={feature.description}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Desktop: Text above video */}
-      <div className="hidden md:block text-center mb-8">
-        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+      <SectionTitle title={titleParts} className="mb-8" />
+      
+      {/* Flexible rewards system text */}
+      <div className="text-center mb-12">
+        <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-3">
           Flexible rewards system with SDK-first architecture and no-code
           interface. No data indexing required.
         </p>
+        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          Don't take our word for it, check out the live feature demos below.
+        </p>
+      </div>
+      
+      {/* Desktop: Horizontal layout with vertical cards and video */}
+      <div className="hidden md:flex gap-8 w-full max-w-7xl mx-auto mb-20">
+        {/* Right: Video */}
+        <div className="flex-1 flex flex-col">
+          <div className="flex items-center gap-8">
+            {/* Left: Vertical feature cards - vertically centered with video */}
+            <div className="flex flex-col gap-3 w-64 flex-shrink-0">
+              {features.map((feature) => (
+                <div
+                  key={feature.title}
+                  onClick={() => handleFeatureClick(feature)}
+                  onMouseEnter={() => handleFeatureHover(feature)}
+                  onMouseLeave={handleFeatureLeave}
+                  className={`cursor-pointer transition-all duration-300 hover:scale-102 ${
+                    activeFeature === feature.title
+                      ? "ring-2 ring-primary shadow-lg shadow-primary/40 scale-105 bg-primary/10"
+                      : hoveredFeature === feature.title
+                      ? "ring-2 ring-primary ring-opacity-30 scale-102"
+                      : ""
+                  }`}
+                >
+                  <GeometricCard
+                    title={feature.title}
+                    description={feature.description}
+                    isActive={activeFeature === feature.title}
+                  />
+                </div>
+              ))}
+            </div>
+            
+            {/* Video player */}
+            <div className="flex justify-center flex-1 relative" ref={videoRef}>
+              <motion.video
+                ref={videoElementRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                controls
+                className={`rounded-xl shadow-lg w-full h-auto border border-primary/20 transition-opacity duration-300 ${
+                  videoLoading ? "opacity-30" : "opacity-100"
+                }`}
+                preload="metadata"
+                style={{ scale }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                src={currentVideo}
+                onLoadStart={() => setVideoLoading(true)}
+                onCanPlay={() => setVideoLoading(false)}
+                onError={() => setVideoLoading(false)}
+              >
+                Your browser does not support the video tag.
+              </motion.video>
+              
+              {/* Video title badge */}
+              {!videoLoading && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-4 py-2 rounded-full shadow-lg"
+                >
+                  <span className="text-sm font-medium text-white">
+                    {activeFeature} Demo
+                  </span>
+                </motion.div>
+              )}
+
+              {/* Loading skeleton overlay */}
+              {videoLoading && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 flex items-center justify-center bg-gray-900/50 rounded-xl backdrop-blur-sm"
+                >
+                  <div className="flex flex-col items-center space-y-3">
+                    <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>
+                    <p className="text-sm text-gray-300">Loading {activeFeature}...</p>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Mobile: Horizontal cards above video */}
@@ -125,16 +203,19 @@ export function PlatformFeatures({ className }: { className?: string }) {
               onClick={() => handleFeatureClick(feature)}
               className={`p-4 rounded-lg border transition-all duration-200 text-left ${
                 activeFeature === feature.title
-                  ? "border-primary bg-primary/10"
+                  ? "border-primary bg-primary/10 shadow-lg shadow-primary/25"
                   : "border-gray-700 bg-black/20"
               }`}
             >
               <h3 className="text-white font-semibold text-sm mb-2">
                 {feature.title}
               </h3>
-              <p className="text-gray-400 text-xs leading-tight">
+              <p className="text-gray-400 text-xs leading-tight mb-2">
                 {feature.description}
               </p>
+              <span className="text-primary text-xs font-medium opacity-70">
+                ▶ Tap to preview
+              </span>
             </button>
           ))}
         </div>
@@ -146,15 +227,17 @@ export function PlatformFeatures({ className }: { className?: string }) {
           </p>
         </div>
       </div>
-      <div className="w-full flex justify-center mb-20" ref={videoRef}>
+      
+      {/* Mobile: Keep original layout */}
+      <div className="md:hidden w-full flex justify-center mb-20">
         <motion.video
-          key={currentVideo} // Force re-render when video changes
+          key={currentVideo}
           autoPlay
           loop
           muted
           playsInline
           controls
-          className="rounded-xl shadow-lg max-w-[1200px] w-full h-auto"
+          className="rounded-xl shadow-lg w-full h-auto border border-primary/20"
           preload="metadata"
           style={{ scale }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
