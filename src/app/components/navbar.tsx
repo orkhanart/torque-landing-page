@@ -43,19 +43,22 @@ export default function Navbar() {
   };
 
   return (
-    <header className="flex justify-between items-center lg:pt-6 pt-12 text-white max-w-[1400px] w-full px-8 z-[999]">
+    <header className="flex justify-between items-center lg:pt-6 pt-12 text-white max-w-[1400px] w-full z-[999]">
       <Link href="/" className="flex items-center space-x-2 z-[999]">
         <Image src="/Logotype.svg" alt="Torque logo" width={110} height={32} />
       </Link>
 
-      {/* Mobile menu button */}
-      <button
-        className="md:hidden"
-        onClick={toggleMenu}
-        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-      >
-        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+      {/* Mobile: Launch app button in top right */}
+      {/* <div className="md:hidden flex items-center ml-8">
+        <CustomButton
+          href="https://app.torque.so"
+          className="shadow-[0px_0px_40px_0px_rgba(161,255,255,0.4)] z-50"
+          style={{ fontSize: "1rem", padding: "0.5rem 1rem" }}
+          customVariant="client-login"
+        >
+          Client Login
+        </CustomButton>
+      </div> */}
 
       {/* Desktop menu */}
       <NavigationMenu className="hidden md:flex">
@@ -71,9 +74,12 @@ export default function Navbar() {
           ))}
           <div className="w-4"></div>
           <NavigationMenuItem>
-            <CustomButton href="https://platform.torque.so">
+            {/* <CustomButton
+              href="https://platform.torque.so"
+              customVariant="client-login"
+            >
               Client Login
-            </CustomButton>
+            </CustomButton> */}
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>

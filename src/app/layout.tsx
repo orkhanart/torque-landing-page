@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+//import AnimatedBackground from "@/components/AnimatedBackground";
+import Hyperspeed from "@/blocks/Backgrounds/Hyperspeed/Hyperspeed";
 // import Navbar from "./components/navbar";
 
 const geistSans = localFont({
@@ -57,7 +59,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="fixed inset-0 top-0 z-0 w-full h-full overflow-hidden">
+          <Hyperspeed />
+        </div>
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );

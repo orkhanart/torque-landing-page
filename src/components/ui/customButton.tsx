@@ -5,7 +5,7 @@ import Link from "next/link";
 
 interface CustomButtonProps extends Omit<ButtonProps, "variant"> {
   children: React.ReactNode;
-  customVariant?: "default" | "big" | "ghost";
+  customVariant?: "default" | "big" | "ghost" | "client-login";
   href?: string;
   isLink?: boolean;
 }
@@ -17,9 +17,16 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
   ) => {
     const isBig = customVariant === "big";
     const isGhost = customVariant === "ghost";
-    const rectangleHeight = isBig ? "h-[54px]" : "h-[38px]";
+    const isClientLogin = customVariant === "client-login";
+    const rectangleHeight = isBig
+      ? "h-[54px]"
+      : isClientLogin
+      ? "h-[32px]"
+      : "h-[38px]";
     const buttonHeight = isBig
       ? "h-[64px] text-[20px] px-3"
+      : isClientLogin
+      ? "h-[36px] text-[15px] border border-primary !bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover"
       : "h-[48px] text-[16px]";
 
     const buttonContent = (
@@ -65,12 +72,14 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
         >
           <Button
             ref={ref}
-            variant={isGhost ? "ghost" : "default"}
+            variant={isGhost || isClientLogin ? "ghost" : "default"}
             className={cn(
               buttonHeight,
               "rounded-none px-2 py-2 transition-colors !font-semibold",
               isGhost
                 ? "!bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover"
+                : isClientLogin
+                ? "!bg-transparent border border-primary text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover"
                 : "!bg-primary !shadow-none group-hover:!bg-primary-hover",
               className
             )}
@@ -112,6 +121,39 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
         </div>
       </div>
     );
+    if (isClientLogin) {
+      // Minimal outline button, no decorative shapes
+      if (isLink && href && href !== "default") {
+        return (
+          <Link href={href} className="inline-flex">
+            <Button
+              ref={ref}
+              variant="ghost"
+              className={cn(
+                "h-[36px] text-[15px] border border-primary !bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover rounded-md px-4 py-2 transition-colors !font-semibold",
+                className
+              )}
+              {...props}
+            >
+              {children}
+            </Button>
+          </Link>
+        );
+      }
+      return (
+        <Button
+          ref={ref}
+          variant="ghost"
+          className={cn(
+            "h-[36px] text-[15px] border border-primary !bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover rounded-md px-4 py-2 transition-colors !font-semibold",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </Button>
+      );
+    }
     if (isLink && href && href !== "default") {
       return (
         <Link href={href} className="relative inline-flex items-center group">
