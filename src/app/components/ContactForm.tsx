@@ -3,6 +3,12 @@ import { useForm } from "@formspree/react";
 import { CustomButton } from "@/components/ui/customButton";
 import { Select } from "@/components/ui/select";
 
+declare global {
+  interface Window {
+    gtag: (command: string, targetId: string, config?: any) => void;
+  }
+}
+
 interface ContactFormProps {
   onSuccess?: () => void;
 }
@@ -18,8 +24,19 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
   const [entityType, setEntityType] = React.useState("");
 
   React.useEffect(() => {
-    if (state.succeeded && onSuccess) {
-      onSuccess();
+    if (state.succeeded) {
+      // Fire Google Analytics event
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'contact_form_submit', {
+          event_category: 'engagement',
+          event_label: 'contact_form',
+          value: 1
+        });
+      }
+      
+      if (onSuccess) {
+        onSuccess();
+      }
     }
   }, [state.succeeded, onSuccess]);
 
