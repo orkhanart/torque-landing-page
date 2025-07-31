@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 //import AnimatedBackground from "@/components/AnimatedBackground";
 import Hyperspeed from "@/blocks/Backgrounds/Hyperspeed/Hyperspeed";
@@ -55,21 +56,22 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CM307NTBB"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-8CM307NTBB');
-            `,
-          }}
-        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-8CM307NTBB"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-8CM307NTBB');
+          `}
+        </Script>
         <div className="fixed inset-0 top-0 z-0 w-full h-full overflow-hidden">
           <Hyperspeed />
         </div>

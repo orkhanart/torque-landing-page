@@ -59,6 +59,7 @@ export function PlatformFeatures({ className }: { className?: string }) {
   const [activeFeature, setActiveFeature] = useState<string>("Leaderboards"); // Start with leaderboards active
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null);
   const [videoLoading, setVideoLoading] = useState(false);
+  const [shouldAutoplay, setShouldAutoplay] = useState(true); // Autoplay first video on load
 
   const { scrollYProgress } = useScroll({
     target: videoRef,
@@ -68,29 +69,51 @@ export function PlatformFeatures({ className }: { className?: string }) {
   const scale = useTransform(scrollYProgress, [0, 0.3, 1], [0.7, 1, 0.9]);
 
   const handleFeatureClick = (feature: (typeof features)[0]) => {
-    if (videoElementRef.current && feature.video !== currentVideo) {
+    if (feature.video !== currentVideo) {
       setVideoLoading(true);
-      videoElementRef.current.src = feature.video;
-      videoElementRef.current.load();
+      setActiveFeature(feature.title);
+      
+      // Force a minimum 1-second loading delay for smooth UX
+      const startTime = Date.now();
+      const minLoadTime = 1000; // 1 second
+      
+      if (videoElementRef.current) {
+        videoElementRef.current.src = feature.video;
+        videoElementRef.current.load();
+        
+        const handleCanPlay = () => {
+          const elapsedTime = Date.now() - startTime;
+          const remainingTime = Math.max(0, minLoadTime - elapsedTime);
+          
+          setTimeout(() => {
+            setVideoLoading(false);
+            setCurrentVideo(feature.video);
+            if (shouldAutoplay && videoElementRef.current) {
+              videoElementRef.current.play().catch(() => {});
+            }
+          }, remainingTime);
+          
+          // Clean up event listener
+          if (videoElementRef.current) {
+            videoElementRef.current.removeEventListener('canplay', handleCanPlay);
+          }
+        };
+        
+        videoElementRef.current.addEventListener('canplay', handleCanPlay);
+      }
+      setShouldAutoplay(true);
+    } else {
+      setActiveFeature(feature.title);
     }
-    setCurrentVideo(feature.video);
-    setActiveFeature(feature.title);
   };
 
   const handleFeatureHover = (feature: (typeof features)[0]) => {
     setHoveredFeature(feature.title);
-    if (videoElementRef.current && feature.video !== currentVideo) {
-      setVideoLoading(true);
-      videoElementRef.current.src = feature.video;
-      videoElementRef.current.load();
-    }
-    setCurrentVideo(feature.video);
-    setActiveFeature(feature.title); // Make hovered feature the new active one
+    // Don't change video on hover - only visual hover effects
   };
 
   const handleFeatureLeave = () => {
     setHoveredFeature(null);
-    // Keep the current video - don't revert
   };
 
   return (
@@ -143,19 +166,44 @@ export function PlatformFeatures({ className }: { className?: string }) {
                 muted
                 playsInline
                 controls
+                autoPlay={shouldAutoplay}
                 className={`rounded-xl shadow-lg w-full h-auto border border-primary/20 transition-opacity duration-300 ${
-                  videoLoading ? "opacity-30" : "opacity-100"
+                  videoLoading ? "opacity-20" : "opacity-100"
                 }`}
                 preload="metadata"
                 style={{ scale }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 src={currentVideo}
-                onLoadStart={() => setVideoLoading(true)}
-                onCanPlay={() => setVideoLoading(false)}
                 onError={() => setVideoLoading(false)}
               >
                 Your browser does not support the video tag.
               </motion.video>
+
+              {/* Enhanced Loading skeleton overlay */}
+              {videoLoading && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 flex items-center justify-center bg-gray-900/80 rounded-xl backdrop-blur-sm"
+                >
+                  <div className="flex flex-col items-center space-y-4">
+                    <div className="relative">
+                      <div className="animate-spin rounded-full h-12 w-12 border-3 border-primary border-t-transparent"></div>
+                      <div className="absolute inset-0 rounded-full h-12 w-12 border-3 border-primary/20"></div>
+                    </div>
+                    <div className="text-center space-y-2">
+                      <p className="text-lg font-medium text-white">Loading {activeFeature} Demo</p>
+                    </div>
+                    {/* Animated progress dots */}
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '200ms' }}></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '400ms' }}></div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
               
               {/* Video title badge */}
               {!videoLoading && (
@@ -171,20 +219,6 @@ export function PlatformFeatures({ className }: { className?: string }) {
                 </motion.div>
               )}
 
-              {/* Loading skeleton overlay */}
-              {videoLoading && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 flex items-center justify-center bg-gray-900/50 rounded-xl backdrop-blur-sm"
-                >
-                  <div className="flex flex-col items-center space-y-3">
-                    <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>
-                    <p className="text-sm text-gray-300">Loading {activeFeature}...</p>
-                  </div>
-                </motion.div>
-              )}
             </div>
           </div>
         </div>
@@ -224,19 +258,44 @@ export function PlatformFeatures({ className }: { className?: string }) {
           muted
           playsInline
           controls
+          autoPlay={shouldAutoplay}
           className={`rounded-xl shadow-lg w-full h-auto border border-primary/20 transition-opacity duration-300 ${
-            videoLoading ? "opacity-30" : "opacity-100"
+            videoLoading ? "opacity-20" : "opacity-100"
           }`}
           preload="metadata"
           style={{ scale }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           src={currentVideo}
-          onLoadStart={() => setVideoLoading(true)}
-          onCanPlay={() => setVideoLoading(false)}
           onError={() => setVideoLoading(false)}
         >
           Your browser does not support the video tag.
         </motion.video>
+
+        {/* Mobile: Enhanced Loading skeleton overlay */}
+        {videoLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 flex items-center justify-center bg-gray-900/80 rounded-xl backdrop-blur-sm"
+          >
+            <div className="flex flex-col items-center space-y-4">
+              <div className="relative">
+                <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary border-t-transparent"></div>
+                <div className="absolute inset-0 rounded-full h-10 w-10 border-2 border-primary/20"></div>
+              </div>
+              <div className="text-center space-y-1">
+                <p className="text-base font-medium text-white">Loading {activeFeature} Demo</p>
+              </div>
+              {/* Animated progress dots */}
+              <div className="flex space-x-1">
+                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" style={{ animationDelay: '200ms' }}></div>
+                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" style={{ animationDelay: '400ms' }}></div>
+              </div>
+            </div>
+          </motion.div>
+        )}
         
         {/* Mobile: Video title badge */}
         {!videoLoading && (
@@ -252,20 +311,6 @@ export function PlatformFeatures({ className }: { className?: string }) {
           </motion.div>
         )}
 
-        {/* Mobile: Loading skeleton overlay */}
-        {videoLoading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 flex items-center justify-center bg-gray-900/50 rounded-xl backdrop-blur-sm"
-          >
-            <div className="flex flex-col items-center space-y-3">
-              <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>
-              <p className="text-sm text-gray-300">Loading {activeFeature}...</p>
-            </div>
-          </motion.div>
-        )}
       </div>
     </div>
   );
