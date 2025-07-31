@@ -30,10 +30,10 @@ export const metadata: Metadata = {
     siteName: "Torque",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image-new.png",
         width: 1200,
-        height: 630,
-        alt: "Torque - The Growth Protocol",
+        height: 675,
+        alt: "Torque - Solana's Incentive Protocol",
       },
     ],
     locale: "en_US",
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Torque - The Growth Protocol",
-    description: "Building Solana's onchain attention economy.",
-    images: ["/og-image.png"], // Replace with your actual image path
+    title: "Torque - Solana's Incentive Protocol",
+    description: "Launch Smart Incentives to Drive Growth",
+    images: ["/og-image-new.png"],
   },
 };
 
