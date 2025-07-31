@@ -40,9 +40,7 @@ export default function Home() {
   return (
     <div className="w-full relative min-h-screen container mx-auto px-5">
       <BlurredLines />
-      <div className="flex justify-center w-full">
-        <Navbar />
-      </div>
+      <Navbar />
       <div className="flex flex-col items-center justify-center gap-10 my-4">
         <Hero />
         {/* <div className="h-10"></div> */}

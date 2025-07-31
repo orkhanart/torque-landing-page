@@ -5,7 +5,7 @@ import Link from "next/link";
 
 interface CustomButtonProps extends Omit<ButtonProps, "variant"> {
   children: React.ReactNode;
-  customVariant?: "default" | "big" | "ghost" | "client-login";
+  customVariant?: "default" | "big" | "ghost" | "client-login" | "header";
   href?: string;
   isLink?: boolean;
 }
@@ -18,15 +18,20 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
     const isBig = customVariant === "big";
     const isGhost = customVariant === "ghost";
     const isClientLogin = customVariant === "client-login";
+    const isHeader = customVariant === "header";
     const rectangleHeight = isBig
       ? "h-[54px]"
       : isClientLogin
       ? "h-[32px]"
+      : isHeader
+      ? "h-[24px]"
       : "h-[38px]";
     const buttonHeight = isBig
       ? "h-[64px] text-[20px] px-3"
       : isClientLogin
       ? "h-[36px] text-[15px] border border-primary !bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover"
+      : isHeader
+      ? "h-[34px] text-[13px] px-2"
       : "h-[48px] text-[16px]";
 
     const buttonContent = (
