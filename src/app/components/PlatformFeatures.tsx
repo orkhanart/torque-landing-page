@@ -59,6 +59,7 @@ export function PlatformFeatures({ className }: { className?: string }) {
   const [activeFeature, setActiveFeature] = useState<string>("Leaderboards"); // Start with leaderboards active
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null);
   const [videoLoading, setVideoLoading] = useState(false);
+  const [loadingFeature, setLoadingFeature] = useState<string>(""); // Track which feature is loading
   const [shouldAutoplay, setShouldAutoplay] = useState(true); // Autoplay first video on load
 
   const { scrollYProgress } = useScroll({
@@ -71,7 +72,7 @@ export function PlatformFeatures({ className }: { className?: string }) {
   const handleFeatureClick = (feature: (typeof features)[0]) => {
     if (feature.video !== currentVideo) {
       setVideoLoading(true);
-      setActiveFeature(feature.title);
+      setLoadingFeature(feature.title); // Set which feature is loading
       
       // Force a minimum 1-second loading delay for smooth UX
       const startTime = Date.now();
@@ -86,8 +87,11 @@ export function PlatformFeatures({ className }: { className?: string }) {
           const remainingTime = Math.max(0, minLoadTime - elapsedTime);
           
           setTimeout(() => {
-            setVideoLoading(false);
+            // Update everything at the same time to prevent flashing
+            setActiveFeature(feature.title);
             setCurrentVideo(feature.video);
+            setVideoLoading(false);
+            setLoadingFeature("");
             if (shouldAutoplay && videoElementRef.current) {
               videoElementRef.current.play().catch(() => {});
             }
@@ -193,7 +197,7 @@ export function PlatformFeatures({ className }: { className?: string }) {
                       <div className="absolute inset-0 rounded-full h-12 w-12 border-3 border-primary/20"></div>
                     </div>
                     <div className="text-center space-y-2">
-                      <p className="text-lg font-medium text-white">Loading {activeFeature} Demo</p>
+                      <p className="text-lg font-medium text-white">Loading {loadingFeature} Demo</p>
                     </div>
                     {/* Animated progress dots */}
                     <div className="flex space-x-1">
@@ -285,7 +289,7 @@ export function PlatformFeatures({ className }: { className?: string }) {
                 <div className="absolute inset-0 rounded-full h-10 w-10 border-2 border-primary/20"></div>
               </div>
               <div className="text-center space-y-1">
-                <p className="text-base font-medium text-white">Loading {activeFeature} Demo</p>
+                <p className="text-base font-medium text-white">Loading {loadingFeature} Demo</p>
               </div>
               {/* Animated progress dots */}
               <div className="flex space-x-1">
