@@ -27,7 +27,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="w-full h-full max-w-none max-h-none sm:w-auto sm:h-auto sm:max-w-[425px] sm:max-h-none bg-black/95 border border-gray-800 rounded-none sm:rounded-lg p-6 sm:p-6">
+      <DialogContent className="w-full h-full max-w-none max-h-none sm:w-[600px] sm:min-w-[600px] sm:h-auto sm:max-w-none sm:max-h-none bg-black/95 border border-gray-800 rounded-none sm:rounded-lg p-8 sm:p-8">
         <DialogHeader>
           <DialogTitle className="text-2xl font-medium text-center">
             Request Access
