@@ -145,12 +145,12 @@ export function PlatformFeatures({ className }: { className?: string }) {
                   onClick={() => handleFeatureClick(feature)}
                   onMouseEnter={() => handleFeatureHover(feature)}
                   onMouseLeave={handleFeatureLeave}
-                  className={`cursor-pointer transition-all duration-300 hover:scale-102 ${
-                    activeFeature === feature.title
+                  className={`cursor-pointer transition-all duration-300 ${
+                    activeFeature === feature.title || loadingFeature === feature.title
                       ? "ring-2 ring-primary shadow-lg shadow-primary/40 scale-105 bg-primary/10"
                       : hoveredFeature === feature.title
-                      ? "ring-2 ring-primary ring-opacity-30 scale-102"
-                      : ""
+                      ? "ring-2 ring-primary/50 shadow-md shadow-primary/20 scale-105 bg-primary/5"
+                      : "hover:scale-102 hover:shadow-md"
                   }`}
                 >
                   <GeometricCard
@@ -164,24 +164,26 @@ export function PlatformFeatures({ className }: { className?: string }) {
             
             {/* Video player */}
             <div className="flex justify-center flex-1 relative" ref={videoRef}>
-              <motion.video
-                ref={videoElementRef}
-                loop
-                muted
-                playsInline
-                controls
-                autoPlay={shouldAutoplay}
-                className={`rounded-xl shadow-lg w-full h-auto border border-primary/20 transition-opacity duration-300 ${
-                  videoLoading ? "opacity-20" : "opacity-100"
-                }`}
-                preload="metadata"
-                style={{ scale }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                src={currentVideo}
-                onError={() => setVideoLoading(false)}
-              >
-                Your browser does not support the video tag.
-              </motion.video>
+              <div className="relative w-full aspect-video">
+                <motion.video
+                  ref={videoElementRef}
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  autoPlay={shouldAutoplay}
+                  className={`absolute inset-0 w-full h-full rounded-xl shadow-lg border border-primary/20 transition-opacity duration-300 object-cover ${
+                    videoLoading ? "opacity-20" : "opacity-100"
+                  }`}
+                  preload="metadata"
+                  style={{ scale }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  src={currentVideo}
+                  onError={() => setVideoLoading(false)}
+                >
+                  Your browser does not support the video tag.
+                </motion.video>
+              </div>
 
               {/* Enhanced Loading skeleton overlay */}
               {videoLoading && (
@@ -256,24 +258,26 @@ export function PlatformFeatures({ className }: { className?: string }) {
       
       {/* Mobile: Keep original layout */}
       <div className="md:hidden w-full flex justify-center mb-20 relative">
-        <motion.video
-          ref={videoElementRef}
-          loop
-          muted
-          playsInline
-          controls
-          autoPlay={shouldAutoplay}
-          className={`rounded-xl shadow-lg w-full h-auto border border-primary/20 transition-opacity duration-300 ${
-            videoLoading ? "opacity-20" : "opacity-100"
-          }`}
-          preload="metadata"
-          style={{ scale }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          src={currentVideo}
-          onError={() => setVideoLoading(false)}
-        >
-          Your browser does not support the video tag.
-        </motion.video>
+        <div className="relative w-full aspect-video">
+          <motion.video
+            ref={videoElementRef}
+            loop
+            muted
+            playsInline
+            controls
+            autoPlay={shouldAutoplay}
+            className={`absolute inset-0 w-full h-full rounded-xl shadow-lg border border-primary/20 transition-opacity duration-300 object-cover ${
+              videoLoading ? "opacity-20" : "opacity-100"
+            }`}
+            preload="metadata"
+            style={{ scale }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            src={currentVideo}
+            onError={() => setVideoLoading(false)}
+          >
+            Your browser does not support the video tag.
+          </motion.video>
+        </div>
 
         {/* Mobile: Enhanced Loading skeleton overlay */}
         {videoLoading && (
