@@ -139,7 +139,6 @@ export function PlatformFeatures({ className }: { className?: string }) {
             <div className="flex justify-center flex-1 relative" ref={videoRef}>
               <motion.video
                 ref={videoElementRef}
-                autoPlay
                 loop
                 muted
                 playsInline
@@ -221,7 +220,6 @@ export function PlatformFeatures({ className }: { className?: string }) {
       <div className="md:hidden w-full flex justify-center mb-20 relative">
         <motion.video
           ref={videoElementRef}
-          autoPlay
           loop
           muted
           playsInline

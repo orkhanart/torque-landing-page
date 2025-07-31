@@ -1,12 +1,9 @@
 "use client";
 
-import { CustomButton } from "@/components/ui/customButton";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { ContactModal } from "./ContactModal";
 
 const GetStarted = () => {
-  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="relative flex flex-col items-center justify-center gap-4 w-full min-h-[500px]">
@@ -24,19 +21,11 @@ const GetStarted = () => {
             early partners
           </span>
         </h1>
-        <p className="text-lg text-center text-gray-300 max-w-[600px] mb-8">
+        <p className="text-lg text-center text-gray-300 max-w-[600px]">
           We&apos;re bringing on a few select teams to shape the future of
           onchain growth. Request access now to secure your spot.
         </p>
-        <CustomButton
-          customVariant="big"
-          onClick={() => setShowModal(true)}
-          className="shadow-[0px_0px_40px_0px_rgba(161,255,255,0.4)] z-50"
-        >
-          Request Access
-        </CustomButton>
       </div>
-      <ContactModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 };
