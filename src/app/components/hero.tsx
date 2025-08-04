@@ -100,8 +100,8 @@ const Hero = () => {
 
   // Helper function to format rewards distributed
   const formatRewardsDistributed = (value: number) => {
-    if (value >= 5000) {
-      return `$5M`;
+    if (value >= 6000) {
+      return `$6M`;
     } else if (value >= 1000) {
       return `$${(value / 1000).toFixed(1)}M`;
     } else {
@@ -127,10 +127,10 @@ const Hero = () => {
         });
       }, 80);
 
-      // Animate Rewards Distributed (5000 which represents 5M) - adjusted to finish in ~2000ms
+      // Animate Rewards Distributed (6000 which represents 6M) - adjusted to finish in ~2000ms
       const rewardsInterval = setInterval(() => {
         setRewardsDistributed((prev) => {
-          if (prev >= 5000) return 5000;
+          if (prev >= 6000) return 6000;
           return prev + 40;
         });
       }, 16);

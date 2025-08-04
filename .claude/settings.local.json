@@ -3,7 +3,9 @@
     "allow": [
       "Bash(rm:*)",
       "Bash(node:*)",
-      "Bash(git filter-branch:*)"
+      "Bash(git filter-branch:*)",
+      "Bash(echo:*)",
+      "Bash(pnpm dev:*)"
     ],
     "deny": []
   }

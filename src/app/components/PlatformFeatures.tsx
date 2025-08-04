@@ -4,7 +4,7 @@ import { SectionTitle } from "./SectionTitle";
 import { GeometricCard } from "./GeometricCard";
 import { cn } from "@/lib/utils";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 const features = [
   {
@@ -52,15 +52,52 @@ const titleParts = [
   },
 ];
 
+// Video cache to prevent reloading
+const videoCache = new Map<string, HTMLVideoElement>();
+
+// Preload videos to cache them
+const preloadVideo = (src: string): Promise<HTMLVideoElement> => {
+  return new Promise((resolve, reject) => {
+    if (videoCache.has(src)) {
+      resolve(videoCache.get(src)!);
+      return;
+    }
+    
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+    
+    const handleLoad = () => {
+      videoCache.set(src, video);
+      video.removeEventListener('loadeddata', handleLoad);
+      video.removeEventListener('error', handleError);
+      resolve(video);
+    };
+    
+    const handleError = () => {
+      video.removeEventListener('loadeddata', handleLoad);
+      video.removeEventListener('error', handleError);
+      reject(new Error(`Failed to load video: ${src}`));
+    };
+    
+    video.addEventListener('loadeddata', handleLoad);
+    video.addEventListener('error', handleError);
+    video.src = src;
+  });
+};
+
 export function PlatformFeatures({ className }: { className?: string }) {
   const videoRef = useRef(null);
   const videoElementRef = useRef<HTMLVideoElement>(null);
-  const [currentVideo, setCurrentVideo] = useState(features[0].video); // Start with first video
-  const [activeFeature, setActiveFeature] = useState<string>("Leaderboards"); // Start with leaderboards active
+  const [currentVideo, setCurrentVideo] = useState(features[0].video);
+  const [activeFeature, setActiveFeature] = useState<string>("Leaderboards");
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null);
   const [videoLoading, setVideoLoading] = useState(false);
-  const [loadingFeature, setLoadingFeature] = useState<string>(""); // Track which feature is loading
-  const [shouldAutoplay, setShouldAutoplay] = useState(true); // Autoplay first video on load
+  const [loadingFeature, setLoadingFeature] = useState<string>("");
+  const [shouldAutoplay, setShouldAutoplay] = useState(true);
+  const [videosPreloaded, setVideosPreloaded] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: videoRef,
@@ -69,47 +106,79 @@ export function PlatformFeatures({ className }: { className?: string }) {
 
   const scale = useTransform(scrollYProgress, [0, 0.3, 1], [0.7, 1, 0.9]);
 
-  const handleFeatureClick = (feature: (typeof features)[0]) => {
+  // Preload all videos on component mount
+  useEffect(() => {
+    const preloadAllVideos = async () => {
+      try {
+        await Promise.all(features.map(feature => preloadVideo(feature.video)));
+        setVideosPreloaded(true);
+      } catch (error) {
+        console.warn('Some videos failed to preload:', error);
+        setVideosPreloaded(true); // Continue anyway
+      }
+    };
+    
+    preloadAllVideos();
+  }, []);
+
+  // Optimized video switching using cached videos
+  const handleFeatureClick = useCallback((feature: (typeof features)[0]) => {
     if (feature.video !== currentVideo) {
       setVideoLoading(true);
-      setLoadingFeature(feature.title); // Set which feature is loading
+      setLoadingFeature(feature.title);
       
-      // Force a minimum 1-second loading delay for smooth UX
-      const startTime = Date.now();
-      const minLoadTime = 1000; // 1 second
-      
-      if (videoElementRef.current) {
-        videoElementRef.current.src = feature.video;
-        videoElementRef.current.load();
+      // Use requestAnimationFrame to defer work and prevent blocking
+      requestAnimationFrame(() => {
+        const cachedVideo = videoCache.get(feature.video);
         
-        const handleCanPlay = () => {
-          const elapsedTime = Date.now() - startTime;
-          const remainingTime = Math.max(0, minLoadTime - elapsedTime);
+        if (cachedVideo && videoElementRef.current) {
+          // Clone the cached video's attributes to current video element
+          videoElementRef.current.src = feature.video;
+          videoElementRef.current.currentTime = 0;
           
+          // Minimal delay for smooth transition
           setTimeout(() => {
-            // Update everything at the same time to prevent flashing
             setActiveFeature(feature.title);
             setCurrentVideo(feature.video);
             setVideoLoading(false);
             setLoadingFeature("");
+            
             if (shouldAutoplay && videoElementRef.current) {
               videoElementRef.current.play().catch(() => {});
             }
-          }, remainingTime);
-          
-          // Clean up event listener
+          }, 300); // Reduced from 1000ms to 300ms
+        } else {
+          // Fallback for non-cached videos
           if (videoElementRef.current) {
-            videoElementRef.current.removeEventListener('canplay', handleCanPlay);
+            videoElementRef.current.src = feature.video;
+            videoElementRef.current.load();
+            
+            const handleCanPlay = () => {
+              setTimeout(() => {
+                setActiveFeature(feature.title);
+                setCurrentVideo(feature.video);
+                setVideoLoading(false);
+                setLoadingFeature("");
+                if (shouldAutoplay && videoElementRef.current) {
+                  videoElementRef.current.play().catch(() => {});
+                }
+              }, 300);
+              
+              if (videoElementRef.current) {
+                videoElementRef.current.removeEventListener('canplay', handleCanPlay);
+              }
+            };
+            
+            videoElementRef.current.addEventListener('canplay', handleCanPlay);
           }
-        };
-        
-        videoElementRef.current.addEventListener('canplay', handleCanPlay);
-      }
+        }
+      });
+      
       setShouldAutoplay(true);
     } else {
       setActiveFeature(feature.title);
     }
-  };
+  }, [currentVideo, shouldAutoplay]);
 
   const handleFeatureHover = (feature: (typeof features)[0]) => {
     setHoveredFeature(feature.title);
