@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { SelectBadge } from "@/components/ui/selectBadge";
 import { ContactModal } from "./ContactModal";
 
-
 const trustedCompanies = [
   {
     name: "Raydium",
@@ -160,7 +159,6 @@ const Hero = () => {
         <CustomButton customVariant="big" onClick={() => setShowModal(true)}>
           Request Access
         </CustomButton>
-
         {/* Stat Cards */}
       </div>
 
@@ -340,7 +338,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
 
       <ContactModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>
