@@ -88,8 +88,8 @@ const Hero = () => {
 
   // Helper function to format trading volume
   const formatTradingVolume = (value: number) => {
-    if (value >= 4000) {
-      return `$4B`;
+    if (value >= 5000) {
+      return `$5B`;
     } else if (value >= 1000) {
       return `$${(value / 1000).toFixed(1)}B`;
     } else {
@@ -99,8 +99,8 @@ const Hero = () => {
 
   // Helper function to format rewards distributed
   const formatRewardsDistributed = (value: number) => {
-    if (value >= 6000) {
-      return `$6M`;
+    if (value >= 8000) {
+      return `$8M`;
     } else if (value >= 1000) {
       return `$${(value / 1000).toFixed(1)}M`;
     } else {
@@ -110,27 +110,27 @@ const Hero = () => {
 
   useEffect(() => {
     const animateNumbers = () => {
-      // Animate Trading Volume to 4000 (which represents 4B)
+      // Animate Trading Volume to 5000 (which represents 5B)
       const tradingInterval = setInterval(() => {
         setTradingVolume((prev) => {
-          if (prev >= 4000) return 4000;
+          if (prev >= 5000) return 5000;
           return prev + 30;
         });
       }, 15);
 
-      // Animate Campaigns (300) - adjusted to finish in ~2000ms
+      // Animate Campaigns (400) - adjusted to finish in ~2000ms
       const campaignsInterval = setInterval(() => {
         setCampaigns((prev) => {
-          if (prev >= 300) return 300;
+          if (prev >= 400) return 400;
           return prev + 10;
         });
-      }, 80);
+      }, 60);
 
-      // Animate Rewards Distributed (6000 which represents 6M) - adjusted to finish in ~2000ms
+      // Animate Rewards Distributed (8000 which represents 8M) - adjusted to finish in ~2000ms
       const rewardsInterval = setInterval(() => {
         setRewardsDistributed((prev) => {
-          if (prev >= 6000) return 6000;
-          return prev + 40;
+          if (prev >= 8000) return 8000;
+          return prev + 50;
         });
       }, 16);
 
