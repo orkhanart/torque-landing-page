@@ -60,7 +60,7 @@ const Hero = () => {
   const [tradingVolume, setTradingVolume] = useState(0);
   const [campaigns, setCampaigns] = useState(0);
   const [rewardsDistributed, setRewardsDistributed] = useState(0);
-  const titleText = "Solana's Incentive Protocol";
+  const titleText = "Accelerate Your Growth";
 
   const subtitleContainer = {
     hidden: { opacity: 0 },
