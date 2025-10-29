@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function PlatformFeatures() {
   return (
-    <main className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen py-16">
       <h3 className="text-secondary">Lorem Ipsum</h3>
       <h1 className="text-foreground text-[40px]">Unique Features</h1>
 

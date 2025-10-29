@@ -7,23 +7,24 @@ import IncentiveExplanation from "./components/IncentiveExplanation";
 
 export default function Home() {
   return (
-    <div className="w-full relative min-h-screen container mx-auto px-0">
+    <>
       <AnnouncementBanner />
       <Navbar />
-      <div className="flex flex-col items-center justify-center gap-10 my-4">
-        <Hero />
-      </div>
-      
-      <div className="h-32"></div>
-      <IncentiveExplanation />
+      <div className="w-full relative min-h-screen container mx-auto px-4">
+        
+        <div className="flex flex-col items-center justify-center gap-10 my-4">
+          <Hero />
+        </div>
+        
+        <div className="h-32"></div>
+        <IncentiveExplanation />
 
-      <div className="h-20"></div>
-      <PlatformFeatures />
+        <div className="h-20"></div>
+        <PlatformFeatures />
 
-      <div className="h-16"></div>
-      <div className="flex flex-col items-center justify-start w-full">
-        <Footer />
+        <div className="h-16"></div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }

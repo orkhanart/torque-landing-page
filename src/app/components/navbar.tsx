@@ -3,13 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CustomButton } from "@/components/ui/customButton";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { ContactModal } from "./ContactModal";
@@ -53,7 +47,7 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-[52px] left-0 right-0 bg-card backdrop-blur-lg z-[1000] border-b border-border/10">
-        <div className="flex justify-between items-center py-4 px-2 text-white max-w-[1400px] mx-auto w-full">
+        <div className="flex justify-between items-center py-4 px-6 md:px-8 text-white max-w-[1600px] mx-auto w-full">
           <Link href="/" className="flex items-center space-x-2 z-[999]">
             <Image src="/logos/LogoNewFull.svg" alt="Torque logo" width={130} height={32} />
           </Link>

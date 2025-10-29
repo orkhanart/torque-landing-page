@@ -143,7 +143,7 @@ const Hero = () => {
         {/* Stat Cards */}
       </div>
 
-      <section className="bg-card w-[1050px] p-16 rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">
+      <section className="bg-card w-full p-16 rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">
         <div className="max-w-6xl mx-auto">
             {/* Logo */}
             <div className="flex justify-center mb-4">

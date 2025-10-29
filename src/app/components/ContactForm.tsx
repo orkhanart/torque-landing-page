@@ -44,13 +44,14 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
     <form className="w-full space-y-6" onSubmit={handleSubmit}>
       <div className="space-y-2">
         <label
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-foreground"
           htmlFor="name"
         >
           Name
         </label>
         <input
-          className="w-full h-10 px-3 rounded-md bg-transparent border border-gray-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full h-10 px-3 bg-transparent border border-secondary-foreground rounded-md text-secondary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+          style={{ borderRadius: '0.375rem' }}
           id="name"
           name="name"
           required
@@ -58,13 +59,14 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       </div>
       <div className="space-y-2">
         <label
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-foreground"
           htmlFor="email"
         >
           Email
         </label>
         <input
-          className="w-full h-10 px-3 rounded-md bg-transparent border border-gray-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full h-10 px-3 bg-transparent border border-secondary-foreground rounded-md text-secondary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+          style={{ borderRadius: '0.375rem' }}
           id="email"
           name="email"
           type="email"
@@ -73,13 +75,14 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       </div>
       <div className="space-y-2">
         <label
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-foreground"
           htmlFor="telegram"
         >
           Telegram Username
         </label>
         <input
-          className="w-full h-10 px-3 rounded-md bg-transparent border border-gray-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full h-10 px-3 bg-transparent border border-secondary-foreground rounded-md text-secondary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+          style={{ borderRadius: '0.375rem' }}
           id="telegram"
           name="telegram"
           placeholder="@username"
@@ -88,7 +91,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       </div>
       <div className="space-y-2">
         <label
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-foreground"
           htmlFor="entity-type"
         >
           What best describes your project?
@@ -105,13 +108,14 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       </div>
       <div className="space-y-2">
         <label
-          className="block text-sm font-medium text-gray-300"
+          className="block text-sm font-medium text-foreground"
           htmlFor="message"
         >
           Message
         </label>
         <textarea
-          className="w-full h-32 px-3 py-2 rounded-md bg-transparent border border-gray-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+          className="w-full h-32 px-3 py-2 bg-transparent border border-secondary-foreground rounded-md text-secondary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+          style={{ borderRadius: '0.375rem' }}
           id="message"
           name="message"
           required

@@ -67,12 +67,13 @@ export function Select({
       <button
         type="button"
         className={cn(
-          "w-full h-10 px-3 rounded-md bg-transparent border border-gray-700 text-white",
+          "w-full h-10 px-3 rounded-md bg-transparent border border-secondary-foreground text-secondary",
           "flex items-center justify-between",
           "focus:outline-none focus:ring-2 focus:ring-primary transition-colors",
-          "hover:border-gray-600",
+          "hover:border-secondary",
           !selectedValue && "text-gray-400"
         )}
+        style={{ borderRadius: '0.375rem' }}
         onClick={() => setIsOpen(!isOpen)}
         id={id}
       >
@@ -89,16 +90,16 @@ export function Select({
 
       {/* Dropdown options */}
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-gray-900 border border-gray-700 rounded-md shadow-lg">
+        <div className="absolute z-50 w-full mt-1 bg-background border border-secondary-foreground rounded-md shadow-lg" style={{ borderRadius: '0.375rem' }}>
           <div className="py-1 max-h-60 overflow-auto">
             {options.map((option) => (
               <button
                 key={option.value}
                 type="button"
                 className={cn(
-                  "w-full px-3 py-2 text-left text-white hover:bg-gray-800 transition-colors",
-                  "focus:outline-none focus:bg-gray-800",
-                  selectedValue === option.value && "bg-gray-800 text-primary"
+                  "w-full px-3 py-2 text-left text-secondary hover:bg-muted transition-colors",
+                  "focus:outline-none focus:bg-muted",
+                  selectedValue === option.value && "bg-muted text-primary"
                 )}
                 onClick={() => handleSelect(option.value)}
               >
