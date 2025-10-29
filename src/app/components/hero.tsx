@@ -170,7 +170,7 @@ const Hero = () => {
               {/* Stat 2 */}
               <div className="text-center">
                 <div className="text-secondary text-2xl font-mono font-semibold mb-3">250,000</div>
-                <div className="text-secondary text-base">Solana's Top Users</div>
+                <div className="text-secondary text-base">Solana&apos;s Top Users</div>
               </div>
 
               {/* Stat 3 */}

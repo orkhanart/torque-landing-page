@@ -158,7 +158,6 @@ const DecoratedButton = React.forwardRef<
         </div>
 
         {/* Middle section (button content) */}
-        {/* @ts-expect-error - React 18 ForwardRef type compatibility issue */}
         <Button
           ref={ref}
           variant="default"
@@ -195,7 +194,6 @@ const DecoratedButton = React.forwardRef<
     // If href is provided and asLink is true, wrap in Link
     if (asLink && href) {
       return (
-        /* @ts-expect-error - React 18 ForwardRef type compatibility issue */
         <Link href={href} className="inline-flex">
           {content}
         </Link>
