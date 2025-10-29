@@ -1,52 +1,148 @@
 import React from "react";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { cva, type VariantProps } from "class-variance-authority";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
-interface CustomButtonProps extends Omit<ButtonProps, "variant"> {
+// =============================================================================
+// Variants Definition using CVA
+// =============================================================================
+
+const decoratedButtonVariants = cva(
+  "rounded-none transition-colors !font-semibold !shadow-none",
+  {
+    variants: {
+      buttonSize: {
+        small: "h-[30px] text-[13px] px-2",
+        big: "h-[40px] text-[16px] px-3",
+      },
+      buttonColor: {
+        primary: "!bg-primary text-primary-foreground hover:!bg-primary-hover",
+        secondary: "!bg-secondary text-primary-foreground hover:!bg-secondary/80",
+      },
+    },
+    defaultVariants: {
+      buttonSize: "big",
+      buttonColor: "primary",
+    },
+  }
+);
+
+const cornerVariants = cva("transition-colors", {
+  variants: {
+    buttonColor: {
+      primary: "fill-primary group-hover:fill-primary-hover",
+      secondary: "fill-secondary group-hover:fill-secondary/80",
+    },
+  },
+  defaultVariants: {
+    buttonColor: "primary",
+  },
+});
+
+const rectangleVariants = cva("w-[10px] transition-colors", {
+  variants: {
+    buttonSize: {
+      small: "h-[20px]", // 30px button - 10px triangle
+      big: "h-[30px]",   // 40px button - 10px triangle
+    },
+    buttonColor: {
+      primary: "bg-primary group-hover:bg-primary-hover",
+      secondary: "bg-secondary group-hover:bg-secondary/80",
+    },
+  },
+  defaultVariants: {
+    buttonSize: "big",
+    buttonColor: "primary",
+  },
+});
+
+// =============================================================================
+// Button Corners Component - Decorative Elements
+// =============================================================================
+
+interface ButtonCornersProps {
+  buttonSize?: "small" | "big";
+  buttonColor?: "primary" | "secondary";
   children: React.ReactNode;
-  customVariant?: "default" | "big" | "ghost" | "client-login" | "header";
-  href?: string;
-  isLink?: boolean;
 }
 
-const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
+const ButtonCorners: React.FC<ButtonCornersProps> = ({
+  buttonSize = "big",
+  buttonColor = "primary",
+  children,
+}) => {
+  return (
+    <div className="relative inline-flex items-center group">
+      {/* Left column */}
+      <div className="flex flex-col">
+        <div className={rectangleVariants({ buttonSize, buttonColor })} />
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 10L0 0H10V10Z"
+            className={cornerVariants({ buttonColor })}
+          />
+        </svg>
+      </div>
+
+      {/* Middle section (button content) */}
+      {children}
+
+      {/* Right column */}
+      <div className="flex flex-col">
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0L10 10H0V0Z"
+            className={cornerVariants({ buttonColor })}
+          />
+        </svg>
+        <div className={rectangleVariants({ buttonSize, buttonColor })} />
+      </div>
+    </div>
+  );
+};
+
+// =============================================================================
+// Decorated Button Component
+// =============================================================================
+
+export interface DecoratedButtonProps
+  extends Omit<ButtonProps, "variant" | "size">,
+    VariantProps<typeof decoratedButtonVariants> {
+  children: React.ReactNode;
+  href?: string;
+  asLink?: boolean;
+}
+
+const DecoratedButton = React.forwardRef<
+  HTMLButtonElement,
+  DecoratedButtonProps
+>(
   (
-    { className, children, customVariant, href, isLink = true, ...props },
+    { className, children, buttonSize, buttonColor, href, asLink = true, ...props },
     ref
   ) => {
-    const isBig = customVariant === "big";
-    const isGhost = customVariant === "ghost";
-    const isClientLogin = customVariant === "client-login";
-    const isHeader = customVariant === "header";
-    const rectangleHeight = isBig
-      ? "h-[54px]"
-      : isClientLogin
-      ? "h-[32px]"
-      : isHeader
-      ? "h-[24px]"
-      : "h-[38px]";
-    const buttonHeight = isBig
-      ? "h-[64px] text-[20px] px-3"
-      : isClientLogin
-      ? "h-[36px] text-[15px] border border-primary !bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover"
-      : isHeader
-      ? "h-[34px] text-[13px] px-2"
-      : "h-[48px] text-[16px]";
+    const size = buttonSize || "big";
+    const color = buttonColor || "primary";
 
-    const buttonContent = (
+    const content = (
       <div className="relative inline-flex items-center group">
         {/* Left column */}
         <div className="flex flex-col">
-          <div
-            className={cn(
-              "w-[10px] transition-colors",
-              isGhost
-                ? "bg-transparent group-hover:bg-primary/10"
-                : "bg-primary group-hover:bg-primary-hover",
-              rectangleHeight
-            )}
-          />
+          <div className={rectangleVariants({ buttonSize: size, buttonColor: color })} />
           <svg
             width="10"
             height="10"
@@ -55,44 +151,27 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              id="Corner"
               d="M10 10L0 0H10V10Z"
-              className={cn(
-                "transition-colors",
-                isGhost
-                  ? "fill-transparent group-hover:fill-primary/10"
-                  : "fill-primary group-hover:fill-primary-hover"
-              )}
+              className={cornerVariants({ buttonColor: color })}
             />
           </svg>
         </div>
 
         {/* Middle section (button content) */}
-        <div
-          style={{
-            boxShadow: isGhost
-              ? "none"
-              : "0px 0px 40px 0px rgba(161, 255, 255, 0.4)",
-          }}
+        {/* @ts-expect-error - React 18 ForwardRef type compatibility issue */}
+        <Button
+          ref={ref}
+          variant="default"
+          className={cn(
+            decoratedButtonVariants({ buttonSize: size, buttonColor: color }),
+            className
+          )}
+          {...props}
         >
-          <Button
-            ref={ref}
-            variant={isGhost || isClientLogin ? "ghost" : "default"}
-            className={cn(
-              buttonHeight,
-              "rounded-none px-2 py-2 transition-colors !font-semibold",
-              isGhost
-                ? "!bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover"
-                : isClientLogin
-                ? "!bg-transparent border border-primary text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover"
-                : "!bg-primary !shadow-none group-hover:!bg-primary-hover",
-              className
-            )}
-            {...props}
-          >
-            {children}
-          </Button>
-        </div>
+          {children}
+          <ArrowUpRight className="w-5 h-5 text-primary-foreground ml-2 -mr-1" />
+        </Button>
+
 
         {/* Right column */}
         <div className="flex flex-col">
@@ -104,72 +183,33 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              id="Corner"
               d="M0 0L10 10H0V0Z"
-              className={cn(
-                "transition-colors",
-                isGhost
-                  ? "fill-transparent group-hover:fill-primary/10"
-                  : "fill-primary group-hover:fill-primary-hover"
-              )}
+              className={cornerVariants({ buttonColor: color })}
             />
           </svg>
-          <div
-            className={cn(
-              "w-[10px] transition-colors",
-              isGhost
-                ? "bg-transparent group-hover:bg-primary/10"
-                : "bg-primary group-hover:bg-primary-hover",
-              rectangleHeight
-            )}
-          />
+          <div className={rectangleVariants({ buttonSize: size, buttonColor: color })} />
         </div>
       </div>
     );
-    if (isClientLogin) {
-      // Minimal outline button, no decorative shapes
-      if (isLink && href && href !== "default") {
-        return (
-          <Link href={href} className="inline-flex">
-            <Button
-              ref={ref}
-              variant="ghost"
-              className={cn(
-                "h-[36px] text-[15px] border border-primary !bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover rounded-md px-4 py-2 transition-colors !font-semibold",
-                className
-              )}
-              {...props}
-            >
-              {children}
-            </Button>
-          </Link>
-        );
-      }
+
+    // If href is provided and asLink is true, wrap in Link
+    if (asLink && href) {
       return (
-        <Button
-          ref={ref}
-          variant="ghost"
-          className={cn(
-            "h-[36px] text-[15px] border border-primary !bg-transparent text-primary hover:!bg-primary/10 hover:!text-primary-hover hover:border-primary-hover rounded-md px-4 py-2 transition-colors !font-semibold",
-            className
-          )}
-          {...props}
-        >
-          {children}
-        </Button>
-      );
-    }
-    if (isLink && href && href !== "default") {
-      return (
-        <Link href={href} className="relative inline-flex items-center group">
-          {buttonContent}
+        /* @ts-expect-error - React 18 ForwardRef type compatibility issue */
+        <Link href={href} className="inline-flex">
+          {content}
         </Link>
       );
     }
-    return buttonContent;
+
+    return content;
   }
 );
 
-CustomButton.displayName = "CustomShapedButton";
+DecoratedButton.displayName = "DecoratedButton";
 
-export { CustomButton };
+// =============================================================================
+// Exports
+// =============================================================================
+
+export { DecoratedButton, DecoratedButton as CustomButton };

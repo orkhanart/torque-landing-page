@@ -34,7 +34,7 @@ export function SuccessMessage({ onClose }: SuccessMessageProps) {
           Our team will review your request and get back to you within 1-2 business days.
         </p>
       </div>
-      <CustomButton onClick={onClose} customVariant="default">
+      <CustomButton onClick={onClose} buttonSize="big" buttonColor="primary" asLink={false}>
         Continue
       </CustomButton>
     </div>

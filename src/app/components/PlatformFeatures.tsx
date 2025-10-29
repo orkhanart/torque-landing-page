@@ -1,18 +1,30 @@
-"use client";
+import Image from "next/image";
 
-import { cn } from "@/lib/utils";
-
-export function PlatformFeatures({ className }: { className?: string }) {
-  // Component is temporarily hidden - both feature cards and title text are hidden
-  // Maintaining the div structure to preserve spacing
+export function PlatformFeatures() {
   return (
-    <div
-      className={cn(
-        "flex flex-col items-center justify-center py-20",
-        className
-      )}
-    >
-      {/* All content temporarily hidden */}
-    </div>
+    <main className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+      <h3 className="text-secondary">Lorem Ipsum</h3>
+      <h1 className="text-foreground text-[40px]">Unique Features</h1>
+
+      <div className="flex flex-row gap-8 h-auto mt-10">
+        <div className="flex flex-col gap-8 flex-1">
+          <div>
+            <Image src="/Smart.svg" alt="Torque logo" width={800} height={800} />
+          </div>
+          <div>
+            <Image src="/Campaign.svg" alt="Torque logo" width={800} height={800} />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-8 flex-1">
+          <div>
+            <Image src="/Intelligence.svg" alt="Torque logo" width={800} height={800} />
+          </div>
+          <div>
+            <Image src="/No-code.svg" alt="Torque logo" width={800} height={800} />
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

@@ -73,7 +73,7 @@ export default function RootLayout({
           `}
         </Script>
         <div className="fixed inset-0 top-0 z-0 w-full h-full overflow-hidden">
-          <Hyperspeed />
+          {/* <Hyperspeed /> */}
         </div>
         <div className="relative z-10">{children}</div>
       </body>

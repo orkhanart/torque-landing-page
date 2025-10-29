@@ -118,7 +118,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         />
       </div>
       <div className="flex justify-end">
-        <CustomButton type="submit" disabled={state.submitting}>
+        <CustomButton type="submit" disabled={state.submitting} asLink={false}>
           {state.submitting ? "Sending..." : "Send"}
         </CustomButton>
       </div>

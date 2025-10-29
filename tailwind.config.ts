@@ -22,6 +22,7 @@ const config: Config = {
   			},
   			primary: {
           DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
           hover: "hsl(var(--primary-hover))",
           focus: "hsl(var(--primary-focus))",
         },
@@ -88,6 +89,7 @@ const config: Config = {
   		},
 			fontFamily: {
         sans: ['Instrument Sans', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       lineHeight: {
         '56': '56px',

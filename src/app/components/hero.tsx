@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { CustomButton } from "@/components/ui/customButton";
 import { motion } from "framer-motion";
-import { SelectBadge } from "@/components/ui/selectBadge";
 import { ContactModal } from "./ContactModal";
 
 const trustedCompanies = [
@@ -62,29 +61,6 @@ const Hero = () => {
   const [rewardsDistributed, setRewardsDistributed] = useState(0);
   const titleText = "Accelerate Your Growth";
 
-  const subtitleContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.05 },
-    },
-  };
-
-  const subtitleChild = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        damping: 20,
-        stiffness: 100,
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 20,
-    },
-  };
 
   // Helper function to format trading volume
   const formatTradingVolume = (value: number) => {
@@ -149,195 +125,63 @@ const Hero = () => {
   return (
     <div className="relative text-white flex flex-col w-full items-center justify-between pt-8 md:pt-14">
       <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-4 pt-0 min-h-[60vh] md:min-h-[70vh] flex flex-col items-center justify-center">
-        <h1 className="sm:text-[56px] text-6xl lg:text-8xl font-semibold sm:mb-6 mb-4 font-sans leading-tight">
+        <h1 className="sm:text-[56px] text-6xl lg:text-8xl sm:mb-6 mb-4 font-sans leading-tight text-foreground">
           {titleText}
         </h1>
-        <div className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-gray-300 text-center">
-          Instantly Launch Smart Incentives that Drive Growth
+        <div className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-secondary text-center">
+          Smart Incentives. Real Outcomes.
         </div>
 
-        <CustomButton customVariant="big" onClick={() => setShowModal(true)}>
-          Request Access
-        </CustomButton>
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+          <CustomButton buttonSize="big" buttonColor="secondary" href="#features">
+            Watch 90s Overview
+          </CustomButton>
+          <CustomButton buttonSize="big" buttonColor="primary" onClick={() => setShowModal(true)} asLink={false}>
+            Launch Platform
+          </CustomButton>
+        </div>
         {/* Stat Cards */}
       </div>
 
-      <div className="w-full mt-8 space-y-4">
-        <div className="relative mb-8">
-          <div className="backdrop-blur-sm bg-black/20 border border-white/10">
-            {/* Border accents */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-primary via-white to-[#F1A3A1]"></div>
-            <div className="absolute top-0 left-0 bottom-0 h-full w-[1px] bg-gradient-to-b from-primary via-white to-[#F1A3A1]"></div>
-            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#F1A3A1] via-white to-primary"></div>
-            <div className="absolute top-0 right-0 bottom-0 h-full w-[1px] bg-gradient-to-b to-primary via-white from-[#F1A3A1]"></div>
+      <section className="bg-card w-[1050px] p-16 rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">
+        <div className="max-w-6xl mx-auto">
+            {/* Logo */}
+            <div className="flex justify-center mb-4">
+              <Image src="logos/LogoPurple.svg" alt="Torque logo" width={32} height={32} />
+            </div>
 
-            <div className="p-6 text-center">
-              <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
-                {/* Component 1 - Trading Volume */}
-                <motion.div
-                  className="flex flex-col items-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <motion.div
-                    className="text-4xl md:text-6xl font-black text-primary tracking-tight mb-2"
-                    initial={{ scale: 0.8 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                  >
-                    {formatTradingVolume(tradingVolume)}+
-                  </motion.div>
-                  <div className="text-lg md:text-xl font-medium text-white">
-                    Trading Volume Generated
-                  </div>
-                </motion.div>
+            {/* Headline */}
+            <h1 className="text-center text-secondary text-lg leading-relaxed mx-auto mb-12">
+              We build the operating systems to handle your incentives—from set-up to distribution and analytics—powered by
+              Torque Intelligence.
+            </h1>
 
-                {/* Component 2 - Campaigns */}
-                <motion.div
-                  className="flex flex-col items-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                >
-                  <motion.div
-                    className="text-4xl md:text-6xl font-black text-[#F1A3A1] tracking-tight mb-2"
-                    initial={{ scale: 0.8 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                  >
-                    {campaigns}+
-                  </motion.div>
-                  <div className="text-lg md:text-xl font-medium text-white">
-                    Campaigns
-                  </div>
-                </motion.div>
+            {/* Dashed Divider */}
+            <div className="border-t border-dashed border-secondary-foreground mb-16" />
 
-                {/* Component 3 - Rewards Distributed */}
-                <motion.div
-                  className="flex flex-col items-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  <motion.div
-                    className="text-4xl md:text-6xl font-black text-white tracking-tight mb-2"
-                    initial={{ scale: 0.8 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                  >
-                    {formatRewardsDistributed(rewardsDistributed)}+
-                  </motion.div>
-                  <div className="text-lg md:text-xl font-medium text-white">
-                    Rewards Distributed
-                  </div>
-                </motion.div>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+              {/* Stat 1 */}
+              <div className="text-center">
+                <div className="text-secondary text-2xl font-mono font-semibold mb-3">$10,000,000</div>
+                <div className="text-secondary text-base">Rewards Distributed</div>
+              </div>
+
+              {/* Stat 2 */}
+              <div className="text-center">
+                <div className="text-secondary text-2xl font-mono font-semibold mb-3">250,000</div>
+                <div className="text-secondary text-base">Solana's Top Users</div>
+              </div>
+
+              {/* Stat 3 */}
+              <div className="text-center">
+                <div className="text-secondary text-2xl font-mono font-semibold mb-3">300+</div>
+                <div className="text-secondary text-base">Campaigns (Tokens, Protocols, Platforms)</div>
               </div>
             </div>
           </div>
-        </div>
+      </section>
 
-        {/* Customers & Audit Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="backdrop-blur-sm bg-black/20 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
-            <div className="absolute top-0 left-0 bottom-0 h-full w-2 bg-[#A1FFFF] "></div>
-            <h3 className="text-[#A1FFFF] text-xl font-semibold mb-4 text-left uppercase">
-              Trusted By
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center justify-center">
-              {trustedCompanies.map((company, index) => (
-                <div
-                  key={index}
-                  className="logo-placeholder flex items-center justify-center"
-                  style={{ minHeight: "65px" }}
-                >
-                  {company.logo ? (
-                    company.url ? (
-                      <a
-                        href={company.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="transition-all duration-300 hover:drop-shadow-[0_0_8px_#A1FFFF] hover:brightness-110"
-                      >
-                        <Image
-                          src={company.logo}
-                          alt={company.name}
-                          width={company.width}
-                          height={company.height}
-                          objectFit="contain"
-                          priority={index < 2}
-                        />
-                      </a>
-                    ) : (
-                      <Image
-                        src={company.logo}
-                        alt={company.name}
-                        width={company.width}
-                        height={company.height}
-                        objectFit="contain"
-                        priority={index < 2}
-                      />
-                    )
-                  ) : (
-                    <span className="text-gray-300 text-lg">
-                      {company.name}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="backdrop-blur-sm bg-black/20 px-8 pt-8 pb-6 border border-[#A1FFFF]/20 relative">
-            <div className="absolute top-0 right-0 bottom-0 h-full w-2 bg-[#F1A3A1] "></div>
-            <h3 className="text-[#F1A3A1] text-xl font-semibold mb-4 text-right uppercase">
-              Backed By
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center justify-center">
-              {backers.map((company, index) => (
-                <div
-                  key={index}
-                  className="logo-placeholder flex items-center justify-center"
-                  style={{ minHeight: "80px" }}
-                >
-                  {company.logo ? (
-                    company.url ? (
-                      <a
-                        href={company.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="transition-all duration-300 hover:drop-shadow-[0_0_8px_#F1A3A1] hover:brightness-110"
-                      >
-                        <Image
-                          src={company.logo}
-                          alt={company.name}
-                          width={company.width}
-                          height={company.height}
-                          className="max-w-[160px] md:max-w-[140px] lg:max-w-[160px] xl:max-w-[180px] max-h-[80px] md:max-h-[70px] lg:max-h-[80px] xl:max-h-[100px] w-auto h-auto"
-                          objectFit="contain"
-                        />
-                      </a>
-                    ) : (
-                      <Image
-                        src={company.logo}
-                        alt={company.name}
-                        width={company.width}
-                        height={company.height}
-                        className="max-w-[120px] md:max-w-[100px] lg:max-w-[120px] xl:max-w-[150px] max-h-[60px] md:max-h-[50px] lg:max-h-[60px] xl:max-h-[80px] w-auto h-auto"
-                        objectFit="contain"
-                      />
-                    )
-                  ) : (
-                    <span className="text-gray-300 text-lg">
-                      {company.name}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
 
       <ContactModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>

@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 body {
   @apply font-sans;
@@ -24,48 +24,57 @@ html {
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 183, 41%, 5%, 1;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    /* ===================================
+       NEW DESIGN SYSTEM COLORS
+       Light theme with purple/indigo brand
+       =================================== */
+    
+    /* Backgrounds */
+    --background: 252 8% 93%;              /* Light gray page background (effects/surface/gray-highlight) */
+    --card: 0, 0%, 96%;                    /* Light surface for cards (controls/tertiary) */
+    --popover: 240 7% 89%;                 /* Popover backgrounds */
+    
+    /* Text Colors */
+    --foreground: 0 0% 3%;                 /* Large titles, primary text (elements/top-emphasis) */
+    --card-foreground: 0 0% 3%;            /* Text on cards */
+    --popover-foreground: 0 0% 3%;         /* Text in popovers */
+    --muted-foreground: 240 2% 31%;        /* Secondary text, descriptions (elements/mid-emphasis) */
+    --secondary-foreground: 240 1% 48%;    /* Nav buttons, low-emphasis text (elements/low-emphasis) */
 
-    /* Primary color */
-    --primary: 180, 100%, 82%, 1;
-    --primary-hover: 180, 100%, 77%, 1;
-    --primary-focus: 180, 100%, 77%, 1;
+    /* Primary Brand Color (Purple/Indigo) */
+    --primary: 238 88% 67%;                /* Primary brand color */
+    --primary-foreground: 0 0% 96%;        /* Text on primary buttons */
+    --primary-hover: 238 88% 62%;          /* Hover state (slightly darker) */
+    --primary-focus: 238 88% 57%;          /* Focus/active state (darker) */
 
-    /* Accent color */
-    --accent: 2, 74%, 79%, 1;
-    --accent-hover: 2, 74%, 79%, 0.7;
-    --accent-focus: 2, 74%, 74%, 1;
+    /* Secondary/Accent Colors */
+    --secondary: 240 2% 31%;               /* Secondary buttons (controls/high-contrast) */
+    --accent: 238 88% 67%;                 /* Accent color (using primary) */
+    --accent-hover: 238 88% 62%;           /* Accent hover */
+    --accent-focus: 238 88% 57%;           /* Accent focus */
 
-    /* White button color */
-    --white-button: 0 0% 100%;
-    --white-button-hover: 0, 0%, 100%, 0.6;
-    --white-button-focus: 0, 0%, 95%, 1;
+    /* Button Colors */
+    --white-button: 240 7% 89%;            /* Light/white button color */
+    --white-button-hover: 240 7% 85%;      /* White button hover */
+    --white-button-focus: 240 7% 80%;      /* White button focus */
 
-    /* Tertiary color */
-    --tertiary: 180, 10%, 80%, 1;
+    /* Utility Colors */
+    --tertiary: 240 7% 89%;                /* Tertiary backgrounds */
+    --muted: 240 7% 89%;                   /* Muted backgrounds */
+    --border: 238 88% 67%;                 /* Borders (use with opacity: border-primary/30) */
+    --input: 240 7% 89%;                   /* Input field backgrounds */
+    --ring: 238 88% 67%;                   /* Focus rings */
 
-    /* Other existing variables */
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    /* System Colors */
+    --destructive: 0 72% 51%;              /* Error/destructive actions */
+    --destructive-foreground: 0 0% 98%;    /* Text on destructive elements */
 
-    /* Chart colors (unchanged) */
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Chart colors (updated to match new palette) */
+    --chart-1: 238 88% 67%;                /* Primary purple */
+    --chart-2: 240 2% 31%;                 /* Dark gray */
+    --chart-3: 240 1% 48%;                 /* Medium gray */
+    --chart-4: 240 7% 89%;                 /* Light gray */
+    --chart-5: 0 0% 3%;                    /* Near black */
   }
 }
 
