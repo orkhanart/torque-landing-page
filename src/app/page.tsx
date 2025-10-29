@@ -8,21 +8,20 @@ import IncentiveExplanation from "./components/IncentiveExplanation";
 export default function Home() {
   return (
     <>
-      <AnnouncementBanner />
       <Navbar />
-      <div className="w-full relative min-h-screen container mx-auto px-4">
+      <div className="w-full relative container mx-auto px-4 md:px-6 lg:px-8">
         
-        <div className="flex flex-col items-center justify-center gap-10 my-4">
+        <div className="flex flex-col items-center justify-center gap-6 md:gap-10 my-4">
           <Hero />
         </div>
         
-        <div className="h-32"></div>
+        <div className="h-16 md:h-32"></div>
         <IncentiveExplanation />
 
-        <div className="h-20"></div>
+        <div className="h-12 md:h-20"></div>
         <PlatformFeatures />
 
-        <div className="h-16"></div>
+        <div className="h-8 md:h-16"></div>
       </div>
       <Footer />
     </>

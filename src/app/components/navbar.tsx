@@ -7,10 +7,12 @@ import { CustomButton } from "@/components/ui/customButton";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { ContactModal } from "./ContactModal";
+// import AnnouncementBanner from "./AnnouncementBanner";
 
 interface MenuItem {
   label: string;
   href: string;
+  external?: boolean;
 }
 
 export default function Navbar() {
@@ -22,7 +24,7 @@ export default function Navbar() {
   const menuItems: MenuItem[] = [
     { label: "About", href: "/about" },
     { label: "Case Studies", href: "/case-studies" },
-    { label: "Docs", href: "/docs" },
+    { label: "Docs", href: "https://docs.torque.so/", external: true },
   ];
 
   useEffect(() => {
@@ -46,7 +48,8 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-[52px] left-0 right-0 bg-card backdrop-blur-lg z-[1000] border-b border-border/10">
+      {/* <AnnouncementBanner /> */}
+      <header className="fixed top-0 left-0 right-0 bg-card backdrop-blur-lg z-[1000] border-b border-border/10">
         <div className="flex justify-between items-center py-4 px-6 md:px-8 text-white max-w-[1600px] mx-auto w-full">
           <Link href="/" className="flex items-center space-x-2 z-[999]">
             <Image src="/logos/LogoNewFull.svg" alt="Torque logo" width={130} height={32} />
@@ -56,6 +59,22 @@ export default function Navbar() {
           <nav className="hidden lg:flex items-center space-x-8">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
+              
+              if (item.external) {
+                return (
+                  <a 
+                    key={item.label} 
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="text-secondary-foreground hover:text-black transition-colors">
+                      {item.label}
+                    </span>
+                  </a>
+                );
+              }
+              
               return (
                 <Link key={item.label} href={item.href}>
                   <span className={`transition-colors ${
@@ -102,6 +121,22 @@ export default function Navbar() {
           <nav className="px-5 py-4 space-y-4">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
+              
+              if (item.external) {
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                    className="block transition-colors py-2 text-secondary-foreground hover:text-black"
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
+              
               return (
                 <Link
                   key={item.label}
@@ -135,8 +170,8 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Spacer to account for fixed header and banner */}
-      <div className="h-[116px]"></div>
+      {/* Spacer to account for fixed header */}
+      <div className="h-[64px]"></div>
 
       <ContactModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>

@@ -3,55 +3,53 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { CustomButton } from "@/components/ui/customButton";
-import { motion } from "framer-motion";
 import { ContactModal } from "./ContactModal";
+import { IconBelt } from "@/components/ui/iconBelt";
 
 const trustedCompanies = [
   {
+    name: "Solana",
+    logo: "/logos/solana-round.svg",
+    width: 90,
+    height: 90,
+    url: "https://solana.com",
+  },
+  {
     name: "Raydium",
-    logo: "/logos/raydium.png",
-    width: 200,
-    height: 80,
+    logo: "/logos/raydium-round.svg",
+    width: 90,
+    height: 90,
     url: "https://raydium.io",
   },
   {
     name: "Metaplex",
-    logo: "/logos/metaplex.png",
-    width: 210,
-    height: 71,
+    logo: "/logos/metaplex-round.svg",
+    width: 90,
+    height: 90,
     url: "https://metaplex.com",
   },
   {
     name: "Tensor",
-    logo: "/logos/tensor.png",
-    width: 145,
-    height: 59,
+    logo: "/logos/tensor-round.svg",
+    width: 90,
+    height: 90,
     url: "https://tensor.so",
   },
-];
+  {
+    name: "Axium",
+    logo: "/logos/axium-round.svg",
+    width: 90,
+    height: 90,
+    url: "https://axiom.trade",
+  },
+  {
+    name: "Portals",
+    logo: "/logos/portals-round.svg",
+    width: 90,
+    height: 90,
+    url: "https://theportal.to/",
+  },
 
-const backers = [
-  {
-    name: "Sixth Man Ventures",
-    logo: "/logos/6mv.png",
-    width: 100,
-    height: 60,
-    url: "https://6thman.ventures/",
-  },
-  {
-    name: "Solana Ventures",
-    logo: "/logos/sv-white.png",
-    width: 100,
-    height: 60,
-    url: "https://solana.ventures/",
-  },
-  {
-    name: "Colosseum",
-    logo: "/logos/colosseum.png",
-    width: 100,
-    height: 60,
-    url: "https://www.colosseum.com/",
-  },
 ];
 
 const Hero = () => {
@@ -136,11 +134,41 @@ const Hero = () => {
           <CustomButton buttonSize="big" buttonColor="secondary" href="#features">
             Watch 90s Overview
           </CustomButton>
-          <CustomButton buttonSize="big" buttonColor="primary" onClick={() => setShowModal(true)} asLink={false}>
+          <CustomButton buttonSize="big" buttonColor="primary" href="https://platform.torque.so/">
             Launch Platform
           </CustomButton>
         </div>
         {/* Stat Cards */}
+      </div>
+
+      {/* Icon Belt */}
+      <div className="w-full mb-20">
+        <IconBelt
+          items={[...trustedCompanies].map((company, i) => (
+            <a
+              key={i}
+              href={company.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 inline-block"
+              style={{ width: '50px', height: '50px' }}
+            >
+              <Image
+                src={company.logo}
+                alt={company.name}
+                width={company.width}
+                height={company.height}
+                style={{ width: '50px', height: '50px', objectFit: 'contain' }}
+              />
+            </a>
+          ))}
+          speed={100}
+          direction="left"
+          gap={90}
+          repeatCount={6}
+          pauseOnHover={true}
+          className="py-3"
+        />
       </div>
 
       <section className="bg-card w-full p-16 rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">

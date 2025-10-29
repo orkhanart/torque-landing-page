@@ -42,9 +42,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 
   return (
     <form className="w-full space-y-6" onSubmit={handleSubmit}>
-      <div className="space-y-2">
+      <div className="space-y-1">
         <label
-          className="block text-sm font-medium text-foreground"
+          className="block font-medium text-foreground"
           htmlFor="name"
         >
           Name
@@ -57,9 +57,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           required
         />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-1">
         <label
-          className="block text-sm font-medium text-foreground"
+          className="block font-medium text-foreground"
           htmlFor="email"
         >
           Email
@@ -73,9 +73,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           required
         />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-1">
         <label
-          className="block text-sm font-medium text-foreground"
+          className="block font-medium text-foreground"
           htmlFor="telegram"
         >
           Telegram Username
@@ -89,9 +89,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           required
         />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-1">
         <label
-          className="block text-sm font-medium text-foreground"
+          className="block font-medium text-foreground"
           htmlFor="entity-type"
         >
           What best describes your project?
@@ -106,9 +106,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           required
         />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-1">
         <label
-          className="block text-sm font-medium text-foreground"
+          className="block font-medium text-foreground"
           htmlFor="message"
         >
           Message

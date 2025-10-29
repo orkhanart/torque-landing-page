@@ -193,6 +193,17 @@ const DecoratedButton = React.forwardRef<
 
     // If href is provided and asLink is true, wrap in Link
     if (asLink && href) {
+      // Check if it's an external link
+      const isExternal = href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//');
+      
+      if (isExternal) {
+        return (
+          <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex">
+            {content}
+          </a>
+        );
+      }
+      
       return (
         <Link href={href} className="inline-flex">
           {content}
