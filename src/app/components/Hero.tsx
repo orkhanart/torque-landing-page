@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { CustomButton } from "@/components/ui/custom-button";
-import { ContactModal } from "./ContactModal";
 import { IconBelt } from "@/components/ui/icon-belt";
 
 const trustedCompanies = [
@@ -53,28 +51,21 @@ const trustedCompanies = [
 ];
 
 const Hero = () => {
-  const [showModal, setShowModal] = useState(false);
-  const titleText = "Accelerate Your Growth";
-
   return (
     <div className="relative text-white flex flex-col w-full items-center justify-between pt-8 md:pt-14">
-      <div className="relative z-10 text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-4 pt-0 min-h-[60vh] md:min-h-[70vh] flex flex-col items-center justify-center">
-        <h1 className="sm:text-[56px] text-6xl lg:text-8xl sm:mb-6 mb-4 font-sans leading-tight text-foreground">
-          {titleText}
-        </h1>
-        <div className="md:text-2xl sm:text-lg text-base sm:mb-8 mb-6 text-secondary text-center">
-          Smart Incentives. Real Outcomes.
-        </div>
+      <div className="relative z-10 pt-4 lg:pt-12 min-h-[35vh] md:min-h-[60vh] w-full flex flex-col md:flex-row items-center justify-end gap-4 md:gap-8">
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-sans leading-tight text-foreground">
+              Accelerate Your Growth
+            </h1>
+          </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-          <CustomButton buttonSize="big" buttonColor="secondary" href="#features">
-            Watch 90s Overview
-          </CustomButton>
-          <CustomButton buttonSize="big" buttonColor="primary" href="https://platform.torque.so/">
-            Launch Platform
-          </CustomButton>
-        </div>
-        {/* Stat Cards */}
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-lg sm:text-xl lg:text-2xl text-secondary text-center md:text-left max-w-lg">
+              $10M+ in rewards distributed through active incentives
+            </h2>
+          </div>
+          
       </div>
 
       {/* Icon Belt */}
@@ -86,7 +77,7 @@ const Hero = () => {
               href={company.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-shrink-0 inline-block w-10 h-10 sm:w-14 sm:h-14 md:w-[50px] md:h-[50px]"
+              className="flex-shrink-0 inline-block w-10 h-10 sm:w-14 sm:h-14 md:w-[60px] md:h-[60px]"
             >
               <Image
                 src={company.logo}
@@ -99,7 +90,7 @@ const Hero = () => {
           ))}
           speed={100}
           direction="left"
-          gapClassName="gap-[50px] md:gap-[90px]"
+          gapClassName="gap-[60px] md:gap-[180px]"
           repeatCount={6}
           pauseOnHover={true}
           className="py-3"
@@ -144,9 +135,6 @@ const Hero = () => {
             </div>
           </div>
       </section>
-
-
-      <ContactModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 };
