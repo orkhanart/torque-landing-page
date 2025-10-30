@@ -116,7 +116,7 @@ const Hero = () => {
           
       </div>
 
-      <div className="relative z-10 w-full mb-12 md:mb-20 py-8 md:py-16 bg-card flex flex-col items-center justify-center shadow-2xl shadow-primary/10">
+      <div className="relative z-10 w-full py-8 md:py-16 bg-card flex flex-col items-center justify-center shadow-2xl shadow-primary/10">
       
         {/* Icon Belt */}
         <IconBelt
