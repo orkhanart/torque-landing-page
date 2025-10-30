@@ -61,13 +61,13 @@ export const RotatingHexagons = () => {
           style={{
             width: scaledSize,
             height: scaledSize,
-            opacity: 0.1,
+            opacity: 0.3,
             left: scaledHexagon1.left,
             top: scaledHexagon1.top,
           }}
           animate={{ rotate: -360 }}
           transition={{
-            duration: 30,
+            duration: 100,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -87,13 +87,13 @@ export const RotatingHexagons = () => {
           style={{
             width: scaledSize,
             height: scaledSize,
-            opacity: 0.1,
+            opacity: 0.3,
             left: scaledHexagon2.left,
             top: scaledHexagon2.top,
           }}
           animate={{ rotate: 360 }}
           transition={{
-            duration: 30,
+            duration: 100,
             repeat: Infinity,
             ease: "linear",
           }}

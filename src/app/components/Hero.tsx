@@ -1,8 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { IconBelt } from "@/components/ui/icon-belt";
+import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+
+// Animated Counter Component
+interface AnimatedCounterProps {
+  value: number;
+  duration?: number;
+  suffix?: string;
+  className?: string;
+}
+
+const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ 
+  value, 
+  duration = 2,
+  suffix = "",
+  className = "" 
+}) => {
+  const count = useMotionValue(1);
+  const rounded = useTransform(() => {
+    const roundedValue = Math.round(count.get());
+    return roundedValue.toLocaleString() + suffix;
+  });
+
+  useEffect(() => {
+    const controls = animate(count, value, { 
+      duration,
+      ease: "easeOut" // Starts fast and slows down at the end
+    });
+    return () => controls.stop();
+  }, [count, value, duration]);
+
+  return <motion.span className={className}>{rounded}</motion.span>;
+};
 
 const trustedCompanies = [
   {
@@ -52,24 +84,28 @@ const trustedCompanies = [
 
 const Hero = () => {
   return (
-    <div className="relative text-white flex flex-col w-full items-center justify-between pt-8 md:pt-14">
-      <div className="relative z-10 pt-4 lg:pt-12 min-h-[35vh] md:min-h-[60vh] w-full flex flex-col md:flex-row items-center justify-end gap-4 md:gap-8">
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-sans leading-tight text-foreground">
+    <div className="relative text-white flex flex-col w-full items-center justify-between pt-4 sm:pt-8 md:pt-14">
+      <div className="relative z-10 pt-4 lg:pt-12 min-h-[60vh] md:min-h-[60vh] w-full flex flex-col md:flex-row items-end justify-end gap-0">
+          <div className="w-full md:w-1/2 text-center md:text-left bg-card h-48 sm:h-52 md:h-52 px-6 sm:px-12 md:pl-28 md:pr-8 lg:pr-16 flex items-center justify-start invisible md:visible">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans leading-tight text-foreground">
               Accelerate Your Growth
             </h1>
           </div>
 
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-lg sm:text-xl lg:text-2xl text-secondary text-center md:text-left max-w-lg">
+          <div className="w-full md:w-1/2 text-center md:text-left bg-white/20 backdrop-blur-md h-48 sm:h-52 md:h-52 px-6 sm:px-12 md:px-8 lg:pr-20 flex items-center md:justify-start md:flex-row flex-col justify-center gap-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans leading-tight text-foreground md:hidden">
+              Accelerate Your Growth
+            </h1>
+            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground text-center md:text-left max-w-lg mx-auto md:mx-0">
               $10M+ in rewards distributed through active incentives
             </h2>
           </div>
           
       </div>
 
-      {/* Icon Belt */}
-      <div className="relative z-10 w-full mb-20">
+      <div className="relative z-10 w-full mb-12 md:mb-20 py-8 md:py-16 bg-card flex flex-col items-center justify-center shadow-2xl shadow-primary/10">
+      
+        {/* Icon Belt */}
         <IconBelt
           items={[...trustedCompanies].map((company, i) => (
             <a
@@ -95,46 +131,53 @@ const Hero = () => {
           pauseOnHover={true}
           className="py-3"
         />
-      </div>
 
-      <section className="relative z-10 bg-card w-full p-16 rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">
-        <div className="max-w-6xl mx-auto">
+        <div className="h-24 md:h-40"></div>
+
+        <div className="max-w-6xl mx-auto mt-8 md:mt-16 pb-12 md:pb-18 px-6 md:px-8 min-h-[30vh] md:h-[60vh]">
             {/* Logo */}
-            <div className="flex justify-center mb-4">
-              <Image src="logos/LogoPurple.svg" alt="Torque logo" width={32} height={32} />
+            <div className="flex justify-center mb-4 md:mb-6">
+              <Image src="logos/LogoPurple.svg" alt="Torque logo" width={40} height={40} className="w-8 h-8 md:w-12 md:h-12" />
             </div>
 
             {/* Headline */}
-            <h2 className="text-center text-secondary text-lg leading-relaxed mx-auto mb-12">
+            <h2 className="text-center text-secondary text-base sm:text-lg leading-relaxed mx-auto mb-8 md:mb-12 px-4">
               We build the operating systems to handle your incentives—from set-up to distribution and analytics—powered by
               Torque Intelligence.
             </h2>
 
             {/* Dashed Divider */}
-            <div className="border-t border-dashed border-secondary-foreground mb-16" />
+            <div className="border-t border-dashed border-secondary-foreground mb-8 md:mb-16" />
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
               {/* Stat 1 */}
               <div className="text-center">
-                <div className="text-secondary text-2xl font-mono font-semibold mb-3">$10,000,000</div>
-                <div className="text-secondary text-base">Rewards Distributed</div>
+                <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
+                  $<AnimatedCounter value={10000000} duration={2.5} />
+                </div>
+                <div className="text-secondary text-sm sm:text-base">Rewards Distributed</div>
               </div>
 
               {/* Stat 2 */}
               <div className="text-center">
-                <div className="text-secondary text-2xl font-mono font-semibold mb-3">250,000</div>
-                <div className="text-secondary text-base">Solana&apos;s Top Users</div>
+                <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
+                  <AnimatedCounter value={250000} duration={2.5} />
+                </div>
+                <div className="text-secondary text-sm sm:text-base">Solana&apos;s Top Users</div>
               </div>
 
               {/* Stat 3 */}
               <div className="text-center">
-                <div className="text-secondary text-2xl font-mono font-semibold mb-3">300+</div>
-                <div className="text-secondary text-base">Campaigns (Tokens, Protocols, Platforms)</div>
+                <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
+                  <AnimatedCounter value={300} duration={2} suffix="+" />
+                </div>
+                <div className="text-secondary text-sm sm:text-base">Campaigns (Tokens, Protocols, Platforms)</div>
               </div>
             </div>
           </div>
-      </section>
+      </div>
+
     </div>
   );
 };
