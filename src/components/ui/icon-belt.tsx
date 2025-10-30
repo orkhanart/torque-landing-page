@@ -63,7 +63,6 @@ export function IconBelt({
         display: "flex",
       }}
     >
-      {/* @ts-expect-error - Known framer-motion v11 + TypeScript v5 compatibility issue */}
       <motion.div
         role="list"
         aria-label="moving icon belt"
