@@ -14,10 +14,10 @@ const IncentiveExplanation = () => {
 
       <div className="flex flex-col lg:flex-row gap-6 md:gap-8 h-auto">
         <div className="flex flex-col gap-6 md:gap-8 flex-1">
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">  
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 transition-transform duration-300 hover:scale-[102%]">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
-                <span className="text-xl md:text-3xl font-medium">Create Incentive</span>
+                <span className="text-xl md:text-3xl font-medium">Create</span>
 
                 <HammerIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
@@ -31,10 +31,10 @@ const IncentiveExplanation = () => {
               </CardContent>
           </Card>
 
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">  
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 transition-transform duration-300 hover:scale-[102%]">  
             <CardHeader>
             <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
-                <span className="text-xl md:text-3xl font-medium">Fund Incentive</span>
+                <span className="text-xl md:text-3xl font-medium">Fund</span>
 
                 <PiggyBankIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
@@ -48,10 +48,10 @@ const IncentiveExplanation = () => {
           </Card>
         </div>
         <div className="flex flex-col justify-center items-center h-full flex-1 md:pt-28">
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 w-full">  
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 w-full transition-transform duration-300 hover:scale-[102%]">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
-                <span className="text-xl md:text-3xl font-medium">Optimize Incentive</span>
+                <span className="text-xl md:text-3xl font-medium">Optimize</span>
 
                 <WandSparklesIcon className="w-6 h-6 md:w-7 md:h-7 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>

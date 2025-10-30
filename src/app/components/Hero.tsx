@@ -39,47 +39,60 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 const trustedCompanies = [
   {
     name: "Solana",
-    logo: "/logos/solana-round.svg",
-    width: 90,
+    logo: "/logos/solana.svg",
+    width: 200,
     height: 90,
     url: "https://solana.com",
   },
   {
     name: "Raydium",
-    logo: "/logos/raydium-round.svg",
-    width: 90,
+    logo: "/logos/raydium.svg",
+    width: 200,
     height: 90,
     url: "https://raydium.io",
   },
   {
     name: "Metaplex",
-    logo: "/logos/metaplex-round.svg",
-    width: 90,
+    logo: "/logos/metaplex.svg",
+    width: 200,
     height: 90,
     url: "https://metaplex.com",
   },
   {
     name: "Tensor",
-    logo: "/logos/tensor-round.svg",
-    width: 90,
+    logo: "/logos/tensor.svg",
+    width: 200,
     height: 90,
     url: "https://tensor.so",
   },
   {
-    name: "Axium",
-    logo: "/logos/axium-round.svg",
-    width: 90,
+    name: "Axiom",
+    logo: "/logos/axiom.svg",
+    width: 200,
     height: 90,
     url: "https://axiom.trade",
   },
   {
     name: "Portals",
-    logo: "/logos/portals-round.svg",
-    width: 90,
+    logo: "/logos/portals.svg",
+    width: 200,
     height: 90,
     url: "https://theportal.to/",
   },
-
+  {
+    name: "Darklake",
+    logo: "/logos/darklake.svg",
+    width: 200,
+    height: 90,
+    url: "https://www.darklake.fi",
+  },
+  {
+    name: "USD1",
+    logo: "/logos/usd1.svg",
+    width: 150,
+    height: 90,
+    url: "https://worldlibertyfinancial.com/usd1",
+  },
 ];
 
 const Hero = () => {
@@ -113,7 +126,7 @@ const Hero = () => {
               href={company.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-shrink-0 inline-block w-10 h-10 sm:w-14 sm:h-14 md:w-[60px] md:h-[60px]"
+              className={`flex-shrink-0 inline-block w-[120px] h-[60px] md:w-[${company.width}px] md:h-[${company.height}px]`}
             >
               <Image
                 src={company.logo}
@@ -124,7 +137,7 @@ const Hero = () => {
               />
             </a>
           ))}
-          speed={100}
+          speed={250}
           direction="left"
           gapClassName="gap-[60px] md:gap-[180px]"
           repeatCount={6}
