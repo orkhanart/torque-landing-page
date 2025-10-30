@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomButton } from "@/components/ui/customButton";
+import { CustomButton } from "@/components/ui/custom-button";
 
 interface SuccessMessageProps {
   onClose: () => void;

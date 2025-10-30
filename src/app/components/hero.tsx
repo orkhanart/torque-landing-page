@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { CustomButton } from "@/components/ui/customButton";
+import { CustomButton } from "@/components/ui/custom-button";
 import { ContactModal } from "./ContactModal";
-import { IconBelt } from "@/components/ui/iconBelt";
+import { IconBelt } from "@/components/ui/icon-belt";
 
 const trustedCompanies = [
   {
@@ -54,75 +54,11 @@ const trustedCompanies = [
 
 const Hero = () => {
   const [showModal, setShowModal] = useState(false);
-  const [tradingVolume, setTradingVolume] = useState(0);
-  const [campaigns, setCampaigns] = useState(0);
-  const [rewardsDistributed, setRewardsDistributed] = useState(0);
   const titleText = "Accelerate Your Growth";
-
-
-  // Helper function to format trading volume
-  const formatTradingVolume = (value: number) => {
-    if (value >= 5000) {
-      return `$5B`;
-    } else if (value >= 1000) {
-      return `$${(value / 1000).toFixed(1)}B`;
-    } else {
-      return `$${value}M`;
-    }
-  };
-
-  // Helper function to format rewards distributed
-  const formatRewardsDistributed = (value: number) => {
-    if (value >= 8000) {
-      return `$8M`;
-    } else if (value >= 1000) {
-      return `$${(value / 1000).toFixed(1)}M`;
-    } else {
-      return `$${Math.round(value)}K`;
-    }
-  };
-
-  useEffect(() => {
-    const animateNumbers = () => {
-      // Animate Trading Volume to 5000 (which represents 5B)
-      const tradingInterval = setInterval(() => {
-        setTradingVolume((prev) => {
-          if (prev >= 5000) return 5000;
-          return prev + 30;
-        });
-      }, 15);
-
-      // Animate Campaigns (400) - adjusted to finish in ~2000ms
-      const campaignsInterval = setInterval(() => {
-        setCampaigns((prev) => {
-          if (prev >= 400) return 400;
-          return prev + 10;
-        });
-      }, 60);
-
-      // Animate Rewards Distributed (8000 which represents 8M) - adjusted to finish in ~2000ms
-      const rewardsInterval = setInterval(() => {
-        setRewardsDistributed((prev) => {
-          if (prev >= 8000) return 8000;
-          return prev + 50;
-        });
-      }, 16);
-
-      return () => {
-        clearInterval(tradingInterval);
-        clearInterval(campaignsInterval);
-        clearInterval(rewardsInterval);
-      };
-    };
-
-    // Start animation when component mounts
-    const timeout = setTimeout(animateNumbers, 1000);
-    return () => clearTimeout(timeout);
-  }, []);
 
   return (
     <div className="relative text-white flex flex-col w-full items-center justify-between pt-8 md:pt-14">
-      <div className="text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-4 pt-0 min-h-[60vh] md:min-h-[70vh] flex flex-col items-center justify-center">
+      <div className="relative z-10 text-center sm:px-6 lg:px-8 lg:pt-12 sm:pt-4 pt-0 min-h-[60vh] md:min-h-[70vh] flex flex-col items-center justify-center">
         <h1 className="sm:text-[56px] text-6xl lg:text-8xl sm:mb-6 mb-4 font-sans leading-tight text-foreground">
           {titleText}
         </h1>
@@ -142,7 +78,7 @@ const Hero = () => {
       </div>
 
       {/* Icon Belt */}
-      <div className="w-full mb-20">
+      <div className="relative z-10 w-full mb-20">
         <IconBelt
           items={[...trustedCompanies].map((company, i) => (
             <a
@@ -150,28 +86,27 @@ const Hero = () => {
               href={company.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-shrink-0 inline-block"
-              style={{ width: '50px', height: '50px' }}
+              className="flex-shrink-0 inline-block w-10 h-10 sm:w-14 sm:h-14 md:w-[50px] md:h-[50px]"
             >
               <Image
                 src={company.logo}
                 alt={company.name}
                 width={company.width}
                 height={company.height}
-                style={{ width: '50px', height: '50px', objectFit: 'contain' }}
+                className="w-full h-full object-contain"
               />
             </a>
           ))}
           speed={100}
           direction="left"
-          gap={90}
+          gapClassName="gap-[50px] md:gap-[90px]"
           repeatCount={6}
           pauseOnHover={true}
           className="py-3"
         />
       </div>
 
-      <section className="bg-card w-full p-16 rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">
+      <section className="relative z-10 bg-card w-full p-16 rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">
         <div className="max-w-6xl mx-auto">
             {/* Logo */}
             <div className="flex justify-center mb-4">
@@ -179,10 +114,10 @@ const Hero = () => {
             </div>
 
             {/* Headline */}
-            <h1 className="text-center text-secondary text-lg leading-relaxed mx-auto mb-12">
+            <h2 className="text-center text-secondary text-lg leading-relaxed mx-auto mb-12">
               We build the operating systems to handle your incentives—from set-up to distribution and analytics—powered by
               Torque Intelligence.
-            </h1>
+            </h2>
 
             {/* Dashed Divider */}
             <div className="border-t border-dashed border-secondary-foreground mb-16" />

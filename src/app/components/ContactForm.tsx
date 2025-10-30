@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "@formspree/react";
-import { CustomButton } from "@/components/ui/customButton";
+import { CustomButton } from "@/components/ui/custom-button";
 import { Select } from "@/components/ui/select";
 
 declare global {

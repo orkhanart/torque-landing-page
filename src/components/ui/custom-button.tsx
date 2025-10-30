@@ -77,7 +77,7 @@ const ButtonCorners: React.FC<ButtonCornersProps> = ({
     <div className="relative inline-flex items-center group">
       {/* Left column */}
       <div className="flex flex-col">
-        <div className={rectangleVariants({ buttonSize, buttonColor })} />
+        <div className={cn(rectangleVariants({ buttonSize, buttonColor }), "rounded-tl-[3px]")} />
         <svg
           width="10"
           height="10"
@@ -109,7 +109,7 @@ const ButtonCorners: React.FC<ButtonCornersProps> = ({
             className={cornerVariants({ buttonColor })}
           />
         </svg>
-        <div className={rectangleVariants({ buttonSize, buttonColor })} />
+        <div className={cn(rectangleVariants({ buttonSize, buttonColor }), "rounded-br-[3px]")} />
       </div>
     </div>
   );
@@ -142,7 +142,7 @@ const DecoratedButton = React.forwardRef<
       <div className="relative inline-flex items-center group">
         {/* Left column */}
         <div className="flex flex-col">
-          <div className={rectangleVariants({ buttonSize: size, buttonColor: color })} />
+          <div className={cn(rectangleVariants({ buttonSize: size, buttonColor: color }), "rounded-tl-[3px]")} />
           <svg
             width="10"
             height="10"
@@ -186,7 +186,7 @@ const DecoratedButton = React.forwardRef<
               className={cornerVariants({ buttonColor: color })}
             />
           </svg>
-          <div className={rectangleVariants({ buttonSize: size, buttonColor: color })} />
+          <div className={cn(rectangleVariants({ buttonSize: size, buttonColor: color }), "rounded-br-[3px]")} />
         </div>
       </div>
     );

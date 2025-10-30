@@ -1,14 +1,16 @@
-import Hero from "./components/hero";
-import Footer from "./components/footer";
-import Navbar from "./components/navbar";
+import Hero from "./components/Hero";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 import { PlatformFeatures } from "./components/PlatformFeatures";
 import AnnouncementBanner from "./components/AnnouncementBanner";
 import IncentiveExplanation from "./components/IncentiveExplanation";
+import { RotatingHexagons } from "./components/RotatingHexagons";
 
 export default function Home() {
   return (
     <>
       <Navbar />
+      <RotatingHexagons />
       <div className="w-full relative container mx-auto px-4 md:px-6 lg:px-8">
         
         <div className="flex flex-col items-center justify-center gap-6 md:gap-10 my-4">

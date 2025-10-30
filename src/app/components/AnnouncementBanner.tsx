@@ -1,5 +1,5 @@
 "use client";
-import { CustomButton } from "@/components/ui/customButton";
+import { CustomButton } from "@/components/ui/custom-button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 

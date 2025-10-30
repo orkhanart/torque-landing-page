@@ -6,6 +6,7 @@ interface IconBeltProps {
   speed?: number;
   direction?: "left" | "right";
   gap?: number;
+  gapClassName?: string; // Tailwind gap classes for responsive spacing (e.g., "gap-10 md:gap-20")
   pauseOnHover?: boolean;
   className?: string;
   repeatCount?: number; // How many times to repeat the items array
@@ -16,6 +17,7 @@ export function IconBelt({
   speed = 18,
   direction = "left",
   gap = 28,
+  gapClassName,
   pauseOnHover = true,
   className = "",
   repeatCount = 4,
@@ -61,13 +63,15 @@ export function IconBelt({
         display: "flex",
       }}
     >
+      {/* @ts-expect-error - Known framer-motion v11 + TypeScript v5 compatibility issue */}
       <motion.div
         role="list"
         aria-label="moving icon belt"
         style={{
           display: "inline-flex",
-          gap: `${gap}px`,
+          ...(gapClassName ? {} : { gap: `${gap}px` }),
         }}
+        className={gapClassName || ""}
         animate={!prefersReducedMotion ? { x: animateX } : undefined}
         transition={
           !prefersReducedMotion

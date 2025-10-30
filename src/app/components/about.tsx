@@ -1,9 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
-// import ComparisonCard from "@/components/ui/comparisonCard";
-import Frame from "@/components/ui/frame";
 
 const About = () => {
   return (
@@ -20,111 +17,10 @@ const About = () => {
       </h1>
       <div className="flex xl:flex-row flex-col justify-center items-center lg:gap-12 gap-8">
         <Card className="md:w-[588px] w-full md:h-[400px] h-auto p-4">
-          <Frame gray={true}>
-            <CardHeader>
-              <div>
-                <Badge size="sm" variant="tertiary">
-                  The status quo
-                </Badge>
-              </div>
-              <CardTitle className="text-3xl">
-                Manually build static reward mechanisms,{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-                  in months
-                </span>
-              </CardTitle>
-              <CardContent className="p-0">
-                <ul className="flex flex-col gap-2">
-                  <li className="flex items-start">
-                    <Image
-                      src="/close.png"
-                      alt="bullet point"
-                      width={16}
-                      height={16}
-                      className="mr-2 mt-1"
-                    />
-                    Requires continuous upkeep from your dev team
-                  </li>
-                  <li className="flex items-start">
-                    <Image
-                      src="/close.png"
-                      alt="bullet point"
-                      width={16}
-                      height={16}
-                      className="mr-2 mt-1"
-                    />
-                    Rigid campaigns that do not encourage iterations
-                  </li>
-                  <li className="flex items-start">
-                    <Image
-                      src="/close.png"
-                      alt="bullet point"
-                      width={16}
-                      height={16}
-                      className="mr-2 mt-1"
-                    />
-                    Limited in targeting and token distribution
-                  </li>
-                </ul>
-              </CardContent>
-            </CardHeader>
-          </Frame>
+
         </Card>
         <Card className="md:w-[588px] w-full md:h-[400px] h-auto p-4">
-          <Frame>
-            <CardHeader>
-              <div>
-                <Badge size="sm" variant="primary">
-                  <div className="mr-2">With TORQUE</div>
-                  <Image
-                    src="/blue-logo.svg"
-                    alt="TORQUE"
-                    width={18}
-                    height={18}
-                  />
-                </Badge>
-              </div>
-              <CardTitle className="text-3xl">
-                Execute on scalable growth strategies,{" "}
-                <span className="text-primary">in seconds</span>
-              </CardTitle>
 
-              <CardContent className="p-0">
-                <ul className="flex flex-col gap-2">
-                  <li className="flex items-start">
-                    <Image
-                      src="/point.svg"
-                      alt="bullet point"
-                      width={16}
-                      height={16}
-                      className="mr-2 mt-1"
-                    />
-                    Target specific users and track performance
-                  </li>
-                  <li className="flex items-start">
-                    <Image
-                      src="/point.svg"
-                      alt="bullet point"
-                      width={16}
-                      height={16}
-                      className="mr-2 mt-1"
-                    />
-                    Flexible reward engine for rapid iteration
-                  </li>
-                  <li className="flex items-start">
-                    <Image
-                      src="/point.svg"
-                      alt="bullet point"
-                      width={16}
-                      height={16}
-                      className="mr-2 mt-1"
-                    />
-                    No-code client for marketers
-                  </li>
-                </ul>
-              </CardContent>
-            </CardHeader>
-          </Frame>
         </Card>
       </div>
     </div>

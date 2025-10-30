@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CustomButton } from "@/components/ui/customButton";
+import { CustomButton } from "@/components/ui/custom-button";
 
 import { Menu, X } from "lucide-react";
 import Image from "next/image";

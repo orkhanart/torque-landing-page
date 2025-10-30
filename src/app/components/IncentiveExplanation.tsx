@@ -7,9 +7,9 @@ const IncentiveExplanation = () => {
   return (
     <div>
       <div className="flex flex-col md:gap-4 gap-2 mb-6 md:mb-8">
-        <h3 className="text-secondary text-sm md:text-base">How we add value</h3>
-        <h1 className="text-foreground text-2xl md:text-[40px]">Incentives from A to Z</h1>
-        <h3 className="text-secondary text-sm md:text-base">Easily build custom incentives to reward and grow your community</h3>
+        <p className="text-secondary text-sm md:text-base">How we add value</p>
+        <h2 className="text-foreground text-2xl md:text-[40px]">Incentives from A to Z</h2>
+        <p className="text-secondary text-sm md:text-base">Easily build custom incentives to reward and grow your community</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 md:gap-8 h-auto">
@@ -17,7 +17,7 @@ const IncentiveExplanation = () => {
           <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
-                <h1 className="text-xl md:text-3xl font-medium">Create Incentive</h1>
+                <span className="text-xl md:text-3xl font-medium">Create Incentive</span>
 
                 <HammerIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
@@ -34,7 +34,7 @@ const IncentiveExplanation = () => {
           <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">  
             <CardHeader>
             <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
-                <h1 className="text-xl md:text-3xl font-medium">Fund Incentive</h1>
+                <span className="text-xl md:text-3xl font-medium">Fund Incentive</span>
 
                 <PiggyBankIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
@@ -53,7 +53,7 @@ const IncentiveExplanation = () => {
           <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 w-full">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
-                <h1 className="text-xl md:text-3xl font-medium">Optimize Incentive</h1>
+                <span className="text-xl md:text-3xl font-medium">Optimize Incentive</span>
 
                 <WandSparklesIcon className="w-6 h-6 md:w-7 md:h-7 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
