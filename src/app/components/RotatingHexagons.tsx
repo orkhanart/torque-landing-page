@@ -2,8 +2,52 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export const RotatingHexagons = () => {
+  const [viewportWidth, setViewportWidth] = useState(0);
+  
+  // Base width where the design looks good (your current viewport)
+  const BASE_WIDTH = 1680;
+
+  useEffect(() => {
+    const updateViewportWidth = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    // Set initial width
+    updateViewportWidth();
+
+    // Update on resize
+    window.addEventListener("resize", updateViewportWidth);
+    return () => window.removeEventListener("resize", updateViewportWidth);
+  }, []);
+
+  // Calculate scale factor based on viewport width
+  const scaleFactor = viewportWidth / BASE_WIDTH;
+  
+  // Base dimensions and positions (values that look good at 1680px)
+  const baseSize = 2000;
+  const hexagon1 = {
+    left: -1000,
+    top: -1000,
+  };
+  const hexagon2 = {
+    left: 500,
+    top: 200,
+  };
+
+  // Apply scaling
+  const scaledSize = baseSize * scaleFactor;
+  const scaledHexagon1 = {
+    left: hexagon1.left * scaleFactor,
+    top: hexagon1.top * scaleFactor,
+  };
+  const scaledHexagon2 = {
+    left: hexagon2.left * scaleFactor,
+    top: hexagon2.top * scaleFactor,
+  };
+  
   return (
     <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
       <div className="relative w-full h-full flex justify-between items-start">
@@ -11,11 +55,11 @@ export const RotatingHexagons = () => {
         <motion.div
           className="absolute"
           style={{
-            width: 2000,
-            height: 2000,
+            width: scaledSize,
+            height: scaledSize,
             opacity: 0.1,
-            left: -1000,
-            top: -1000,
+            left: scaledHexagon1.left,
+            top: scaledHexagon1.top,
           }}
           animate={{ rotate: -360 }}
           transition={{
@@ -27,8 +71,8 @@ export const RotatingHexagons = () => {
           <Image
             src="/bg-hexagon.svg"
             alt="Background hexagon"
-            width={2000}
-            height={2000}
+            width={scaledSize}
+            height={scaledSize}
             className="w-full h-full"
           />
         </motion.div>
@@ -37,11 +81,11 @@ export const RotatingHexagons = () => {
         <motion.div
           className="absolute"
           style={{
-            width: 2000,
-            height: 2000,
+            width: scaledSize,
+            height: scaledSize,
             opacity: 0.1,
-            left: 500,
-            top: 200,
+            left: scaledHexagon2.left,
+            top: scaledHexagon2.top,
           }}
           animate={{ rotate: 360 }}
           transition={{
@@ -53,8 +97,8 @@ export const RotatingHexagons = () => {
           <Image
             src="/bg-hexagon.svg"
             alt="Background hexagon"
-            width={2000}
-            height={2000}
+            width={scaledSize}
+            height={scaledSize}
             className="w-full h-full"
           />
         </motion.div>
