@@ -11,13 +11,15 @@ export const RotatingHexagons = () => {
         <motion.div
           className="absolute"
           style={{
-            width: 800,
-            height: 800,
-            opacity: 1,
+            width: 2000,
+            height: 2000,
+            opacity: 0.1,
+            left: -1000,
+            top: -1000,
           }}
-          animate={{ rotate: 360 }}
+          animate={{ rotate: -360 }}
           transition={{
-            duration: 60,
+            duration: 30,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -25,8 +27,8 @@ export const RotatingHexagons = () => {
           <Image
             src="/bg-hexagon.svg"
             alt="Background hexagon"
-            width={800}
-            height={800}
+            width={2000}
+            height={2000}
             className="w-full h-full"
           />
         </motion.div>
@@ -35,15 +37,15 @@ export const RotatingHexagons = () => {
         <motion.div
           className="absolute"
           style={{
-            width: 800,
-            height: 800,
-            opacity: 1,
-            left: "50%",
-            paddingTop: 300,
+            width: 2000,
+            height: 2000,
+            opacity: 0.1,
+            left: 500,
+            top: 200,
           }}
-          animate={{ rotate: -360 }}
+          animate={{ rotate: 360 }}
           transition={{
-            duration: 60,
+            duration: 30,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -51,8 +53,8 @@ export const RotatingHexagons = () => {
           <Image
             src="/bg-hexagon.svg"
             alt="Background hexagon"
-            width={800}
-            height={800}
+            width={2000}
+            height={2000}
             className="w-full h-full"
           />
         </motion.div>

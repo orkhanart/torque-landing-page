@@ -22,8 +22,8 @@ const IncentiveExplanation = () => {
                 <HammerIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
               
-              <CardDescription>
-                <p className="text-sm md:text-base">Design onchain incentives to drive engagement and growth. Pick from leaderboards, rebates, raffles, or direct distributions to reward your users</p>
+              <CardDescription className="text-sm md:text-base">
+                Design onchain incentives to drive engagement and growth. Pick from leaderboards, rebates, raffles, or direct distributions to reward your users
               </CardDescription>
             </CardHeader>
             <CardContent className="px-4 md:px-6">
@@ -38,10 +38,8 @@ const IncentiveExplanation = () => {
 
                 <PiggyBankIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
-              <CardDescription>
-                <p className="text-sm md:text-base">
-                  Fund and manage your incentive treasury with transparent onchain distributions. Track payouts and ensure seamless rewards delivery
-                </p>
+              <CardDescription className="text-sm md:text-base">
+                Fund and manage your incentive treasury with transparent onchain distributions. Track payouts and ensure seamless rewards delivery
               </CardDescription>
             </CardHeader>
             <CardContent className="px-4 md:px-6">
@@ -57,10 +55,8 @@ const IncentiveExplanation = () => {
 
                 <WandSparklesIcon className="w-6 h-6 md:w-7 md:h-7 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
-              <CardDescription>
-                <p className="text-sm md:text-base">
-                  Refine your reward strategies using the Torque Assistant. Set new metrics, adjust distribution formulas, and optimize future incentives
-                </p>
+              <CardDescription className="text-sm md:text-base">
+                Refine your reward strategies using the Torque Assistant. Set new metrics, adjust distribution formulas, and optimize future incentives
               </CardDescription>
             </CardHeader>
             <CardContent className="px-4 md:px-6">
