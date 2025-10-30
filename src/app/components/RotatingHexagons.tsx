@@ -11,6 +11,9 @@ export const RotatingHexagons = () => {
   const BASE_WIDTH = 1680;
 
   useEffect(() => {
+    // Check if window is defined (client-side only)
+    if (typeof window === "undefined") return;
+
     const updateViewportWidth = () => {
       setViewportWidth(window.innerWidth);
     };
@@ -24,7 +27,8 @@ export const RotatingHexagons = () => {
   }, []);
 
   // Calculate scale factor based on viewport width
-  const scaleFactor = viewportWidth / BASE_WIDTH;
+  // Use BASE_WIDTH as fallback for SSR or initial render
+  const scaleFactor = viewportWidth > 0 ? viewportWidth / BASE_WIDTH : 1;
   
   // Base dimensions and positions (values that look good at 1680px)
   const baseSize = 2000;
