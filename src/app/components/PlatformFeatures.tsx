@@ -42,10 +42,13 @@ function FeatureCard({
         <div className={`absolute inset-0 transition-all duration-[600ms] cubic-bezier(0.4, 0, 0.2, 1) ${getGradientClass()}`} />
       )}
       {title && (
-        <div className={`absolute inset-0 flex flex-col justify-${titlePosition === "top" ? "start" : "end"} p-8`}>
+        <div className={`absolute inset-0 flex flex-col justify-${titlePosition === "top" ? "start" : "end"} p-6 md:p-8`}>
           <h3 
-            className="text-3xl md:text-4xl lg:text-5xl z-10"
-            style={{ color: "#F5F5F5" }}
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-[56px] z-10 transition-opacity duration-[600ms] group-hover:opacity-0"
+            style={{ 
+              color: "#F5F5F5",
+              transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
+            }}
           >
             {title}
           </h3>
@@ -53,18 +56,13 @@ function FeatureCard({
       )}
       {description && (
         <div 
-          className={`absolute inset-x-0 px-8 transition-transform duration-[600ms] ${
-            slideDirection === "bottom" 
-              ? "bottom-0 translate-y-[calc(100%+80px)] group-hover:translate-y-0" 
-              : "top-0 -translate-y-[calc(100%+80px)] group-hover:translate-y-0"
-          }`}
+          className="absolute inset-0 flex px-6 md:px-8 py-6 md:py-8 opacity-0 group-hover:opacity-100 transition-opacity duration-[600ms]"
           style={{
-            [slideDirection === "bottom" ? "bottom" : "top"]: "40px",
             transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
           }}
         >
           <p 
-            className="text-lg md:text-xl lg:text-2xl z-10 leading-relaxed"
+            className="text-xl md:text-xl lg:text-2xl xl:text-3xl z-10 leading-relaxed "
             style={{ color: "#F5F5F5" }}
           >
             {description}
@@ -78,21 +76,19 @@ function FeatureCard({
 function IntelligenceCard() {
   return (
     <div 
-      className="group relative w-full h-full rounded-xl overflow-hidden flex items-center justify-center p-8"
+      className="group relative w-full h-full rounded-xl overflow-hidden flex items-start justify-start p-4 md:p-8"
       style={{
         backgroundColor: "#0a0a15",
-        background: "linear-gradient(212deg, rgba(104, 171, 249, 0.00) 0%, rgba(61, 101, 147, 0.25) 100%)",
+        background: "linear-gradient(212deg, rgb(22, 46, 74) 0%, rgb(26, 31, 36) 100%)",
         backdropFilter: "blur(2px)",
       }}
     >
       {/* Title - visible by default, fades out on hover */}
       <h3 
-        className="flex-1 transition-opacity duration-[600ms] group-hover:opacity-0 absolute inset-0 flex items-center justify-center p-8"
+        className="flex-1 transition-opacity duration-[600ms] group-hover:opacity-0 absolute inset-0 flex justify-start p-6 md:p-8 text-3xl md:text-4xl lg:text-5xl xl:text-[56px] leading-tight md:leading-[64px]"
         style={{
           fontFamily: '"JetBrains Mono", monospace',
-          fontSize: "56px",
           fontWeight: 400,
-          lineHeight: "64px",
           background: "linear-gradient(91deg, #888694 -11.8%, #ECECEF 43.8%, #68ABF9 114.03%)",
           backgroundClip: "text",
           WebkitBackgroundClip: "text",
@@ -107,13 +103,13 @@ function IntelligenceCard() {
       
       {/* Description - hidden by default, fades in on hover */}
       <p 
-        className="flex-1 transition-opacity duration-[600ms] opacity-0 group-hover:opacity-100 text-lg md:text-xl lg:text-2xl leading-relaxed"
+        className="flex-1 transition-opacity duration-[600ms] opacity-0 group-hover:opacity-100 text-xl md:text-xl lg:text-2xl xl:text-3xl leading-relaxed"
         style={{ 
           color: "#F5F5F5",
           transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
         }}
       >
-        AI-powered recommendations that analyze performance and suggest campaign improvements in real-time.
+        AI-powered recommendations that analyze performance and suggest incentive improvements.
       </p>
     </div>
   );
