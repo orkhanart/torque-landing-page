@@ -40,23 +40,30 @@ const trustedCompanies = [
   {
     name: "Solana",
     logo: "/logos/solana.svg",
-    width: 300,
+    width: 200,
     height: 90,
     url: "https://solana.com",
   },
   {
     name: "Raydium",
     logo: "/logos/raydium.svg",
-    width: 300,
+    width: 200,
     height: 90,
     url: "https://raydium.io",
   },
   {
     name: "Metaplex",
     logo: "/logos/metaplex.svg",
-    width: 300,
+    width: 200,
     height: 90,
     url: "https://metaplex.com",
+  },
+  {
+    name: "Darklake",
+    logo: "/logos/darklake.svg",
+    width: 200,
+    height: 90,
+    url: "https://www.darklake.fi",
   },
   {
     name: "Tensor",
@@ -75,21 +82,14 @@ const trustedCompanies = [
   {
     name: "Portals",
     logo: "/logos/portals.svg",
-    width: 200,
+    width: 250,
     height: 90,
     url: "https://theportal.to/",
   },
   {
-    name: "Darklake",
-    logo: "/logos/darklake.svg",
-    width: 200,
-    height: 90,
-    url: "https://www.darklake.fi",
-  },
-  {
     name: "USD1",
     logo: "/logos/usd1.svg",
-    width: 200,
+    width: 150,
     height: 90,
     url: "https://worldlibertyfinancial.com/usd1",
   },
@@ -100,25 +100,24 @@ const Hero = () => {
     <div className="relative text-white flex flex-col w-full items-center justify-between pt-4 sm:pt-8 md:pt-14">
       <div className="relative z-10 pt-4 lg:pt-12 min-h-[60vh] md:min-h-[60vh] w-full flex flex-col md:flex-row items-end justify-end gap-0">
           <div className="w-full md:w-1/2 text-center md:text-left bg-card h-48 sm:h-52 md:h-52 px-6 sm:px-12 md:pl-28 md:pr-8 lg:pr-16 flex items-center justify-start invisible md:visible">
-            <h1 className="text-2xl sm:text-3xl md:text-5xl  font-sans leading-tight text-foreground">
+            <h1 className="text-3xl sm:text-3xl md:text-5xl  font-sans leading-tight text-foreground">
               Accelerate Your Growth.
             </h1>
           </div>
 
           <div className="w-full md:w-1/2 text-center md:text-left bg-white/20 backdrop-blur-md h-48 sm:h-52 md:h-52 px-6 sm:px-12 md:px-8 lg:pr-20 flex items-center md:justify-start md:flex-row flex-col justify-center gap-4">
-            <h1 className="text-2xl sm:text-3xl md:text-6xl font-sans leading-tight text-foreground md:hidden">
+            <h1 className="text-3xl sm:text-3xl md:text-6xl font-sans leading-tight text-foreground md:hidden">
               Accelerate Your Growth.
             </h1>
-            <h2 className="text-base sm:text-lg md:text-4xl text-primary text-center md:text-left max-w-lg mx-auto md:mx-0">
+            <h2 className="text-xl md:text-3xl text-foreground text-center md:text-left max-w-lg mx-auto md:mx-0">
               Smart Incentives. <br></br>Real Results.
             </h2>
           </div>
           
       </div>
 
-      <div className="relative z-10 w-full py-8 md:py-16 bg-card flex flex-col items-center justify-center shadow-2xl shadow-primary/10">
-      
-        {/* Icon Belt */}
+      {/* Icon Belt - No Background */}
+      <div className="relative z-10 w-full py-8 md:py-12">
         <IconBelt
           items={[...trustedCompanies].map((company, i) => (
             <a
@@ -126,7 +125,8 @@ const Hero = () => {
               href={company.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex-shrink-0 inline-block w-[120px] h-[60px] md:w-[${company.width}px] md:h-[${company.height}px]`}
+              className="flex-shrink-0 inline-block max-w-[120px] sm:max-w-[140px] md:max-w-none"
+              style={{ width: `${company.width}px`, height: `${company.height}px` }}
             >
               <Image
                 src={company.logo}
@@ -144,51 +144,52 @@ const Hero = () => {
           pauseOnHover={true}
           className="py-3"
         />
+      </div>
 
-        <div className="h-24 md:h-40"></div>
+      {/* Card with "We build the operating systems..." section */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-8 pb-12 md:pb-18 mt-6 md:mt-12">
+        <div className="bg-card rounded-2xl shadow-2xl shadow-primary/10 p-8 md:p-12">
+          {/* Logo */}
+          <div className="flex justify-center mb-4 md:mb-6">
+            <Image src="logos/LogoPurple.svg" alt="Torque logo" width={40} height={40} className="w-8 h-8 md:w-12 md:h-12" />
+          </div>
 
-        <div className="max-w-6xl mx-auto mt-8 md:mt-16 pb-12 md:pb-18 px-6 md:px-8 min-h-[30vh] md:h-[60vh]">
-            {/* Logo */}
-            <div className="flex justify-center mb-4 md:mb-6">
-              <Image src="logos/LogoPurple.svg" alt="Torque logo" width={40} height={40} className="w-8 h-8 md:w-12 md:h-12" />
+          {/* Headline */}
+          <h2 className="text-center text-secondary text-base sm:text-lg leading-relaxed mx-auto mb-8 md:mb-12 px-4">
+            We build the operating systems to handle your incentives—from set-up to distribution and analytics—powered by
+            Torque Intelligence.
+          </h2>
+
+          {/* Dashed Divider */}
+          <div className="border-t border-dashed border-secondary-foreground mb-8 md:mb-16" />
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            {/* Stat 1 */}
+            <div className="text-center">
+              <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
+                $<AnimatedCounter value={10000000} duration={2.5} />
+              </div>
+              <div className="text-secondary text-sm sm:text-base">Rewards Distributed</div>
             </div>
 
-            {/* Headline */}
-            <h2 className="text-center text-secondary text-base sm:text-lg leading-relaxed mx-auto mb-8 md:mb-12 px-4">
-              We build the operating systems to handle your incentives—from set-up to distribution and analytics—powered by
-              Torque Intelligence.
-            </h2>
-
-            {/* Dashed Divider */}
-            <div className="border-t border-dashed border-secondary-foreground mb-8 md:mb-16" />
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-              {/* Stat 1 */}
-              <div className="text-center">
-                <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
-                  $<AnimatedCounter value={10000000} duration={2.5} />
-                </div>
-                <div className="text-secondary text-sm sm:text-base">Rewards Distributed</div>
+            {/* Stat 2 */}
+            <div className="text-center">
+              <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
+                <AnimatedCounter value={5} duration={2} suffix="x" />
               </div>
+              <div className="text-secondary text-sm sm:text-base">Retention Rate</div>
+            </div>
 
-              {/* Stat 2 */}
-              <div className="text-center">
-                <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
-                  <AnimatedCounter value={250000} duration={2.5} />
-                </div>
-                <div className="text-secondary text-sm sm:text-base">Solana&apos;s Top Users</div>
+            {/* Stat 3 */}
+            <div className="text-center">
+              <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
+                <AnimatedCounter value={9} duration={2} suffix="x" />
               </div>
-
-              {/* Stat 3 */}
-              <div className="text-center">
-                <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
-                  <AnimatedCounter value={300} duration={2} suffix="+" />
-                </div>
-                <div className="text-secondary text-sm sm:text-base">Campaigns</div>
-              </div>
+              <div className="text-secondary text-sm sm:text-base">Power User Retention Rate</div>
             </div>
           </div>
+        </div>
       </div>
 
     </div>
