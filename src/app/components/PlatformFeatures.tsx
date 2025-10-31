@@ -39,7 +39,7 @@ function FeatureCard({
         className="object-cover"
       />
       {gradientType !== "none" && (
-        <div className={`absolute inset-0 transition-all duration-700 ease-in-out ${getGradientClass()}`} />
+        <div className={`absolute inset-0 transition-all duration-[600ms] cubic-bezier(0.4, 0, 0.2, 1) ${getGradientClass()}`} />
       )}
       {title && (
         <div className={`absolute inset-0 flex flex-col justify-${titlePosition === "top" ? "start" : "end"} p-8`}>
@@ -53,13 +53,14 @@ function FeatureCard({
       )}
       {description && (
         <div 
-          className={`absolute inset-x-0 px-8 transition-transform duration-700 ease-in-out ${
+          className={`absolute inset-x-0 px-8 transition-transform duration-[600ms] ${
             slideDirection === "bottom" 
               ? "bottom-0 translate-y-[calc(100%+80px)] group-hover:translate-y-0" 
               : "top-0 -translate-y-[calc(100%+80px)] group-hover:translate-y-0"
           }`}
           style={{
-            [slideDirection === "bottom" ? "bottom" : "top"]: "40px"
+            [slideDirection === "bottom" ? "bottom" : "top"]: "40px",
+            transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
           }}
         >
           <p 
@@ -77,16 +78,16 @@ function FeatureCard({
 function IntelligenceCard() {
   return (
     <div 
-      className="group relative w-full h-full rounded-xl overflow-hidden flex items-center justify-center p-8 transition-all duration-700 ease-in-out"
+      className="group relative w-full h-full rounded-xl overflow-hidden flex items-center justify-center p-8"
       style={{
-        backgroundColor: "#1a1a2e",
+        backgroundColor: "#0a0a15",
         background: "linear-gradient(212deg, rgba(104, 171, 249, 0.00) 0%, rgba(61, 101, 147, 0.25) 100%)",
         backdropFilter: "blur(2px)",
       }}
     >
       {/* Title - visible by default, fades out on hover */}
       <h3 
-        className="flex-1 transition-opacity duration-700 ease-in-out group-hover:opacity-0 absolute inset-0 flex items-center justify-center p-8"
+        className="flex-1 transition-opacity duration-[600ms] group-hover:opacity-0 absolute inset-0 flex items-center justify-center p-8"
         style={{
           fontFamily: '"JetBrains Mono", monospace',
           fontSize: "56px",
@@ -96,6 +97,7 @@ function IntelligenceCard() {
           backgroundClip: "text",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
+          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
         }}
       >
         Torque
@@ -105,8 +107,11 @@ function IntelligenceCard() {
       
       {/* Description - hidden by default, fades in on hover */}
       <p 
-        className="flex-1 transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100 text-lg md:text-xl lg:text-2xl leading-relaxed"
-        style={{ color: "#F5F5F5" }}
+        className="flex-1 transition-opacity duration-[600ms] opacity-0 group-hover:opacity-100 text-lg md:text-xl lg:text-2xl leading-relaxed"
+        style={{ 
+          color: "#F5F5F5",
+          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
+        }}
       >
         AI-powered recommendations that analyze performance and suggest campaign improvements in real-time.
       </p>

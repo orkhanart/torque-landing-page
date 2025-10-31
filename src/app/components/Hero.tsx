@@ -147,7 +147,7 @@ const Hero = () => {
       </div>
 
       {/* Card with "We build the operating systems..." section */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-8 pb-12 md:pb-18 mt-6 md:mt-12">
+      <div className="relative z-10 w-full container mx-auto px-4 md:px-6 lg:px-8 pb-12 md:pb-18 mt-6 md:mt-12">
         <div className="bg-card rounded-2xl shadow-2xl shadow-primary/10 p-8 md:p-12">
           {/* Logo */}
           <div className="flex justify-center mb-4 md:mb-6">
