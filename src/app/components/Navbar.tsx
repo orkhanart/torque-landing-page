@@ -6,7 +6,6 @@ import { CustomButton } from "@/components/ui/custom-button";
 
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
-import { ContactModal } from "./ContactModal";
 // import AnnouncementBanner from "./AnnouncementBanner";
 
 interface MenuItem {
@@ -18,7 +17,6 @@ interface MenuItem {
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuHeight, setMenuHeight] = useState(0);
-  const [showModal, setShowModal] = useState(false);
   const pathname = usePathname();
 
   const menuItems: MenuItem[] = [
@@ -89,16 +87,15 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Desktop Request Access Button */}
+          {/* Desktop Launch Platform Button */}
           <div className="hidden lg:block">
             <CustomButton 
               buttonSize="small"
               buttonColor="primary"
-              onClick={() => setShowModal(true)}
+              href="https://platform.torque.so/"
               className="shadow-[0px_0px_20px_0px_rgba(161,255,255,0.3)]"
-              asLink={false}
             >
-              Request Access
+              Launch
             </CustomButton>
           </div>
 
@@ -156,14 +153,10 @@ export default function Navbar() {
               <CustomButton 
                 buttonSize="small"
                 buttonColor="primary"
-                onClick={() => {
-                  setShowModal(true);
-                  closeMenu();
-                }}
+                href="https://platform.torque.so/"
                 className="w-full shadow-[0px_0px_20px_0px_rgba(161,255,255,0.3)]"
-                asLink={false}
               >
-                Request Access
+                Launch
               </CustomButton>
             </div>
           </nav>
@@ -172,8 +165,6 @@ export default function Navbar() {
 
       {/* Spacer to account for fixed header */}
       <div className="h-[64px]"></div>
-
-      <ContactModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>
   );
 }

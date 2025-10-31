@@ -13,7 +13,7 @@ const IncentiveExplanation = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 md:gap-8 h-auto">
-        <div className="flex flex-col gap-6 md:gap-8 flex-1">
+        <div className="flex flex-col gap-6 md:gap-12 flex-1">
           <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 transition-transform duration-300 hover:scale-[102%]">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
@@ -31,23 +31,6 @@ const IncentiveExplanation = () => {
               </CardContent>
           </Card>
 
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 transition-transform duration-300 hover:scale-[102%]">  
-            <CardHeader>
-            <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
-                <span className="text-xl md:text-3xl font-medium">Fund</span>
-
-                <PiggyBankIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
-              </CardTitle>
-              <CardDescription className="text-sm md:text-base">
-                Fund and manage your incentive treasury with transparent onchain distributions. Track payouts and ensure seamless rewards delivery
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="px-4 md:px-6">
-                <Image src="/data-card.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
-              </CardContent>
-          </Card>
-        </div>
-        <div className="flex flex-col justify-center items-center h-full flex-1 md:pt-28">
           <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 w-full transition-transform duration-300 hover:scale-[102%]">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
@@ -62,6 +45,25 @@ const IncentiveExplanation = () => {
             <CardContent className="px-4 md:px-6">
                 <Image src="/ai-chat.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
             </CardContent>
+          </Card>
+
+          
+        </div>
+        <div className="flex flex-col justify-center items-center h-full flex-1 md:pt-28">
+        <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 transition-transform duration-300 hover:scale-[102%]">  
+            <CardHeader>
+            <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
+                <span className="text-xl md:text-3xl font-medium">Fund</span>
+
+                <PiggyBankIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
+              </CardTitle>
+              <CardDescription className="text-sm md:text-base">
+                Fund and manage your incentive treasury with transparent onchain distributions. Track payouts and ensure seamless rewards delivery
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-4 md:px-6">
+                <Image src="/data-card.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
+              </CardContent>
           </Card>
 
         </div>

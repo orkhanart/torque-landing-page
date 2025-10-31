@@ -40,21 +40,21 @@ const trustedCompanies = [
   {
     name: "Solana",
     logo: "/logos/solana.svg",
-    width: 200,
+    width: 300,
     height: 90,
     url: "https://solana.com",
   },
   {
     name: "Raydium",
     logo: "/logos/raydium.svg",
-    width: 200,
+    width: 300,
     height: 90,
     url: "https://raydium.io",
   },
   {
     name: "Metaplex",
     logo: "/logos/metaplex.svg",
-    width: 200,
+    width: 300,
     height: 90,
     url: "https://metaplex.com",
   },
@@ -89,7 +89,7 @@ const trustedCompanies = [
   {
     name: "USD1",
     logo: "/logos/usd1.svg",
-    width: 150,
+    width: 200,
     height: 90,
     url: "https://worldlibertyfinancial.com/usd1",
   },
@@ -100,17 +100,17 @@ const Hero = () => {
     <div className="relative text-white flex flex-col w-full items-center justify-between pt-4 sm:pt-8 md:pt-14">
       <div className="relative z-10 pt-4 lg:pt-12 min-h-[60vh] md:min-h-[60vh] w-full flex flex-col md:flex-row items-end justify-end gap-0">
           <div className="w-full md:w-1/2 text-center md:text-left bg-card h-48 sm:h-52 md:h-52 px-6 sm:px-12 md:pl-28 md:pr-8 lg:pr-16 flex items-center justify-start invisible md:visible">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans leading-tight text-foreground">
-              Accelerate Your Growth
+            <h1 className="text-2xl sm:text-3xl md:text-5xl  font-sans leading-tight text-foreground">
+              Accelerate Your Growth.
             </h1>
           </div>
 
           <div className="w-full md:w-1/2 text-center md:text-left bg-white/20 backdrop-blur-md h-48 sm:h-52 md:h-52 px-6 sm:px-12 md:px-8 lg:pr-20 flex items-center md:justify-start md:flex-row flex-col justify-center gap-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans leading-tight text-foreground md:hidden">
-              Accelerate Your Growth
+            <h1 className="text-2xl sm:text-3xl md:text-6xl font-sans leading-tight text-foreground md:hidden">
+              Accelerate Your Growth.
             </h1>
-            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground text-center md:text-left max-w-lg mx-auto md:mx-0">
-              $10M+ in rewards distributed through active incentives
+            <h2 className="text-base sm:text-lg md:text-4xl text-primary text-center md:text-left max-w-lg mx-auto md:mx-0">
+              Smart Incentives. <br></br>Real Results.
             </h2>
           </div>
           
@@ -185,7 +185,7 @@ const Hero = () => {
                 <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
                   <AnimatedCounter value={300} duration={2} suffix="+" />
                 </div>
-                <div className="text-secondary text-sm sm:text-base">Campaigns (Tokens, Protocols, Platforms)</div>
+                <div className="text-secondary text-sm sm:text-base">Campaigns</div>
               </div>
             </div>
           </div>

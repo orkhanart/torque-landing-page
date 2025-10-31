@@ -61,7 +61,7 @@ export const RotatingHexagons = () => {
           style={{
             width: scaledSize,
             height: scaledSize,
-            opacity: 0.3,
+            opacity: 0.5,
             left: scaledHexagon1.left,
             top: scaledHexagon1.top,
           }}
@@ -87,7 +87,7 @@ export const RotatingHexagons = () => {
           style={{
             width: scaledSize,
             height: scaledSize,
-            opacity: 0.3,
+            opacity: 0.5,
             left: scaledHexagon2.left,
             top: scaledHexagon2.top,
           }}
