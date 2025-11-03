@@ -39,15 +39,14 @@ function FeatureCard({
         className="object-cover"
       />
       {gradientType !== "none" && (
-        <div className={`absolute inset-0 transition-all duration-[600ms] cubic-bezier(0.4, 0, 0.2, 1) ${getGradientClass()}`} />
+        <div className={`absolute inset-0 transition-all duration-300 ease-in-out ${getGradientClass()}`} />
       )}
       {title && (
         <div className={`absolute inset-0 flex flex-col justify-${titlePosition === "top" ? "start" : "end"} p-6 md:p-8`}>
           <h3 
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-[56px] z-10 transition-opacity duration-[600ms] group-hover:opacity-0"
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-[56px] z-10 transition-opacity duration-300 ease-in-out group-hover:opacity-0"
             style={{ 
-              color: "#F5F5F5",
-              transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
+              color: "#F5F5F5"
             }}
           >
             {title}
@@ -56,10 +55,7 @@ function FeatureCard({
       )}
       {description && (
         <div 
-          className="absolute inset-0 flex px-6 md:px-8 py-6 md:py-8 opacity-0 group-hover:opacity-100 transition-opacity duration-[600ms]"
-          style={{
-            transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
-          }}
+          className="absolute inset-0 flex px-6 md:px-8 py-6 md:py-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
         >
           <p 
             className="text-xl md:text-xl lg:text-2xl xl:text-3xl z-10 leading-relaxed "
@@ -85,15 +81,14 @@ function IntelligenceCard() {
     >
       {/* Title - visible by default, fades out on hover */}
       <h3 
-        className="flex-1 transition-opacity duration-[600ms] group-hover:opacity-0 absolute inset-0 flex justify-start p-6 md:p-8 text-3xl md:text-4xl lg:text-5xl xl:text-[56px] leading-tight md:leading-[64px]"
+        className="flex-1 transition-opacity duration-300 ease-in-out group-hover:opacity-0 absolute inset-0 flex justify-start p-6 md:p-8 text-3xl md:text-4xl lg:text-5xl xl:text-[56px] leading-tight md:leading-[64px]"
         style={{
           fontFamily: '"JetBrains Mono", monospace',
           fontWeight: 400,
           background: "linear-gradient(91deg, #888694 -11.8%, #ECECEF 43.8%, #68ABF9 114.03%)",
           backgroundClip: "text",
           WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
+          WebkitTextFillColor: "transparent"
         }}
       >
         Torque
@@ -103,10 +98,9 @@ function IntelligenceCard() {
       
       {/* Description - hidden by default, fades in on hover */}
       <p 
-        className="flex-1 transition-opacity duration-[600ms] opacity-0 group-hover:opacity-100 text-xl md:text-xl lg:text-2xl xl:text-3xl leading-relaxed"
+        className="flex-1 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100 text-xl md:text-xl lg:text-2xl xl:text-3xl leading-relaxed"
         style={{ 
-          color: "#F5F5F5",
-          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)"
+          color: "#F5F5F5"
         }}
       >
         AI-powered recommendations that analyze performance and suggest incentive improvements.

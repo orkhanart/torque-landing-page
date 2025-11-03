@@ -63,7 +63,7 @@ const IncentiveExplanation = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="px-4 md:px-6">
-                <Image src="/ai-chat.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
+                <Image src="/ai-chat1.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
             </CardContent>
           </Card>
         </div>
