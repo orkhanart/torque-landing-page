@@ -156,8 +156,7 @@ const Hero = () => {
 
           {/* Headline */}
           <h2 className="text-center text-secondary text-lg sm:text-lg leading-relaxed mx-auto mb-8 md:mb-12 px-4">
-            We build the operating systems to handle your incentives—from set-up to distribution and analytics—powered by
-            Torque Intelligence.
+          Torque is the operating system for your growth operations — from user analytics to incentives and token distribution — powered by <i>Torque Intelligence</i>.
           </h2>
 
           {/* Dashed Divider */}

@@ -122,9 +122,9 @@ export function PlatformFeatures() {
           <div className="flex-1">
             <FeatureCard
               image="/Incentive.png"
-              alt="Smart Incentives"
-              title="Smart Incentives"
-              description="Intelligent incentive programs that automatically reward users for verifiable on-chain actions."
+              alt="Product and Token CRM"
+              title="Product and Token CRM"
+              description="Dive into your product and token data to understand your user segments."
               gradientType="blue"
               titlePosition="top"
               slideDirection="bottom"
@@ -135,9 +135,9 @@ export function PlatformFeatures() {
           <div className="flex-1">
             <FeatureCard
               image="/Campaign.png"
-              alt="Product and Token CRM"
-              title="Product and Token CRM"
-              description="Dive into your product and token data to understand your user segments."
+              alt="Smart Incentives"
+              title="Smart Incentives"
+              description="Intelligent incentive programs that automatically reward users for verifiable on-chain actions."
               gradientType="black"
               titlePosition="bottom"
               slideDirection="top"
