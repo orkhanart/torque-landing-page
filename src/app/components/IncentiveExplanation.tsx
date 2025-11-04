@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { HammerIcon, WandSparklesIcon, PiggyBankIcon } from "lucide-react";
+import { HammerIcon, WandSparklesIcon, CoinsIcon } from "lucide-react";
 
 
 const IncentiveExplanation = () => {
@@ -24,7 +24,7 @@ const IncentiveExplanation = () => {
               </CardTitle>
               
               <CardDescription className="text-sm md:text-base">
-                Design and launch on-chain incentive in minutes. Choose from pre-built modules like leaderboards, raffles, and rebates.
+                Design and launch on-chain incentives in minutes. Choose from pre-built modules like leaderboards, raffles, and rebates.
               </CardDescription>
             </CardHeader>
             <CardContent className="px-4 md:px-6">
@@ -37,10 +37,10 @@ const IncentiveExplanation = () => {
             <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
                 <span className="text-xl md:text-3xl font-medium">Fund</span>
 
-                <PiggyBankIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
+                <CoinsIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
               <CardDescription className="text-sm md:text-base">
-                Allocate tokens and set budgets with built-in analytics. Fund campaigns safely and transparently, directly from your wallet.
+              Allocate tokens and set budgets with built-in analytics. Fund campaigns securely and transparently — right from your wallet.
               </CardDescription>
             </CardHeader>
             <CardContent className="px-4 md:px-6">
@@ -59,7 +59,7 @@ const IncentiveExplanation = () => {
                 <WandSparklesIcon className="w-6 h-6 md:w-7 md:h-7 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
               <CardDescription className="text-sm md:text-base">
-              Use Torque Intelligence to measure performance and adjust parameters automatically. Identify what&apos;s working — and scale it instantly.
+              Use Torque Intelligence to measure performance and automatically optimize incentives. Identify what&apos;s working — and scale it instantly.
               </CardDescription>
             </CardHeader>
             <CardContent className="px-4 md:px-6">

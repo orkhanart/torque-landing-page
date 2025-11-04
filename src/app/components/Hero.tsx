@@ -155,7 +155,7 @@ const Hero = () => {
           </div>
 
           {/* Headline */}
-          <h2 className="text-center text-secondary text-base sm:text-lg leading-relaxed mx-auto mb-8 md:mb-12 px-4">
+          <h2 className="text-center text-secondary text-lg sm:text-lg leading-relaxed mx-auto mb-8 md:mb-12 px-4">
             We build the operating systems to handle your incentives—from set-up to distribution and analytics—powered by
             Torque Intelligence.
           </h2>
@@ -167,26 +167,26 @@ const Hero = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {/* Stat 1 */}
             <div className="text-center">
-              <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
-                $<AnimatedCounter value={10000000} duration={2.5} />
+              <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
+                $<AnimatedCounter value={10} duration={2.5} suffix="M" />
               </div>
               <div className="text-secondary text-sm sm:text-base">Rewards Distributed</div>
             </div>
 
             {/* Stat 2 */}
             <div className="text-center">
-              <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
-                <AnimatedCounter value={5} duration={2} suffix="x" />
+              <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
+                <AnimatedCounter value={240} duration={2} suffix="%" />
               </div>
-              <div className="text-secondary text-sm sm:text-base">Retention Rate</div>
+              <div className="text-secondary text-sm sm:text-base">Average ROI</div>
             </div>
 
             {/* Stat 3 */}
             <div className="text-center">
-              <div className="text-secondary text-xl sm:text-2xl font-mono font-semibold mb-2 md:mb-3">
-                <AnimatedCounter value={9} duration={2} suffix="x" />
+              <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
+                <AnimatedCounter value={5} duration={2} suffix="x" />
               </div>
-              <div className="text-secondary text-sm sm:text-base">Power User Retention Rate</div>
+              <div className="text-secondary text-sm sm:text-base">User Retention Rate Increase</div>
             </div>
           </div>
         </div>
