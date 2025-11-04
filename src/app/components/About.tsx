@@ -1,13 +1,12 @@
 "use client";
 
 import { CustomButton } from "@/components/ui/custom-button";
-import { Card } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RotatingHexagons } from "./RotatingHexagons";
 
 export default function About() {
   return (
-    <>
-   <div className="relative min-h-screen">
+    <div className="relative min-h-screen">
       {/* Background Hexagons */}
       <RotatingHexagons />
 
@@ -24,7 +23,7 @@ export default function About() {
             About Torque
           </h1>
           <h2 className="text-xl md:text-3xl text-foreground text-center md:text-left max-w-lg mx-auto md:mx-0">
-            The Growth Protocol for On-Chain Ecosystems
+            Torque Powers Growth for On-Chain Ecosystems
           </h2>
         </div>
       </div>
@@ -32,53 +31,73 @@ export default function About() {
       {/* Main Content */}
       <div className="relative z-10 container mx-auto py-16 md:py-28">
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pb-16 md:pb-32 px-4 md:px-6 lg:px-8 mx-auto max-w-[1400px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pb-16 md:pb-32 px-4 md:px-6 lg:px-8 mx-auto max-w-[1600px]">
           {/* Left Column - Text Content */}
-          <div className="space-y-6">
+          <Card className="space-y-6 p-6 bg-white/20 backdrop-blur-md px-6 md:px-12 py-12 md:py-12" style={{ borderRadius: '1rem', overflow: 'hidden' }}>
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Empowering On-Chain Growth Through Intelligent Incentives
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+                Growth Through Smart Incentives
               </h2>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Torque is revolutionizing how blockchain ecosystems grow by providing a comprehensive 
-                platform for creating, managing, and optimizing incentive campaigns. Our no-code solution 
-                enables protocols and DAOs to drive meaningful user engagement through targeted rewards, 
-                detailed analytics, and AI-powered insights. Whether you&apos;re looking to bootstrap liquidity, 
-                increase user adoption, or reward community participation, Torque provides the tools to 
-                achieve your growth objectives efficiently and transparently.
+                Torque helps teams on Solana design, deploy, and optimize smart on-chain incentives — turning user actions into measurable growth.
+                We make it simple to launch reward programs that drive trading, liquidity, and product engagement, all verified directly on-chain.
+              </p>
+
+              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-6 mt-8">
+                How it works
+              </h3>
+              <p className="font-semibold mb-2">Design incentives that scale</p>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Use Torque’s modular system to define any audience — from traders and liquidity providers to builders and holders. Create dynamic reward logic using SQL-based audience queries powered by indexed on-chain data.
+              </p>
+
+              <p className="font-semibold mb-2 mt-7">Fund and launch with confidence</p>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Allocate budgets transparently and fund campaigns directly from your wallet. All incentives are deployed as verifiable smart contracts, ensuring trust and full visibility across every transaction.
+              </p>
+
+              <p className="font-semibold mb-2 mt-7">Optimize with intelligence</p>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Torque Intelligence monitors performance, answers analytics questions, and automatically recommends improvements — so you can scale what works, faster.
               </p>
             </div>
-          </div>
+          </Card>
 
           {/* Right Column - Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Card className="p-6 bg-card backdrop-blur-sm border border-border/20 rounded-lg">
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
-                Our Mission
-              </h3>
-              <p className="text-sm md:text-base text-muted-foreground">
-                To accelerate blockchain adoption by making growth tools accessible, transparent, and effective for every protocol.
-              </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 h-auto">
+            <Card className="p-6 bg-card backdrop-blur-sm h-64" style={{ borderRadius: '1rem', overflow: 'hidden' }}>
+              <CardDescription className="font-mono">
+                FUNDING              
+              </CardDescription>
+              <CardTitle className="text-7xl md:text-7xl font-bold text-foreground mb-0 font-mono">
+                $3M
+              </CardTitle>
+              <CardDescription>
+                Led by x
+              </CardDescription>
+              
             </Card>
-            <Card className="p-6 bg-card backdrop-blur-sm border border-border/20 rounded-lg">
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
-                Our Vision
-              </h3>
-              <p className="text-sm md:text-base text-muted-foreground">
-                A thriving on-chain ecosystem where growth is driven by smart incentives and data-driven decisions.
-              </p>
+            <Card className="p-6 bg-card backdrop-blur-sm h-64" style={{ borderRadius: '1rem', overflow: 'hidden' }}>
+              <CardDescription className="font-mono">
+                TEAM              
+              </CardDescription>
+              <CardTitle className="text-7xl md:text-7xl font-bold text-foreground mb-0 font-mono">
+                8
+              </CardTitle>
+              <CardDescription>
+                Seasoned builders.
+              </CardDescription>
             </Card>
           </div>
         </div>
 
         {/* CTA Section */}
-        <div className="bg-card border border-border/20 rounded-lg py-16 md:py-20 px-8 md:px-12 text-center mb-16 md:mb-24">
+        <div className="bg-card border border-border/20 py-16 md:py-20 px-8 md:px-12 text-center mb-16 md:mb-24" style={{ borderRadius: '0.5rem', overflow: 'hidden' }}>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Ready to Grow Your Protocol?
+            Our Vision
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Join leading protocols using Torque to drive engagement, reward users, and scale their ecosystems 
-            with powerful, data-driven incentive campaigns.
+          <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto mb-8">
+            We believe growth should be transparent, data-driven, and on-chain. Torque empowers ecosystems to evolve beyond speculation — by rewarding real contributions, real users, and real activity.
           </p>
           <CustomButton 
             buttonSize="big"
@@ -97,7 +116,7 @@ export default function About() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {/* Metaplex Award */}
-            <Card className="p-8 bg-card backdrop-blur-sm border-2 border-[#FFD700] rounded-lg hover:shadow-xl transition-shadow">
+            <Card className="p-8 bg-card backdrop-blur-sm border-2 border-[#FFD700] hover:shadow-xl transition-shadow" style={{ borderRadius: '0.5rem', overflow: 'hidden' }}>
               <div className="mb-6 inline-block bg-black px-4 py-2 rounded">
                 <span className="text-[#14F195] font-mono font-bold text-lg">
                   {'>'}<span className="text-white">Metaplex cHack</span>
@@ -112,7 +131,7 @@ export default function About() {
             </Card>
 
             {/* Colosseum Award */}
-            <Card className="p-8 bg-card backdrop-blur-sm border-2 border-[#C0C0C0] rounded-lg hover:shadow-xl transition-shadow">
+            <Card className="p-8 bg-card backdrop-blur-sm border-2 border-[#C0C0C0] hover:shadow-xl transition-shadow" style={{ borderRadius: '0.5rem', overflow: 'hidden' }}>
               <div className="mb-6 inline-block bg-black px-4 py-2 rounded">
                 <span className="text-white font-bold text-lg flex items-center gap-2">
                   <span className="text-2xl">⋮</span>
@@ -130,6 +149,5 @@ export default function About() {
         </div>
       </div>
     </div>
-    </>
   );
 }

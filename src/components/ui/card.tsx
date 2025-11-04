@@ -12,11 +12,6 @@ const Card = React.forwardRef<
       "bg-card text-card-foreground shadow",
       className
     )}
-    style={{
-      border: '2px solid',
-      borderImageSource: 'linear-gradient(180deg, rgba(161, 255, 255, 0.08) 0%, rgba(161, 255, 255, 0.03) 100%)',
-      borderImageSlice: '1',
-    }}
     {...props}
   />
 ))

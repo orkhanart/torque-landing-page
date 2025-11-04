@@ -9,6 +9,8 @@ export default function AboutPage() {
       <main className="flex-grow flex items-center justify-center">
         <p className="text-2xl">Coming Soon...</p>
       </main>
+
+      {/* <About /> */}
       <Footer />
     </div>
   );
