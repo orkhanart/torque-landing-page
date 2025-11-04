@@ -1,21 +1,9 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 //import AnimatedBackground from "@/components/AnimatedBackground";
 import Hyperspeed from "@/blocks/Backgrounds/Hyperspeed/Hyperspeed";
 // import Navbar from "./components/navbar";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Torque",
@@ -57,9 +45,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-8CM307NTBB"
           strategy="afterInteractive"
@@ -73,7 +59,7 @@ export default function RootLayout({
           `}
         </Script>
         <div className="fixed inset-0 top-0 z-0 w-full h-full overflow-hidden">
-          <Hyperspeed />
+          {/* <Hyperspeed /> */}
         </div>
         <div className="relative z-10">{children}</div>
       </body>
