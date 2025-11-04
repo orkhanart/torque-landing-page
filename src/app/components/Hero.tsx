@@ -156,7 +156,7 @@ const Hero = () => {
 
           {/* Headline */}
           <h2 className="text-center text-secondary text-lg sm:text-lg leading-relaxed mx-auto mb-8 md:mb-12 px-4">
-          Torque is the operating system for your growth operations — from user analytics to incentives and token distribution — powered by <i>Torque Intelligence</i>.
+            Torque is Solana's growth stack for user analytics, incentives, and token distribution — powered by <i>Torque Intelligence</i>.
           </h2>
 
           {/* Dashed Divider */}
