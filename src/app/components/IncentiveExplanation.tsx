@@ -12,10 +12,10 @@ const IncentiveExplanation = () => {
         <p className="text-secondary text-sm md:text-base">Everything you need to design, deploy, and measure on-chain incentives.</p>
       </div>
 
-      <div className="flex flex-col gap-6 md:gap-8">
-        {/* First row: Explore and Create cards */}
-        <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 flex-1">  
+      <div className="flex flex-col lg:flex-row gap-6 md:gap-10">
+        {/* Left column: Explore and Fund cards */}
+        <div className="flex flex-col gap-6 md:gap-12 flex-1">
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
                 <span className="text-xl md:text-3xl font-medium">Explore</span>
@@ -31,7 +31,26 @@ const IncentiveExplanation = () => {
             </CardContent>
           </Card>
 
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 flex-1">  
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">  
+            <CardHeader>
+            <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
+                <span className="text-xl md:text-3xl font-medium">Fund</span>
+
+                <CoinsIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
+              </CardTitle>
+              <CardDescription className="text-sm md:text-base">
+              Allocate tokens and set budgets with built-in analytics. Fund campaigns securely and transparently — right from your wallet.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-4 md:px-6">
+                <Image src="/data-card.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
+              </CardContent>
+          </Card>
+        </div>
+
+        {/* Right column: Create and Optimize cards */}
+        <div className="flex flex-col gap-6 md:gap-12 flex-1 lg:pt-28">
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
                 <span className="text-xl md:text-3xl font-medium">Create</span>
@@ -47,27 +66,8 @@ const IncentiveExplanation = () => {
                 <Image src="/incentive-type.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
               </CardContent>
           </Card>
-        </div>
 
-        {/* Second row: Fund and Optimize cards */}
-        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:items-start">
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 flex-1">  
-            <CardHeader>
-            <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
-                <span className="text-xl md:text-3xl font-medium">Fund</span>
-
-                <CoinsIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
-              </CardTitle>
-              <CardDescription className="text-sm md:text-base">
-              Allocate tokens and set budgets with built-in analytics. Fund campaigns securely and transparently — right from your wallet.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="px-4 md:px-6">
-                <Image src="/data-card.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
-              </CardContent>
-          </Card>
-
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 flex-1">  
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
                 <span className="text-xl md:text-3xl font-medium">Optimize</span>
