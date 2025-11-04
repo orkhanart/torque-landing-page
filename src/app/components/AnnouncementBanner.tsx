@@ -9,7 +9,7 @@ export default function AnnouncementBanner() {
       <div className="flex items-center justify-center py-3 bg-primary/30 text-white w-full">
         <div className="flex items-center gap-4 flex-wrap justify-center">
           <span className="text-sm md:text-base text-black">
-            Torque Labs announces $3 million fundraise
+            Torque Labs announces $5 million fundraise
           </span>
           <CustomButton 
             buttonSize="small"

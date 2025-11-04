@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { HammerIcon, WandSparklesIcon, CoinsIcon } from "lucide-react";
+import { HammerIcon, WandSparklesIcon, CoinsIcon, BarChart3Icon } from "lucide-react";
 
 
 const IncentiveExplanation = () => {
@@ -13,8 +13,24 @@ const IncentiveExplanation = () => {
       </div>
 
       <div className="flex flex-col gap-6 md:gap-8">
-        {/* First row: Create and Fund cards */}
+        {/* First row: Explore and Create cards */}
         <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 flex-1">  
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
+                <span className="text-xl md:text-3xl font-medium">Explore</span>
+
+                <BarChart3Icon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
+              </CardTitle>
+              <CardDescription className="text-sm md:text-base">
+                Unlock deep insights into user behavior and holder segments. Discover who your community is and what drives them.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-4 md:px-6">
+                <Image src="/explore-data.svg" alt="Explore data visualization" width={800} height={800} className="w-full h-auto" />
+            </CardContent>
+          </Card>
+
           <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 flex-1">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
@@ -31,7 +47,10 @@ const IncentiveExplanation = () => {
                 <Image src="/incentive-type.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
               </CardContent>
           </Card>
+        </div>
 
+        {/* Second row: Fund and Optimize cards */}
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:items-start">
           <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 flex-1">  
             <CardHeader>
             <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
@@ -47,16 +66,13 @@ const IncentiveExplanation = () => {
                 <Image src="/data-card.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
               </CardContent>
           </Card>
-        </div>
 
-        {/* Second row: Optimize card centered */}
-        <div className="flex justify-center">
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 w-full lg:w-1/2">  
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 flex-1">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
                 <span className="text-xl md:text-3xl font-medium">Optimize</span>
 
-                <WandSparklesIcon className="w-6 h-6 md:w-7 md:h-7 text-secondary-foreground flex-shrink-0"/>
+                <WandSparklesIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
               <CardDescription className="text-sm md:text-base">
               Use Torque Intelligence to measure performance and automatically optimize incentives. Identify what&apos;s working — and scale it instantly.
