@@ -42,7 +42,7 @@ function FeatureCard({
         <div className={`absolute inset-0 transition-all duration-300 ease-in-out ${getGradientClass()}`} />
       )}
       {title && (
-        <div className={`absolute inset-0 flex flex-col justify-${titlePosition === "top" ? "start" : "end"} p-6 md:p-8`}>
+        <div className={`absolute inset-0 flex flex-col justify-start ${titlePosition === "bottom" ? "md:justify-end" : ""} p-6 md:p-8`}>
           <h3 
             className="text-3xl md:text-4xl lg:text-5xl xl:text-[56px] z-10 transition-opacity duration-300 ease-in-out group-hover:opacity-0"
             style={{ 
