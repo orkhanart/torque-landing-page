@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { HammerIcon, WandSparklesIcon, CoinsIcon, BarChart3Icon } from "lucide-react";
+import { HammerIcon, WandSparklesIcon, RocketIcon, BarChart3Icon } from "lucide-react";
 
 
 const IncentiveExplanation = () => {
@@ -26,8 +26,8 @@ const IncentiveExplanation = () => {
                 Unlock deep insights into user behavior and holder segments. Discover who your community is and what drives them.
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-4 md:px-6">
-                <Image src="/explore-data.svg" alt="Explore data visualization" width={800} height={800} className="w-full h-auto" />
+            <CardContent className="px-4 md:px-5">
+                <Image src="/explore-card.svg" alt="Explore data visualization" width={840} height={800} className="w-full h-auto" />
             </CardContent>
           </Card>
 
@@ -36,14 +36,14 @@ const IncentiveExplanation = () => {
             <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4">
                 <span className="text-xl md:text-3xl font-medium">Launch</span>
 
-                <CoinsIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
+                <RocketIcon className="w-6 h-6 md:w-8 md:h-8 text-secondary-foreground flex-shrink-0"/>
               </CardTitle>
               <CardDescription className="text-sm md:text-base">
                 Allocate tokens and set budgets with built-in analytics. Fund campaigns securely and transparently — right from your wallet.
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-4 md:px-6">
-                <Image src="/data-card.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
+            <CardContent className="px-4 md:px-5">
+                <Image src="/launch-card.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
               </CardContent>
           </Card>
         </div>
@@ -62,7 +62,7 @@ const IncentiveExplanation = () => {
                 Design and launch on-chain incentives in minutes. Choose from pre-built modules like leaderboards, raffles, and rebates.
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-4 md:px-6">
+            <CardContent className="px-4 md:px-5">
                 <Image src="/incentive-type.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
               </CardContent>
           </Card>
@@ -78,8 +78,8 @@ const IncentiveExplanation = () => {
               Use Torque Intelligence to measure performance and automatically optimize incentives. Identify what&apos;s working — and scale it instantly.
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-4 md:px-6">
-                <Image src="/ai-chat1.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
+            <CardContent className="px-4 md:px-5">
+                <Image src="/ai-card.svg" alt="Torque logo" width={800} height={800} className="w-full h-auto" />
             </CardContent>
           </Card>
         </div>

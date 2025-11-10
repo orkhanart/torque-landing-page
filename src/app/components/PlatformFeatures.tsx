@@ -1,5 +1,6 @@
 "use client";
 
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
 interface FeatureCardProps {
@@ -115,7 +116,7 @@ export function PlatformFeatures() {
       <p className="text-secondary text-sm md:text-base mb-2 md:mb-4">What makes us different</p>
       <h2 className="text-foreground text-2xl md:text-[40px]">Features</h2>
 
-      <div className="flex flex-col lg:flex-row gap-6 md:gap-10 mt-6 md:mt-10" style={{ height: "800px" }}>
+      <div className="flex flex-col lg:flex-row gap-6 md:gap-10 mt-6 md:mt-10" style={{ height: "1150px" }}>
         {/* Left Column */}
         <div className="flex flex-col gap-6 md:gap-10 flex-1">
           {/* Smart Incentive */}
@@ -130,6 +131,20 @@ export function PlatformFeatures() {
               slideDirection="bottom"
             />
           </div>
+
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 !bg-black">  
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4 text-white">
+                <span className="text-xl md:text-3xl font-medium">In-Product Reward Engine</span>
+
+              </CardTitle>
+              <CardDescription className="text-sm md:text-base text-white">
+              With our embedded rewards system, you can effortlessly create targeted campaigns, identify key contributors, and distribute rewards, all within a few clicks.              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-4 md:px-5">
+                <Image src="/leaderboard-feature.svg" alt="Explore data visualization" width={840} height={800} className="w-full h-auto" />
+            </CardContent>
+          </Card>
 
           {/* Campaigns */}
           <div className="flex-1">
@@ -150,6 +165,25 @@ export function PlatformFeatures() {
           {/* Intelligence - smaller height */}
           <div style={{ height: "160px" }}>
             <IntelligenceCard />
+          </div>
+
+          {/* Analytics */}
+          <div className="rounded-xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative">
+            <Image 
+              src="/feature-analytics.svg" 
+              alt="Analytics Dashboard" 
+              width={524}
+              height={328}
+              className="w-full h-auto"
+            />
+            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-start max-w-sm">
+              <h3 className="text-white text-xl md:text-3xl font-medium mb-2 md:mb-4">
+                Move Faster with data-driven decisions
+              </h3>
+              <p className="text-sm md:text-base text-gray-300 max-w-md">
+                Stop relying on hunches, pieces of information, or outdated data. Torque helps you diving into real on-chain data, and drive consistent, scalable results.
+              </p>
+            </div>
           </div>
 
           {/* No-code - grows to fill remaining space */}
