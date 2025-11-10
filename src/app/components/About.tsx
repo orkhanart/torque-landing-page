@@ -3,6 +3,8 @@
 import { CustomButton } from "@/components/ui/custom-button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RotatingHexagons } from "./RotatingHexagons";
+import Image from "next/image";
+import { Trophy } from "lucide-react";
 
 export default function About() {
   return (
@@ -29,88 +31,47 @@ export default function About() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto py-16 md:py-28">
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pb-16 md:pb-32 px-4 md:px-6 lg:px-8 mx-auto max-w-[1600px]">
-          {/* Left Column - Text Content */}
-          <Card className="space-y-6 p-6 bg-white/20 backdrop-blur-md px-6 md:px-12 py-12 md:py-12" style={{ borderRadius: '1rem', overflow: 'hidden' }}>
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-                Growth Through Smart Incentives
-              </h2>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Torque helps teams on Solana design, deploy, and optimize smart on-chain incentives — turning user actions into measurable growth.
-                We make it simple to launch reward programs that drive trading, liquidity, and product engagement, all verified directly on-chain.
-              </p>
+      <div className="relative z-10 w-full pb-16 md:pb-32 mt-16 md:mt-24">
+        {/* Full Width Content Card */}
+        <Card className="bg-card backdrop-blur-md py-12 md:py-16" style={{ borderRadius: '0', overflow: 'hidden' }}>
+          <div className="flex flex-col md:flex-row w-full md:gap-0 gap-10">
+            {/* Left Half - Text Content */}
+            <div className="w-full md:w-1/2 flex items-center justify-start px-6 sm:px-12 md:pl-28 md:pr-8 lg:pr-16">
+              <div className="space-y-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+                  Growth Through Smart Incentives
+                </h2>
 
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-6 mt-8">
-                How it works
-              </h3>
-              <p className="font-semibold mb-2">Design incentives that scale</p>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Use Torque’s modular system to define any audience — from traders and liquidity providers to builders and holders. Create dynamic reward logic using SQL-based audience queries powered by indexed on-chain data.
-              </p>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Torque is the engine of growth for companies building on Solana — a unified platform that brings analytics, CRM, and smart on-chain incentives together. It helps teams explore and understand their on-chain data, uncover insights about user behavior, and identify what drives engagement. With Torque Intelligence, businesses can segment audiences, measure performance, and surface new growth opportunities. Teams can then strategically deploy incentive campaigns that reward meaningful actions and accelerate ecosystem activity.
+                  
+                </p>
 
-              <p className="font-semibold mb-2 mt-7">Fund and launch with confidence</p>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Allocate budgets transparently and fund campaigns directly from your wallet. All incentives are deployed as verifiable smart contracts, ensuring trust and full visibility across every transaction.
-              </p>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                By turning blockchain data into strategy, Torque transforms on-chain participation into measurable, sustainable growth.
 
-              <p className="font-semibold mb-2 mt-7">Optimize with intelligence</p>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Torque Intelligence monitors performance, answers analytics questions, and automatically recommends improvements — so you can scale what works, faster.
-              </p>
+                </p>
+              </div>
             </div>
-          </Card>
 
-          {/* Right Column - Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 h-auto">
-            <Card className="p-6 bg-card backdrop-blur-sm h-64" style={{ borderRadius: '1rem', overflow: 'hidden' }}>
-              <CardDescription className="font-mono">
-                FUNDING              
-              </CardDescription>
-              <CardTitle className="text-7xl md:text-7xl font-bold text-foreground mb-0 font-mono">
-                $3M
-              </CardTitle>
-              <CardDescription>
-                Led by x
-              </CardDescription>
-              
-            </Card>
-            <Card className="p-6 bg-card backdrop-blur-sm h-64" style={{ borderRadius: '1rem', overflow: 'hidden' }}>
-              <CardDescription className="font-mono">
-                TEAM              
-              </CardDescription>
-              <CardTitle className="text-7xl md:text-7xl font-bold text-foreground mb-0 font-mono">
-                8
-              </CardTitle>
-              <CardDescription>
-                Seasoned builders.
-              </CardDescription>
-            </Card>
+            {/* Right Half - Image */}
+            <div className="w-full md:w-1/2 flex items-center justify-start px-6 sm:px-12 md:pl-8 md:pr-8 lg:pr-20">
+              <Image
+                src="/about-image.svg"
+                alt="About Torque illustration"
+                width={600}
+                height={600}
+                className="w-full max-w-lg"
+              />
+            </div>
           </div>
-        </div>
+        </Card>
+      </div>
 
-        {/* CTA Section */}
-        <div className="bg-card border border-border/20 py-16 md:py-20 px-8 md:px-12 text-center mb-16 md:mb-24" style={{ borderRadius: '0.5rem', overflow: 'hidden' }}>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Our Vision
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto mb-8">
-            We believe growth should be transparent, data-driven, and on-chain. Torque empowers ecosystems to evolve beyond speculation — by rewarding real contributions, real users, and real activity.
-          </p>
-          <CustomButton 
-            buttonSize="big"
-            buttonColor="primary"
-            href="https://platform.torque.so/"
-            className="shadow-[0px_0px_20px_0px_rgba(161,255,255,0.3)]"
-          >
-            Launch Platform
-          </CustomButton>
-        </div>
+      <div className="relative z-10 w-full pb-16 md:pb-24">
 
         {/* Awards Section */}
-        <div className="pb-16 md:pb-24">
+        <div className="pb-16 md:pb-24 px-6 sm:px-12 md:px-28">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 md:mb-12">
             Awards
           </h2>
@@ -125,7 +86,8 @@ export default function About() {
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
                 Metaplex cHack Hackathon
               </h3>
-              <p className="text-base text-secondary-foreground font-medium">
+              <p className="text-base text-secondary-foreground font-medium flex items-center gap-2">
+                <Trophy className="w-4 h-4" />
                 Winner
               </p>
             </Card>
