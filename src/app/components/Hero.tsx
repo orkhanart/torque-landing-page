@@ -148,9 +148,8 @@ const Hero = () => {
         />
       </div>
 
-      {/* Card with "We build the operating systems..." section */}
-      <div className="relative z-10 w-full container mx-auto px-4 md:px-6 lg:px-8 pb-12 md:pb-18 mt-6 md:mt-12">
-        <div className="bg-white rounded-2xl shadow-2xl shadow-primary/10 p-8 md:p-12">
+      <div className="relative z-10 w-full container mx-auto px-4 md:px-6 lg:px-8 pb-12 md:pb-18 mt-6 md:mt-12 ">
+        <div className="bg-white rounded-2xl shadow-2xl shadow-primary/10 p-6 py-12 md:p-12 flex flex-col items-center justify-center ">
           {/* Logo */}
           <div className="flex justify-center mb-4 md:mb-6">
             <LightbulbIcon className="w-10 h-10 text-black" />
@@ -162,9 +161,9 @@ const Hero = () => {
           </h2>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 px-4 w-full">
             {/* Stat 1 */}
-            <Card className="text-start p-8 md:pl-12 bg-transparent bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none" style={{ backgroundImage: 'url(/first-hero.svg)', backgroundSize: '100% 100%' }}>
+            <Card className="text-start p-8 md:pl-12 bg-[url('/first-hero.svg')] bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none">
               <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
                 $<AnimatedCounter value={10} duration={2.5} suffix="M" />
               </div>
@@ -172,7 +171,7 @@ const Hero = () => {
             </Card>
 
             {/* Stat 2 */}
-            <Card className="text-start p-8 md:pl-12 bg-transparent bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none" style={{ backgroundImage: 'url(/second-hero.svg)', backgroundSize: '100% 100%' }}>
+            <Card className="text-start p-8 md:pl-12 bg-[url('/second-hero.svg')] bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none">
               <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
                 <AnimatedCounter value={240} duration={2} suffix="%" />
               </div>
@@ -180,7 +179,7 @@ const Hero = () => {
             </Card>
 
             {/* Stat 3 */}
-            <Card className="text-start p-8 md:pl-12 bg-transparent bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none" style={{ backgroundImage: 'url(/third-hero.svg)', backgroundSize: '100% 100%' }}>
+            <Card className="text-start p-8 md:pl-12 bg-[url('/third-hero.svg')] bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none">
               <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
                 <AnimatedCounter value={5} duration={2} suffix="x" />
               </div>
