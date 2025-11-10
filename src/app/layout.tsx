@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Torque",
   description: "Building Solana's onchain attention economy.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/logos/c-logo-lm-2.png",
   },
   openGraph: {
     title: "Torque - The Growth Protocol",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: "Torque",
     images: [
       {
-        url: "/og-image-new.png",
+        url: "/og-image-light-mode.png",
         width: 1200,
         height: 675,
         alt: "Torque - Solana's Incentive Protocol",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Torque - Solana's Incentive Protocol",
     description: "Launch Smart Incentives to Drive Growth",
-    images: ["/og-image-new.png"],
+    images: ["/og-image-light-mode.png"],
   },
 };
 
@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/logos/c-logo-lm-2.png" sizes="any" />
       </head>
       <body className="antialiased">
         <Script

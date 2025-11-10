@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { IconBelt } from "@/components/ui/icon-belt";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import { LightbulbIcon } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 // Animated Counter Component
 interface AnimatedCounterProps {
@@ -109,7 +111,7 @@ const Hero = () => {
             <h1 className="text-3xl sm:text-3xl md:text-6xl font-sans leading-tight text-foreground md:hidden">
               Accelerate Your Growth.
             </h1>
-            <h2 className="text-xl md:text-3xl text-foreground text-center md:text-left max-w-lg mx-auto md:mx-0">
+            <h2 className="text-xl md:text-3xl text-foreground text-center text-primary md:text-left max-w-lg mx-auto md:mx-0">
               Smart Incentives. <br></br>Real Results.
             </h2>
           </div>
@@ -146,47 +148,43 @@ const Hero = () => {
         />
       </div>
 
-      {/* Card with "We build the operating systems..." section */}
-      <div className="relative z-10 w-full container mx-auto px-4 md:px-6 lg:px-8 pb-12 md:pb-18 mt-6 md:mt-12">
-        <div className="bg-card rounded-2xl shadow-2xl shadow-primary/10 p-8 md:p-12">
+      <div className="relative z-10 w-full container mx-auto px-4 md:px-6 lg:px-8 pb-12 md:pb-18 mt-6 md:mt-12 ">
+        <div className="bg-white rounded-2xl shadow-2xl shadow-primary/10 p-6 py-12 md:p-12 flex flex-col items-center justify-center ">
           {/* Logo */}
           <div className="flex justify-center mb-4 md:mb-6">
-            <Image src="logos/LogoPurple.svg" alt="Torque logo" width={40} height={40} className="w-8 h-8 md:w-12 md:h-12" />
+            <LightbulbIcon className="w-10 h-10 text-black" />
           </div>
 
           {/* Headline */}
-          <h2 className="text-center text-secondary text-lg sm:text-lg leading-relaxed mx-auto mb-8 md:mb-12 px-4">
-            Torque is Solana's growth stack for user analytics, incentives, and token distribution — powered by <i>Torque Intelligence</i>.
+          <h2 className="text-center text-secondary text-xl sm:text-xl leading-relaxed mx-auto mb-8 md:mb-12 px-4">
+            Torque is Solana&apos;s growth stack for user analytics, incentives, and token distribution — powered by <i>Torque Intelligence</i>.
           </h2>
 
-          {/* Dashed Divider */}
-          <div className="border-t border-dashed border-secondary-foreground mb-8 md:mb-16" />
-
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 px-4 w-full">
             {/* Stat 1 */}
-            <div className="text-center">
+            <Card className="text-start p-8 md:pl-12 bg-[url('/first-hero.svg')] bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none">
               <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
                 $<AnimatedCounter value={10} duration={2.5} suffix="M" />
               </div>
-              <div className="text-secondary text-sm sm:text-base">Rewards Distributed</div>
-            </div>
+              <div className="text-secondary sm:text-base">Rewards Distributed</div>
+            </Card>
 
             {/* Stat 2 */}
-            <div className="text-center">
+            <Card className="text-start p-8 md:pl-12 bg-[url('/second-hero.svg')] bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none">
               <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
                 <AnimatedCounter value={240} duration={2} suffix="%" />
               </div>
               <div className="text-secondary text-sm sm:text-base">Average ROI</div>
-            </div>
+            </Card>
 
             {/* Stat 3 */}
-            <div className="text-center">
+            <Card className="text-start p-8 md:pl-12 bg-[url('/third-hero.svg')] bg-cover bg-center bg-no-repeat rounded-xl h-[200px] flex flex-col justify-start shadow-none border-none">
               <div className="text-secondary text-2xl sm:text-3xl font-mono font-semibold mb-2 md:mb-3">
                 <AnimatedCounter value={5} duration={2} suffix="x" />
               </div>
               <div className="text-secondary text-sm sm:text-base">User Retention Rate Increase</div>
-            </div>
+            </Card>
           </div>
         </div>
       </div>
