@@ -116,7 +116,7 @@ export function PlatformFeatures() {
       <p className="text-secondary text-sm md:text-base mb-2 md:mb-4">What makes us different</p>
       <h2 className="text-foreground text-2xl md:text-[40px]">Features</h2>
 
-      <div className="flex flex-col lg:flex-row gap-6 md:gap-10 mt-6 md:mt-10" style={{ height: "1150px" }}>
+      <div className="flex flex-col lg:flex-row gap-6 md:gap-10 mt-6 md:mt-10 h-[1400px] md:h-[1250px]">
         {/* Left Column */}
         <div className="flex flex-col gap-6 md:gap-10 flex-1">
           {/* Smart Incentive */}
@@ -132,7 +132,7 @@ export function PlatformFeatures() {
             />
           </div>
 
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 !bg-black">  
+          <Card className="rounded-xl shadow-2xl shadow-primary/10 border border-primary/5 !bg-black !pb-0">  
             <CardHeader>
               <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4 text-white">
                 <span className="text-xl md:text-3xl font-medium">In-Product Reward Engine</span>
@@ -141,7 +141,7 @@ export function PlatformFeatures() {
               <CardDescription className="text-sm md:text-base text-white">
               With our embedded rewards system, you can effortlessly create targeted campaigns, identify key contributors, and distribute rewards, all within a few clicks.              </CardDescription>
             </CardHeader>
-            <CardContent className="px-4 md:px-5">
+            <CardContent className="px-4 md:px-5 !pb-0">
                 <Image src="/leaderboard-feature.svg" alt="Explore data visualization" width={840} height={800} className="w-full h-auto" />
             </CardContent>
           </Card>
@@ -168,7 +168,7 @@ export function PlatformFeatures() {
           </div>
 
           {/* Analytics */}
-          <div className="rounded-xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative">
+          <div className="h-auto rounded-xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative">
             <Image 
               src="/feature-analytics.svg" 
               alt="Analytics Dashboard" 
@@ -176,11 +176,11 @@ export function PlatformFeatures() {
               height={328}
               className="w-full h-auto"
             />
-            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-start max-w-sm">
-              <h3 className="text-white text-xl md:text-3xl font-medium mb-2 md:mb-4">
+            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-start ">
+              <h3 className="text-white text-xl md:text-3xl font-medium mb-2 md:mb-4 max-w-sm">
                 Move Faster with data-driven decisions
               </h3>
-              <p className="text-sm md:text-base text-gray-300 max-w-md">
+              <p className="text-sm md:text-base text-gray-300 max-w-[50%]">
                 Stop relying on hunches, pieces of information, or outdated data. Torque helps you diving into real on-chain data, and drive consistent, scalable results.
               </p>
             </div>
