@@ -1,7 +1,6 @@
 "use client";
 
-import { CustomButton } from "@/components/ui/custom-button";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { RotatingHexagons } from "./RotatingHexagons";
 import Image from "next/image";
 import { Trophy } from "lucide-react";
@@ -78,15 +77,11 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {/* Metaplex Award */}
             <Card className="p-8 bg-card backdrop-blur-sm border-2 border-[#FFD700] hover:shadow-xl transition-shadow" style={{ borderRadius: '0.5rem', overflow: 'hidden' }}>
-              <div className="mb-6 inline-block bg-black px-4 py-2 rounded">
-                <span className="text-[#14F195] font-mono font-bold text-lg">
-                  {'>'}<span className="text-white">Metaplex cHack</span>
-                </span>
-              </div>
+              <Image src="/metaplex-chack.svg" alt="Metaplex cHack Hackathon" width={150} height={150} className="mb-4" />
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
                 Metaplex cHack Hackathon
               </h3>
-              <p className="text-base text-secondary-foreground font-medium flex items-center gap-2">
+              <p className="text-lg text-secondary font-medium flex items-center gap-2">
                 <Trophy className="w-4 h-4" />
                 Winner
               </p>
@@ -94,16 +89,11 @@ export default function About() {
 
             {/* Colosseum Award */}
             <Card className="p-8 bg-card backdrop-blur-sm border-2 border-[#C0C0C0] hover:shadow-xl transition-shadow" style={{ borderRadius: '0.5rem', overflow: 'hidden' }}>
-              <div className="mb-6 inline-block bg-black px-4 py-2 rounded">
-                <span className="text-white font-bold text-lg flex items-center gap-2">
-                  <span className="text-2xl">⋮</span>
-                  COLOSSEUM
-                </span>
-              </div>
+              <Image src="/colosseum.svg" alt="Colosseum Infrastructure Track Hackathon" width={150} height={150} className="mb-4" />
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
                 Colosseum Infrastructure Track Hackathon
               </h3>
-              <p className="text-base text-secondary-foreground font-medium">
+              <p className="text-lg text-secondary font-medium flex items-center gap-2">
                 2nd Place
               </p>
             </Card>
