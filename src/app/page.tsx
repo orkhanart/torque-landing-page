@@ -19,7 +19,7 @@ export default function Home() {
         <IncentiveExplanation />
 
         <div className="h-12 md:h-18"></div>
-        <PlatformFeatures />
+        {/* <PlatformFeatures /> */}
 
         <div className="h-8 md:h-12"></div>
       </div>

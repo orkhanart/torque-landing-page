@@ -7,8 +7,7 @@ const IncentiveExplanation = () => {
   return (
     <div>
       <div className="flex flex-col md:gap-4 gap-2 mb-6 md:mb-8">
-        <p className="text-secondary text-sm md:text-base">Product</p>
-        <h2 className="text-foreground text-2xl md:text-[40px]">Growth from A to Z</h2>
+        <h2 className="text-foreground text-2xl md:text-[40px]">Features</h2>
         <p className="text-secondary text-sm md:text-base">Everything you need to design, deploy, and measure on-chain incentives.</p>
       </div>
 
