@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import { CustomButton } from "@/components/ui/custom-button";
 import { RotatingHexagons } from "../components/RotatingHexagons";
 
-const projectCategories = [
+const companyCategories = [
   "Stable Coin",
   "Perps Trading",
   "Dex",
@@ -26,14 +26,11 @@ const inputErrorClassName =
   "w-full px-4 py-3 bg-card border border-red-500 rounded-none text-foreground placeholder:text-muted-foreground/50 placeholder:italic focus:outline-none focus:ring-2 focus:ring-red-500/50";
 
 const requiredFields = [
-  "projectName",
-  "companyProjectName",
+  "companyName",
   "telegramUsername",
   "walletAddress",
-  "projectCategory",
-  "objectives",
-  "budgetAllocation",
-  "timeline",
+  "companyCategory",
+  "tokenOrProtocolAddress",
 ];
 
 function JoinForm() {
@@ -99,46 +96,27 @@ function JoinForm() {
       </p>
       <form onSubmit={validateAndSubmit} className="w-full max-w-lg space-y-5" noValidate>
         <div>
-          <label htmlFor="projectName" className="block text-sm font-semibold text-foreground mb-2">
-            Name of Project <span className="text-red-500">*</span>
+          <label htmlFor="companyName" className="block text-sm font-semibold text-foreground mb-2">
+            Name of Company <span className="text-red-500">*</span>
           </label>
           <input
-            id="projectName"
+            id="companyName"
             type="text"
-            name="projectName"
-            className={getFieldError("projectName") ? inputErrorClassName : inputClassName}
-            placeholder="Your project name"
-            onChange={(e) => handleFieldChange("projectName", e.target.value)}
-            onBlur={() => handleFieldBlur("projectName")}
+            name="companyName"
+            className={getFieldError("companyName") ? inputErrorClassName : inputClassName}
+            placeholder="Name of company"
+            onChange={(e) => handleFieldChange("companyName", e.target.value)}
+            onBlur={() => handleFieldBlur("companyName")}
           />
-          {getFieldError("projectName") && (
-            <p className="text-red-500 text-sm mt-1">Project name is required</p>
+          {getFieldError("companyName") && (
+            <p className="text-red-500 text-sm mt-1">company name is required</p>
           )}
-          <ValidationError prefix="Project Name" field="projectName" errors={state.errors} className="text-red-500 text-sm mt-1" />
-        </div>
-
-        <div>
-          <label htmlFor="companyProjectName" className="block text-sm font-semibold text-foreground mb-2">
-            Company Project Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            id="companyProjectName"
-            type="text"
-            name="companyProjectName"
-            className={getFieldError("companyProjectName") ? inputErrorClassName : inputClassName}
-            placeholder="Company project name"
-            onChange={(e) => handleFieldChange("companyProjectName", e.target.value)}
-            onBlur={() => handleFieldBlur("companyProjectName")}
-          />
-          {getFieldError("companyProjectName") && (
-            <p className="text-red-500 text-sm mt-1">Company project name is required</p>
-          )}
-          <ValidationError prefix="Company Project Name" field="companyProjectName" errors={state.errors} className="text-red-500 text-sm mt-1" />
+          <ValidationError prefix="Company Name" field="companyName" errors={state.errors} className="text-red-500 text-sm mt-1" />
         </div>
 
         <div>
           <label htmlFor="telegramUsername" className="block text-sm font-semibold text-foreground mb-2">
-            Company Project Telegram Username <span className="text-red-500">*</span>
+            Telegram Username <span className="text-red-500">*</span>
           </label>
           <input
             id="telegramUsername"
@@ -157,7 +135,7 @@ function JoinForm() {
 
         <div>
           <label htmlFor="walletAddress" className="block text-sm font-semibold text-foreground mb-2">
-            Company Project Wallet Address <span className="text-red-500">*</span>
+            Wallet Address <span className="text-red-500">*</span>
           </label>
           <input
             id="walletAddress"
@@ -175,112 +153,46 @@ function JoinForm() {
         </div>
 
         <div>
-          <label htmlFor="projectCategory" className="block text-sm font-semibold text-foreground mb-2">
-            Project Category <span className="text-red-500">*</span>
+          <label htmlFor="companyCategory" className="block text-sm font-semibold text-foreground mb-2">
+            Category <span className="text-red-500">*</span>
           </label>
           <select
-            id="projectCategory"
-            name="projectCategory"
-            className={getFieldError("projectCategory") ? inputErrorClassName : inputClassName}
-            onChange={(e) => handleFieldChange("projectCategory", e.target.value)}
-            onBlur={() => handleFieldBlur("projectCategory")}
+            id="companyCategory"
+            name="companyCategory"
+            className={getFieldError("companyCategory") ? inputErrorClassName : inputClassName}
+            onChange={(e) => handleFieldChange("companyCategory", e.target.value)}
+            onBlur={() => handleFieldBlur("companyCategory")}
           >
             <option value="">Select a category</option>
-            {projectCategories.map((category) => (
+            {companyCategories.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
             ))}
           </select>
-          {getFieldError("projectCategory") && (
-            <p className="text-red-500 text-sm mt-1">Project category is required</p>
+          {getFieldError("companyCategory") && (
+            <p className="text-red-500 text-sm mt-1">company category is required</p>
           )}
-          <ValidationError prefix="Project Category" field="projectCategory" errors={state.errors} className="text-red-500 text-sm mt-1" />
+          <ValidationError prefix="Company Category" field="companyCategory" errors={state.errors} className="text-red-500 text-sm mt-1" />
         </div>
 
         <div>
-          <label htmlFor="objectives" className="block text-sm font-semibold text-foreground mb-2">
-            What are your primary objectives? <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            id="objectives"
-            name="objectives"
-            rows={3}
-            className={`${getFieldError("objectives") ? inputErrorClassName : inputClassName} resize-none`}
-            placeholder="e.g., increase holder count, reduce selling pressure, boost trading volume, graduate Small holders to Medium"
-            onChange={(e) => handleFieldChange("objectives", e.target.value)}
-            onBlur={() => handleFieldBlur("objectives")}
-          />
-          {getFieldError("objectives") && (
-            <p className="text-red-500 text-sm mt-1">Objectives are required</p>
-          )}
-          <ValidationError prefix="Objectives" field="objectives" errors={state.errors} className="text-red-500 text-sm mt-1" />
-        </div>
-
-        <div>
-          <label htmlFor="budgetAllocation" className="block text-sm font-semibold text-foreground mb-2">
-            Budget Allocation <span className="text-red-500">*</span>
+          <label htmlFor="tokenOrProtocolAddress" className="block text-sm font-semibold text-foreground mb-2">
+            Token or Protocol Address <span className="text-red-500">*</span>
           </label>
           <input
-            id="budgetAllocation"
+            id="tokenOrProtocolAddress"
             type="text"
-            name="budgetAllocation"
-            className={getFieldError("budgetAllocation") ? inputErrorClassName : inputClassName}
-            placeholder="% of supply or absolute token amount to be used for incentives"
-            onChange={(e) => handleFieldChange("budgetAllocation", e.target.value)}
-            onBlur={() => handleFieldBlur("budgetAllocation")}
+            name="tokenOrProtocolAddress"
+            className={getFieldError("tokenOrProtocolAddress") ? inputErrorClassName : inputClassName}
+            placeholder="Token or protocol address"
+            onChange={(e) => handleFieldChange("tokenOrProtocolAddress", e.target.value)}
+            onBlur={() => handleFieldBlur("tokenOrProtocolAddress")}
           />
-          {getFieldError("budgetAllocation") && (
-            <p className="text-red-500 text-sm mt-1">Budget allocation is required</p>
+          {getFieldError("tokenOrProtocolAddress") && (
+            <p className="text-red-500 text-sm mt-1">Token or protocol address is required</p>
           )}
-          <ValidationError prefix="Budget Allocation" field="budgetAllocation" errors={state.errors} className="text-red-500 text-sm mt-1" />
-        </div>
-
-        <div>
-          <label htmlFor="timeline" className="block text-sm font-semibold text-foreground mb-2">
-            Timeline <span className="text-red-500">*</span>
-          </label>
-          <input
-            id="timeline"
-            type="text"
-            name="timeline"
-            className={getFieldError("timeline") ? inputErrorClassName : inputClassName}
-            placeholder="Campaign duration (30/60/90 days)"
-            onChange={(e) => handleFieldChange("timeline", e.target.value)}
-            onBlur={() => handleFieldBlur("timeline")}
-          />
-          {getFieldError("timeline") && (
-            <p className="text-red-500 text-sm mt-1">Timeline is required</p>
-          )}
-          <ValidationError prefix="Timeline" field="timeline" errors={state.errors} className="text-red-500 text-sm mt-1" />
-        </div>
-
-        <div>
-          <label htmlFor="tokenAddress" className="block text-sm font-semibold text-foreground mb-2">
-            Token Address
-          </label>
-          <input
-            id="tokenAddress"
-            type="text"
-            name="tokenAddress"
-            className={inputClassName}
-            placeholder="Token contract address (optional)"
-          />
-          <ValidationError prefix="Token Address" field="tokenAddress" errors={state.errors} className="text-red-500 text-sm mt-1" />
-        </div>
-
-        <div>
-          <label htmlFor="protocolAddress" className="block text-sm font-semibold text-foreground mb-2">
-            Protocol Address
-          </label>
-          <input
-            id="protocolAddress"
-            type="text"
-            name="protocolAddress"
-            className={inputClassName}
-            placeholder="Protocol address (optional)"
-          />
-          <ValidationError prefix="Protocol Address" field="protocolAddress" errors={state.errors} className="text-red-500 text-sm mt-1" />
+          <ValidationError prefix="Token or Protocol Address" field="tokenOrProtocolAddress" errors={state.errors} className="text-red-500 text-sm mt-1" />
         </div>
 
         <CustomButton
