@@ -21,6 +21,7 @@ export default function Navbar() {
 
   const menuItems: MenuItem[] = [
     { label: "About", href: "/about" },
+    { label: "Join", href: "/join" },
     // { label: "Case Studies", href: "/case-studies" },
     { label: "Docs", href: "https://docs.torque.so/", external: true },
   ];
