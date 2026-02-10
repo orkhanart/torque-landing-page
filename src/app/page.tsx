@@ -1,28 +1,41 @@
-import Hero from "./components/Hero";
+import HeroV2 from "./components/HeroV2";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import { PlatformFeatures } from "./components/PlatformFeatures";
-import AnnouncementBanner from "./components/AnnouncementBanner";
-import IncentiveExplanation from "./components/IncentiveExplanation";
-import { RotatingHexagons } from "./components/RotatingHexagons";
+import EcosystemSignal from "./components/EcosystemSignal";
+import TrustBar from "./components/TrustBar";
+import DataTruth from "./components/DataTruth";
+import GrowthStack from "./components/GrowthStack";
+import Solutions from "./components/Solutions";
+import FeaturedPlaybookFlow from "./components/FeaturedPlaybookFlow";
+import HomepageCTA from "./components/HomepageCTA";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <RotatingHexagons />
-      
-      <Hero />
-      
-      <div className="w-full relative container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="h-16 md:h-28"></div>
-        <IncentiveExplanation />
 
-        <div className="h-12 md:h-18"></div>
-        {/* <PlatformFeatures /> */}
+      {/* Section 1: Hero & Trust */}
+      <HeroV2 />
+      <TrustBar />
 
-        <div className="h-8 md:h-12"></div>
+      <div className="w-full relative">
+        {/* Section 2: The Data Truth (Problem vs. Proof) */}
+        <DataTruth />
+
+        {/* Section 3: The Growth Stack (Product Showcase) */}
+        <GrowthStack />
+
+        {/* Section 4: Solutions (Sector Specifics) */}
+        <Solutions />
+
+        {/* Section 5: Featured Playbook (The Action) */}
+        <FeaturedPlaybookFlow />
+
+        {/* Section 6: Homepage CTA */}
+        <HomepageCTA />
       </div>
+
+      {/* Section 7: Footer */}
       <Footer />
     </>
   );

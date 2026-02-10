@@ -1,30 +1,66 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  // Base styles - terminal aesthetic
+  [
+    "inline-flex items-center justify-center",
+    "font-mono text-xs uppercase tracking-wider font-medium",
+    "rounded-[3px]",
+    "transition-all duration-200 ease-out",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2",
+    "disabled:pointer-events-none disabled:opacity-50",
+  ],
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-black shadow hover:bg-primary-hover",
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        // Primary: Black bg, white text → inverts on hover
+        default: [
+          "bg-black text-white border border-black",
+          "hover:bg-white hover:text-black",
+        ],
+        // Outline: White bg, black border → inverts on hover
+        outline: [
+          "bg-white text-black border border-black",
+          "hover:bg-black hover:text-white",
+        ],
+        // Ghost: No bg, just text with underline on hover
+        ghost: [
+          "bg-transparent text-black border-none",
+          "hover:underline underline-offset-4",
+        ],
+        // Link: Text only with arrow
+        link: [
+          "bg-transparent text-black border-none p-0 h-auto",
+          "hover:underline underline-offset-4",
+        ],
+        // Inverse variants for dark backgrounds
+        "inverse": [
+          "bg-white text-black border border-white",
+          "hover:bg-black hover:text-white hover:border-white",
+        ],
+        "inverse-outline": [
+          "bg-transparent text-white border border-white",
+          "hover:bg-white hover:text-black",
+        ],
+        "inverse-ghost": [
+          "bg-transparent text-white border-none",
+          "hover:underline underline-offset-4",
+        ],
+        // Destructive
+        destructive: [
+          "bg-red-600 text-white border border-red-600",
+          "hover:bg-white hover:text-red-600",
+        ],
       },
       size: {
-        default: "h-9 px-0 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+        default: "h-11 px-6 py-3",
+        sm: "h-9 px-4 py-2 text-[10px]",
+        lg: "h-13 px-8 py-4",
+        icon: "h-10 w-10 p-0",
       },
     },
     defaultVariants: {
@@ -38,17 +74,48 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  href?: string
+  external?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, href, external = false, children, ...props }, ref) => {
+    // If href is provided, render as a link
+    if (href) {
+      const isExternal = external || href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//')
+
+      if (isExternal) {
+        return (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ variant, size, className }))}
+          >
+            {children}
+          </a>
+        )
+      }
+
+      return (
+        <Link
+          href={href}
+          className={cn(buttonVariants({ variant, size, className }))}
+        >
+          {children}
+        </Link>
+      )
+    }
+
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {children}
+      </Comp>
     )
   }
 )

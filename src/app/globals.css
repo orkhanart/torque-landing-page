@@ -1,80 +1,142 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
-body {
-  @apply font-sans;
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+/* Geist Font - Local or CDN */
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* body,
-html {
-  background-image: url("/bg-image.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-} */
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @layer base {
   :root {
     /* ===================================
-       NEW DESIGN SYSTEM COLORS
-       Light theme with purple/indigo brand
+       TORQUE DESIGN SYSTEM
+       Monochrome Light - Cyberpunk Terminal
        =================================== */
-    
-    /* Backgrounds */
-    --background: 252 8% 93%;              /* Light gray page background (effects/surface/gray-highlight) */
-    --card: 0, 0%, 96%;                    /* Light surface for cards (controls/tertiary) */
-    --popover: 240 7% 89%;                 /* Popover backgrounds */
-    
-    /* Text Colors */
-    --foreground: 0 0% 3%;                 /* Large titles, primary text (elements/top-emphasis) */
-    --card-foreground: 0 0% 3%;            /* Text on cards */
-    --popover-foreground: 0 0% 3%;         /* Text in popovers */
-    --muted-foreground: 240 2% 31%;        /* Secondary text, descriptions (elements/mid-emphasis) */
-    --secondary-foreground: 240 1% 48%;    /* Nav buttons, low-emphasis text (elements/low-emphasis) */
 
-    /* Primary Brand Color (Purple/Indigo) */
-    --primary: 238 88% 67%;                /* Primary brand color */
-    --primary-foreground: 0 0% 96%;        /* Text on primary buttons */
-    --primary-hover: 238 88% 62%;          /* Hover state (slightly darker) */
-    --primary-focus: 238 88% 57%;          /* Focus/active state (darker) */
+    /* Font Families */
+    --font-display: 'Funnel Display', system-ui, sans-serif;
+    --font-body: 'Geist', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 
-    /* Secondary/Accent Colors */
-    --secondary: 240 2% 31%;               /* Secondary buttons (controls/high-contrast) */
-    --accent: 238 88% 67%;                 /* Accent color (using primary) */
-    --accent-hover: 238 88% 62%;           /* Accent hover */
-    --accent-focus: 238 88% 57%;           /* Accent focus */
+    /* Pure Monochrome */
+    --black: 0 0% 0%;
+    --white: 0 0% 100%;
 
-    /* Button Colors */
-    --white-button: 240 7% 89%;            /* Light/white button color */
-    --white-button-hover: 240 7% 85%;      /* White button hover */
-    --white-button-focus: 240 7% 80%;      /* White button focus */
+    /* Gray Scale */
+    --gray-50: 0 0% 98%;
+    --gray-100: 0 0% 96%;
+    --gray-200: 0 0% 90%;
+    --gray-300: 0 0% 83%;
+    --gray-400: 0 0% 64%;
+    --gray-500: 0 0% 45%;
+    --gray-600: 0 0% 32%;
+    --gray-700: 0 0% 25%;
+    --gray-800: 0 0% 15%;
+    --gray-900: 0 0% 9%;
 
-    /* Utility Colors */
-    --tertiary: 240 7% 89%;                /* Tertiary backgrounds */
-    --muted: 240 7% 89%;                   /* Muted backgrounds */
-    --border: 238 88% 67%;                 /* Borders (use with opacity: border-primary/30) */
-    --input: 240 7% 89%;                   /* Input field backgrounds */
-    --ring: 238 88% 67%;                   /* Focus rings */
+    /* Semantic Mappings */
+    --background: var(--white);
+    --foreground: var(--black);
+    --card: var(--white);
+    --card-foreground: var(--black);
+    --popover: var(--white);
+    --popover-foreground: var(--black);
 
-    /* System Colors */
-    --destructive: 0 72% 51%;              /* Error/destructive actions */
-    --destructive-foreground: 0 0% 98%;    /* Text on destructive elements */
+    --primary: var(--black);
+    --primary-foreground: var(--white);
 
-    /* Chart colors (updated to match new palette) */
-    --chart-1: 238 88% 67%;                /* Primary purple */
-    --chart-2: 240 2% 31%;                 /* Dark gray */
-    --chart-3: 240 1% 48%;                 /* Medium gray */
-    --chart-4: 240 7% 89%;                 /* Light gray */
-    --chart-5: 0 0% 3%;                    /* Near black */
+    --secondary: var(--gray-100);
+    --secondary-foreground: var(--black);
+
+    --muted: var(--gray-100);
+    --muted-foreground: var(--gray-500);
+
+    --accent: var(--gray-100);
+    --accent-foreground: var(--black);
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: var(--white);
+
+    --border: var(--gray-200);
+    --input: var(--gray-200);
+    --ring: var(--black);
+
+    /* Semantic Colors (subtle) */
+    --positive: 142 76% 22%;
+    --positive-bg: 142 76% 97%;
+    --negative: 0 72% 35%;
+    --negative-bg: 0 72% 97%;
+    --warning: 32 95% 30%;
+    --warning-bg: 32 95% 97%;
+
+    /* Radius */
+    --radius: 0.5rem;
+
+    /* Animation Durations */
+    --duration-instant: 100ms;
+    --duration-fast: 200ms;
+    --duration-normal: 300ms;
+    --duration-slow: 500ms;
+    --duration-slower: 800ms;
+
+    /* Easing */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  /* Dark mode (inverse sections) */
+  .dark, [data-theme="dark"] {
+    --background: var(--black);
+    --foreground: var(--white);
+    --card: var(--gray-900);
+    --card-foreground: var(--white);
+    --popover: var(--gray-900);
+    --popover-foreground: var(--white);
+
+    --primary: var(--white);
+    --primary-foreground: var(--black);
+
+    --secondary: var(--gray-800);
+    --secondary-foreground: var(--white);
+
+    --muted: var(--gray-800);
+    --muted-foreground: var(--gray-400);
+
+    --border: var(--gray-800);
+    --input: var(--gray-800);
+    --ring: var(--white);
   }
 }
 
@@ -82,7 +144,423 @@ html {
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  html {
+    scroll-behavior: smooth;
   }
+
+  body {
+    font-family: var(--font-body);
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-black text-white;
+  }
+}
+
+/* ===================================
+   TYPOGRAPHY UTILITIES
+   =================================== */
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Font Families */
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Terminal Text Styles */
+  .text-terminal {
+    font-family: var(--font-mono);
+    @apply uppercase tracking-wider text-xs font-medium;
+  }
+
+  .text-label {
+    font-family: var(--font-mono);
+    @apply uppercase tracking-[0.1em] text-[10px] font-medium text-gray-500;
+  }
+
+  .text-data {
+    font-family: var(--font-mono);
+    @apply tabular-nums tracking-tight;
+  }
+}
+
+/* ===================================
+   TERMINAL COMPONENT STYLES
+   =================================== */
+
+@layer components {
+  /* Terminal Card */
+  .terminal-card {
+    @apply border border-black bg-white;
+  }
+
+  .terminal-card-header {
+    @apply flex items-center gap-2 px-4 py-2 bg-black text-white border-b border-black;
+  }
+
+  .terminal-card-dots {
+    @apply flex gap-1.5;
+  }
+
+  .terminal-card-dot {
+    @apply w-2.5 h-2.5 rounded-full bg-white/20;
+  }
+
+  .terminal-card-title {
+    font-family: var(--font-mono);
+    @apply text-xs uppercase tracking-wider font-medium ml-2;
+  }
+
+  .terminal-card-body {
+    @apply p-4;
+  }
+
+  /* Terminal Button */
+  .btn-terminal {
+    font-family: var(--font-mono);
+    @apply inline-flex items-center justify-center px-6 py-3 text-xs uppercase tracking-wider font-medium;
+    @apply bg-black text-white border border-black;
+    @apply transition-all duration-200;
+  }
+
+  .btn-terminal:hover {
+    @apply bg-white text-black;
+  }
+
+  .btn-terminal-outline {
+    font-family: var(--font-mono);
+    @apply inline-flex items-center justify-center px-6 py-3 text-xs uppercase tracking-wider font-medium;
+    @apply bg-white text-black border border-black;
+    @apply transition-all duration-200;
+  }
+
+  .btn-terminal-outline:hover {
+    @apply bg-black text-white;
+  }
+
+  /* Data Table */
+  .data-table {
+    @apply w-full border border-black;
+  }
+
+  .data-table th {
+    font-family: var(--font-mono);
+    @apply text-[10px] uppercase tracking-wider font-medium text-gray-500;
+    @apply px-4 py-3 text-left bg-gray-50 border-b border-black;
+  }
+
+  .data-table td {
+    font-family: var(--font-mono);
+    @apply text-sm px-4 py-3 border-b border-gray-200;
+  }
+
+  .data-table tr:last-child td {
+    @apply border-b-0;
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    @apply h-2 bg-gray-200 overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-black transition-all duration-500;
+  }
+
+  /* Status Indicator */
+  .status-dot {
+    @apply w-2 h-2 bg-black;
+  }
+
+  .status-dot.live {
+    @apply animate-pulse;
+  }
+
+  /* Tag */
+  .tag {
+    font-family: var(--font-mono);
+    @apply inline-flex items-center px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium;
+    @apply bg-gray-100 text-gray-600;
+  }
+
+  .tag-positive {
+    @apply bg-green-50 text-green-800;
+  }
+
+  .tag-negative {
+    @apply bg-red-50 text-red-800;
+  }
+}
+
+/* ===================================
+   BACKGROUND EFFECTS
+   =================================== */
+
+@layer utilities {
+  /* Grid Background */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Scan Lines */
+  .scan-lines {
+    position: relative;
+  }
+
+  .scan-lines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.02) 2px,
+      rgba(0, 0, 0, 0.02) 4px
+    );
+    pointer-events: none;
+  }
+
+  .scan-lines-dark::after {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.02) 2px,
+      rgba(255, 255, 255, 0.02) 4px
+    );
+  }
+
+  /* Noise Texture */
+  .noise {
+    position: relative;
+  }
+
+  .noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  /* Vignette */
+  .vignette {
+    position: relative;
+  }
+
+  .vignette::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+    pointer-events: none;
+  }
+}
+
+/* ===================================
+   ANIMATIONS
+   =================================== */
+
+@layer utilities {
+  /* Typing Cursor */
+  .cursor-blink::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Glitch Effect */
+  .glitch {
+    position: relative;
+  }
+
+  .glitch:hover {
+    animation: glitch 0.3s ease-in-out;
+  }
+
+  @keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+  }
+
+  /* Flicker */
+  .flicker {
+    animation: flicker 4s infinite;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.8; }
+    94% { opacity: 1; }
+    95% { opacity: 0.9; }
+    96% { opacity: 1; }
+  }
+
+  /* Scan Line Animation */
+  .scan-animate {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-animate::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.03) 50%,
+      transparent 100%
+    );
+    animation: scanDown 8s linear infinite;
+  }
+
+  @keyframes scanDown {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  /* Fade Up */
+  .animate-fade-up {
+    animation: fadeUp 0.6s var(--ease-out) forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Stagger children */
+  .stagger-children > * {
+    opacity: 0;
+    animation: fadeUp 0.5s var(--ease-out) forwards;
+  }
+
+  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+  .stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+  .stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+  .stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+  .stagger-children > *:nth-child(6) { animation-delay: 500ms; }
+
+  /* Count up number animation placeholder */
+  .count-up {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ===================================
+   SECTION STYLES
+   =================================== */
+
+@layer components {
+  /* Inverse Section (Dark) */
+  .section-inverse {
+    @apply bg-black text-white;
+  }
+
+  .section-inverse .terminal-card {
+    @apply border-white/20 bg-black;
+  }
+
+  .section-inverse .terminal-card-header {
+    @apply bg-white text-black border-white/20;
+  }
+
+  .section-inverse .btn-terminal {
+    @apply bg-white text-black border-white;
+  }
+
+  .section-inverse .btn-terminal:hover {
+    @apply bg-black text-white;
+  }
+
+  /* Hero specific */
+  .hero-title {
+    font-family: var(--font-display);
+    @apply text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-[0.95];
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-body);
+    @apply text-lg sm:text-xl text-gray-600 leading-relaxed;
+  }
+}
+
+/* ===================================
+   SCROLLBAR
+   =================================== */
+
+/* Minimal scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+  background: #404040;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #525252;
 }
