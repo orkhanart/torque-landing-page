@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torque: Monochrome Light</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2');
+            font-weight: 600;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        :root {
+            /* MONOCHROME LIGHT - Pure Black & White */
+
+            /* Philosophy: Radical simplicity. No accent colors needed.
+               The confidence comes from restraint. Data is the hero.
+               Light mode signals transparency and clarity. */
+
+            /* Backgrounds */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #FAFAFA;
+            --bg-tertiary: #F5F5F5;
+            --bg-card: #FFFFFF;
+            --bg-card-hover: #FAFAFA;
+            --bg-elevated: #FFFFFF;
+            --bg-inverse: #000000;
+            --bg-inverse-subtle: #0A0A0A;
+
+            /* Text */
+            --text-primary: #000000;
+            --text-secondary: #525252;
+            --text-tertiary: #737373;
+            --text-muted: #A3A3A3;
+            --text-inverse: #FFFFFF;
+
+            /* Borders */
+            --border-subtle: #E5E5E5;
+            --border-default: #D4D4D4;
+            --border-strong: #A3A3A3;
+            --border-inverse: #262626;
+
+            /* Interactive - using black as the "accent" */
+            --interactive-primary: #000000;
+            --interactive-primary-hover: #262626;
+            --interactive-secondary: #F5F5F5;
+            --interactive-secondary-hover: #E5E5E5;
+
+            /* Semantic - subtle, not screaming */
+            --positive: #166534;
+            --positive-bg: #F0FDF4;
+            --negative: #991B1B;
+            --negative-bg: #FEF2F2;
+            --warning: #92400E;
+            --warning-bg: #FFFBEB;
+
+            /* Typography */
+            --font-display: 'Funnel Display', system-ui, sans-serif;
+            --font-body: 'Geist', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            --space-4xl: 96px;
+
+            /* Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-2xl);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: var(--space-4xl) 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .header h1 {
+            font-family: var(--font-display);
+            font-size: 56px;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-md);
+        }
+
+        .header .tag {
+            display: inline-block;
+            background: var(--bg-inverse);
+            color: var(--text-inverse);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-lg);
+        }
+
+        .header p {
+            font-family: var(--font-body);
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: var(--space-4xl);
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        /* Philosophy */
+        .philosophy {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            margin-bottom: var(--space-4xl);
+            padding: var(--space-2xl);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+        }
+
+        .philosophy-content h3 {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-md);
+        }
+
+        .philosophy-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            line-height: 1.8;
+        }
+
+        .philosophy-principles {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .principle {
+            display: flex;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .principle-number {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            min-width: 24px;
+        }
+
+        .principle-text {
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Font Cards */
+        .font-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .font-card {
+            padding: var(--space-xl);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+        }
+
+        .font-card-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-md);
+        }
+
+        .font-card-preview {
+            margin-bottom: var(--space-md);
+        }
+
+        .font-card-preview.display {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .font-card-preview.body {
+            font-family: var(--font-body);
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .font-card-preview.mono {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        .font-card-name {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .font-card-usage {
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Color Swatches */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .color-swatch {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .color-preview {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .color-info {
+            padding: var(--space-md);
+            background: var(--bg-primary);
+        }
+
+        .color-name {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+        }
+
+        .color-hex {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Typography Scale */
+        .type-scale {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .type-item {
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-xl);
+            padding: var(--space-lg) 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .type-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            min-width: 80px;
+        }
+
+        .type-display-hero {
+            font-family: var(--font-display);
+            font-size: 72px;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .type-display-xl {
+            font-family: var(--font-display);
+            font-size: 56px;
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .type-display-lg {
+            font-family: var(--font-display);
+            font-size: 40px;
+            font-weight: 500;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .type-display-md {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+        }
+
+        .type-body-lg {
+            font-family: var(--font-body);
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .type-body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .type-body-sm {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+        }
+
+        .type-mono-lg {
+            font-family: var(--font-mono);
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .type-mono {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .type-mono-sm {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        /* Buttons */
+        .buttons-row {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--interactive-primary);
+            color: var(--text-inverse);
+        }
+
+        .btn-primary:hover {
+            background: var(--interactive-primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-default);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            border-color: var(--border-strong);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 12px 16px;
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-secondary);
+        }
+
+        .btn-inverse {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .btn-inverse:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* Components Grid */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-xl);
+        }
+
+        .component-box {
+            padding: var(--space-xl);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+        }
+
+        .component-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-lg);
+        }
+
+        /* Insight Card */
+        .insight-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .insight-header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .insight-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-primary);
+            border-radius: 50%;
+        }
+
+        .insight-type {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .insight-time {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .insight-body {
+            padding: var(--space-lg);
+        }
+
+        .insight-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: var(--space-md);
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+        }
+
+        .insight-data {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+
+        .insight-data-item {
+            text-align: center;
+        }
+
+        .insight-data-value {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .insight-data-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .insight-action {
+            padding: var(--space-md) var(--space-lg);
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .insight-dismiss {
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .insight-dismiss:hover {
+            color: var(--text-secondary);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+        }
+
+        .stat-card {
+            padding: var(--space-xl);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+
+        .stat-card.inverse {
+            background: var(--bg-inverse);
+            border-color: var(--bg-inverse);
+        }
+
+        .stat-card.inverse .stat-value,
+        .stat-card.inverse .stat-label {
+            color: var(--text-inverse);
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 44px;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Data Table */
+        .data-table {
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .data-table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .data-table-header span {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .data-table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid var(--border-subtle);
+            align-items: center;
+        }
+
+        .data-table-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-table-wallet {
+            font-family: var(--font-mono);
+            font-size: 13px;
+        }
+
+        .data-table-value {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .data-table-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+        }
+
+        .data-table-tag.good {
+            background: var(--positive-bg);
+            color: var(--positive);
+        }
+
+        .data-table-tag.bad {
+            background: var(--negative-bg);
+            color: var(--negative);
+        }
+
+        .data-table-tag.neutral {
+            background: var(--bg-secondary);
+            color: var(--text-tertiary);
+        }
+
+        /* Hero Mock */
+        .hero-section {
+            margin-bottom: var(--space-4xl);
+        }
+
+        .nav-mock {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md) 0;
+            margin-bottom: var(--space-3xl);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-xl);
+        }
+
+        .nav-link {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .hero-mock {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            align-items: center;
+            padding: var(--space-3xl) 0;
+        }
+
+        .hero-content {
+            max-width: 560px;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 56px;
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-xl);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--space-md);
+        }
+
+        .hero-visual {
+            background: var(--bg-inverse);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            color: var(--text-inverse);
+        }
+
+        .hero-visual-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border-inverse);
+        }
+
+        .hero-visual-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
+        }
+
+        .hero-visual-live {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-visual-live::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--text-inverse);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero-visual-stat {
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-visual-stat-value {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: var(--space-xs);
+        }
+
+        .hero-visual-stat-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-visual-insight {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+        }
+
+        .hero-visual-insight-title {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: var(--space-sm);
+        }
+
+        .hero-visual-insight-meta {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            opacity: 0.5;
+        }
+
+        /* Inverse Section */
+        .section-inverse {
+            background: var(--bg-inverse);
+            color: var(--text-inverse);
+            margin: var(--space-4xl) calc(-1 * var(--space-2xl));
+            padding: var(--space-4xl) var(--space-2xl);
+        }
+
+        .section-inverse .section-title {
+            color: rgba(255, 255, 255, 0.4);
+            border-bottom-color: var(--border-inverse);
+        }
+
+        .inverse-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .inverse-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-xl);
+        }
+
+        .inverse-card {
+            padding: var(--space-xl);
+            border: 1px solid var(--border-inverse);
+            border-radius: var(--radius-lg);
+        }
+
+        .inverse-card-number {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            opacity: 0.4;
+            margin-bottom: var(--space-md);
+        }
+
+        .inverse-card-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.01em;
+        }
+
+        .inverse-card-desc {
+            font-family: var(--font-body);
+            font-size: 14px;
+            opacity: 0.6;
+            line-height: 1.6;
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-3xl);
+            padding: var(--space-2xl) 0;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            margin: var(--space-3xl) 0;
+        }
+
+        .trust-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .trust-logo {
+            font-family: var(--font-body);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="tag">Monochrome Light</div>
+            <h1>Black & White</h1>
+            <p>Radical simplicity. The confidence comes from restraint. Data is the hero.</p>
+        </header>
+
+        <!-- Philosophy -->
+        <div class="philosophy">
+            <div class="philosophy-content">
+                <h3>Color Philosophy</h3>
+                <p>Pure black and white creates maximum clarity. No accent colors competing for attention. Every element earns its place through typography, spacing, and hierarchy alone.</p>
+                <p>Light mode signals transparency - nothing to hide. The data speaks for itself. This is infrastructure confidence: we don't need flashy colors because the product is the statement.</p>
+            </div>
+            <div class="philosophy-principles">
+                <div class="principle">
+                    <span class="principle-number">01</span>
+                    <span class="principle-text">Black for action, interaction, and emphasis</span>
+                </div>
+                <div class="principle">
+                    <span class="principle-number">02</span>
+                    <span class="principle-text">White for space, clarity, and breathing room</span>
+                </div>
+                <div class="principle">
+                    <span class="principle-number">03</span>
+                    <span class="principle-text">Grays for hierarchy, not decoration</span>
+                </div>
+                <div class="principle">
+                    <span class="principle-number">04</span>
+                    <span class="principle-text">Typography and spacing do the heavy lifting</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fonts -->
+        <section class="section">
+            <h2 class="section-title">Typography System</h2>
+            <div class="font-info">
+                <div class="font-card">
+                    <div class="font-card-label">Display</div>
+                    <div class="font-card-preview display">Funnel Display</div>
+                    <div class="font-card-name">Funnel Display</div>
+                    <div class="font-card-usage">Headlines, large numbers, statements</div>
+                </div>
+                <div class="font-card">
+                    <div class="font-card-label">Body</div>
+                    <div class="font-card-preview body">Geist</div>
+                    <div class="font-card-name">Geist</div>
+                    <div class="font-card-usage">Body text, UI, descriptions</div>
+                </div>
+                <div class="font-card">
+                    <div class="font-card-label">Mono</div>
+                    <div class="font-card-preview mono">JetBrains</div>
+                    <div class="font-card-name">JetBrains Mono</div>
+                    <div class="font-card-usage">Data, labels, technical content</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Colors -->
+        <section class="section">
+            <h2 class="section-title">Color Palette</h2>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #000000; color: #fff;">Aa</div>
+                    <div class="color-info">
+                        <div class="color-name">Black</div>
+                        <div class="color-hex">#000000</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #FFFFFF; color: #000; border-bottom: 1px solid #e5e5e5;">Aa</div>
+                    <div class="color-info">
+                        <div class="color-name">White</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #FAFAFA; color: #000;">Aa</div>
+                    <div class="color-info">
+                        <div class="color-name">Gray 50</div>
+                        <div class="color-hex">#FAFAFA</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #F5F5F5; color: #000;">Aa</div>
+                    <div class="color-info">
+                        <div class="color-name">Gray 100</div>
+                        <div class="color-hex">#F5F5F5</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #E5E5E5; color: #000;">Aa</div>
+                    <div class="color-info">
+                        <div class="color-name">Gray 200</div>
+                        <div class="color-hex">#E5E5E5</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #A3A3A3; color: #000;">Aa</div>
+                    <div class="color-info">
+                        <div class="color-name">Gray 400</div>
+                        <div class="color-hex">#A3A3A3</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #525252; color: #fff;">Aa</div>
+                    <div class="color-info">
+                        <div class="color-name">Gray 600</div>
+                        <div class="color-hex">#525252</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #262626; color: #fff;">Aa</div>
+                    <div class="color-info">
+                        <div class="color-name">Gray 800</div>
+                        <div class="color-hex">#262626</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography Scale -->
+        <section class="section">
+            <h2 class="section-title">Type Scale</h2>
+            <div class="type-scale">
+                <div class="type-item">
+                    <div class="type-label">Hero</div>
+                    <div class="type-display-hero">89M+</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Display XL</div>
+                    <div class="type-display-xl">Stop guessing.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Display LG</div>
+                    <div class="type-display-lg">Intelligence Layer</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Display MD</div>
+                    <div class="type-display-md">We know which wallets respond.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Body LG</div>
+                    <div class="type-body-lg">We've analyzed 90 million trades. We know which wallets respond and which extract and leave.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Body</div>
+                    <div class="type-body">Protocols waste 40% of their incentive spend on bot farms, mercenaries, and blind targeting.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Mono LG</div>
+                    <div class="type-mono-lg">906,000</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Mono</div>
+                    <div class="type-mono">transactions_indexed: 89,000,000+</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Mono SM</div>
+                    <div class="type-mono-sm">Last Updated: 2 Min Ago</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components -->
+        <section class="section">
+            <h2 class="section-title">Components</h2>
+            <div class="components-grid">
+                <div class="component-box">
+                    <div class="component-label">Buttons</div>
+                    <div class="buttons-row">
+                        <button class="btn btn-primary">Get Started</button>
+                        <button class="btn btn-secondary">Learn More</button>
+                        <button class="btn btn-ghost">Documentation</button>
+                    </div>
+                </div>
+                <div class="component-box">
+                    <div class="component-label">Insight Card</div>
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <div class="insight-header-left">
+                                <div class="insight-dot"></div>
+                                <span class="insight-type">Activation</span>
+                            </div>
+                            <span class="insight-time">2 min ago</span>
+                        </div>
+                        <div class="insight-body">
+                            <div class="insight-title">47 high-volume traders have never received incentives.</div>
+                            <div class="insight-data">
+                                <div class="insight-data-item">
+                                    <div class="insight-data-value">$3.8M</div>
+                                    <div class="insight-data-label">Volume</div>
+                                </div>
+                                <div class="insight-data-item">
+                                    <div class="insight-data-value">73%</div>
+                                    <div class="insight-data-label">Response</div>
+                                </div>
+                                <div class="insight-data-item">
+                                    <div class="insight-data-value">12d</div>
+                                    <div class="insight-data-label">Window</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="insight-action">
+                            <button class="btn btn-primary">Target Wallets</button>
+                            <span class="insight-dismiss">Dismiss</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="section">
+            <h2 class="section-title">Stats Display</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">$10M</div>
+                    <div class="stat-label">Distributed</div>
+                </div>
+                <div class="stat-card inverse">
+                    <div class="stat-value">906K</div>
+                    <div class="stat-label">Profiles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89M+</div>
+                    <div class="stat-label">Transactions</div>
+                </div>
+                <div class="stat-card inverse">
+                    <div class="stat-value">40%</div>
+                    <div class="stat-label">Saved</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="section">
+            <h2 class="section-title">Data Table</h2>
+            <div class="data-table">
+                <div class="data-table-header">
+                    <span>Wallet</span>
+                    <span>Volume (7d)</span>
+                    <span>Retention</span>
+                    <span>Status</span>
+                </div>
+                <div class="data-table-row">
+                    <div class="data-table-wallet">7xKP...3mNq</div>
+                    <div class="data-table-value">$284,500</div>
+                    <div class="data-table-value">94%</div>
+                    <div><span class="data-table-tag good">Loyal</span></div>
+                </div>
+                <div class="data-table-row">
+                    <div class="data-table-wallet">9aRt...7wXz</div>
+                    <div class="data-table-value">$156,200</div>
+                    <div class="data-table-value">67%</div>
+                    <div><span class="data-table-tag neutral">Monitor</span></div>
+                </div>
+                <div class="data-table-row">
+                    <div class="data-table-wallet">2bYu...4kLm</div>
+                    <div class="data-table-value">$892,100</div>
+                    <div class="data-table-value">12%</div>
+                    <div><span class="data-table-tag bad">Mercenary</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Bar -->
+        <div class="trust-bar">
+            <span class="trust-label">Trusted by</span>
+            <span class="trust-logo">Raydium</span>
+            <span class="trust-logo">Metaplex</span>
+            <span class="trust-logo">Bonk</span>
+            <span class="trust-logo">Tensor</span>
+        </div>
+
+        <!-- Hero Mock -->
+        <section class="section hero-section">
+            <h2 class="section-title">Hero Section</h2>
+            <nav class="nav-mock">
+                <div class="nav-logo">Torque</div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Product</a>
+                    <a href="#" class="nav-link">Solutions</a>
+                    <a href="#" class="nav-link">Pricing</a>
+                    <a href="#" class="nav-link">Docs</a>
+                </div>
+                <button class="btn btn-primary">Get Started</button>
+            </nav>
+            <div class="hero-mock">
+                <div class="hero-content">
+                    <div class="hero-eyebrow">Intelligence Layer for Token Rewards</div>
+                    <h1 class="hero-title">Stop guessing.<br>Start knowing.</h1>
+                    <p class="hero-subtitle">We've analyzed 90 million trades. We know which wallets respond, which extract and leave, and exactly what to pay.</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary">Start Free</button>
+                        <button class="btn btn-secondary">View Demo</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-visual-header">
+                        <span class="hero-visual-title">Live Intelligence</span>
+                        <span class="hero-visual-live">Live</span>
+                    </div>
+                    <div class="hero-visual-stat">
+                        <div class="hero-visual-stat-value">89,247,103</div>
+                        <div class="hero-visual-stat-label">Transactions Indexed</div>
+                    </div>
+                    <div class="hero-visual-insight">
+                        <div class="hero-visual-insight-title">47 high-volume traders identified for activation</div>
+                        <div class="hero-visual-insight-meta">$3.8M combined weekly volume</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Inverse Section Example -->
+    <section class="section-inverse">
+        <div class="inverse-content">
+            <h2 class="section-title">How It Works</h2>
+            <div class="inverse-grid">
+                <div class="inverse-card">
+                    <div class="inverse-card-number">01</div>
+                    <div class="inverse-card-title">Deposit Rewards</div>
+                    <div class="inverse-card-desc">Set your budget and define success metrics. We handle the rest.</div>
+                </div>
+                <div class="inverse-card">
+                    <div class="inverse-card-number">02</div>
+                    <div class="inverse-card-title">We Target</div>
+                    <div class="inverse-card-desc">Our intelligence identifies the right wallets based on behavioral data.</div>
+                </div>
+                <div class="inverse-card">
+                    <div class="inverse-card-number">03</div>
+                    <div class="inverse-card-title">You Pay for Results</div>
+                    <div class="inverse-card-desc">5% fee only when campaigns succeed. No results, no charge.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div style="text-align: center; padding: 64px 0; color: var(--text-muted);">
+            <p style="font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;">End of Reference</p>
+        </div>
+    </div>
+</body>
+</html>

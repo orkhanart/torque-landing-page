@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torque Color Option A: Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* OPTION A: TERMINAL - Monochrome + Signal */
+
+            /* Philosophy: Data is neutral. Color = action/insight only.
+               Like Bloomberg terminal meets modern design.
+               Single accent does all the heavy lifting. */
+
+            /* Base Palette - Pure Monochrome */
+            --bg-primary: #000000;
+            --bg-secondary: #0A0A0A;
+            --bg-tertiary: #141414;
+            --bg-card: #1A1A1A;
+            --bg-card-hover: #222222;
+            --bg-elevated: #262626;
+
+            /* Text Hierarchy */
+            --text-primary: #FFFFFF;
+            --text-secondary: #A1A1A1;
+            --text-tertiary: #666666;
+            --text-muted: #404040;
+
+            /* Borders */
+            --border-subtle: #222222;
+            --border-default: #333333;
+            --border-strong: #444444;
+
+            /* Signal Color - Citrine (AgentSmyth inspired) */
+            --accent-primary: #D4FF00;
+            --accent-primary-hover: #E5FF4D;
+            --accent-primary-muted: rgba(212, 255, 0, 0.15);
+            --accent-on-accent: #000000;
+
+            /* Semantic */
+            --success: #00FF88;
+            --warning: #FFB800;
+            --error: #FF4444;
+            --info: #00B4FF;
+
+            /* Typography */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+
+            /* Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-2xl);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: var(--space-3xl) 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .header h1 {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+        }
+
+        .header .tag {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: var(--accent-on-accent);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-lg);
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: var(--space-3xl);
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        /* Color Swatches */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .color-swatch {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .color-preview {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-info {
+            padding: var(--space-md);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .color-name {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+        }
+
+        .color-hex {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        /* Typography Showcase */
+        .type-scale {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .type-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: var(--space-xl);
+            align-items: baseline;
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .type-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .type-display-xl {
+            font-family: var(--font-display);
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .type-display-lg {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .type-display-md {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .type-body-lg {
+            font-family: var(--font-body);
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .type-body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .type-mono {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .type-mono-sm {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        /* Components */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-xl);
+        }
+
+        .component-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+        }
+
+        .component-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-lg);
+        }
+
+        /* Buttons */
+        .buttons-row {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-full);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: var(--accent-on-accent);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-primary-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-default);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+        }
+
+        .stat-card.accent {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .stat-card.accent .stat-value,
+        .stat-card.accent .stat-label {
+            color: var(--accent-on-accent);
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: var(--space-sm);
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        /* Insight Card */
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .insight-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .insight-type {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .insight-body {
+            padding: var(--space-lg);
+        }
+
+        .insight-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .insight-meta {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .insight-metric {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: var(--accent-primary-muted);
+            color: var(--accent-primary);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+        }
+
+        .insight-action {
+            padding: var(--space-md) var(--space-lg);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        /* Hero Mock */
+        .hero-mock {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: var(--space-3xl);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-mock::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, var(--accent-primary-muted) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: var(--space-lg);
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-lg);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto var(--space-xl);
+            position: relative;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Nav Mock */
+        .nav-mock {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md) var(--space-xl);
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-full);
+            margin-bottom: var(--space-xl);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-xl);
+        }
+
+        .nav-link {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Font Info */
+        .font-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .font-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .font-card-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .font-card-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .font-card-name.display { font-family: var(--font-display); }
+        .font-card-name.body { font-family: var(--font-body); }
+        .font-card-name.mono { font-family: var(--font-mono); }
+
+        .font-card-usage {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        /* Philosophy */
+        .philosophy {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .philosophy h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            margin-bottom: var(--space-md);
+        }
+
+        .philosophy p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .philosophy ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .philosophy li {
+            background: var(--bg-elevated);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-secondary);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="tag">Option A</div>
+            <h1>Terminal</h1>
+            <p>Monochrome base with a single high-impact signal color. Data is neutral. Color means action.</p>
+        </header>
+
+        <!-- Philosophy -->
+        <div class="philosophy">
+            <h3>Color Philosophy</h3>
+            <p>The Terminal approach treats the interface as a data environment where color is precious and meaningful. The monochrome base (pure blacks, whites, grays) creates a neutral canvas that lets data speak. The single accent color (Citrine) becomes the signal - it means "look here," "act now," or "this matters."</p>
+            <p>This approach draws from Bloomberg terminals, code editors, and professional trading interfaces where information density is high and distraction is costly.</p>
+            <ul>
+                <li>Bloomberg Terminal</li>
+                <li>VS Code</li>
+                <li>Linear App</li>
+                <li>Raycast</li>
+                <li>Warp Terminal</li>
+            </ul>
+        </div>
+
+        <!-- Fonts -->
+        <section class="section">
+            <h2 class="section-title">Typography System</h2>
+            <div class="font-info">
+                <div class="font-card">
+                    <div class="font-card-label">Display</div>
+                    <div class="font-card-name display">Space Grotesk</div>
+                    <div class="font-card-usage">Headlines, large numbers, stats</div>
+                </div>
+                <div class="font-card">
+                    <div class="font-card-label">Body</div>
+                    <div class="font-card-name body">Inter</div>
+                    <div class="font-card-usage">Body text, descriptions, UI elements</div>
+                </div>
+                <div class="font-card">
+                    <div class="font-card-label">Mono</div>
+                    <div class="font-card-name mono">JetBrains Mono</div>
+                    <div class="font-card-usage">Labels, data, code, technical info</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Colors -->
+        <section class="section">
+            <h2 class="section-title">Color Palette</h2>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #000000;">
+                        <span style="color: #666;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Background Primary</div>
+                        <div class="color-hex">#000000</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #0A0A0A;">
+                        <span style="color: #666;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Background Secondary</div>
+                        <div class="color-hex">#0A0A0A</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #1A1A1A;">
+                        <span style="color: #888;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Card Background</div>
+                        <div class="color-hex">#1A1A1A</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #262626;">
+                        <span style="color: #999;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Elevated</div>
+                        <div class="color-hex">#262626</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #D4FF00;">
+                        <span style="color: #000;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Primary (Citrine)</div>
+                        <div class="color-hex">#D4FF00</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #FFFFFF;">
+                        <span style="color: #000;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Text Primary</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #A1A1A1;">
+                        <span style="color: #000;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Text Secondary</div>
+                        <div class="color-hex">#A1A1A1</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #666666;">
+                        <span style="color: #fff;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Text Tertiary</div>
+                        <div class="color-hex">#666666</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography Scale -->
+        <section class="section">
+            <h2 class="section-title">Type Scale</h2>
+            <div class="type-scale">
+                <div class="type-item">
+                    <div class="type-label">Display XL</div>
+                    <div class="type-display-xl">89M+</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Display LG</div>
+                    <div class="type-display-lg">Stop guessing.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Display MD</div>
+                    <div class="type-display-md">Intelligence Layer for Token Rewards</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Body LG</div>
+                    <div class="type-body-lg">We've analyzed 90 million trades. We know which wallets respond and which extract and leave.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Body</div>
+                    <div class="type-body">Protocols waste 40% of their incentive spend on bot farms, mercenaries, and blind targeting.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Mono Label</div>
+                    <div class="type-mono">Transactions Indexed</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Mono SM</div>
+                    <div class="type-mono-sm">Activation Opportunity Detected</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components -->
+        <section class="section">
+            <h2 class="section-title">Components</h2>
+            <div class="components-grid">
+                <div class="component-box">
+                    <div class="component-label">Buttons</div>
+                    <div class="buttons-row">
+                        <button class="btn btn-primary">Get Access</button>
+                        <button class="btn btn-secondary">Learn More</button>
+                        <button class="btn btn-ghost">Documentation</button>
+                    </div>
+                </div>
+                <div class="component-box">
+                    <div class="component-label">Insight Card</div>
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <div class="insight-dot"></div>
+                            <span class="insight-type">Activation Opportunity</span>
+                        </div>
+                        <div class="insight-body">
+                            <div class="insight-title">47 high-volume traders have never received incentives.</div>
+                            <div class="insight-meta">Combined weekly volume: $3.8M</div>
+                            <div class="insight-metric">73% predicted response rate</div>
+                        </div>
+                        <div class="insight-action">
+                            <button class="btn btn-primary">Target Wallets</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="section">
+            <h2 class="section-title">Stats Display</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">$10M</div>
+                    <div class="stat-label">Rewards Distributed</div>
+                </div>
+                <div class="stat-card accent">
+                    <div class="stat-value">906K</div>
+                    <div class="stat-label">Wallet Profiles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89M+</div>
+                    <div class="stat-label">Transactions Indexed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">40%</div>
+                    <div class="stat-label">Waste Prevented</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Mock -->
+        <section class="section">
+            <h2 class="section-title">Hero Section Mock</h2>
+            <nav class="nav-mock">
+                <div class="nav-logo">Torque</div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Product</a>
+                    <a href="#" class="nav-link">Solutions</a>
+                    <a href="#" class="nav-link">Pricing</a>
+                    <a href="#" class="nav-link">Docs</a>
+                </div>
+                <button class="btn btn-primary">Get Access</button>
+            </nav>
+            <div class="hero-mock">
+                <div class="hero-eyebrow">Intelligence Layer for Token Rewards</div>
+                <h1 class="hero-title">Stop guessing.<br>Start knowing.</h1>
+                <p class="hero-subtitle">We've analyzed 90 million trades. We know which wallets respond, which extract and leave, and exactly what to pay.</p>
+                <div class="hero-cta">
+                    <button class="btn btn-primary">Start Free</button>
+                    <button class="btn btn-secondary">View Demo</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

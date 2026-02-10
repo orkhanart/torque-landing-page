@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torque Color Option D: High Contrast Signal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* OPTION D: HIGH CONTRAST SIGNAL - Neutral + Bold */
+
+            /* Philosophy: The data is neutral, our insight cuts through.
+               Balanced gray base (neither warm nor cool) with an unexpected
+               bold accent that becomes the brand signature. AgentSmyth approach
+               but with Torque's unique signal color. */
+
+            /* Base Palette - True Neutral Gray */
+            --bg-primary: #09090B;
+            --bg-secondary: #0F0F12;
+            --bg-tertiary: #18181B;
+            --bg-card: #1F1F23;
+            --bg-card-hover: #27272A;
+            --bg-elevated: #2E2E33;
+
+            /* Text Hierarchy */
+            --text-primary: #FAFAFA;
+            --text-secondary: #A1A1AA;
+            --text-tertiary: #71717A;
+            --text-muted: #52525B;
+
+            /* Borders */
+            --border-subtle: #27272A;
+            --border-default: #3F3F46;
+            --border-strong: #52525B;
+
+            /* Signal Color - Electric Mint (Torque's signature) */
+            --accent-primary: #00FFB2;
+            --accent-primary-hover: #33FFC4;
+            --accent-primary-muted: rgba(0, 255, 178, 0.1);
+            --accent-on-accent: #09090B;
+
+            /* Secondary Signal - Bright White (for maximum contrast) */
+            --accent-secondary: #FFFFFF;
+            --accent-secondary-muted: rgba(255, 255, 255, 0.08);
+
+            /* Data Colors (for visualization) */
+            --data-positive: #00FFB2;
+            --data-negative: #FF6B6B;
+            --data-neutral: #71717A;
+            --data-highlight: #FFFFFF;
+
+            /* Semantic */
+            --success: #00FFB2;
+            --success-muted: rgba(0, 255, 178, 0.12);
+            --warning: #FFBE0A;
+            --warning-muted: rgba(255, 190, 10, 0.12);
+            --error: #FF6B6B;
+            --error-muted: rgba(255, 107, 107, 0.12);
+
+            /* Typography */
+            --font-display: 'DM Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+
+            /* Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-2xl);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: var(--space-3xl) 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .header h1 {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+        }
+
+        .header .tag {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: var(--accent-on-accent);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-lg);
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: var(--space-3xl);
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .section-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-primary);
+        }
+
+        /* Color Swatches */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .color-swatch {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .color-preview {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-info {
+            padding: var(--space-md);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .color-name {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .color-hex {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        /* Typography Scale */
+        .type-scale {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .type-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: var(--space-xl);
+            align-items: baseline;
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .type-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .type-display-xl {
+            font-family: var(--font-display);
+            font-size: 80px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .type-display-lg {
+            font-family: var(--font-display);
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .type-display-md {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .type-body-lg {
+            font-family: var(--font-body);
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .type-body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .type-mono {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        .type-mono-sm {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        /* Components */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-xl);
+        }
+
+        .component-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+        }
+
+        .component-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-lg);
+        }
+
+        /* Buttons */
+        .buttons-row {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 14px 28px;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: var(--accent-on-accent);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border-default);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--accent-primary);
+            padding: 14px 16px;
+        }
+
+        .btn-ghost:hover {
+            text-decoration: underline;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: var(--space-xl);
+            text-align: left;
+        }
+
+        .stat-card.accent {
+            background: var(--accent-primary);
+        }
+
+        .stat-card.accent .stat-value,
+        .stat-card.accent .stat-label {
+            color: var(--accent-on-accent);
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.03em;
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Insight Card */
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .insight-header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .insight-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-primary);
+        }
+
+        .insight-type {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .insight-time {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .insight-body {
+            padding: var(--space-lg);
+        }
+
+        .insight-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            line-height: 1.4;
+        }
+
+        .insight-data {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+        }
+
+        .insight-data-item {
+            text-align: center;
+        }
+
+        .insight-data-value {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .insight-data-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .insight-action {
+            padding: var(--space-md) var(--space-lg);
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .insight-action-secondary {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Hero Mock */
+        .hero-mock {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--space-3xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-mock::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--accent-primary-muted), transparent);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            position: relative;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--accent-primary);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-title .signal {
+            color: var(--accent-primary);
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            line-height: 1.7;
+            max-width: 520px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--space-md);
+        }
+
+        .hero-stats {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            background: var(--border-subtle);
+        }
+
+        .hero-stat {
+            background: var(--bg-card);
+            padding: var(--space-lg) var(--space-xl);
+            text-align: right;
+        }
+
+        .hero-stat-value {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-stat-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Nav Mock */
+        .nav-mock {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: var(--space-xl);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .nav-logo-mark {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-xl);
+        }
+
+        .nav-link {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Font Info */
+        .font-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .font-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+        }
+
+        .font-card-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .font-card-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .font-card-name.display { font-family: var(--font-display); }
+        .font-card-name.body { font-family: var(--font-body); }
+        .font-card-name.mono { font-family: var(--font-mono); }
+
+        .font-card-usage {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-tertiary);
+        }
+
+        /* Philosophy */
+        .philosophy {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-3xl);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+        }
+
+        .philosophy-content h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            margin-bottom: var(--space-md);
+        }
+
+        .philosophy-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            line-height: 1.7;
+        }
+
+        .philosophy-refs {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: var(--space-lg);
+        }
+
+        .philosophy-refs-title {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-md);
+        }
+
+        .philosophy-refs ul {
+            list-style: none;
+        }
+
+        .philosophy-refs li {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .philosophy-refs li:last-child {
+            border-bottom: none;
+        }
+
+        .philosophy-refs li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent-primary);
+        }
+
+        /* Data Table Preview */
+        .data-table {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-top: var(--space-xl);
+        }
+
+        .data-table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .data-table-header span {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .data-table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid var(--border-subtle);
+            align-items: center;
+        }
+
+        .data-table-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-table-wallet {
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .data-table-value {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .data-table-value.positive {
+            color: var(--accent-primary);
+        }
+
+        .data-table-value.negative {
+            color: var(--error);
+        }
+
+        .data-table-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .data-table-tag.good {
+            background: var(--success-muted);
+            color: var(--success);
+        }
+
+        .data-table-tag.bad {
+            background: var(--error-muted);
+            color: var(--error);
+        }
+
+        .data-table-tag.neutral {
+            background: var(--accent-secondary-muted);
+            color: var(--text-tertiary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="tag">Option D</div>
+            <h1>High Contrast Signal</h1>
+            <p>Neutral gray base with a bold, unexpected accent. The data is neutral - our insight cuts through like a signal in the noise.</p>
+        </header>
+
+        <!-- Philosophy -->
+        <div class="philosophy">
+            <div class="philosophy-content">
+                <h3>Color Philosophy</h3>
+                <p>High Contrast Signal treats the interface as a neutral data environment where one bold color becomes the brand's signature. The true neutral grays (neither warm nor cool) create perfect objectivity.</p>
+                <p>The Electric Mint accent (#00FFB2) is unexpected and memorable - not the typical blue or purple of tech. It signals action, insight, and opportunity against the quiet backdrop of data.</p>
+                <p>This approach makes every colored element meaningful: if it's mint, it matters.</p>
+            </div>
+            <div class="philosophy-refs">
+                <div class="philosophy-refs-title">References</div>
+                <ul>
+                    <li>AgentSmyth (approach)</li>
+                    <li>Robinhood</li>
+                    <li>Figma</li>
+                    <li>Mercury</li>
+                    <li>Ramp</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Fonts -->
+        <section class="section">
+            <h2 class="section-title">Typography System</h2>
+            <div class="font-info">
+                <div class="font-card">
+                    <div class="font-card-label">Display</div>
+                    <div class="font-card-name display">DM Sans</div>
+                    <div class="font-card-usage">Headlines, large numbers, bold statements</div>
+                </div>
+                <div class="font-card">
+                    <div class="font-card-label">Body</div>
+                    <div class="font-card-name body">Inter</div>
+                    <div class="font-card-usage">Body text, descriptions, UI</div>
+                </div>
+                <div class="font-card">
+                    <div class="font-card-label">Mono</div>
+                    <div class="font-card-name mono">Space Mono</div>
+                    <div class="font-card-usage">Data, labels, technical info</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Colors -->
+        <section class="section">
+            <h2 class="section-title">Color Palette</h2>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #09090B;">
+                        <span style="color: #71717A;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">BG Primary</div>
+                        <div class="color-hex">#09090B</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #18181B;">
+                        <span style="color: #A1A1AA;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">BG Tertiary</div>
+                        <div class="color-hex">#18181B</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #1F1F23;">
+                        <span style="color: #A1A1AA;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Card</div>
+                        <div class="color-hex">#1F1F23</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #2E2E33;">
+                        <span style="color: #FAFAFA;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Elevated</div>
+                        <div class="color-hex">#2E2E33</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #00FFB2;">
+                        <span style="color: #09090B;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Signal (Mint)</div>
+                        <div class="color-hex">#00FFB2</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #FF6B6B;">
+                        <span style="color: #09090B;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Negative</div>
+                        <div class="color-hex">#FF6B6B</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #FAFAFA;">
+                        <span style="color: #09090B;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Text Primary</div>
+                        <div class="color-hex">#FAFAFA</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: #71717A;">
+                        <span style="color: #FAFAFA;">Aa</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Text Tertiary</div>
+                        <div class="color-hex">#71717A</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography Scale -->
+        <section class="section">
+            <h2 class="section-title">Type Scale</h2>
+            <div class="type-scale">
+                <div class="type-item">
+                    <div class="type-label">XL</div>
+                    <div class="type-display-xl">89M+</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">LG</div>
+                    <div class="type-display-lg">Stop guessing.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">MD</div>
+                    <div class="type-display-md">Intelligence Layer for Token Rewards</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Body LG</div>
+                    <div class="type-body-lg">We've analyzed 90 million trades. We know which wallets respond and which extract and leave.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Body</div>
+                    <div class="type-body">Protocols waste 40% of their incentive spend on bot farms, mercenaries, and blind targeting.</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Mono</div>
+                    <div class="type-mono">transactions: 89,000,000+</div>
+                </div>
+                <div class="type-item">
+                    <div class="type-label">Mono SM</div>
+                    <div class="type-mono-sm">Last Sync: 2 Min Ago</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components -->
+        <section class="section">
+            <h2 class="section-title">Components</h2>
+            <div class="components-grid">
+                <div class="component-box">
+                    <div class="component-label">Buttons</div>
+                    <div class="buttons-row">
+                        <button class="btn btn-primary">Get Access</button>
+                        <button class="btn btn-secondary">Learn More</button>
+                        <button class="btn btn-ghost">Docs →</button>
+                    </div>
+                </div>
+                <div class="component-box">
+                    <div class="component-label">Insight Card</div>
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <div class="insight-header-left">
+                                <div class="insight-dot"></div>
+                                <span class="insight-type">Activation</span>
+                            </div>
+                            <span class="insight-time">2 min ago</span>
+                        </div>
+                        <div class="insight-body">
+                            <div class="insight-title">47 high-volume traders have never received incentives.</div>
+                            <div class="insight-data">
+                                <div class="insight-data-item">
+                                    <div class="insight-data-value">$3.8M</div>
+                                    <div class="insight-data-label">Weekly Vol</div>
+                                </div>
+                                <div class="insight-data-item">
+                                    <div class="insight-data-value">73%</div>
+                                    <div class="insight-data-label">Response</div>
+                                </div>
+                                <div class="insight-data-item">
+                                    <div class="insight-data-value">12d</div>
+                                    <div class="insight-data-label">Window</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="insight-action">
+                            <button class="btn btn-primary">Target Wallets</button>
+                            <span class="insight-action-secondary">Dismiss</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="data-table">
+                <div class="data-table-header">
+                    <span>Wallet</span>
+                    <span>Volume (7d)</span>
+                    <span>Retention</span>
+                    <span>Status</span>
+                </div>
+                <div class="data-table-row">
+                    <div class="data-table-wallet">7xKP...3mNq</div>
+                    <div class="data-table-value">$284,500</div>
+                    <div class="data-table-value positive">94%</div>
+                    <div><span class="data-table-tag good">Loyal</span></div>
+                </div>
+                <div class="data-table-row">
+                    <div class="data-table-wallet">9aRt...7wXz</div>
+                    <div class="data-table-value">$156,200</div>
+                    <div class="data-table-value">67%</div>
+                    <div><span class="data-table-tag neutral">Monitor</span></div>
+                </div>
+                <div class="data-table-row">
+                    <div class="data-table-wallet">2bYu...4kLm</div>
+                    <div class="data-table-value">$892,100</div>
+                    <div class="data-table-value negative">12%</div>
+                    <div><span class="data-table-tag bad">Mercenary</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="section">
+            <h2 class="section-title">Stats Display</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">$10M</div>
+                    <div class="stat-label">Distributed</div>
+                </div>
+                <div class="stat-card accent">
+                    <div class="stat-value">906K</div>
+                    <div class="stat-label">Profiles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89M+</div>
+                    <div class="stat-label">Transactions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">40%</div>
+                    <div class="stat-label">Waste Cut</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Mock -->
+        <section class="section">
+            <h2 class="section-title">Hero Section Mock</h2>
+            <nav class="nav-mock">
+                <div class="nav-logo">
+                    <div class="nav-logo-mark"></div>
+                    Torque
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Product</a>
+                    <a href="#" class="nav-link">Solutions</a>
+                    <a href="#" class="nav-link">Pricing</a>
+                    <a href="#" class="nav-link">Docs</a>
+                </div>
+                <button class="btn btn-primary">Get Access</button>
+            </nav>
+            <div class="hero-mock">
+                <div class="hero-content">
+                    <div class="hero-eyebrow">Intelligence Layer</div>
+                    <h1 class="hero-title">Stop guessing.<br><span class="signal">Start knowing.</span></h1>
+                    <p class="hero-subtitle">We've analyzed 90 million trades. We know which wallets respond, which extract and leave, and exactly what to pay.</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary">Start Free</button>
+                        <button class="btn btn-secondary">View Demo</button>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">89M+</div>
+                        <div class="hero-stat-label">Transactions</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">906K</div>
+                        <div class="hero-stat-label">Profiles</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">40%</div>
+                        <div class="hero-stat-label">Saved</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

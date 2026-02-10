@@ -1,19 +1,16 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-//import AnimatedBackground from "@/components/AnimatedBackground";
-import Hyperspeed from "@/blocks/Backgrounds/Hyperspeed/Hyperspeed";
-// import Navbar from "./components/navbar";
 
 export const metadata: Metadata = {
-  title: "Torque",
-  description: "Building Solana's onchain attention economy.",
+  title: "Torque | The Revenue Engine for On-Chain Growth",
+  description: "Stop renting mercenary TVL. Torque is the intelligent growth stack for Solana protocols, driving retention and revenue through programmable incentives.",
   icons: {
     icon: "/logos/c-logo-lm-2.png",
   },
   openGraph: {
-    title: "Torque - The Growth Protocol",
-    description: "The SVM growth engine.",
+    title: "Torque | The Revenue Engine for On-Chain Growth",
+    description: "Stop renting mercenary TVL. Torque is the intelligent growth stack for Solana protocols, driving retention and revenue through programmable incentives.",
     url: "https://torque.so",
     siteName: "Torque",
     images: [
@@ -21,7 +18,7 @@ export const metadata: Metadata = {
         url: "/og-image-light-mode.png",
         width: 1200,
         height: 675,
-        alt: "Torque - Solana's Incentive Protocol",
+        alt: "Torque - The Revenue Engine for On-Chain Growth",
       },
     ],
     locale: "en_US",
@@ -29,8 +26,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Torque - Solana's Incentive Protocol",
-    description: "Launch Smart Incentives to Drive Growth",
+    title: "Torque | The Revenue Engine for On-Chain Growth",
+    description: "Stop renting mercenary TVL. Torque is the intelligent growth stack for Solana protocols, driving retention and revenue through programmable incentives.",
     images: ["/og-image-light-mode.png"],
   },
 };
@@ -58,10 +55,7 @@ export default function RootLayout({
             gtag('config', 'G-8CM307NTBB');
           `}
         </Script>
-        <div className="fixed inset-0 top-0 z-0 w-full h-full overflow-hidden">
-          {/* <Hyperspeed /> */}
-        </div>
-        <div className="relative z-10">{children}</div>
+        {children}
       </body>
     </html>
   );

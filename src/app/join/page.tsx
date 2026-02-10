@@ -5,7 +5,6 @@ import { useForm, ValidationError } from "@formspree/react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { CustomButton } from "@/components/ui/custom-button";
-import { RotatingHexagons } from "../components/RotatingHexagons";
 
 const companyCategories = [
   "Stable Coin",
@@ -212,14 +211,11 @@ function JoinForm() {
 
 export default function JoinPage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
-      <div className="relative min-h-screen">
-        <RotatingHexagons />
-        <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 py-20">
-          <JoinForm />
-        </main>
-      </div>
+      <main className="flex-grow flex flex-col items-center justify-center px-6 py-20">
+        <JoinForm />
+      </main>
       <Footer />
     </div>
   );

@@ -2,12 +2,7 @@ import React from "react";
 import { useForm } from "@formspree/react";
 import { CustomButton } from "@/components/ui/custom-button";
 import { Select } from "@/components/ui/select";
-
-declare global {
-  interface Window {
-    gtag: (command: string, targetId: string, config?: any) => void;
-  }
-}
+import "@/types/wallet";
 
 interface ContactFormProps {
   onSuccess?: () => void;
@@ -51,7 +46,6 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         </label>
         <input
           className="w-full h-10 px-3 bg-transparent border border-secondary-foreground rounded-md text-secondary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
-          style={{ borderRadius: '0.375rem' }}
           id="name"
           name="name"
           required
@@ -66,7 +60,6 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         </label>
         <input
           className="w-full h-10 px-3 bg-transparent border border-secondary-foreground rounded-md text-secondary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
-          style={{ borderRadius: '0.375rem' }}
           id="email"
           name="email"
           type="email"
@@ -82,7 +75,6 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         </label>
         <input
           className="w-full h-10 px-3 bg-transparent border border-secondary-foreground rounded-md text-secondary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
-          style={{ borderRadius: '0.375rem' }}
           id="telegram"
           name="telegram"
           placeholder="@username"
@@ -115,7 +107,6 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         </label>
         <textarea
           className="w-full h-32 px-3 py-2 bg-transparent border border-secondary-foreground rounded-md text-secondary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-          style={{ borderRadius: '0.375rem' }}
           id="message"
           name="message"
           required

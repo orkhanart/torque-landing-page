@@ -1,197 +1,191 @@
 "use client";
 
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { GlassCard } from "@/components/ui/glass-card";
+import { platformFeatures } from "@/app/content/platform-features";
 
 interface FeatureCardProps {
   image: string;
   alt: string;
   title?: string;
   description?: string;
-  gradientType?: "blue" | "black" | "none";
-  titlePosition?: "top" | "bottom";
-  slideDirection?: "top" | "bottom";
 }
 
-function FeatureCard({ 
-  image, 
-  alt, 
-  title, 
-  description,
-  gradientType = "none", 
-  titlePosition = "top",
-  slideDirection = "bottom"
-}: FeatureCardProps) {
-  const getGradientClass = () => {
-    if (gradientType === "blue") {
-      return "bg-gradient-to-b from-[hsla(212,41%,41%,1)] to-[hsla(212,92%,69%,0)] group-hover:from-[hsla(212,41%,41%,1)] group-hover:to-[hsla(212,15%,10%,0.6)]";
-    } else if (gradientType === "black") {
-      return "bg-gradient-to-b from-black/80 via-black/40 to-transparent group-hover:from-black/95 group-hover:via-black/70";
-    }
-    return "";
-  };
-
+function FeatureCard({ image, alt, title, description }: FeatureCardProps) {
   return (
-    <div className="group relative w-full h-full rounded-xl overflow-hidden">
-      <Image 
-        src={image} 
-        alt={alt} 
-        fill
-        className="object-cover"
-      />
-      {gradientType !== "none" && (
-        <div className={`absolute inset-0 transition-all duration-300 ease-in-out ${getGradientClass()}`} />
-      )}
-      {title && (
-        <div className={`absolute inset-0 flex flex-col justify-start ${titlePosition === "bottom" ? "md:justify-end" : ""} p-6 md:p-8`}>
-          <h3 
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-[56px] z-10 transition-opacity duration-300 ease-in-out group-hover:opacity-0"
-            style={{ 
-              color: "#F5F5F5"
-            }}
-          >
-            {title}
-          </h3>
-        </div>
-      )}
-      {description && (
-        <div 
-          className="absolute inset-0 flex px-6 md:px-8 py-6 md:py-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
-        >
-          <p 
-            className="text-xl md:text-xl lg:text-2xl xl:text-3xl z-10 leading-relaxed "
-            style={{ color: "#F5F5F5" }}
-          >
-            {description}
-          </p>
-        </div>
-      )}
-    </div>
+    <GlassCard
+      glow={true}
+      scale={false}
+      border="subtle"
+      padding="none"
+      blur={true}
+      className="h-full"
+    >
+      <div className="group relative w-full h-full rounded-xl overflow-hidden">
+        <Image
+          src={image}
+          alt={alt}
+          fill
+          className="object-cover"
+        />
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/50" />
+
+        {title && (
+          <div className="absolute inset-0 flex flex-col justify-start p-6 md:p-8">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl z-10 transition-opacity duration-300 group-hover:opacity-0 text-white font-medium">
+              {title}
+            </h3>
+          </div>
+        )}
+        {description && (
+          <div className="absolute inset-0 flex px-6 md:px-8 py-6 md:py-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <p className="text-xl md:text-2xl z-10 leading-relaxed text-white">
+              {description}
+            </p>
+          </div>
+        )}
+      </div>
+    </GlassCard>
   );
 }
 
-function IntelligenceCard() {
+function IntelligenceCard({ title, description }: { title: string; description: string }) {
   return (
-    <div 
-      className="group relative w-full h-full rounded-xl overflow-hidden flex items-start justify-start p-4 md:p-8"
-      style={{
-        backgroundColor: "#0a0a15",
-        background: "linear-gradient(212deg, rgb(22, 46, 74) 0%, rgb(26, 31, 36) 100%)",
-        backdropFilter: "blur(2px)",
-      }}
+    <GlassCard
+      glow={true}
+      scale={false}
+      border="cyan"
+      padding="lg"
+      blur={true}
+      className="h-full"
     >
-      {/* Title - visible by default, fades out on hover */}
-      <h3 
-        className="flex-1 transition-opacity duration-300 ease-in-out group-hover:opacity-0 absolute inset-0 flex justify-start p-6 md:p-8 text-3xl md:text-4xl lg:text-5xl xl:text-[56px] leading-tight md:leading-[64px]"
-        style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          fontWeight: 400,
-          background: "linear-gradient(91deg, #888694 -11.8%, #ECECEF 43.8%, #68ABF9 114.03%)",
-          backgroundClip: "text",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
-        }}
-      >
-        Torque
-        <br />
-        Intelligence
-      </h3>
-      
-      {/* Description - hidden by default, fades in on hover */}
-      <p 
-        className="flex-1 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100 text-xl md:text-xl lg:text-2xl xl:text-3xl leading-relaxed"
-        style={{ 
-          color: "#F5F5F5"
-        }}
-      >
-        AI-powered recommendations that analyze performance and suggest incentive improvements.
-      </p>
-    </div>
+      <div className="group relative w-full h-full flex items-start justify-start">
+        {/* Title - visible by default, fades out on hover */}
+        <h3 className="flex-1 transition-opacity duration-300 group-hover:opacity-0 absolute inset-0 text-3xl md:text-4xl lg:text-5xl leading-tight font-mono font-normal text-primary whitespace-pre-line">
+          {title}
+        </h3>
+
+        {/* Description - hidden by default, fades in on hover */}
+        <p className="flex-1 transition-opacity duration-300 opacity-0 group-hover:opacity-100 text-xl md:text-2xl leading-relaxed text-black">
+          {description}
+        </p>
+      </div>
+    </GlassCard>
   );
 }
 
 export function PlatformFeatures() {
+  const { sectionTitle, sectionSubtitle, leftColumn, rightColumn } = platformFeatures;
+
   return (
     <main className="py-8 md:py-16">
-      <p className="text-secondary text-sm md:text-base mb-2 md:mb-4">What makes us different</p>
-      <h2 className="text-foreground text-2xl md:text-[40px]">Features</h2>
+      <div>
+        <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 md:mb-4 block">
+          {sectionSubtitle}
+        </span>
+        <h2 className="text-black text-2xl md:text-4xl lg:text-5xl font-medium">
+          {sectionTitle}
+        </h2>
+      </div>
 
-      <div className="flex flex-col lg:flex-row gap-6 md:gap-10 mt-6 md:mt-10 h-[1700px] md:h-[1250px]">
+      <div className="flex flex-col lg:flex-row gap-6 md:gap-8 mt-8 md:mt-12">
         {/* Left Column */}
-        <div className="flex flex-col gap-6 md:gap-10 flex-1">
+        <div className="flex flex-col gap-6 md:gap-8 flex-1">
           {/* Smart Incentive */}
-          <div className="flex-1">
+          <div className="h-[300px] md:h-[400px]">
             <FeatureCard
-              image="/Incentive.png"
-              alt="Product and Token CRM"
-              title="Product and Token CRM"
-              description="Dive into your product and token data to understand your user segments."
-              gradientType="blue"
-              titlePosition="top"
-              slideDirection="bottom"
+              image={leftColumn.productCRM.image}
+              alt={leftColumn.productCRM.alt}
+              title={leftColumn.productCRM.title}
+              description={leftColumn.productCRM.description}
             />
           </div>
 
-          <Card className="rounded-xl shadow-2xl shadow-primary/10 !bg-black !pb-0">  
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 justify-between pr-2 md:pr-4 text-white pt-0">
-                <span className="text-2xl md:text-3xl font-medium">In-Product Reward Engine</span>
-
-              </CardTitle>
-              <CardDescription className="text-base text-tertiary">
-              Create targeted campaigns, spot key contributors, and distribute rewards — all in just a few clicks with our built-in rewards system.             </CardDescription>
-            </CardHeader>
-            <CardContent className="px-4 md:px-5 !pb-0">
-                <Image src="/leaderboard-feature.svg" alt="Explore data visualization" width={840} height={800} className="w-full h-auto" />
-            </CardContent>
-          </Card>
+          {/* Reward Engine */}
+          <GlassCard
+            glow={true}
+            scale={false}
+            border="cyan"
+            padding="none"
+            blur={true}
+          >
+            <div className="p-6 md:p-8 bg-black rounded-t-xl">
+              <h3 className="text-2xl md:text-3xl font-medium text-white mb-2">
+                {leftColumn.rewardEngine.title}
+              </h3>
+              <p className="text-base text-white/70">
+                {leftColumn.rewardEngine.description}
+              </p>
+            </div>
+            <div className="bg-black rounded-b-xl">
+              <Image
+                src={leftColumn.rewardEngine.image}
+                alt={leftColumn.rewardEngine.imageAlt}
+                width={840}
+                height={800}
+                className="w-full h-auto"
+              />
+            </div>
+          </GlassCard>
 
           {/* Campaigns */}
-          <div className="flex-1">
+          <div className="h-[300px] md:h-[400px]">
             <FeatureCard
-              image="/Campaign.png"
-              alt="Smart Incentives"
-              title="Smart Incentives"
-              description="Intelligent incentive programs that automatically reward users for verifiable on-chain actions."
-              gradientType="black"
-              titlePosition="bottom"
-              slideDirection="top"
+              image={leftColumn.smartIncentives.image}
+              alt={leftColumn.smartIncentives.alt}
+              title={leftColumn.smartIncentives.title}
+              description={leftColumn.smartIncentives.description}
             />
           </div>
         </div>
 
         {/* Right Column */}
-        <div className="flex flex-col gap-6 md:gap-10 flex-1">
-          {/* Intelligence - smaller height */}
-          <div style={{ height: "160px" }}>
-            <IntelligenceCard />
+        <div className="flex flex-col gap-6 md:gap-8 flex-1">
+          {/* Intelligence */}
+          <div className="h-[160px]">
+            <IntelligenceCard
+              title={rightColumn.intelligence.title}
+              description={rightColumn.intelligence.description}
+            />
           </div>
 
           {/* Analytics */}
-          <div className="rounded-xl overflow-hidden bg-black p-6 md:p-6 flex flex-col justify-center items-center h-auto relative"> 
-            <div className="rounded-xl overflow-hidden bg-black bg-[url('/feature-analytics.svg')] bg-cover bg-center bg-no-repeat p-0 md:p-0 flex flex-col justify-start md:h-[600px] h-[740px]">
-              <h3 className="text-white text-xl md:text-3xl font-medium mb-2 md:mb-4 max-w-sm pt-0">
-                Move Faster with data-driven decisions
+          <GlassCard
+            glow={true}
+            scale={false}
+            border="subtle"
+            padding="none"
+            blur={true}
+          >
+            <div
+              className="rounded-xl overflow-hidden bg-black bg-cover bg-center bg-no-repeat p-6 md:p-8 flex flex-col justify-start min-h-[400px] md:min-h-[500px] relative"
+              style={{ backgroundImage: `url('${rightColumn.analytics.backgroundImage}')` }}
+            >
+              <h3 className="text-white text-xl md:text-3xl font-medium mb-2 md:mb-4 max-w-sm">
+                {rightColumn.analytics.title}
               </h3>
-              <p className="md:text-base text-tertiary max-w-[50%]">
-                Stop relying on hunches, scattered insights, or outdated data.
-                Torque lets you dive into real on-chain data for consistent, scalable results.
+              <p className="text-base text-white/70 max-w-[50%]">
+                {rightColumn.analytics.description}
               </p>
+              <Image
+                src={rightColumn.analytics.badgesImage}
+                alt="Badges"
+                width={300}
+                height={50}
+                className="md:w-[60%] w-[80%] h-auto absolute bottom-6 left-6"
+              />
             </div>
-            <Image src="/feature-badges.svg" alt="Badges" width={300} height={50} className="md:w-[60%] w-[80%] h-auto absolute bottom-6 left-6" />
-          </div>
+          </GlassCard>
 
-          {/* No-code - grows to fill remaining space */}
-          <div className="h-full">
+          {/* No-code */}
+          <div className="h-[300px] md:h-[400px]">
             <FeatureCard
-              image="/No-code.png"
-              alt="No-code Deployment"
-              title="No-code Deployment"
-              description="Build powerful incentive programs with our visual interface. No code required."
-              gradientType="black"
-              titlePosition="bottom"
-              slideDirection="top"
-            />  
+              image={rightColumn.noCode.image}
+              alt={rightColumn.noCode.alt}
+              title={rightColumn.noCode.title}
+              description={rightColumn.noCode.description}
+            />
           </div>
         </div>
       </div>

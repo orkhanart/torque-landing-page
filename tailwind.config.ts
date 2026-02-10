@@ -81,11 +81,20 @@ const config: Config = {
   				to: {
   					height: '0'
   				}
+  			},
+  			'gradient-shift': {
+  				'0%, 100%': {
+  					backgroundPosition: '0% 50%'
+  				},
+  				'50%': {
+  					backgroundPosition: '100% 50%'
+  				}
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'gradient-shift': 'gradient-shift 8s ease infinite'
   		},
 			fontFamily: {
         sans: ['Instrument Sans', 'sans-serif'],
@@ -96,9 +105,19 @@ const config: Config = {
       },
 			backgroundImage: {
 				'custom-gradient': 'linear-gradient(90deg, #FFFFFF -7.54%, #ABFFFF 60.87%, #F1A3A1 100%)',
+				'cyan-gradient': 'linear-gradient(135deg, #00B3B3 0%, #00E6E6 100%)',
+				'glass-gradient': 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
       },
+			boxShadow: {
+				'cyan-glow': '0 0 30px 0 rgba(0, 179, 179, 0.25)',
+				'cyan-glow-lg': '0 0 50px 0 rgba(0, 179, 179, 0.35)',
+				'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+				'glass-hover': '0 12px 40px 0 rgba(0, 0, 0, 0.12)',
+				'subtle': '0 1px 3px 0 rgb(0 0 0 / 0.08)',
+				'card': '0 4px 20px -2px rgb(0 0 0 / 0.06)',
+			},
   	}
   },
-  // plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate")],
 };
 export default config;
