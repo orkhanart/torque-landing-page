@@ -5,27 +5,38 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  // Base styles - terminal aesthetic
+  // Base styles - clean digital aesthetic
   [
     "inline-flex items-center justify-center",
     "font-mono text-xs uppercase tracking-wider font-medium",
     "rounded-[3px]",
     "transition-all duration-200 ease-out",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2",
     "disabled:pointer-events-none disabled:opacity-50",
+    "strobe-glitch",
   ],
   {
     variants: {
       variant: {
-        // Primary: Black bg, white text → inverts on hover
+        // Primary: Black bg, white text
         default: [
           "bg-black text-white border border-black",
-          "hover:bg-white hover:text-black",
+          "hover:bg-black-light",
         ],
-        // Outline: White bg, black border → inverts on hover
+        // Accent: Digital Blue
+        accent: [
+          "bg-blue text-white border border-blue",
+          "hover:bg-blue-dark hover:border-blue-dark",
+        ],
+        // Outline: White bg, black border
         outline: [
-          "bg-white text-black border border-black",
-          "hover:bg-black hover:text-white",
+          "bg-white text-black border border-black/20",
+          "hover:border-black hover:bg-gray-100",
+        ],
+        // Secondary: Gray bg
+        secondary: [
+          "bg-black/10 text-black border border-transparent",
+          "hover:bg-black/20",
         ],
         // Ghost: No bg, just text with underline on hover
         ghost: [
@@ -40,7 +51,7 @@ const buttonVariants = cva(
         // Inverse variants for dark backgrounds
         "inverse": [
           "bg-white text-black border border-white",
-          "hover:bg-black hover:text-white hover:border-white",
+          "hover:bg-gray-100",
         ],
         "inverse-outline": [
           "bg-transparent text-white border border-white",
@@ -50,10 +61,15 @@ const buttonVariants = cva(
           "bg-transparent text-white border-none",
           "hover:underline underline-offset-4",
         ],
+        // Blue outline (for light backgrounds)
+        "blue-outline": [
+          "bg-transparent text-blue border border-blue",
+          "hover:bg-blue hover:text-white",
+        ],
         // Destructive
         destructive: [
           "bg-red-600 text-white border border-red-600",
-          "hover:bg-white hover:text-red-600",
+          "hover:bg-red-700 hover:border-red-700",
         ],
       },
       size: {

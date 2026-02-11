@@ -1,117 +1,179 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { ParticleField, GridBackground, ScanLines, NoiseOverlay } from "@/components/backgrounds";
-import { TerminalCard, TypeWriter, GlitchText } from "@/components/terminal";
+import React, { useState, useEffect, useRef } from "react";
+import { GlitchText } from "@/components/terminal";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Terminal, TrendingUp, AlertTriangle, DollarSign } from "lucide-react";
+import { ArrowUpRight, Terminal, CircleDot, CreditCard, TrendingUp, ChevronDown } from "lucide-react";
 import IntegrationRequestModal from "./IntegrationRequestModal";
-import { cn } from "@/lib/utils";
+import TrustBar from "./TrustBar";
+import GrowthStack from "./GrowthStack";
+import PlaybooksSection from "./PlaybooksSection";
+
+// =============================================================================
+// Scramble Text Component - Auto-triggers on mount
+// =============================================================================
+const CHARS = "0123456789$MK+%";
+
+function ScrambleStat({
+  value,
+  delay = 0
+}: {
+  value: string;
+  delay?: number;
+}) {
+  const [text, setText] = useState(value);
+  const [isMounted, setIsMounted] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const iterationRef = useRef(0);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    // Start with random text
+    setText(
+      value.split("").map((char) => {
+        if (char === " " || char === ".") return char;
+        return CHARS[Math.floor(Math.random() * CHARS.length)];
+      }).join("")
+    );
+
+    // Then scramble to reveal
+    const timeout = setTimeout(() => {
+      iterationRef.current = 0;
+
+      intervalRef.current = setInterval(() => {
+        setText(
+          value
+            .split("")
+            .map((char, index) => {
+              if (index < iterationRef.current) {
+                return value[index];
+              }
+              if (char === " " || char === ".") return char;
+              return CHARS[Math.floor(Math.random() * CHARS.length)];
+            })
+            .join("")
+        );
+
+        if (iterationRef.current >= value.length) {
+          if (intervalRef.current) clearInterval(intervalRef.current);
+        }
+
+        iterationRef.current += 0.4;
+      }, 50);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeout);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isMounted, value, delay]);
+
+  return <>{text}</>;
+}
+
+// =============================================================================
+// Rotating Text Component - Typewriter effect
+// =============================================================================
+const phrases = [
+  "On-chain Growth",
+  "Token Rewards",
+  "Incentives",
+  "Leaderboards",
+  "Competitions",
+];
+
+function RotatingText() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentPhrase = phrases[currentIndex];
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        // Typing
+        if (displayText.length < currentPhrase.length) {
+          setDisplayText(currentPhrase.slice(0, displayText.length + 1));
+        } else {
+          // Pause before deleting
+          setTimeout(() => setIsDeleting(true), 1500);
+        }
+      } else {
+        // Deleting
+        if (displayText.length > 0) {
+          setDisplayText(displayText.slice(0, -1));
+        } else {
+          setIsDeleting(false);
+          setCurrentIndex((prev) => (prev + 1) % phrases.length);
+        }
+      }
+    }, isDeleting ? 30 : 50);
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, currentIndex]);
+
+  return (
+    <span>
+      for {displayText}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
+}
+
+// =============================================================================
+// Stats Data
+// =============================================================================
+const stats = [
+  { value: "$10M+", label: "Distributed" },
+  { value: "906K", label: "Wallets" },
+  { value: "89M+", label: "Transactions" },
+];
 
 // =============================================================================
 // HeroV2 - Immersive terminal-style hero section
 // =============================================================================
 
-// Rotating insights data
-const INSIGHTS = [
-  {
-    type: "activation",
-    icon: TrendingUp,
-    label: "ACTIVATION_OPPORTUNITY",
-    title: "Jupiter users showing high activation potential",
-    metric: "+23%",
-    context: "7d activation rate increase",
-  },
-  {
-    type: "churn",
-    icon: AlertTriangle,
-    label: "CHURN_RISK_DETECTED",
-    title: "Marinade stakers at risk of churning",
-    metric: "-18%",
-    context: "30d churn prediction",
-  },
-  {
-    type: "waste",
-    icon: DollarSign,
-    label: "WASTE_RECOVERED",
-    title: "Kamino reward efficiency improved",
-    metric: "$45K",
-    context: "recovered this month",
-  },
-];
-
 const HeroV2 = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeInsight, setActiveInsight] = useState(0);
-
-  // Rotate insights
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveInsight((prev) => (prev + 1) % INSIGHTS.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <section className="relative w-full bg-white overflow-hidden">
-      {/* Background Layers */}
-      <div className="absolute inset-0 z-0">
-        <GridBackground
-          color="rgba(0,0,0,0.03)"
-          lineWidth={1}
-          animated={true}
-        />
-      </div>
-
-      <div className="absolute inset-0 z-[1] pointer-events-none">
-        <ParticleField
-          particleCount={80}
-          color="#000000"
-          opacity={0.15}
-          speed={0.3}
-          connectionDistance={120}
-          showConnections={true}
-          mouseInteraction={true}
-        />
-      </div>
-
-      <div className="absolute inset-0 z-[2] pointer-events-none">
-        <ScanLines opacity={0.02} speed={8} />
-      </div>
-
-      <div className="absolute inset-0 z-[3] pointer-events-none">
-        <NoiseOverlay opacity={0.015} />
-      </div>
-
-      {/* Main Hero Content - Centered */}
-      <div className="relative z-10 w-full px-6 pt-32 pb-20 md:pt-40 md:pb-28">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Main Hero Content */}
+      <div className="relative z-10 w-full min-h-[70vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-8">
+        <div className="max-w-4xl">
           {/* Terminal Tag */}
-          <div className="inline-flex items-center gap-2 mb-8 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+          <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
             <Terminal className="w-3 h-3" />
-            <span>Protocol Intelligence Layer</span>
-            <span className="w-1.5 h-1.5 bg-black rounded-full animate-pulse" />
+            <span>89M+ transactions indexed</span>
+            <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
           </div>
 
           {/* Main Headline - 2 Lines */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-medium leading-[1.05] tracking-tight mb-6 text-black">
-            <GlitchText intensity="subtle" triggerOnView={true}>
-              The Intelligence Layer
-            </GlitchText>
-            <br />
-            <span className="text-black/40">for Token Rewards</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black">
+            <span className="block whitespace-nowrap">
+              <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
+                The Intelligence Layer
+              </GlitchText>
+            </span>
+            <span className="block text-black/40 whitespace-nowrap"><RotatingText /></span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-black/60 mb-10 leading-relaxed max-w-2xl mx-auto">
-            40% of incentive spend is wasted.<br className="hidden sm:block" />
-            We fix that with data-driven reward optimization.
+          <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl">
+            40% of incentive spend is wasted. We fix that with data-driven reward optimization.
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <div className="flex flex-col sm:flex-row items-start gap-4 mb-16">
             <Button
               onClick={() => setIsModalOpen(true)}
+              variant="accent"
               className="group"
             >
               Get Started
@@ -127,107 +189,197 @@ const HeroV2 = () => {
           </div>
 
           {/* Stats Row */}
-          <div className="flex items-center justify-center gap-12 md:gap-16">
-            <div className="text-center">
-              <div className="font-mono text-3xl md:text-4xl font-medium text-black">$10M+</div>
-              <div className="text-xs font-mono uppercase tracking-wider text-black/40 mt-1">Distributed</div>
-            </div>
-            <div className="w-px h-12 bg-black/10" />
-            <div className="text-center">
-              <div className="font-mono text-3xl md:text-4xl font-medium text-black">906K</div>
-              <div className="text-xs font-mono uppercase tracking-wider text-black/40 mt-1">Wallets</div>
-            </div>
-            <div className="w-px h-12 bg-black/10" />
-            <div className="text-center">
-              <div className="font-mono text-3xl md:text-4xl font-medium text-black">89M+</div>
-              <div className="text-xs font-mono uppercase tracking-wider text-black/40 mt-1">Transactions</div>
-            </div>
+          <div className="flex items-center gap-12 md:gap-16 lg:gap-20">
+            {stats.map((stat, index) => (
+              <div key={index} className="flex flex-col">
+                <span className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold text-black tracking-tight">
+                  {stat.value}
+                </span>
+                <span className="text-sm text-black/50 mt-1">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Live Intelligence Section - Below Hero */}
-      <div className="relative z-10 w-full px-6 pb-24 md:pb-32">
-        <div className="max-w-5xl mx-auto">
-          {/* Section Label */}
-          <div className="text-center mb-8">
-            <span className="font-mono text-xs uppercase tracking-wider text-black/40">
-              Live Intelligence Feed
-            </span>
+      {/* Trust Bar - Logos */}
+      <TrustBar />
+
+      {/* Scroll to Explore */}
+      <div className="flex items-center gap-2 text-black/40 pb-16 md:pb-24 px-6 md:px-12 lg:px-20">
+        <span className="font-mono text-xs uppercase tracking-wider">Scroll to explore</span>
+        <ChevronDown className="w-4 h-4 animate-bounce" />
+      </div>
+
+      {/* Platform Features */}
+      <GrowthStack />
+
+      {/* Problem Section - Hidden for now
+      <div className="relative z-10 w-full py-20 md:py-32 bg-white border-t border-black/10">
+        <div className="relative w-full px-6 md:px-12 lg:px-20">
+          <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+            <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+            <span>The Problem</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-black mb-6 max-w-4xl">
+            Protocols waste <span className="text-red-500">40%</span> of their incentive spend
+          </h2>
+          <p className="text-lg md:text-xl text-black/60 mb-16 max-w-2xl">
+            You&apos;re spending millions on incentives with no idea if it&apos;s working. Essentially throwing money into the void.
+          </p>
+          ...
+        </div>
+      </div>
+      */}
+
+      {/* Solution Section */}
+      <div className="relative z-10 w-full py-20 md:py-32 bg-white border-t border-black/10">
+        <div className="relative w-full px-6 md:px-12 lg:px-20">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+            <div>
+              {/* Section Tag */}
+              <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+                <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
+                <span>The Solutions</span>
+              </div>
+
+              {/* Headline */}
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-black mb-6 max-w-4xl">
+                Distribution infrastructure with <span className="text-black/40">intelligence</span>
+              </h2>
+
+              {/* Subheadline */}
+              <p className="text-lg md:text-xl text-black/60 max-w-2xl">
+                Sector-specific strategies for the problems no one else is solving.
+              </p>
+            </div>
+            <Button variant="outline" href="/solutions" className="w-fit">
+              View Solutions
+              <ArrowUpRight className="w-4 h-4 ml-2" />
+            </Button>
           </div>
 
-          {/* Terminal Card with Insights */}
-          <TerminalCard
-            title="torque_intelligence.live"
-            showDots={true}
-            variant="default"
-            className="shadow-2xl"
-          >
-            <div className="grid md:grid-cols-3 gap-6">
-              {INSIGHTS.map((insight, index) => {
-                const Icon = insight.icon;
-                return (
-                  <div
-                    key={insight.type}
-                    className={cn(
-                      "border p-4 transition-all duration-300 cursor-pointer rounded-[3px]",
-                      activeInsight === index
-                        ? "border-black bg-black text-white"
-                        : "border-black/10 hover:border-black/30"
-                    )}
-                    onClick={() => setActiveInsight(index)}
-                  >
-                    {/* Insight Header */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <Icon className={cn("w-4 h-4", activeInsight === index ? "text-white" : "text-black")} />
-                      <span className={cn(
-                        "font-mono text-[10px] uppercase tracking-wider",
-                        activeInsight === index ? "text-white/60" : "text-black/40"
-                      )}>
-                        {insight.label}
-                      </span>
-                    </div>
+          {/* Solution Cards Grid */}
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Card 1 - Stablecoins */}
+            <div className="bg-white border border-black/10 overflow-hidden group hover:border-black/30 transition-colors rounded-[3px]">
+              <div className="flex items-center gap-2 px-4 py-2 bg-black/5 border-b border-black/10">
+                <div className="flex gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-black" />
+                  <span className="w-2 h-2 rounded-full bg-black/20" />
+                  <span className="w-2 h-2 rounded-full bg-black/20" />
+                </div>
+                <span className="font-mono text-[10px] text-black/40 uppercase">stablecoin.strategy</span>
+              </div>
+              <div className="p-6 md:p-8">
+                <CircleDot className="w-8 h-8 text-black mb-6" />
 
-                    {/* Metric */}
-                    <div className={cn(
-                      "font-mono text-3xl font-bold tracking-tight mb-2",
-                      activeInsight === index ? "text-white" : "text-black"
-                    )}>
-                      {insight.metric}
-                    </div>
+                <h3 className="font-display text-2xl font-medium text-black mb-1">
+                  Stablecoins
+                </h3>
+                <p className="text-xs font-mono uppercase tracking-wider text-black/50 mb-6">
+                  Ignite Velocity
+                </p>
 
-                    {/* Context */}
-                    <div className={cn(
-                      "font-mono text-xs uppercase tracking-wider",
-                      activeInsight === index ? "text-white/60" : "text-black/50"
-                    )}>
-                      {insight.context}
-                    </div>
+                <div className="space-y-3 mb-6">
+                  <div className="bg-black/5 p-4 border-l-2 border-black/30">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">diagnosis</span>
+                    <p className="text-sm text-black/70">High Cap / Low Flow</p>
                   </div>
-                );
-              })}
+                  <div className="bg-black/5 p-4 border-l-2 border-blue">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">the fix</span>
+                    <p className="text-sm text-black">Referral & Social Layers</p>
+                  </div>
+                </div>
+
+                <a href="/playbooks" className="inline-flex items-center text-sm text-black hover:text-blue transition-colors font-medium">
+                  View Strategy <ArrowUpRight className="w-4 h-4 ml-1" />
+                </a>
+              </div>
             </div>
 
-            {/* Bottom Stats */}
-            <div className="mt-6 pt-6 border-t border-black/10 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="font-mono text-xs text-black/40">Live Analysis</span>
+            {/* Card 2 - Lending */}
+            <div className="bg-white border border-black/10 overflow-hidden group hover:border-black/30 transition-colors rounded-[3px]">
+              <div className="flex items-center gap-2 px-4 py-2 bg-black/5 border-b border-black/10">
+                <div className="flex gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-black" />
+                  <span className="w-2 h-2 rounded-full bg-black/20" />
+                  <span className="w-2 h-2 rounded-full bg-black/20" />
+                </div>
+                <span className="font-mono text-[10px] text-black/40 uppercase">lending.strategy</span>
               </div>
-              <div className="flex items-center gap-8">
-                <div className="font-mono text-xs">
-                  <span className="text-black/40">Protocols: </span>
-                  <span className="text-black font-medium">47</span>
+              <div className="p-6 md:p-8">
+                <CreditCard className="w-8 h-8 text-black mb-6" />
+
+                <h3 className="font-display text-2xl font-medium text-black mb-1">
+                  Lending
+                </h3>
+                <p className="text-xs font-mono uppercase tracking-wider text-black/50 mb-6">
+                  Drive Real Yield
+                </p>
+
+                <div className="space-y-3 mb-6">
+                  <div className="bg-black/5 p-4 border-l-2 border-black/30">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">diagnosis</span>
+                    <p className="text-sm text-black/70">High TVL / Low Borrows</p>
+                  </div>
+                  <div className="bg-black/5 p-4 border-l-2 border-blue">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">the fix</span>
+                    <p className="text-sm text-black">Looping & Borrowing Rewards</p>
+                  </div>
                 </div>
-                <div className="font-mono text-xs">
-                  <span className="text-black/40">Avg. Retention Lift: </span>
-                  <span className="text-black font-medium">+146%</span>
-                </div>
+
+                <a href="/playbooks" className="inline-flex items-center text-sm text-black hover:text-blue transition-colors font-medium">
+                  View Strategy <ArrowUpRight className="w-4 h-4 ml-1" />
+                </a>
               </div>
             </div>
-          </TerminalCard>
+
+            {/* Card 3 - Perps */}
+            <div className="bg-white border border-black/10 overflow-hidden group hover:border-black/30 transition-colors rounded-[3px]">
+              <div className="flex items-center gap-2 px-4 py-2 bg-black/5 border-b border-black/10">
+                <div className="flex gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-black" />
+                  <span className="w-2 h-2 rounded-full bg-black/20" />
+                  <span className="w-2 h-2 rounded-full bg-black/20" />
+                </div>
+                <span className="font-mono text-[10px] text-black/40 uppercase">perps.strategy</span>
+              </div>
+              <div className="p-6 md:p-8">
+                <TrendingUp className="w-8 h-8 text-black mb-6" />
+
+                <h3 className="font-display text-2xl font-medium text-black mb-1">
+                  Perps
+                </h3>
+                <p className="text-xs font-mono uppercase tracking-wider text-black/50 mb-6">
+                  Automate Retention
+                </p>
+
+                <div className="space-y-3 mb-6">
+                  <div className="bg-black/5 p-4 border-l-2 border-black/30">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">diagnosis</span>
+                    <p className="text-sm text-black/70">High Vol / Low Loyalty</p>
+                  </div>
+                  <div className="bg-black/5 p-4 border-l-2 border-blue">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">the fix</span>
+                    <p className="text-sm text-black">Trader Progression Systems</p>
+                  </div>
+                </div>
+
+                <a href="/playbooks" className="inline-flex items-center text-sm text-black hover:text-blue transition-colors font-medium">
+                  View Strategy <ArrowUpRight className="w-4 h-4 ml-1" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Playbooks Section */}
+      <PlaybooksSection />
 
       {/* Integration Request Modal */}
       <IntegrationRequestModal

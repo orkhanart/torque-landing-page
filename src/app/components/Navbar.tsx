@@ -1,12 +1,65 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import IntegrationRequestModal from "./IntegrationRequestModal";
+
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
+const TARGET = "TORQUE";
+
+function ScrambleText({ isHovered }: { isHovered: boolean }) {
+  const [text, setText] = useState(TARGET);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const iterationRef = useRef(0);
+
+  const scramble = useCallback(() => {
+    iterationRef.current = 0;
+
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
+    intervalRef.current = setInterval(() => {
+      setText(
+        TARGET.split("")
+          .map((char, index) => {
+            if (index < iterationRef.current) {
+              return TARGET[index];
+            }
+            return CHARS[Math.floor(Math.random() * CHARS.length)];
+          })
+          .join("")
+      );
+
+      if (iterationRef.current >= TARGET.length) {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      }
+
+      iterationRef.current += 0.5;
+    }, 40);
+  }, []);
+
+  useEffect(() => {
+    if (isHovered) {
+      scramble();
+    } else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      setText(TARGET);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isHovered, scramble]);
+
+  return (
+    <span className="font-mono text-sm font-semibold uppercase tracking-wider">
+      {text}
+    </span>
+  );
+}
 
 interface MenuItem {
   label: string;
@@ -18,14 +71,25 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuHeight, setMenuHeight] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [scrollRotation, setScrollRotation] = useState(0);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const symbolRef = useRef<HTMLImageElement>(null);
   const pathname = usePathname();
 
-  // Rotate symbol on scroll
+  // Rotate symbol on scroll - using direct DOM manipulation for smooth animation
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const rotation = window.scrollY * 0.15; // Adjust speed with multiplier
-      setScrollRotation(rotation);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (symbolRef.current) {
+            const rotation = window.scrollY * 0.15;
+            symbolRef.current.style.transform = `rotate(${rotation}deg)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -61,22 +125,72 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-[1000] border-b border-black/10">
-        <div className="flex items-center h-16 px-6 w-full">
-          {/* Left: Logo Symbol */}
-          <Link href="/" className="flex items-center flex-shrink-0">
+      {/* SVG Filters for Glass Effect */}
+      <svg className="absolute w-0 h-0" aria-hidden="true">
+        <defs>
+          <filter id="glass-filter" x="-20%" y="-20%" width="140%" height="140%">
+            {/* Subtle turbulence for organic distortion */}
+            <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" seed="5" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+
+            {/* Gaussian blur for frosted effect */}
+            <feGaussianBlur in="displaced" stdDeviation="0.5" result="blurred" />
+
+            {/* Specular lighting for glass shine */}
+            <feSpecularLighting in="blurred" surfaceScale="2" specularConstant="0.8" specularExponent="20" lightingColor="white" result="specular">
+              <fePointLight x="100" y="-50" z="200" />
+            </feSpecularLighting>
+
+            {/* Composite the specular highlight */}
+            <feComposite in="specular" in2="SourceGraphic" operator="in" result="specularComposite" />
+
+            {/* Blend everything together */}
+            <feBlend in="SourceGraphic" in2="specularComposite" mode="screen" />
+          </filter>
+        </defs>
+      </svg>
+
+      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-3rem)] md:w-[calc(100%-6rem)] lg:w-[calc(100%-10rem)]">
+        {/* Glass background layer */}
+        <div className="absolute inset-0 rounded-full overflow-hidden">
+          <div
+            className="absolute inset-0 backdrop-blur-2xl"
+            style={{ filter: 'url(#glass-filter)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white/70" />
+          {/* Top edge highlight */}
+          <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent" />
+          {/* Bottom edge shadow */}
+          <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+          {/* Inner glow */}
+          <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),inset_0_-1px_1px_rgba(0,0,0,0.05)]" />
+        </div>
+
+        {/* Content container */}
+        <div className="relative flex items-center h-14 px-6 w-full rounded-full border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04)]">
+          {/* Left: Logo Symbol with scrambling TORQUE text on hover */}
+          <Link
+            href="/"
+            className="group flex items-center flex-shrink-0 gap-2"
+            onMouseEnter={() => setIsLogoHovered(true)}
+            onMouseLeave={() => setIsLogoHovered(false)}
+          >
             <Image
+              ref={symbolRef}
               src="/logos/torque-symbol.svg"
               alt="Torque"
               width={32}
               height={28}
-              className="h-7 w-auto transition-transform duration-100"
-              style={{ transform: `rotate(${scrollRotation}deg)` }}
+              className="h-7 w-auto transition-transform duration-150 ease-out will-change-transform"
             />
+            <div
+              className={`transition-all duration-200 ${
+                isLogoHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
+              }`}
+            >
+              <ScrambleText isHovered={isLogoHovered} />
+            </div>
           </Link>
-
-          {/* Separator line */}
-          <div className="hidden lg:block w-px h-8 bg-black/10 mx-8" />
 
           {/* Center: Navigation */}
           <nav className="hidden lg:flex items-center justify-center flex-1 gap-1">
@@ -130,7 +244,7 @@ export default function Navbar() {
         {/* Mobile Menu */}
         <div
           id="mobile-menu"
-          className="lg:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-t border-black/10"
+          className="lg:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white/90 backdrop-blur-xl rounded-b-2xl mt-2"
           style={{ maxHeight: `${menuHeight}px` }}
         >
           <nav className="px-6 py-4 space-y-1">
@@ -173,7 +287,7 @@ export default function Navbar() {
       </header>
 
       {/* Spacer to account for fixed header */}
-      <div className="h-16" />
+      <div className="h-20" />
 
       {/* Integration Request Modal */}
       <IntegrationRequestModal

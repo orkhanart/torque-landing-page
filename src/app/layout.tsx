@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   title: "Torque | The Revenue Engine for On-Chain Growth",
   description: "Stop renting mercenary TVL. Torque is the intelligent growth stack for Solana protocols, driving retention and revenue through programmable incentives.",
   icons: {
-    icon: "/logos/c-logo-lm-2.png",
+    icon: [
+      { url: "/logos/torque-symbol-app.svg", type: "image/svg+xml" },
+      { url: "/logos/torque-symbol-app.ico", sizes: "32x32" },
+    ],
+    apple: "/logos/torque-symbol-app.svg",
   },
   openGraph: {
     title: "Torque | The Revenue Engine for On-Chain Growth",
@@ -40,7 +44,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/logos/c-logo-lm-2.png" sizes="any" />
+        <link rel="icon" href="/logos/torque-symbol-app.svg" type="image/svg+xml" />
+        <link rel="icon" href="/logos/torque-symbol-app.ico" sizes="32x32" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased">
         <Script

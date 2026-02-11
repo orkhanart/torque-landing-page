@@ -199,7 +199,7 @@ function JoinForm() {
           disabled={state.submitting}
           buttonSize="big"
           buttonColor="primary"
-          asLink={false}
+          showArrow={false}
           className="w-full"
         >
           {state.submitting ? "Submitting..." : "Submit"}

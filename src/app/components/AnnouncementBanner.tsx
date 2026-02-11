@@ -1,7 +1,5 @@
 "use client";
 import { CustomButton } from "@/components/ui/custom-button";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 
 export default function AnnouncementBanner() {
   return (
@@ -11,12 +9,10 @@ export default function AnnouncementBanner() {
           <span className="text-sm md:text-base text-black">
             Torque Labs announces $5 million fundraise
           </span>
-          <CustomButton 
+          <CustomButton
             buttonSize="small"
-            buttonColor="primary"
-            onClick={() => {}} 
-            asLink={false}
-            className="bg-secondary hover:bg-secondary/90"
+            buttonColor="secondary"
+            showArrow={false}
           >
             Read more
           </CustomButton>

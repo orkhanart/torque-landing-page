@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100;200;300;400;500;600;700;800;900&family=Funnel+Display:wght@300..800&display=swap');
 
 /* Geist Font - Local or CDN */
 @font-face {
@@ -38,33 +38,74 @@
   font-display: swap;
 }
 
+/* Geist Mono Font */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-mono/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-mono/GeistMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-mono/GeistMono-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-mono/GeistMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
     /* ===================================
        TORQUE DESIGN SYSTEM
-       Monochrome Light - Cyberpunk Terminal
+       Digital Blue + Black/White/Gray
        =================================== */
 
     /* Font Families */
-    --font-display: 'Funnel Display', system-ui, sans-serif;
+    --font-display: 'Instrument Sans', system-ui, sans-serif;
+    --font-hero: 'Instrument Sans', system-ui, sans-serif;
     --font-body: 'Geist', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --font-mono: 'Geist Mono', monospace;
 
-    /* Pure Monochrome */
-    --black: 0 0% 0%;
-    --white: 0 0% 100%;
+    /* Core Colors */
+    --black: 0 0% 0%;            /* #000000 - pure black */
+    --white: 0 0% 100%;          /* #FFFFFF - pure white */
+    --off-white: 0 0% 98%;       /* #FAFAFA - very light gray bg */
+    --off-white-dark: 0 0% 96%;  /* #F5F5F5 - slightly darker */
 
-    /* Gray Scale */
-    --gray-50: 0 0% 98%;
-    --gray-100: 0 0% 96%;
-    --gray-200: 0 0% 90%;
-    --gray-300: 0 0% 83%;
-    --gray-400: 0 0% 64%;
-    --gray-500: 0 0% 45%;
-    --gray-600: 0 0% 32%;
-    --gray-700: 0 0% 25%;
-    --gray-800: 0 0% 15%;
-    --gray-900: 0 0% 9%;
+    /* Accent - Digital Pure Blue */
+    --blue: 240 100% 50%;        /* #0000FF - pure digital blue */
+    --blue-light: 240 100% 60%;  /* lighter blue for hover */
+    --blue-dark: 240 100% 40%;   /* darker blue */
+
+    /* Gray Scale (pure, no tint) */
+    --gray-50: 0 0% 98%;         /* #FAFAFA */
+    --gray-100: 0 0% 96%;        /* #F5F5F5 */
+    --gray-200: 0 0% 90%;        /* #E5E5E5 */
+    --gray-300: 0 0% 80%;        /* #CCCCCC */
+    --gray-400: 0 0% 60%;        /* #999999 */
+    --gray-500: 0 0% 45%;        /* #737373 */
+    --gray-600: 0 0% 32%;        /* #525252 */
+    --gray-700: 0 0% 22%;        /* #383838 */
+    --gray-800: 0 0% 12%;        /* #1F1F1F */
+    --gray-900: 0 0% 6%;         /* #0F0F0F */
 
     /* Semantic Mappings */
     --background: var(--white);
@@ -83,23 +124,23 @@
     --muted: var(--gray-100);
     --muted-foreground: var(--gray-500);
 
-    --accent: var(--gray-100);
-    --accent-foreground: var(--black);
+    --accent: var(--blue);
+    --accent-foreground: var(--white);
 
     --destructive: 0 72% 51%;
     --destructive-foreground: var(--white);
 
     --border: var(--gray-200);
     --input: var(--gray-200);
-    --ring: var(--black);
+    --ring: var(--blue);
 
     /* Semantic Colors (subtle) */
-    --positive: 142 76% 22%;
+    --positive: 142 76% 36%;
     --positive-bg: 142 76% 97%;
-    --negative: 0 72% 35%;
+    --negative: 0 72% 50%;
     --negative-bg: 0 72% 97%;
-    --warning: 32 95% 30%;
-    --warning-bg: 32 95% 97%;
+    --warning: 45 93% 47%;
+    --warning-bg: 45 93% 97%;
 
     /* Radius */
     --radius: 0.5rem;
@@ -134,9 +175,12 @@
     --muted: var(--gray-800);
     --muted-foreground: var(--gray-400);
 
-    --border: var(--gray-800);
-    --input: var(--gray-800);
-    --ring: var(--white);
+    --accent: var(--blue);
+    --accent-foreground: var(--white);
+
+    --border: var(--gray-700);
+    --input: var(--gray-700);
+    --ring: var(--blue);
   }
 }
 
@@ -172,6 +216,10 @@
   /* Font Families */
   .font-display {
     font-family: var(--font-display);
+  }
+
+  .font-hero {
+    font-family: var(--font-hero);
   }
 
   .font-body {
@@ -416,6 +464,20 @@
     60% { transform: translate(2px, 2px); }
     80% { transform: translate(2px, -2px); }
     100% { transform: translate(0); }
+  }
+
+  /* Strobe Glitch - Double Invert Flash */
+  @keyframes strobe-glitch {
+    0% { filter: invert(0); }
+    10% { filter: invert(1); }
+    20% { filter: invert(0); }
+    30% { filter: invert(1); }
+    40% { filter: invert(0); }
+    100% { filter: invert(0); }
+  }
+
+  .strobe-glitch:hover {
+    animation: strobe-glitch 0.3s ease-out;
   }
 
   /* Flicker */

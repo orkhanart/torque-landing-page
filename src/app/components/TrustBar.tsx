@@ -12,23 +12,25 @@ const logos = [
 
 export default function TrustBar() {
   return (
-    <section className="w-full py-12 border-b border-black/10 bg-white">
-      <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32">
-        <p className="font-mono text-xs uppercase tracking-wider text-black/40 text-center mb-8">
+    <section className="w-full pt-20 md:pt-32 pb-20 bg-white overflow-hidden px-6 md:px-12 lg:px-20">
+      <div className="w-full">
+        <p className="font-mono text-xs uppercase tracking-wider text-black/40 mb-8">
           Trusted by leading protocols
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
-          {logos.map((logo, index) => (
+
+        {/* Static logos */}
+        <div className="flex items-center justify-start gap-8 md:gap-12">
+          {logos.map((logo) => (
             <div
-              key={index}
-              className="h-10 flex items-center justify-center opacity-30 grayscale hover:opacity-60 hover:grayscale-0 transition-all duration-300"
+              key={logo.name}
+              className="h-14 flex items-center justify-center opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
             >
               <Image
                 src={logo.src}
                 alt={`${logo.name} logo`}
-                width={120}
-                height={40}
-                className="h-6 md:h-8 w-auto object-contain"
+                width={160}
+                height={56}
+                className="h-10 md:h-12 w-auto object-contain"
               />
             </div>
           ))}
