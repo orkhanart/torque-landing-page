@@ -8,7 +8,6 @@ import IntegrationRequestModal from "./IntegrationRequestModal";
 import TrustBar from "./TrustBar";
 import GrowthStack from "./GrowthStack";
 import PlaybooksSection from "./PlaybooksSection";
-import DitheredGradient from "@/components/DitheredGradient";
 
 // =============================================================================
 // Scramble Text Component - Auto-triggers on mount
@@ -145,9 +144,6 @@ const HeroV2 = () => {
 
   return (
     <section className="relative w-full bg-white overflow-hidden">
-      {/* Dithered Background - Subtle across hero */}
-      <DitheredGradient intensity="subtle" animate={true} />
-
       {/* Main Hero Content */}
       <div className="relative z-20 w-full min-h-[70vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-8">
         <div className="max-w-4xl">
