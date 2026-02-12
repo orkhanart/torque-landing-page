@@ -215,19 +215,14 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
       const newX = e.clientX - rect.left;
       const newY = e.clientY - rect.top;
 
-      // Check if mouse is within canvas bounds
-      if (newX < 0 || newX > rect.width || newY < 0 || newY > rect.height) {
-        return;
-      }
-
-      // Only add trail if mouse moved enough
+      // Only add trail if mouse moved enough and is roughly in the area
       const dist = Math.hypot(newX - lastMouseRef.current.x, newY - lastMouseRef.current.y);
-      if (dist > 8) {
+      if (dist > 10 && newX > -100 && newY > -100 && newX < rect.width + 100 && newY < rect.height + 100) {
         stateRef.current.mouseTrails.push({
-          x: newX,
-          y: newY,
+          x: Math.max(0, Math.min(rect.width, newX)),
+          y: Math.max(0, Math.min(rect.height, newY)),
           age: 0,
-          opacity: 0.9,
+          opacity: 1,
         });
         lastMouseRef.current = { x: newX, y: newY };
       }
@@ -243,29 +238,28 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
       const clickY = e.clientY - rect.top;
       const state = stateRef.current;
 
-      // Check if click is within canvas bounds
-      if (clickX < 0 || clickX > rect.width || clickY < 0 || clickY > rect.height) {
-        return;
-      }
-
       if (!state.initialized) return;
+
+      // Clamp to canvas bounds
+      const x = Math.max(0, Math.min(rect.width, clickX));
+      const y = Math.max(0, Math.min(rect.height, clickY));
 
       // Add burst of trails in a circle
       for (let i = 0; i < 20; i++) {
         const angle = (i / 20) * Math.PI * 2;
         const radius = 30 + Math.random() * 40;
         state.mouseTrails.push({
-          x: clickX + Math.cos(angle) * radius,
-          y: clickY + Math.sin(angle) * radius,
+          x: x + Math.cos(angle) * radius,
+          y: y + Math.sin(angle) * radius,
           age: 0,
-          opacity: 0.9,
+          opacity: 1,
         });
       }
 
       // Add center point
       state.mouseTrails.push({
-        x: clickX,
-        y: clickY,
+        x: x,
+        y: y,
         age: 0,
         opacity: 1,
       });
