@@ -8,8 +8,6 @@ import IntegrationRequestModal from "./IntegrationRequestModal";
 import TrustBar from "./TrustBar";
 import GrowthStack from "./GrowthStack";
 import PlaybooksSection from "./PlaybooksSection";
-import { motion } from "framer-motion";
-import ColorBars from "@/components/ColorBars";
 
 // =============================================================================
 // Scramble Text Component - Auto-triggers on mount
@@ -145,70 +143,34 @@ const HeroV2 = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section className="relative w-full bg-transparent overflow-hidden -mt-20">
-      {/* Animated Color Bars Background - Full bleed from top */}
-      <div className="fixed top-0 left-0 right-0 h-screen overflow-hidden pointer-events-none">
-        <ColorBars
-          barCount={24}
-          repetitions={3}
-          influenceRadius={2.5}
-        />
-        {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-white" />
-      </div>
-
+    <section className="relative w-full bg-white overflow-hidden">
       {/* Main Hero Content */}
-      <div className="relative z-10 w-full min-h-[70vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-28">
-        <motion.div
-          className="max-w-4xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
+      <div className="relative z-10 w-full min-h-[70vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-8">
+        <div className="max-w-4xl">
           {/* Terminal Tag */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px] bg-white/80 backdrop-blur-sm"
-          >
+          <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
             <Terminal className="w-3 h-3" />
             <span>89M+ transactions indexed</span>
             <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
-          </motion.div>
+          </div>
 
           {/* Main Headline - 2 Lines */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black"
-          >
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black">
             <span className="block whitespace-nowrap">
               <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
                 The Intelligence Layer
               </GlitchText>
             </span>
             <span className="block text-black/40 whitespace-nowrap"><RotatingText /></span>
-          </motion.h1>
+          </h1>
 
           {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl"
-          >
+          <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl">
             40% of incentive spend is wasted. We fix that with data-driven reward optimization.
-          </motion.p>
+          </p>
 
           {/* Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-start gap-4 mb-16"
-          >
+          <div className="flex flex-col sm:flex-row items-start gap-4 mb-16">
             <Button
               onClick={() => setIsModalOpen(true)}
               variant="accent"
@@ -224,33 +186,22 @@ const HeroV2 = () => {
               View Playbooks
               <ArrowUpRight className="w-4 h-4 ml-2" />
             </Button>
-          </motion.div>
+          </div>
 
           {/* Stats Row */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="flex items-center gap-12 md:gap-16 lg:gap-20"
-          >
+          <div className="flex items-center gap-12 md:gap-16 lg:gap-20">
             {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                className="flex flex-col"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-              >
+              <div key={index} className="flex flex-col">
                 <span className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold text-black tracking-tight">
                   {stat.value}
                 </span>
                 <span className="text-sm text-black/50 mt-1">
                   {stat.label}
                 </span>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Trust Bar - Logos */}
