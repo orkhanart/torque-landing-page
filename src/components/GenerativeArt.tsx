@@ -208,11 +208,16 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
       };
     };
 
-    // Mouse move handler - creates trail
+    // Mouse move handler - creates trail (window level)
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const newX = e.clientX - rect.left;
       const newY = e.clientY - rect.top;
+
+      // Check if mouse is within canvas bounds
+      if (newX < 0 || newX > rect.width || newY < 0 || newY > rect.height) {
+        return;
+      }
 
       // Only add trail if mouse moved enough
       const dist = Math.hypot(newX - lastMouseRef.current.x, newY - lastMouseRef.current.y);
@@ -230,12 +235,17 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
       mouseRef.current = { x: newX, y: newY };
     };
 
-    // Click handler - creates burst effect
+    // Click handler - creates burst effect (window level)
     const handleClick = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const clickY = e.clientY - rect.top;
       const state = stateRef.current;
+
+      // Check if click is within canvas bounds
+      if (clickX < 0 || clickX > rect.width || clickY < 0 || clickY > rect.height) {
+        return;
+      }
 
       if (!state.initialized) return;
 
@@ -264,8 +274,8 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
     resize();
     window.addEventListener("resize", resize);
-    canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("click", handleClick);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("click", handleClick);
 
     const drawStaticContent = () => {
       const state = stateRef.current;
@@ -371,8 +381,8 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
     return () => {
       window.removeEventListener("resize", resize);
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      canvas.removeEventListener("click", handleClick);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("click", handleClick);
       cancelAnimationFrame(animationRef.current);
     };
   }, []);
