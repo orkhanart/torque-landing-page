@@ -8,6 +8,7 @@ import IntegrationRequestModal from "./IntegrationRequestModal";
 import TrustBar from "./TrustBar";
 import GrowthStack from "./GrowthStack";
 import PlaybooksSection from "./PlaybooksSection";
+import PixelParticles from "@/components/PixelParticles";
 
 // =============================================================================
 // Scramble Text Component - Auto-triggers on mount
@@ -144,6 +145,12 @@ const HeroV2 = () => {
 
   return (
     <section className="relative w-full bg-white overflow-hidden">
+      {/* Pixel Particles Background */}
+      <div className="absolute top-0 right-0 w-[60%] h-[80vh] overflow-hidden hidden md:block">
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent z-10 pointer-events-none" />
+        <PixelParticles />
+      </div>
+
       {/* Main Hero Content */}
       <div className="relative z-20 w-full min-h-[70vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-8">
         <div className="max-w-4xl">
