@@ -146,8 +146,8 @@ const HeroV2 = () => {
   return (
     <section className="relative w-full bg-white overflow-hidden">
       {/* Generative Art Background - Right side */}
-      <div className="absolute top-0 right-0 w-[60%] h-[90vh] overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent z-10" />
+      <div className="absolute top-0 right-0 w-[60%] h-[90vh] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent z-10 pointer-events-none" />
         <GenerativeArt />
       </div>
 

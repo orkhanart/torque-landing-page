@@ -85,6 +85,7 @@ interface Path {
   strokeWeight: number;
   progress: number;
   speed: number;
+  opacity: number;
 }
 
 interface Shape {
@@ -100,6 +101,7 @@ interface Shape {
 const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
+  const mouseRef = useRef({ x: -1000, y: -1000 });
   const stateRef = useRef<{
     paths: Path[];
     shapes: Shape[];
@@ -121,6 +123,50 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
     const dpr = window.devicePixelRatio || 1;
 
+    const generatePath = (
+      startX: number,
+      startY: number,
+      noise: NoiseGenerator,
+      width: number,
+      height: number
+    ): Path => {
+      const c = Math.floor(Math.random() * 40 + 10);
+      const scl = 0.005;
+      const type = Math.floor(Math.random() * 4);
+      const points: { x: number; y: number }[] = [];
+
+      let x = startX;
+      let y = startY;
+
+      for (let j = 0; j < c; j++) {
+        const n = noise.noise(x * scl, y * scl, j * 0.001);
+        let angle: number;
+
+        if (type === 0) {
+          angle = Math.floor(n * 10) * (Math.PI / 2);
+        } else if (type === 1) {
+          angle = 10 * n;
+        } else if (type === 2) {
+          angle = Math.floor(n * 15) * (Math.PI / 2);
+        } else {
+          angle = 15 * n;
+        }
+
+        points.push({ x, y });
+        x += Math.cos(angle) * 8;
+        y += Math.sin(angle) * 8;
+      }
+
+      return {
+        points,
+        type,
+        strokeWeight: Math.random() * Math.random() * 1.5,
+        progress: 0,
+        speed: 0.02 + Math.random() * 0.03,
+        opacity: 0.6,
+      };
+    };
+
     const generatePaths = (width: number, height: number) => {
       const noise = new NoiseGenerator();
       const paths: Path[] = [];
@@ -130,40 +176,7 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
       for (let i = 0; i < 300; i++) {
         const startX = randomGaussian(0.5, 0.15) * width;
         const startY = randomGaussian(0.5, 0.15) * height;
-        const c = Math.floor(Math.random() * 40 + 10);
-        const scl = 0.005;
-        const type = Math.floor(Math.random() * 4);
-        const points: { x: number; y: number }[] = [];
-
-        let x = startX;
-        let y = startY;
-
-        for (let j = 0; j < c; j++) {
-          const n = noise.noise(x * scl, y * scl, j * 0.001);
-          let angle: number;
-
-          if (type === 0) {
-            angle = Math.floor(n * 10) * (Math.PI / 2);
-          } else if (type === 1) {
-            angle = 10 * n;
-          } else if (type === 2) {
-            angle = Math.floor(n * 15) * (Math.PI / 2);
-          } else {
-            angle = 15 * n;
-          }
-
-          points.push({ x, y });
-          x += Math.cos(angle) * 8;
-          y += Math.sin(angle) * 8;
-        }
-
-        paths.push({
-          points,
-          type,
-          strokeWeight: Math.random() * Math.random() * 1.5,
-          progress: 0,
-          speed: 0.01 + Math.random() * 0.02,
-        });
+        paths.push(generatePath(startX, startY, noise, width, height));
       }
 
       // Generate overlay shapes
@@ -192,8 +205,49 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
       stateRef.current = { paths, shapes, noise, initialized: true };
     };
 
+    // Mouse move handler
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+    };
+
+    // Click handler - spawn new paths from click location
+    const handleClick = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+      const state = stateRef.current;
+
+      if (!state.initialized) return;
+
+      // Add burst of new paths from click point
+      for (let i = 0; i < 15; i++) {
+        const offsetX = (Math.random() - 0.5) * 50;
+        const offsetY = (Math.random() - 0.5) * 50;
+        state.paths.push(
+          generatePath(clickX + offsetX, clickY + offsetY, state.noise, rect.width, rect.height)
+        );
+      }
+
+      // Add a shape at click location
+      state.shapes.push({
+        x: clickX,
+        y: clickY,
+        size: Math.random() * 100 + 20,
+        strokeWeight: Math.random() * 2,
+        isCircle: Math.random() < 0.5,
+        opacity: 0,
+        fadeIn: true,
+      });
+    };
+
     resize();
     window.addEventListener("resize", resize);
+    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("click", handleClick);
 
     const animate = () => {
       const state = stateRef.current;
@@ -205,13 +259,13 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
       const rect = canvas.getBoundingClientRect();
       const width = rect.width;
       const height = rect.height;
+      const mouse = mouseRef.current;
 
       // Clear with white background
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, width, height);
 
       // Draw paths with animation
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.6)";
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
 
@@ -224,7 +278,23 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
         const pointsToDraw = Math.floor(path.points.length * path.progress);
         if (pointsToDraw < 2) continue;
 
-        ctx.lineWidth = path.strokeWeight;
+        // Check proximity to mouse for highlight effect
+        let minDist = Infinity;
+        for (const point of path.points) {
+          const dist = Math.hypot(point.x - mouse.x, point.y - mouse.y);
+          minDist = Math.min(minDist, dist);
+        }
+
+        const isNearMouse = minDist < 100;
+        const highlightFactor = isNearMouse ? Math.max(0, 1 - minDist / 100) : 0;
+
+        // Dynamic opacity and stroke based on mouse proximity
+        const baseOpacity = path.opacity;
+        const opacity = baseOpacity + highlightFactor * 0.4;
+        const strokeWidth = path.strokeWeight + highlightFactor * 2;
+
+        ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
+        ctx.lineWidth = strokeWidth;
 
         if (path.type < 2) {
           // Draw as connected line
@@ -238,7 +308,7 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
           // Draw as circles along path
           for (let i = 0; i < pointsToDraw; i++) {
             const point = path.points[i];
-            const circleSize = Math.random() * Math.random() * 5;
+            const circleSize = Math.random() * Math.random() * 5 + highlightFactor * 3;
             ctx.beginPath();
             ctx.arc(point.x, point.y, circleSize, 0, Math.PI * 2);
             ctx.stroke();
@@ -253,34 +323,43 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
           shape.opacity += 0.005;
         }
 
-        ctx.strokeStyle = `rgba(0, 0, 0, ${shape.opacity})`;
-        ctx.lineWidth = shape.strokeWeight;
+        // Mouse proximity effect on shapes
+        const dist = Math.hypot(shape.x - mouse.x, shape.y - mouse.y);
+        const isNear = dist < 150;
+        const highlightFactor = isNear ? Math.max(0, 1 - dist / 150) : 0;
+
+        const opacity = shape.opacity + highlightFactor * 0.3;
+        const scale = 1 + highlightFactor * 0.1;
+
+        ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
+        ctx.lineWidth = shape.strokeWeight + highlightFactor;
+
+        const scaledSize = shape.size * scale;
 
         if (shape.isCircle) {
           ctx.beginPath();
-          ctx.arc(shape.x, shape.y, shape.size / 2, 0, Math.PI * 2);
+          ctx.arc(shape.x, shape.y, scaledSize / 2, 0, Math.PI * 2);
           ctx.stroke();
         } else {
           ctx.strokeRect(
-            shape.x - shape.size / 2,
-            shape.y - shape.size / 2,
-            shape.size,
-            shape.size
+            shape.x - scaledSize / 2,
+            shape.y - scaledSize / 2,
+            scaledSize,
+            scaledSize
           );
         }
       }
 
-      // Check if animation is complete, then slowly regenerate
-      const allComplete = state.paths.every((p) => p.progress >= 1);
-      if (allComplete) {
-        // Slowly fade and regenerate after a delay
-        let shouldRegenerate = true;
-        for (const path of state.paths) {
-          if (Math.random() < 0.001) {
-            path.progress = 0;
-            path.speed = 0.01 + Math.random() * 0.02;
-            shouldRegenerate = false;
-          }
+      // Clean up old paths if too many
+      if (state.paths.length > 500) {
+        state.paths.splice(0, state.paths.length - 400);
+      }
+
+      // Slowly regenerate completed paths
+      for (const path of state.paths) {
+        if (path.progress >= 1 && Math.random() < 0.002) {
+          path.progress = 0;
+          path.speed = 0.02 + Math.random() * 0.03;
         }
       }
 
@@ -291,6 +370,8 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
     return () => {
       window.removeEventListener("resize", resize);
+      canvas.removeEventListener("mousemove", handleMouseMove);
+      canvas.removeEventListener("click", handleClick);
       cancelAnimationFrame(animationRef.current);
     };
   }, []);
@@ -298,7 +379,7 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
   return (
     <canvas
       ref={canvasRef}
-      className={`absolute inset-0 w-full h-full ${className}`}
+      className={`absolute inset-0 w-full h-full cursor-pointer ${className}`}
       style={{ display: "block" }}
     />
   );
