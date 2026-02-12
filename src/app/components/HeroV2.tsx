@@ -8,6 +8,7 @@ import IntegrationRequestModal from "./IntegrationRequestModal";
 import TrustBar from "./TrustBar";
 import GrowthStack from "./GrowthStack";
 import PlaybooksSection from "./PlaybooksSection";
+import NeuralGrid from "@/components/NeuralGrid";
 
 // =============================================================================
 // Scramble Text Component - Auto-triggers on mount
@@ -143,9 +144,14 @@ const HeroV2 = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section className="relative w-full bg-white overflow-hidden">
+    <section className="relative w-full bg-white overflow-hidden -mt-20">
+      {/* Neural Grid Background */}
+      <div className="fixed top-0 left-0 right-0 h-screen overflow-hidden">
+        <NeuralGrid gridSize={40} baseHue={190} />
+      </div>
+
       {/* Main Hero Content */}
-      <div className="relative z-10 w-full min-h-[70vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-8">
+      <div className="relative z-10 w-full min-h-[70vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-28">
         <div className="max-w-4xl">
           {/* Terminal Tag */}
           <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
