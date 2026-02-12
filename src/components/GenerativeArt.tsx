@@ -79,39 +79,48 @@ function randomGaussian(mean: number, sd: number): number {
   return mean + sd * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 }
 
-interface Path {
+interface StaticPath {
   points: { x: number; y: number }[];
   type: number;
   strokeWeight: number;
-  progress: number;
-  speed: number;
   opacity: number;
 }
 
-interface Shape {
+interface StaticShape {
   x: number;
   y: number;
   size: number;
   strokeWeight: number;
   isCircle: boolean;
   opacity: number;
-  fadeIn: boolean;
+}
+
+interface MouseTrail {
+  x: number;
+  y: number;
+  age: number;
+  opacity: number;
 }
 
 const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const mouseRef = useRef({ x: -1000, y: -1000 });
+  const lastMouseRef = useRef({ x: -1000, y: -1000 });
   const stateRef = useRef<{
-    paths: Path[];
-    shapes: Shape[];
+    staticPaths: StaticPath[];
+    staticShapes: StaticShape[];
+    mouseTrails: MouseTrail[];
     noise: NoiseGenerator;
     initialized: boolean;
+    needsRedraw: boolean;
   }>({
-    paths: [],
-    shapes: [],
+    staticPaths: [],
+    staticShapes: [],
+    mouseTrails: [],
     noise: new NoiseGenerator(),
     initialized: false,
+    needsRedraw: true,
   });
 
   useEffect(() => {
@@ -123,76 +132,63 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
     const dpr = window.devicePixelRatio || 1;
 
-    const generatePath = (
-      startX: number,
-      startY: number,
-      noise: NoiseGenerator,
-      width: number,
-      height: number
-    ): Path => {
-      const c = Math.floor(Math.random() * 40 + 10);
-      const scl = 0.005;
-      const type = Math.floor(Math.random() * 4);
-      const points: { x: number; y: number }[] = [];
-
-      let x = startX;
-      let y = startY;
-
-      for (let j = 0; j < c; j++) {
-        const n = noise.noise(x * scl, y * scl, j * 0.001);
-        let angle: number;
-
-        if (type === 0) {
-          angle = Math.floor(n * 10) * (Math.PI / 2);
-        } else if (type === 1) {
-          angle = 10 * n;
-        } else if (type === 2) {
-          angle = Math.floor(n * 15) * (Math.PI / 2);
-        } else {
-          angle = 15 * n;
-        }
-
-        points.push({ x, y });
-        x += Math.cos(angle) * 8;
-        y += Math.sin(angle) * 8;
-      }
-
-      return {
-        points,
-        type,
-        strokeWeight: Math.random() * Math.random() * 1.5,
-        progress: 0,
-        speed: 0.02 + Math.random() * 0.03,
-        opacity: 0.6,
-      };
-    };
-
-    const generatePaths = (width: number, height: number) => {
+    const generateStaticArt = (width: number, height: number) => {
       const noise = new NoiseGenerator();
-      const paths: Path[] = [];
-      const shapes: Shape[] = [];
+      const staticPaths: StaticPath[] = [];
+      const staticShapes: StaticShape[] = [];
 
-      // Generate flowing paths
-      for (let i = 0; i < 300; i++) {
+      // Generate static flowing paths
+      for (let i = 0; i < 400; i++) {
         const startX = randomGaussian(0.5, 0.15) * width;
         const startY = randomGaussian(0.5, 0.15) * height;
-        paths.push(generatePath(startX, startY, noise, width, height));
+        const c = Math.floor(Math.random() * 40 + 10);
+        const scl = 0.005;
+        const type = Math.floor(Math.random() * 4);
+        const points: { x: number; y: number }[] = [];
+
+        let x = startX;
+        let y = startY;
+
+        for (let j = 0; j < c; j++) {
+          const n = noise.noise(x * scl, y * scl, j * 0.001);
+          let angle: number;
+
+          if (type === 0) {
+            angle = Math.floor(n * 10) * (Math.PI / 2);
+          } else if (type === 1) {
+            angle = 10 * n;
+          } else if (type === 2) {
+            angle = Math.floor(n * 15) * (Math.PI / 2);
+          } else {
+            angle = 15 * n;
+          }
+
+          points.push({ x, y });
+          x += Math.cos(angle) * 8;
+          y += Math.sin(angle) * 8;
+        }
+
+        staticPaths.push({
+          points,
+          type,
+          strokeWeight: Math.random() * Math.random() * 1.5,
+          opacity: 0.4 + Math.random() * 0.3,
+        });
       }
 
-      // Generate overlay shapes
-      for (let i = 0; i < 50; i++) {
-        shapes.push({
+      // Generate static overlay shapes
+      for (let i = 0; i < 60; i++) {
+        staticShapes.push({
           x: randomGaussian(0.5, 0.15) * width,
           y: randomGaussian(0.5, 0.15) * height,
           size: Math.random() * width * 0.3 * Math.random() * Math.random(),
           strokeWeight: Math.random() * Math.random() * 1.5,
           isCircle: Math.random() < 0.5,
-          opacity: 0,
-          fadeIn: true,
+          opacity: 0.15 + Math.random() * 0.15,
         });
       }
 
-      return { paths, shapes, noise };
+      return { staticPaths, staticShapes, noise };
     };
 
     const resize = () => {
@@ -201,20 +197,40 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
 
-      const { paths, shapes, noise } = generatePaths(rect.width, rect.height);
-      stateRef.current = { paths, shapes, noise, initialized: true };
-    };
-
-    // Mouse move handler
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+      const { staticPaths, staticShapes, noise } = generateStaticArt(rect.width, rect.height);
+      stateRef.current = {
+        staticPaths,
+        staticShapes,
+        mouseTrails: [],
+        noise,
+        initialized: true,
+        needsRedraw: true,
       };
     };
 
-    // Click handler - spawn new paths from click location
+    // Mouse move handler - creates trail
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const newX = e.clientX - rect.left;
+      const newY = e.clientY - rect.top;
+
+      // Only add trail if mouse moved enough
+      const dist = Math.hypot(newX - lastMouseRef.current.x, newY - lastMouseRef.current.y);
+      if (dist > 5) {
+        stateRef.current.mouseTrails.push({
+          x: newX,
+          y: newY,
+          age: 0,
+          opacity: 0.8,
+        });
+        lastMouseRef.current = { x: newX, y: newY };
+        stateRef.current.needsRedraw = true;
+      }
+
+      mouseRef.current = { x: newX, y: newY };
+    };
+
+    // Click handler - creates burst effect
     const handleClick = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
@@ -223,31 +239,90 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
       if (!state.initialized) return;
 
-      // Add burst of new paths from click point
-      for (let i = 0; i < 15; i++) {
-        const offsetX = (Math.random() - 0.5) * 50;
-        const offsetY = (Math.random() - 0.5) * 50;
-        state.paths.push(
-          generatePath(clickX + offsetX, clickY + offsetY, state.noise, rect.width, rect.height)
-        );
+      // Add burst of trails in a circle
+      for (let i = 0; i < 20; i++) {
+        const angle = (i / 20) * Math.PI * 2;
+        const radius = 30 + Math.random() * 40;
+        state.mouseTrails.push({
+          x: clickX + Math.cos(angle) * radius,
+          y: clickY + Math.sin(angle) * radius,
+          age: 0,
+          opacity: 0.9,
+        });
       }
 
-      // Add a shape at click location
-      state.shapes.push({
+      // Add center point
+      state.mouseTrails.push({
         x: clickX,
         y: clickY,
-        size: Math.random() * 100 + 20,
-        strokeWeight: Math.random() * 2,
-        isCircle: Math.random() < 0.5,
-        opacity: 0,
-        fadeIn: true,
+        age: 0,
+        opacity: 1,
       });
+
+      state.needsRedraw = true;
     };
 
     resize();
     window.addEventListener("resize", resize);
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("click", handleClick);
+
+    const drawStaticContent = () => {
+      const state = stateRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+
+      // Clear with white background
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      // Draw static paths
+      for (const path of state.staticPaths) {
+        if (path.points.length < 2) continue;
+
+        ctx.strokeStyle = `rgba(0, 0, 0, ${path.opacity})`;
+        ctx.lineWidth = path.strokeWeight;
+
+        if (path.type < 2) {
+          ctx.beginPath();
+          ctx.moveTo(path.points[0].x, path.points[0].y);
+          for (let i = 1; i < path.points.length; i++) {
+            ctx.lineTo(path.points[i].x, path.points[i].y);
+          }
+          ctx.stroke();
+        } else {
+          for (const point of path.points) {
+            const circleSize = Math.random() * Math.random() * 4;
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, circleSize, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw static shapes
+      for (const shape of state.staticShapes) {
+        ctx.strokeStyle = `rgba(0, 0, 0, ${shape.opacity})`;
+        ctx.lineWidth = shape.strokeWeight;
+
+        if (shape.isCircle) {
+          ctx.beginPath();
+          ctx.arc(shape.x, shape.y, shape.size / 2, 0, Math.PI * 2);
+          ctx.stroke();
+        } else {
+          ctx.strokeRect(
+            shape.x - shape.size / 2,
+            shape.y - shape.size / 2,
+            shape.size,
+            shape.size
+          );
+        }
+      }
+    };
 
     const animate = () => {
       const state = stateRef.current;
@@ -256,111 +331,37 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
         return;
       }
 
-      const rect = canvas.getBoundingClientRect();
-      const width = rect.width;
-      const height = rect.height;
-      const mouse = mouseRef.current;
+      // Only redraw if needed
+      if (state.needsRedraw || state.mouseTrails.length > 0) {
+        drawStaticContent();
 
-      // Clear with white background
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, width, height);
+        // Draw mouse trails
+        for (let i = state.mouseTrails.length - 1; i >= 0; i--) {
+          const trail = state.mouseTrails[i];
+          trail.age++;
+          trail.opacity -= 0.015;
 
-      // Draw paths with animation
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-
-      for (const path of state.paths) {
-        if (path.points.length < 2) continue;
-
-        // Update progress
-        path.progress = Math.min(1, path.progress + path.speed);
-
-        const pointsToDraw = Math.floor(path.points.length * path.progress);
-        if (pointsToDraw < 2) continue;
-
-        // Check proximity to mouse for highlight effect
-        let minDist = Infinity;
-        for (const point of path.points) {
-          const dist = Math.hypot(point.x - mouse.x, point.y - mouse.y);
-          minDist = Math.min(minDist, dist);
-        }
-
-        const isNearMouse = minDist < 100;
-        const highlightFactor = isNearMouse ? Math.max(0, 1 - minDist / 100) : 0;
-
-        // Dynamic opacity and stroke based on mouse proximity
-        const baseOpacity = path.opacity;
-        const opacity = baseOpacity + highlightFactor * 0.4;
-        const strokeWidth = path.strokeWeight + highlightFactor * 2;
-
-        ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
-        ctx.lineWidth = strokeWidth;
-
-        if (path.type < 2) {
-          // Draw as connected line
-          ctx.beginPath();
-          ctx.moveTo(path.points[0].x, path.points[0].y);
-          for (let i = 1; i < pointsToDraw; i++) {
-            ctx.lineTo(path.points[i].x, path.points[i].y);
+          if (trail.opacity <= 0) {
+            state.mouseTrails.splice(i, 1);
+            continue;
           }
-          ctx.stroke();
-        } else {
-          // Draw as circles along path
-          for (let i = 0; i < pointsToDraw; i++) {
-            const point = path.points[i];
-            const circleSize = Math.random() * Math.random() * 5 + highlightFactor * 3;
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, circleSize, 0, Math.PI * 2);
-            ctx.stroke();
-          }
-        }
-      }
 
-      // Draw and animate shapes
-      for (const shape of state.shapes) {
-        // Fade in animation
-        if (shape.fadeIn && shape.opacity < 0.3) {
-          shape.opacity += 0.005;
-        }
-
-        // Mouse proximity effect on shapes
-        const dist = Math.hypot(shape.x - mouse.x, shape.y - mouse.y);
-        const isNear = dist < 150;
-        const highlightFactor = isNear ? Math.max(0, 1 - dist / 150) : 0;
-
-        const opacity = shape.opacity + highlightFactor * 0.3;
-        const scale = 1 + highlightFactor * 0.1;
-
-        ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
-        ctx.lineWidth = shape.strokeWeight + highlightFactor;
-
-        const scaledSize = shape.size * scale;
-
-        if (shape.isCircle) {
+          // Draw trail point as expanding circle
+          const size = 3 + trail.age * 0.3;
+          ctx.strokeStyle = `rgba(0, 0, 0, ${trail.opacity})`;
+          ctx.lineWidth = 1;
           ctx.beginPath();
-          ctx.arc(shape.x, shape.y, scaledSize / 2, 0, Math.PI * 2);
+          ctx.arc(trail.x, trail.y, size, 0, Math.PI * 2);
           ctx.stroke();
-        } else {
-          ctx.strokeRect(
-            shape.x - scaledSize / 2,
-            shape.y - scaledSize / 2,
-            scaledSize,
-            scaledSize
-          );
-        }
-      }
 
-      // Clean up old paths if too many
-      if (state.paths.length > 500) {
-        state.paths.splice(0, state.paths.length - 400);
-      }
-
-      // Slowly regenerate completed paths
-      for (const path of state.paths) {
-        if (path.progress >= 1 && Math.random() < 0.002) {
-          path.progress = 0;
-          path.speed = 0.02 + Math.random() * 0.03;
+          // Draw inner dot
+          ctx.fillStyle = `rgba(0, 0, 0, ${trail.opacity * 0.5})`;
+          ctx.beginPath();
+          ctx.arc(trail.x, trail.y, 2, 0, Math.PI * 2);
+          ctx.fill();
         }
+
+        state.needsRedraw = state.mouseTrails.length > 0;
       }
 
       animationRef.current = requestAnimationFrame(animate);
