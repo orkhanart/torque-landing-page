@@ -210,6 +210,7 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
     // Mouse move handler - creates trail (window level)
     const handleMouseMove = (e: MouseEvent) => {
+      if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
       const newX = e.clientX - rect.left;
       const newY = e.clientY - rect.top;
@@ -221,15 +222,14 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
       // Only add trail if mouse moved enough
       const dist = Math.hypot(newX - lastMouseRef.current.x, newY - lastMouseRef.current.y);
-      if (dist > 5) {
+      if (dist > 8) {
         stateRef.current.mouseTrails.push({
           x: newX,
           y: newY,
           age: 0,
-          opacity: 0.8,
+          opacity: 0.9,
         });
         lastMouseRef.current = { x: newX, y: newY };
-        stateRef.current.needsRedraw = true;
       }
 
       mouseRef.current = { x: newX, y: newY };
@@ -237,6 +237,7 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
 
     // Click handler - creates burst effect (window level)
     const handleClick = (e: MouseEvent) => {
+      if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const clickY = e.clientY - rect.top;
@@ -268,8 +269,6 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
         age: 0,
         opacity: 1,
       });
-
-      state.needsRedraw = true;
     };
 
     resize();
@@ -341,15 +340,17 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
         return;
       }
 
-      // Only redraw if needed
-      if (state.needsRedraw || state.mouseTrails.length > 0) {
+      // Always redraw when there are trails
+      const hasTrails = state.mouseTrails.length > 0;
+
+      if (state.needsRedraw || hasTrails) {
         drawStaticContent();
 
         // Draw mouse trails
         for (let i = state.mouseTrails.length - 1; i >= 0; i--) {
           const trail = state.mouseTrails[i];
           trail.age++;
-          trail.opacity -= 0.015;
+          trail.opacity -= 0.02;
 
           if (trail.opacity <= 0) {
             state.mouseTrails.splice(i, 1);
@@ -357,21 +358,21 @@ const GenerativeArt: React.FC<GenerativeArtProps> = ({ className = "" }) => {
           }
 
           // Draw trail point as expanding circle
-          const size = 3 + trail.age * 0.3;
+          const size = 4 + trail.age * 0.5;
           ctx.strokeStyle = `rgba(0, 0, 0, ${trail.opacity})`;
-          ctx.lineWidth = 1;
+          ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.arc(trail.x, trail.y, size, 0, Math.PI * 2);
           ctx.stroke();
 
           // Draw inner dot
-          ctx.fillStyle = `rgba(0, 0, 0, ${trail.opacity * 0.5})`;
+          ctx.fillStyle = `rgba(0, 0, 0, ${trail.opacity * 0.7})`;
           ctx.beginPath();
-          ctx.arc(trail.x, trail.y, 2, 0, Math.PI * 2);
+          ctx.arc(trail.x, trail.y, 3, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        state.needsRedraw = state.mouseTrails.length > 0;
+        state.needsRedraw = false;
       }
 
       animationRef.current = requestAnimationFrame(animate);
