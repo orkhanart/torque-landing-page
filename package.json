@@ -21,6 +21,7 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.3.0",
     "framer-motion": "^11.11.8",
+    "lenis": "^1.3.17",
     "lucide-react": "^0.445.0",
     "next": "14.2.13",
     "postprocessing": "^6.37.6",

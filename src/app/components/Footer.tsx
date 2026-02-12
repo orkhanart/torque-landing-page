@@ -1,16 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaXTwitter, FaDiscord, FaGithub } from "react-icons/fa6";
 import { ArrowUpRight, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import IntegrationRequestModal from "./IntegrationRequestModal";
+import { motion, useInView } from "framer-motion";
+import { EnergyField } from "@/components/EnergyField";
+import { DistortedText } from "@/components/DistortedText";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const isCtaInView = useInView(ctaRef, { once: true, margin: "-100px" });
 
   const navLinks = [
     { label: "Platform", href: "/platform" },
@@ -34,52 +39,73 @@ const Footer = () => {
   return (
     <footer className="w-full bg-blue overflow-hidden">
       {/* CTA Section */}
-      <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 py-24 md:py-32">
-        <div className="max-w-3xl mx-auto text-center">
+      <div className="relative w-full px-6 md:px-12 lg:px-20 xl:px-32 py-24 md:py-32" ref={ctaRef}>
+        {/* Energy Field Background */}
+        <EnergyField className="opacity-50" />
+
+        <motion.div
+          className="max-w-3xl mx-auto text-center relative z-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           {/* Tag */}
-          <div className="inline-flex items-center gap-2 mb-8 font-mono text-xs uppercase tracking-wider text-white/60 border border-white/20 px-3 py-1.5 rounded-[3px]">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isCtaInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="inline-flex items-center gap-2 mb-8 font-mono text-xs uppercase tracking-wider text-white/60 border border-white/20 px-3 py-1.5 rounded-[3px]"
+          >
             <Terminal className="w-3 h-3" />
             <span>Ready to Optimize</span>
-          </div>
+          </motion.div>
 
           {/* Headline */}
-          <h2 className="font-hero text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6 text-white uppercase">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="font-hero text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6 text-white uppercase"
+          >
             Ready to optimize your
             <br />
             <span className="text-white/40">liquidity?</span>
-          </h2>
+          </motion.h2>
 
           {/* Subtext */}
-          <p className="text-lg text-white/60 mb-10 max-w-xl mx-auto">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-lg text-white/60 mb-10 max-w-xl mx-auto"
+          >
             Launch campaigns that target the real issues, not vanity metrics.
-          </p>
+          </motion.p>
 
           {/* Button */}
-          <Button
-            onClick={() => setIsModalOpen(true)}
-            variant="inverse"
-            className="group"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
-            Get audited
-            <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Button>
-        </div>
+            <Button
+              onClick={() => setIsModalOpen(true)}
+              variant="inverse"
+              className="group"
+            >
+              Get audited
+              <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Button>
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* Huge TORQUE Typography */}
-      <div className="relative w-full">
-        <div
-          className="text-[28vw] font-mono font-bold leading-none select-none text-white/10 w-full"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "-4vw",
-          }}
-        >
-          {"TORQUE".split("").map((char, i) => (
-            <span key={i}>{char}</span>
-          ))}
-        </div>
+      {/* Huge TORQUE Typography with Distortion */}
+      <div className="relative w-full" style={{ marginTop: "-4vw" }}>
+        <DistortedText
+          text="TORQUE"
+          className="text-[28vw] text-white/10"
+        />
       </div>
 
       {/* Footer Content */}

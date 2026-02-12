@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { ScrollProvider } from "@/components/providers/ScrollProvider";
+import { ScrollProgress } from "@/components/ScrollProgress";
 
 export const metadata: Metadata = {
   title: "Torque | The Revenue Engine for On-Chain Growth",
@@ -63,7 +65,10 @@ export default function RootLayout({
             gtag('config', 'G-8CM307NTBB');
           `}
         </Script>
-        {children}
+        <ScrollProvider>
+          <ScrollProgress />
+          {children}
+        </ScrollProvider>
       </body>
     </html>
   );

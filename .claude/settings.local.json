@@ -5,7 +5,23 @@
       "Bash(node:*)",
       "Bash(git filter-branch:*)",
       "Bash(echo:*)",
-      "Bash(pnpm dev:*)"
+      "Bash(pnpm dev:*)",
+      "Bash(cd:*)",
+      "WebFetch(domain:inky-bell-b84.notion.site)",
+      "WebFetch(domain:agentsmyth.com)",
+      "Bash(cd /Users/orkhan/Documents/OMA/01.\\\\ Projects/2026/torque/torque-landing-page && git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: redesign landing page with terminal-style design system\n\n- Add monochrome \\(B&W\\) light mode design with terminal aesthetic\n- Create immersive background components \\(ParticleField, GridBackground, ScanLines, NoiseOverlay\\)\n- Build terminal UI components \\(TerminalCard, TypeWriter, CountUp, GlitchText, etc.\\)\n- Redesign Hero section with centered layout and live intelligence feed\n- Update all sections to full-width layout\n- Unify button system with terminal styling\n- Add rotating Torque symbol on scroll\n- Apply 3px border radius to all bordered elements\n- Use Funnel Display, Geist, and JetBrains Mono fonts\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push)",
+      "WebFetch(domain:torque-azure.vercel.app)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(pnpm build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(pnpm run build)",
+      "WebFetch(domain:fonts.googleapis.com)",
+      "WebSearch",
+      "Bash(pnpm add lenis)"
     ],
     "deny": []
   }

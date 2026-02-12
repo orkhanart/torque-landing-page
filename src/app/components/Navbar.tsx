@@ -152,7 +152,7 @@ export default function Navbar() {
 
       <header className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-3rem)] md:w-[calc(100%-6rem)] lg:w-[calc(100%-10rem)]">
         {/* Glass background layer */}
-        <div className="absolute inset-0 rounded-full overflow-hidden">
+        <div className="absolute inset-0 rounded-[3px] overflow-hidden">
           <div
             className="absolute inset-0 backdrop-blur-2xl"
             style={{ filter: 'url(#glass-filter)' }}
@@ -163,11 +163,11 @@ export default function Navbar() {
           {/* Bottom edge shadow */}
           <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-black/10 to-transparent" />
           {/* Inner glow */}
-          <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),inset_0_-1px_1px_rgba(0,0,0,0.05)]" />
+          <div className="absolute inset-0 rounded-[3px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),inset_0_-1px_1px_rgba(0,0,0,0.05)]" />
         </div>
 
         {/* Content container */}
-        <div className="relative flex items-center h-14 px-6 w-full rounded-full border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="relative flex items-center h-14 px-6 w-full rounded-[3px] border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04)]">
           {/* Left: Logo Symbol with scrambling TORQUE text on hover */}
           <Link
             href="/"
@@ -244,7 +244,7 @@ export default function Navbar() {
         {/* Mobile Menu */}
         <div
           id="mobile-menu"
-          className="lg:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white/90 backdrop-blur-xl rounded-b-2xl mt-2"
+          className="lg:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white/90 backdrop-blur-xl rounded-[3px] mt-2"
           style={{ maxHeight: `${menuHeight}px` }}
         >
           <nav className="px-6 py-4 space-y-1">

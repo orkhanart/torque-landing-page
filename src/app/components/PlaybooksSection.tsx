@@ -1,8 +1,45 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { ArrowUpRight, Zap, Users, TrendingUp, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion, useInView } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+};
+
+const formulaVariants = {
+  hidden: { opacity: 0, x: -10 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+};
 
 const featuredPlaybooks = [
   {
@@ -46,11 +83,19 @@ const featuredPlaybooks = [
 ];
 
 export default function PlaybooksSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
     <section className="w-full py-20 md:py-32 bg-white border-t border-black/10">
-      <div className="w-full px-6 md:px-12 lg:px-20">
+      <div className="w-full px-6 md:px-12 lg:px-20" ref={ref}>
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16"
+        >
           <div>
             <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
               <BookOpen className="w-3 h-3" />
@@ -66,15 +111,22 @@ export default function PlaybooksSection() {
             View All Playbooks
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
-        </div>
+        </motion.div>
 
         {/* Playbooks Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
+        >
           {featuredPlaybooks.map((playbook) => (
-            <a
+            <motion.a
               key={playbook.id}
+              variants={cardVariants}
               href="/playbooks"
-              className="group bg-white border border-black/10 rounded-[3px] overflow-hidden hover:border-black/30 transition-all"
+              className="group bg-white border border-black/10 rounded-[3px] overflow-hidden hover:border-black/30 hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] transition-all"
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
             >
               {/* Card Header */}
               <div className="flex items-center justify-between px-5 py-3 border-b border-black/10 bg-black/5">
@@ -97,9 +149,12 @@ export default function PlaybooksSection() {
 
               {/* Card Body */}
               <div className="p-5 md:p-6">
-                <div className="w-10 h-10 rounded-[3px] bg-black/5 flex items-center justify-center mb-4">
-                  <playbook.icon className="w-5 h-5 text-black/60" />
-                </div>
+                <motion.div
+                  className="w-10 h-10 rounded-[3px] bg-black/5 flex items-center justify-center mb-4 group-hover:bg-blue/10 transition-colors"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                >
+                  <playbook.icon className="w-5 h-5 text-black/60 group-hover:text-blue transition-colors" />
+                </motion.div>
 
                 <h3 className="font-display text-lg md:text-xl font-medium text-black mb-2 group-hover:text-blue transition-colors">
                   {playbook.title}
@@ -111,31 +166,44 @@ export default function PlaybooksSection() {
 
                 {/* Formula or Metric */}
                 {playbook.formula ? (
-                  <div className="space-y-2 pt-4 border-t border-black/10">
-                    <div className="flex items-center gap-2 text-xs">
+                  <motion.div
+                    className="space-y-2 pt-4 border-t border-black/10"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                      visible: {
+                        transition: { staggerChildren: 0.1 },
+                      },
+                    }}
+                  >
+                    <motion.div variants={formulaVariants} className="flex items-center gap-2 text-xs">
                       <span className="font-mono text-black/30 w-16">Trigger</span>
                       <span className="text-black/70">{playbook.formula.trigger}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
+                    </motion.div>
+                    <motion.div variants={formulaVariants} className="flex items-center gap-2 text-xs">
                       <span className="font-mono text-black/30 w-16">Condition</span>
                       <span className="text-black/70">{playbook.formula.condition}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
+                    </motion.div>
+                    <motion.div variants={formulaVariants} className="flex items-center gap-2 text-xs">
                       <span className="font-mono text-blue/60 w-16">Reward</span>
                       <span className="text-blue">{playbook.formula.reward}</span>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 ) : playbook.metricBadge ? (
                   <div className="pt-4 border-t border-black/10">
-                    <span className="inline-flex items-center px-3 py-1.5 bg-blue/10 text-blue text-sm font-medium rounded-[3px]">
+                    <motion.span
+                      className="inline-flex items-center px-3 py-1.5 bg-blue/10 text-blue text-sm font-medium rounded-[3px]"
+                      whileHover={{ scale: 1.05 }}
+                    >
                       {playbook.metricBadge}
-                    </span>
+                    </motion.span>
                   </div>
                 ) : null}
               </div>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
