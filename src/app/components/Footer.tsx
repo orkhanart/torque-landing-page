@@ -54,10 +54,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full overflow-hidden relative">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-blue-light via-blue to-[#000066]" />
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-white/10 via-transparent to-black/30" />
+    <footer className="w-full overflow-hidden relative bg-[#0A0F1C]">
 
       {/* Agencies & Partners Section */}
       <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24" ref={ctaRef}>
@@ -228,8 +225,15 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* Big TORQUE Text */}
+      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] py-8 border-t border-white/10">
+        <div className="text-[15vw] md:text-[12vw] lg:text-[10vw] font-display font-bold leading-none tracking-tighter text-white/[0.03] select-none">
+          TORQUE
+        </div>
+      </div>
+
       {/* Bottom Bar */}
-      <div className="relative z-10 border-t border-white/20">
+      <div className="relative z-10 border-t border-white/10">
         <div className="w-full px-6 md:px-8 lg:px-[4.5rem] py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <span className="font-mono text-xs text-white/50">
