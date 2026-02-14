@@ -39,13 +39,13 @@ export default function TrustBar() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="w-full pt-20 md:pt-32 pb-20 bg-white overflow-hidden px-6 md:px-12 lg:px-20">
+    <section className="w-full pt-20 md:pt-32 pb-20 overflow-hidden px-6 md:px-12 lg:px-20 bg-transparent">
       <div className="w-full" ref={ref}>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.4 }}
-          className="font-mono text-xs uppercase tracking-wider text-black/40 mb-8"
+          className="font-mono text-xs uppercase tracking-wider text-black/40 mb-8 text-center"
         >
           Trusted by leading protocols
         </motion.p>
@@ -55,7 +55,7 @@ export default function TrustBar() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="flex items-center justify-start gap-8 md:gap-12"
+          className="flex items-center justify-center gap-8 md:gap-12"
         >
           {logos.map((logo, index) => (
             <motion.div

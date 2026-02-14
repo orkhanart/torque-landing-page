@@ -21,7 +21,9 @@
       "Bash(pnpm run build)",
       "WebFetch(domain:fonts.googleapis.com)",
       "WebSearch",
-      "Bash(pnpm add lenis)"
+      "Bash(pnpm add lenis)",
+      "Bash(chmod:*)",
+      "Bash(./scripts/generate-light-mono.sh:*)"
     ],
     "deny": []
   }

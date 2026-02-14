@@ -26,7 +26,7 @@ export function ScrollProgress({
 
   return (
     <div
-      className="fixed left-0 top-0 w-full transition-opacity duration-300"
+      className="fixed left-0 bottom-0 w-full transition-opacity duration-300"
       style={{
         height: `${height}px`,
         zIndex,
@@ -39,7 +39,6 @@ export function ScrollProgress({
           backgroundColor: color,
           transform: `scaleX(${progress})`,
           transformOrigin: "left",
-          boxShadow: `0 0 10px ${color}, 0 0 5px ${color}`,
         }}
       />
     </div>

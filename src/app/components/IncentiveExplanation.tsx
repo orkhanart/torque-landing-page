@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { SmartImage } from "@/components/ascii/SmartImage";
 import { GlassCard } from "@/components/ui/glass-card";
 import { HammerIcon, WandSparklesIcon, RocketIcon, BarChart3Icon } from "lucide-react";
 
@@ -9,7 +9,7 @@ const cards = [
     id: 1,
     title: "Explore",
     description: "Unlock deep insights into user behavior and holder segments. Discover who your community is and what drives them.",
-    image: "/explore-card.svg",
+    image: "/generated/image/mono-3d/hero-network-nodes.jpg",
     alt: "Explore data visualization",
     icon: BarChart3Icon,
   },
@@ -17,7 +17,7 @@ const cards = [
     id: 2,
     title: "Create Incentive",
     description: "Design and launch on-chain incentives in minutes. Choose from pre-built modules like leaderboards, raffles, and rebates.",
-    image: "/incentive-type.svg",
+    image: "/generated/image/mono-3d/glass-cube-stack.jpg",
     alt: "Incentive type selection interface",
     icon: HammerIcon,
   },
@@ -25,7 +25,7 @@ const cards = [
     id: 3,
     title: "Launch",
     description: "Allocate tokens and set budgets with built-in analytics. Fund campaigns securely and transparently — right from your wallet.",
-    image: "/launch-card.svg",
+    image: "/generated/image/mono-3d/vault-door.jpg",
     alt: "Campaign launch interface",
     icon: RocketIcon,
   },
@@ -33,7 +33,7 @@ const cards = [
     id: 4,
     title: "Optimize",
     description: "Use Torque Intelligence to measure performance and automatically optimize incentives. Identify what's working — and scale it instantly.",
-    image: "/ai-card.svg",
+    image: "/generated/image/mono-3d/data-stream.jpg",
     alt: "AI optimization dashboard",
     icon: WandSparklesIcon,
   },
@@ -75,7 +75,7 @@ const IncentiveExplanation = () => {
               </p>
             </div>
             <div className="px-4 pb-4">
-              <Image
+              <SmartImage
                 src={card.image}
                 alt={card.alt}
                 width={840}
@@ -110,7 +110,7 @@ const IncentiveExplanation = () => {
                 </p>
               </div>
               <div className="px-4 md:px-5 pb-4 md:pb-5">
-                <Image
+                <SmartImage
                   src={card.image}
                   alt={card.alt}
                   width={840}
@@ -143,7 +143,7 @@ const IncentiveExplanation = () => {
                 </p>
               </div>
               <div className="px-4 md:px-5 pb-4 md:pb-5">
-                <Image
+                <SmartImage
                   src={card.image}
                   alt={card.alt}
                   width={840}

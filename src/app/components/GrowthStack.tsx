@@ -118,16 +118,7 @@ function FeatureCard({
   featured,
 }: FeatureCardProps) {
   return (
-    <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/10 hover:border-blue/30"}`}>
-      {/* Gradient Background */}
-      {featured ? (
-        <div className="absolute inset-0 bg-gradient-to-br from-blue/10 via-blue/5 to-transparent z-0" />
-      ) : (
-        <>
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue/5 z-0" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-0" />
-        </>
-      )}
+    <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "bg-gradient-to-br from-blue/10 via-blue/5 to-transparent border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/5 hover:border-black/15"}`}>
 
       {/* Terminal Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
@@ -181,10 +172,7 @@ function FeatureCard({
 // =============================================================================
 function APICard() {
   return (
-    <div className="relative rounded-[3px] group h-full border border-black/10 hover:border-blue/30 transition-all overflow-hidden min-h-[280px]">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue/5 z-0" />
-      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-0" />
+    <div className="relative rounded-[3px] group h-full border border-black/5 hover:border-black/15 transition-colors overflow-hidden min-h-[280px]">
 
       {/* Terminal Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">

@@ -1,3 +1,5 @@
+import { Zap, Users, TrendingUp, BookOpen, Layers, Trophy, Target, Gift, type LucideIcon } from "lucide-react";
+
 export type CardType = 'RECIPE' | 'FRAMEWORK' | 'CASE_STUDY';
 
 export interface StrategyCard {
@@ -15,6 +17,8 @@ export interface StrategyCard {
     reward: string;
   };
   metricBadge?: string;
+  image: string;
+  icon: LucideIcon;
 }
 
 export const STRATEGIES: StrategyCard[] = [
@@ -32,7 +36,9 @@ export const STRATEGIES: StrategyCard[] = [
       trigger: 'Trade > $100',
       condition: 'User holds 1 Raffle Ticket',
       reward: 'Daily Jackpot (Non-Linear)'
-    }
+    },
+    image: '/generated/image/light-mono/ascending-platforms.jpg',
+    icon: Zap
   },
 
   // --- 2. A BIG CASE STUDY (Social Proof) ---
@@ -44,7 +50,9 @@ export const STRATEGIES: StrategyCard[] = [
     sector: 'DEX',
     tags: ['ROI', 'Volume'],
     description: 'How a top Solana DEX generated 102 SOL of volume for every 1 SOL spent on rewards using Torque raffles.',
-    metricBadge: '100x ROI'
+    metricBadge: '100x ROI',
+    image: '/generated/image/light-mono/floating-mass-02.jpg',
+    icon: TrendingUp
   },
 
   // --- 3. A VIRAL RECIPE (Growth) ---
@@ -61,7 +69,9 @@ export const STRATEGIES: StrategyCard[] = [
       trigger: 'Referee Volume > $500',
       condition: 'Referee Balance > $10 (7d)',
       reward: '$75 Referrer / $40 Referee'
-    }
+    },
+    image: '/generated/image/light-mono/cluster-cubes-02.jpg',
+    icon: Users
   },
 
   // --- 4. A FRAMEWORK (Authority) ---
@@ -73,6 +83,8 @@ export const STRATEGIES: StrategyCard[] = [
     sector: 'General',
     tags: ['Strategy', 'Whitepaper'],
     description: 'The official guide to measuring Velocity, Quality, and Retention on Solana. Stop optimizing for vanity metrics.',
+    image: '/generated/image/light-mono/infrastructure-light.jpg',
+    icon: BookOpen
   },
 
   // --- 5. A DEFI RECIPE (Sophisticated) ---
@@ -89,7 +101,9 @@ export const STRATEGIES: StrategyCard[] = [
       trigger: 'Open Leveraged Position',
       condition: 'Leverage > 3x AND Hold > 7d',
       reward: 'Tiered Bonus (100 - 350 Tokens)'
-    }
+    },
+    image: '/generated/image/light-mono/value-stack-light.jpg',
+    icon: Layers
   },
 
   // --- 6. A STABLECOIN CASE STUDY (Results) ---
@@ -101,7 +115,9 @@ export const STRATEGIES: StrategyCard[] = [
     sector: 'Stablecoins',
     tags: ['Velocity', 'Growth'],
     description: 'By incentivizing creators, this issuer saw a 42x surge in new token pairs and a 3.3x trading volume increase.',
-    metricBadge: '+330% Volume'
+    metricBadge: '+330% Volume',
+    image: '/generated/image/light-mono/cluster-spheres.jpg',
+    icon: TrendingUp
   },
 
   // --- 7. A RETENTION RECIPE (Defense) ---
@@ -118,7 +134,9 @@ export const STRATEGIES: StrategyCard[] = [
       trigger: 'Provide LP > $500',
       condition: 'Position Age > 20 Hours',
       reward: '0.15% Daily Rebate'
-    }
+    },
+    image: '/generated/image/light-mono/vault-light.jpg',
+    icon: Trophy
   },
 
   // --- 8. A B2B RECIPE (Expansion) ---
@@ -135,7 +153,9 @@ export const STRATEGIES: StrategyCard[] = [
       trigger: 'Deposit Token as Collateral',
       condition: 'Maintain > $1k Avg Balance',
       reward: '0.1% Weekly Rebate'
-    }
+    },
+    image: '/generated/image/light-mono/network-nodes-light.jpg',
+    icon: Target
   },
 
   // --- 9. AN ONBOARDING RECIPE (Activation) ---
@@ -152,6 +172,8 @@ export const STRATEGIES: StrategyCard[] = [
       trigger: 'First Trade > $10',
       condition: 'Wallet Age < 7 Days',
       reward: 'Guaranteed "Welcome" Bonus'
-    }
+    },
+    image: '/generated/image/light-mono/growth-bars-light.jpg',
+    icon: Gift
   }
 ];

@@ -8,8 +8,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { CustomButton } from "@/components/ui/custom-button";
-import { CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
 
 interface StrategyContext {
   type: "strategy_deploy" | "general_interest";
@@ -90,15 +90,17 @@ export default function IntegrationRequestModal({
   if (isSuccess) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[500px] bg-card border-2 border-border/20">
+        <DialogContent className="sm:max-w-[500px] bg-white border border-black/10">
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <div className="text-6xl mb-4">👁️</div>
-            <h3 className="text-2xl font-semibold text-foreground mb-2">
+            <div className="w-12 h-12 rounded-full bg-blue/10 flex items-center justify-center mb-4">
+              <span className="text-2xl">👁️</span>
+            </div>
+            <h3 className="text-2xl font-display font-medium text-black mb-2">
               We see you.
             </h3>
-            <p className="text-muted-foreground max-w-md">
+            <p className="text-black/60 max-w-md">
               Our founder will reach out shortly at{" "}
-              <span className="text-primary">{formData.contactInfo}</span>.
+              <span className="text-blue font-medium">{formData.contactInfo}</span>.
             </p>
           </div>
         </DialogContent>
@@ -108,24 +110,30 @@ export default function IntegrationRequestModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] bg-card border-2 border-border/20 max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[600px] bg-white border border-black/10 max-h-[90vh] overflow-y-auto">
+        {/* Terminal Header */}
+        <div className="flex items-center gap-1.5 mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+          <span className="font-mono text-[9px] text-black/30">integration.request</span>
+        </div>
+
         <DialogHeader>
-          <DialogTitle className="text-3xl font-sans font-normal text-foreground">
+          <DialogTitle className="text-2xl font-display font-medium text-black">
             {context?.type === "strategy_deploy" && context.title
               ? `Deploy ${context.title}`
               : "Ready to grow?"}
           </DialogTitle>
-          <DialogDescription className="text-base text-muted-foreground">
+          <DialogDescription className="text-base text-black/60">
             Torque is currently invite-only. Tell us what you're building to skip the line.
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+        <form onSubmit={handleSubmit} className="space-y-5 mt-6">
           {/* Project Name */}
           <div className="space-y-2">
             <label
               htmlFor="protocolName"
-              className="text-sm font-medium text-foreground"
+              className="text-xs font-mono uppercase tracking-wider text-black/60"
             >
               Project Name <span className="text-red-500">*</span>
             </label>
@@ -137,7 +145,7 @@ export default function IntegrationRequestModal({
               onChange={handleInputChange}
               required
               placeholder="e.g., Jupiter, Raydium, Marinade"
-              className="w-full bg-white/5 border border-border/20 rounded-lg px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full bg-white border border-black/10 rounded-[3px] px-4 py-2.5 text-black placeholder:text-black/30 focus:outline-none focus:border-blue transition-colors"
             />
           </div>
 
@@ -145,7 +153,7 @@ export default function IntegrationRequestModal({
           <div className="space-y-2">
             <label
               htmlFor="tokenAddress"
-              className="text-sm font-medium text-foreground"
+              className="text-xs font-mono uppercase tracking-wider text-black/60"
             >
               Token CA <span className="text-red-500">*</span>
             </label>
@@ -157,7 +165,7 @@ export default function IntegrationRequestModal({
               onChange={handleInputChange}
               required
               placeholder="So11111111111111111111111111111111111111112"
-              className="w-full bg-white/5 border border-border/20 rounded-lg px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono text-sm"
+              className="w-full bg-white border border-black/10 rounded-[3px] px-4 py-2.5 text-black placeholder:text-black/30 focus:outline-none focus:border-blue transition-colors font-mono text-sm"
             />
           </div>
 
@@ -165,7 +173,7 @@ export default function IntegrationRequestModal({
           <div className="space-y-2">
             <label
               htmlFor="idlSource"
-              className="text-sm font-medium text-foreground"
+              className="text-xs font-mono uppercase tracking-wider text-black/60"
             >
               Link to IDL / Repo <span className="text-red-500">*</span>
             </label>
@@ -177,7 +185,7 @@ export default function IntegrationRequestModal({
               onChange={handleInputChange}
               required
               placeholder="GitHub link or Solana Explorer"
-              className="w-full bg-white/5 border border-border/20 rounded-lg px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
+              className="w-full bg-white border border-black/10 rounded-[3px] px-4 py-2.5 text-black placeholder:text-black/30 focus:outline-none focus:border-blue transition-colors text-sm"
             />
           </div>
 
@@ -185,7 +193,7 @@ export default function IntegrationRequestModal({
           <div className="space-y-2">
             <label
               htmlFor="contactInfo"
-              className="text-sm font-medium text-foreground"
+              className="text-xs font-mono uppercase tracking-wider text-black/60"
             >
               Your Telegram Handle <span className="text-red-500">*</span>
             </label>
@@ -197,7 +205,7 @@ export default function IntegrationRequestModal({
               onChange={handleInputChange}
               required
               placeholder="@yourhandle"
-              className="w-full bg-white/5 border border-border/20 rounded-lg px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full bg-white border border-black/10 rounded-[3px] px-4 py-2.5 text-black placeholder:text-black/30 focus:outline-none focus:border-blue transition-colors"
             />
           </div>
 
@@ -210,11 +218,10 @@ export default function IntegrationRequestModal({
 
           {/* Submit Button */}
           <div className="pt-4">
-            <CustomButton
+            <Button
               type="submit"
-              buttonSize="big"
-              buttonColor="primary"
-              className="w-full shadow-cyan-glow"
+              variant="accent"
+              className="w-full group"
               disabled={
                 isSubmitting ||
                 !formData.protocolName ||
@@ -223,8 +230,9 @@ export default function IntegrationRequestModal({
                 !formData.contactInfo
               }
             >
-              {isSubmitting ? "Submitting..." : "Get Whitelisted 🚀"}
-            </CustomButton>
+              {isSubmitting ? "Submitting..." : "Get Whitelisted"}
+              <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Button>
           </div>
         </form>
       </DialogContent>

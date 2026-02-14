@@ -1,17 +1,33 @@
-import React from "react";
+"use client";
+
+import React, { useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Card } from "@/components/ui/card";
-import { CustomButton } from "@/components/ui/custom-button";
-import { ArrowRight, TrendingUp, Target, Users, Gem, Sparkles, Terminal, LayoutGrid, FileText, Code } from "lucide-react";
+import IntegrationRequestModal from "../components/IntegrationRequestModal";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowUpRight,
+  CircleDot,
+  CreditCard,
+  TrendingUp,
+  Gem,
+  Sparkles,
+  Terminal,
+  Rocket,
+} from "lucide-react";
+import { motion, useInView } from "framer-motion";
 
+// =============================================================================
+// Types
+// =============================================================================
 interface Solution {
   id: string;
   sector: string;
-  icon: string;
+  icon: React.ComponentType<{ className?: string }>;
+  filename: string;
+  image: string;
   insight: {
     title: string;
-    context: string;
     stat: string;
   };
   problem: {
@@ -24,12 +40,13 @@ interface Solution {
     mechanics: string[];
     result: string;
   };
-  gradient: string;
 }
 
 interface AdditionalMarket {
-  icon: React.ReactNode;
+  icon: React.ComponentType<{ className?: string }>;
   headline: string;
+  filename: string;
+  image: string;
   problem: {
     title: string;
     description: string;
@@ -40,15 +57,18 @@ interface AdditionalMarket {
   };
 }
 
+// =============================================================================
+// Data
+// =============================================================================
 const solutions: Solution[] = [
   {
     id: "stablecoins",
     sector: "Stablecoins",
-    icon: "💵",
-    gradient: "from-blue-500/10 to-transparent",
+    icon: CircleDot,
+    filename: "stablecoin.strategy",
+    image: "/generated/image/light-mono/floating-mass-01.jpg",
     insight: {
       title: "Ignite Velocity",
-      context: "DIAGNOSIS",
       stat: "Market Cap ($175M) but no Velocity.",
     },
     problem: {
@@ -63,21 +83,18 @@ const solutions: Solution[] = [
       title: "Turn holders into distribution nodes.",
       description:
         "We deployed a native referral layer that rewarded users for transaction volume, not just holding.",
-      mechanics: [
-        "Referral Rebate (0.1% of volume)",
-        "Looping Bonus (Leverage > 3x)",
-      ],
-      result: "🏆 Result: +40% Velocity Increase",
+      mechanics: ["Referral Rebate (0.1% of volume)", "Looping Bonus (Leverage > 3x)"],
+      result: "+40% Velocity Increase",
     },
   },
   {
     id: "lending",
     sector: "Lending",
-    icon: "🏦",
-    gradient: "from-green-500/10 to-transparent",
+    icon: CreditCard,
+    filename: "lending.strategy",
+    image: "/generated/image/light-mono/value-stack-light.jpg",
     insight: {
       title: "Drive Real Yield",
-      context: "DIAGNOSIS",
       stat: "No liquidity = no product (Cold Start).",
     },
     problem: {
@@ -92,21 +109,18 @@ const solutions: Solution[] = [
       title: "Target 'First-Time' LPs.",
       description:
         "Instead of universal APY, we targeted new LPs with a one-time bonus, filtering out wash traders by requiring a 48-hour hold.",
-      mechanics: [
-        "First-Time Deposit Bonus (5-10%)",
-        "Duration-Weighted Rewards",
-      ],
-      result: "🏆 Result: Highest Utilization Rate in Sector (53%)",
+      mechanics: ["First-Time Deposit Bonus (5-10%)", "Duration-Weighted Rewards"],
+      result: "Highest Utilization Rate (53%)",
     },
   },
   {
     id: "perps",
     sector: "Perps",
-    icon: "📈",
-    gradient: "from-purple-500/10 to-transparent",
+    icon: TrendingUp,
+    filename: "perps.strategy",
+    image: "/generated/image/light-mono/network-nodes-light.jpg",
     insight: {
       title: "Automate Retention",
-      context: "DIAGNOSIS",
       stat: "The 'One-and-Done' Trader.",
     },
     problem: {
@@ -121,19 +135,18 @@ const solutions: Solution[] = [
       title: "Gamify Habit Formation.",
       description:
         "We shifted incentives from raw volume to 'Streaks.' Repeat winners drove 75% of total volume while consuming only 54% of the budget.",
-      mechanics: [
-        "Volume-Based Raffles",
-        "Streak Bonuses",
-      ],
-      result: "🏆 Result: +146% Net Retention",
+      mechanics: ["Volume-Based Raffles", "Streak Bonuses"],
+      result: "+146% Net Retention",
     },
   },
 ];
 
 const additionalMarkets: AdditionalMarket[] = [
   {
-    icon: <Gem className="w-6 h-6" />,
+    icon: Gem,
     headline: "Memecoins & Communities",
+    filename: "memecoin.strategy",
+    image: "/generated/image/light-mono/data-particles.jpg",
     problem: {
       title: "The PvP Rotator Trap",
       description:
@@ -142,345 +155,432 @@ const additionalMarkets: AdditionalMarket[] = [
     fix: {
       title: '"Diamond Hand" Rewards',
       mechanics: [
-        "Time-Weighted Incentives: Reward users who hold for 7+ days without selling",
-        "Raid-to-Earn: Link on-chain payouts to Social Graph engagement (Twitter/X)",
+        "Time-Weighted Incentives: Reward users who hold for 7+ days",
+        "Raid-to-Earn: Link on-chain payouts to Social Graph engagement",
       ],
     },
   },
   {
-    icon: <Sparkles className="w-6 h-6" />,
+    icon: Sparkles,
     headline: "Prediction Markets",
+    filename: "prediction.strategy",
+    image: "/generated/image/light-mono/network-pulse-light.jpg",
     problem: {
       title: "Event-Driven Churn",
       description:
-        "Users bet on a single major event (e.g., Election) and then leave the protocol entirely once it settles.",
+        "Users bet on a single major event and then leave the protocol entirely once it settles.",
     },
     fix: {
       title: "Cross-Category Streaks",
       mechanics: [
-        "Streak Leaderboards: Require betting on 3 different categories (e.g., Sports + Crypto + Politics) to unlock multipliers",
-        "Consolation Rebates: Auto-refund a % of fees to high-volume users who lose, keeping them in the game",
+        "Streak Leaderboards: Require betting on 3 different categories to unlock multipliers",
+        "Consolation Rebates: Auto-refund a % of fees to high-volume users who lose",
       ],
     },
   },
   {
-    icon: <Terminal className="w-6 h-6" />,
+    icon: Terminal,
     headline: "Terminals & Aggregators",
+    filename: "terminal.strategy",
+    image: "/generated/image/light-mono/blocks-chain-light.jpg",
     problem: {
       title: "Interface Commoditization",
       description:
-        "Users switch terminals based on whichever has the lowest fees or fastest execution that second. Zero loyalty.",
+        "Users switch terminals based on whichever has the lowest fees or fastest execution. Zero loyalty.",
     },
     fix: {
       title: "Embedded Loyalty Layer",
       mechanics: [
-        "Native XP System: An overlay that rewards cumulative volume routed through your terminal, regardless of the underlying DEX",
-        "Fee Rebates: Refund gas costs in your native token to lock users into your execution layer",
+        "Native XP System: Rewards cumulative volume routed through your terminal",
+        "Fee Rebates: Refund gas costs in your native token",
       ],
     },
   },
 ];
 
+// =============================================================================
+// Solutions Page
+// =============================================================================
 export default function SolutionsPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-background">
-        {/* Hero Section */}
-        <section className="w-full max-w-6xl mx-auto px-4 md:px-6 lg:px-8 pt-20 pb-16 md:pt-32 md:pb-24">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-sans font-normal leading-[1.1] tracking-[-0.02em] text-foreground mb-6 md:mb-8">
-              Stop Leaking Revenue.
+      <main className="min-h-screen bg-white pt-24 md:pt-32">
+        {/* Page Header */}
+        <header className="w-full px-6 md:px-12 lg:px-20 pb-12 md:pb-16 border-b border-black/10">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
+              <span className="w-1 h-1 bg-blue rounded-full" />
+              Solutions
+            </div>
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+              Stop Leaking Revenue
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Your metrics are lying to you. High TVL does not mean profit. We diagnosed the specific gaps where stablecoins, lending markets, and DEXs lose real value—and built the primitives to fix them.
+            <p className="text-base md:text-lg text-black/60 max-w-2xl mb-6">
+              High TVL does not mean profit. We diagnosed the specific gaps where stablecoins,
+              lending markets, and DEXs lose real value—and built the primitives to fix them.
             </p>
-          </div>
 
-          {/* Quick Nav */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
-            {solutions.map((solution) => (
-              <a
-                key={solution.id}
-                href={`#${solution.id}`}
-                className="px-4 py-2 rounded-lg bg-card/30 border border-border/20 text-foreground text-sm font-mono hover:bg-card/50 hover:border-primary/30 transition-colors"
-              >
-                {solution.icon} {solution.sector}
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* Solutions Sections */}
-        {solutions.map((solution, index) => (
-          <section
-            key={solution.id}
-            id={solution.id}
-            className={`w-full py-16 md:py-24 ${
-              index % 2 === 0 ? "bg-gradient-to-b from-transparent to-card/20" : ""
-            }`}
-          >
-            <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-              {/* Section Header */}
-              <div className="flex items-center gap-4 mb-8">
-                <span className="text-5xl">{solution.icon}</span>
-                <div>
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans font-normal text-foreground">
+            {/* Quick Nav */}
+            <div className="flex flex-wrap items-center gap-2">
+              {solutions.map((solution) => {
+                const Icon = solution.icon;
+                return (
+                  <a
+                    key={solution.id}
+                    href={`#${solution.id}`}
+                    className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-[3px] border border-black/10 hover:border-black/20 transition-colors font-mono text-[10px] uppercase tracking-wider text-black/50 hover:text-black"
+                  >
+                    <Icon className="w-3 h-3 group-hover:text-blue transition-colors" />
                     {solution.sector}
-                  </h2>
-                </div>
-              </div>
-
-              {/* Insight Card */}
-              <div
-                className={`mb-12 p-8 rounded-lg border-2 border-primary/30 bg-gradient-to-br ${solution.gradient}`}
-              >
-                <div className="flex items-start gap-4 mb-4">
-                  <TrendingUp className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-sans font-normal text-foreground mb-2">
-                      {solution.insight.title}
-                    </h3>
-                    <p className="text-sm font-mono text-primary uppercase tracking-wide mb-3">
-                      {solution.insight.context}
-                    </p>
-                    <p className="text-lg text-muted-foreground">{solution.insight.stat}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Problem & Fix Grid */}
-              <div className="grid md:grid-cols-2 gap-8 mb-12">
-                {/* Problem */}
-                <Card className="p-6 bg-red-500/5 border-2 border-red-500/30">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Target className="w-5 h-5 text-red-400" />
-                    <h4 className="text-xl font-sans font-normal text-foreground">
-                      {solution.problem.title}
-                    </h4>
-                  </div>
-                  <ul className="space-y-3">
-                    {solution.problem.points.map((point, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span className="text-red-400 mt-1">•</span>
-                        <span className="text-sm text-muted-foreground">{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-
-                {/* Fix */}
-                <Card className="p-6 bg-green-500/5 border-2 border-green-500/30">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Users className="w-5 h-5 text-green-400" />
-                    <h4 className="text-xl font-sans font-normal text-foreground">
-                      The Torque Fix
-                    </h4>
-                  </div>
-                  <p className="text-lg font-semibold text-primary mb-3">
-                    {solution.fix.title}
-                  </p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {solution.fix.description}
-                  </p>
-                  <div className="pt-4 border-t border-border/20">
-                    <p className="text-xs font-mono text-muted-foreground uppercase tracking-wide mb-3">
-                      Mechanics
-                    </p>
-                    <ul className="space-y-2 mb-4">
-                      {solution.fix.mechanics.map((mechanic, i) => (
-                        <li key={i} className="flex items-start gap-3">
-                          <span className="text-green-400 mt-1">✓</span>
-                          <span className="text-sm text-foreground">{mechanic}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="pt-3 border-t border-green-500/20">
-                      <p className="text-sm font-semibold text-green-400">{solution.fix.result}</p>
-                    </div>
-                  </div>
-                </Card>
-              </div>
-
-              {/* CTA */}
-              <div className="text-center">
-                <CustomButton
-                  buttonSize="big"
-                  buttonColor="primary"
-                  href="/playbooks"
-                  className="shadow-cyan-glow"
-                >
-                  View {solution.sector} Playbooks
-                </CustomButton>
-              </div>
-            </div>
-          </section>
-        ))}
-
-        {/* High-Velocity Markets Section */}
-        <section className="w-full py-16 md:py-24 bg-gradient-to-b from-transparent to-card/20">
-          <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-            {/* Section Header */}
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans font-normal text-foreground mb-4">
-                Also Optimized For
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                Torque primitives are sector-agnostic. We support the highest-velocity economies on Solana.
-              </p>
-            </div>
-
-            {/* Additional Markets Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {additionalMarkets.map((market, index) => (
-                <Card
-                  key={index}
-                  className="p-6 bg-card/50 backdrop-blur-sm border-2 border-border/20 hover:border-primary/50 transition-all hover:shadow-lg"
-                >
-                  <div className="flex items-center gap-3 mb-4 text-primary">
-                    {market.icon}
-                    <h3 className="text-xl font-sans font-normal text-foreground">
-                      {market.headline}
-                    </h3>
-                  </div>
-
-                  {/* Problem */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-mono text-red-400 uppercase tracking-wide mb-2">
-                      The Problem: {market.problem.title}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {market.problem.description}
-                    </p>
-                  </div>
-
-                  {/* Fix */}
-                  <div>
-                    <h4 className="text-sm font-mono text-green-400 uppercase tracking-wide mb-2">
-                      The Torque Fix: {market.fix.title}
-                    </h4>
-                    <ul className="space-y-2">
-                      {market.fix.mechanics.map((mechanic, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span className="text-green-400 mt-1 flex-shrink-0">✓</span>
-                          <span className="text-sm text-foreground">{mechanic}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </Card>
-              ))}
+                  </a>
+                );
+              })}
             </div>
           </div>
-        </section>
+        </header>
 
-        {/* Agency & Partners Section */}
-        <section className="w-full bg-slate-900 py-16 md:py-24">
-          <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-            {/* Section Header */}
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans font-normal text-white mb-4">
-                Run Your Growth Practice on Torque.
-              </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                Stop managing client incentives in spreadsheets. Join the agencies delivering 240% Average ROI for their protocol clients.
-              </p>
-            </div>
+        {/* Solutions Section */}
+        <SolutionsGrid />
 
-            {/* Value Prop Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {/* Multi-Tenant God View */}
-              <div className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="p-4 rounded-lg bg-primary/10 border border-primary/30">
-                    <LayoutGrid className="w-8 h-8 text-primary" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-sans font-normal text-white mb-3">
-                  Multi-Tenant "God View"
-                </h3>
-                <p className="text-sm text-gray-300">
-                  Manage 10+ distinct client protocols from a single login. Switch contexts instantly without logging in and out.
-                </p>
-              </div>
+        {/* Additional Markets */}
+        <AdditionalMarketsSection />
 
-              {/* Whitelabel ROI Reporting */}
-              <div className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="p-4 rounded-lg bg-primary/10 border border-primary/30">
-                    <FileText className="w-8 h-8 text-primary" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-sans font-normal text-white mb-3">
-                  Whitelabel ROI Reporting
-                </h3>
-                <p className="text-sm text-gray-300">
-                  Auto-generate PDF reports branded with your agency logo. Show clients exactly how much Volume and Retention you generated this week.
-                </p>
-              </div>
-
-              {/* The Agency API */}
-              <div className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="p-4 rounded-lg bg-primary/10 border border-primary/30">
-                    <Code className="w-8 h-8 text-primary" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-sans font-normal text-white mb-3">
-                  The Agency API
-                </h3>
-                <p className="text-sm text-gray-300">
-                  Build your own custom dashboards or trading bots on top of Torque's data layer. You own the strategy; we handle the infrastructure.
-                </p>
-              </div>
-            </div>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <CustomButton
-                buttonSize="big"
-                buttonColor="primary"
-                href="https://platform.torque.so/"
-                className="shadow-cyan-glow min-w-[200px]"
-              >
-                Apply for Partner Program
-              </CustomButton>
-              <a
-                href="https://docs.torque.so/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:text-primary/80 transition-colors font-mono text-sm flex items-center gap-2"
-              >
-                View Agency Documentation
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA */}
-        <section className="w-full bg-gradient-to-b from-card/30 to-transparent py-16 md:py-24">
-          <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl sm:text-4xl font-sans font-normal text-foreground mb-4">
-              Don't see your sector?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Our logic engine is permissionless. If it happens on-chain, you can incentivize it.
-            </p>
-            <CustomButton
-              buttonSize="big"
-              buttonColor="primary"
-              href="https://platform.torque.so/"
-              className="shadow-cyan-glow min-w-[200px]"
-            >
-              Open Logic Builder
-            </CustomButton>
-          </div>
-        </section>
+        {/* CTA Section */}
+        <SolutionsCTA onOpenModal={() => setIsModalOpen(true)} />
       </main>
+
+      {/* Integration Request Modal */}
+      <IntegrationRequestModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
 
       <Footer />
     </>
   );
 }
+
+// =============================================================================
+// Solutions Grid
+// =============================================================================
+function SolutionsGrid() {
+  return (
+    <section className="w-full bg-white border-t border-black/10">
+      <div className="w-full px-6 md:px-12 lg:px-20 py-20 md:py-32">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+          <div>
+            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+              <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
+              <span>Core Solutions</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
+              Battle-tested fixes
+              <br />
+              <span className="text-black/40">for broken incentives</span>
+            </h2>
+
+            <p className="text-lg md:text-xl text-black/60 max-w-2xl">
+              Each solution comes with diagnosis, mechanics, and proven results.
+            </p>
+          </div>
+          <Button variant="outline" href="/playbooks" className="w-fit">
+            View Playbooks
+            <ArrowUpRight className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+
+        {/* Solutions */}
+        <div className="space-y-8">
+          {solutions.map((solution) => (
+            <SolutionCard key={solution.id} solution={solution} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// =============================================================================
+// Solution Card
+// =============================================================================
+interface SolutionCardProps {
+  solution: Solution;
+}
+
+function SolutionCard({ solution }: SolutionCardProps) {
+  const Icon = solution.icon;
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      id={solution.id}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors"
+    >
+
+      {/* Terminal Header */}
+      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-4 py-2 z-10">
+        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+        <span className="font-mono text-[9px] text-black/30">{solution.filename}</span>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 p-6 md:p-8 pt-10">
+        {/* Header */}
+        <div className="flex items-start gap-4 mb-8">
+          <div className="w-12 h-12 rounded-[3px] bg-white/80 backdrop-blur-sm border border-black/10 flex items-center justify-center flex-shrink-0">
+            <Icon className="w-6 h-6 text-black" />
+          </div>
+          <div>
+            <h3 className="font-display text-2xl md:text-3xl font-medium text-black mb-1">
+              {solution.sector}
+            </h3>
+            <p className="text-sm font-mono uppercase tracking-wider text-black/50">
+              {solution.insight.title}
+            </p>
+          </div>
+        </div>
+
+        {/* Insight */}
+        <div className="mb-8 p-4 bg-white/60 backdrop-blur-sm rounded-[3px] border-l-2 border-blue">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">
+            diagnosis
+          </span>
+          <p className="text-base text-black">{solution.insight.stat}</p>
+        </div>
+
+        {/* Problem & Fix Grid */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Problem */}
+          <div className="p-5 bg-white/60 backdrop-blur-sm rounded-[3px] border border-black/10">
+            <h4 className="text-xs font-mono uppercase tracking-wider text-black/50 mb-3">
+              The Problem
+            </h4>
+            <h5 className="text-base font-display font-medium text-black mb-3">
+              {solution.problem.title}
+            </h5>
+            <ul className="space-y-2">
+              {solution.problem.points.map((point, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-black/60">
+                  <span className="w-1 h-1 bg-black/30 rounded-full mt-2 flex-shrink-0" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Fix */}
+          <div className="p-5 bg-white/60 backdrop-blur-sm rounded-[3px] border border-blue/30">
+            <h4 className="text-xs font-mono uppercase tracking-wider text-blue mb-3">
+              The Torque Fix
+            </h4>
+            <h5 className="text-base font-display font-medium text-black mb-2">
+              {solution.fix.title}
+            </h5>
+            <p className="text-sm text-black/60 mb-4">{solution.fix.description}</p>
+
+            {/* Mechanics */}
+            <div className="pt-4 border-t border-black/10">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-2">
+                Mechanics
+              </span>
+              <ul className="space-y-1.5 mb-4">
+                {solution.fix.mechanics.map((mechanic, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-black">
+                    <span className="text-blue mt-0.5">+</span>
+                    {mechanic}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Result */}
+              <div className="pt-3 border-t border-blue/20">
+                <span className="inline-flex items-center px-3 py-1.5 bg-blue/10 text-blue text-sm font-medium rounded-[3px]">
+                  {solution.fix.result}
+                  <ArrowUpRight className="w-3 h-3 ml-1" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-8 pt-6 border-t border-black/10 flex items-center justify-between">
+          <span className="text-sm text-black/40">
+            See how we implemented this for {solution.sector.toLowerCase()} protocols
+          </span>
+          <Button variant="outline" size="sm" href="/playbooks">
+            View Playbook
+            <ArrowUpRight className="w-3 h-3 ml-1" />
+          </Button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// =============================================================================
+// Additional Markets Section
+// =============================================================================
+function AdditionalMarketsSection() {
+  return (
+    <section className="w-full bg-white border-t border-black/10">
+      <div className="w-full px-6 md:px-12 lg:px-20 py-20 md:py-32">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+          <div>
+            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+              <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
+              <span>More Sectors</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
+              Also optimized
+              <br />
+              <span className="text-black/40">for high-velocity markets</span>
+            </h2>
+
+            <p className="text-lg md:text-xl text-black/60 max-w-2xl">
+              Torque primitives are sector-agnostic. We support the highest-velocity economies on
+              Solana.
+            </p>
+          </div>
+        </div>
+
+        {/* Markets Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          {additionalMarkets.map((market, index) => (
+            <MarketCard key={index} market={market} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// =============================================================================
+// Market Card
+// =============================================================================
+interface MarketCardProps {
+  market: AdditionalMarket;
+  index: number;
+}
+
+function MarketCard({ market, index }: MarketCardProps) {
+  const Icon = market.icon;
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors min-h-[720px]"
+    >
+
+      {/* Terminal Header */}
+      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
+        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+        <span className="font-mono text-[9px] text-black/30">{market.filename}</span>
+      </div>
+
+      {/* Content */}
+      <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
+        <div className="mt-auto">
+          {/* Icon */}
+          <div className="w-10 h-10 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+            <Icon className="w-5 h-5 text-black group-hover:text-blue transition-colors" />
+          </div>
+
+          {/* Title */}
+          <h3 className="font-display text-lg font-medium text-black mb-4 group-hover:text-blue transition-colors">
+            {market.headline}
+          </h3>
+
+          {/* Problem */}
+          <div className="mb-4 p-3 bg-white/60 backdrop-blur-sm rounded-[3px] border-l-2 border-black/20">
+            <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-1">
+              The Problem: {market.problem.title}
+            </span>
+            <p className="text-xs text-black/70 leading-relaxed">{market.problem.description}</p>
+          </div>
+
+          {/* Fix */}
+          <div className="p-3 bg-white/60 backdrop-blur-sm rounded-[3px] border-l-2 border-blue">
+            <span className="text-[9px] font-mono uppercase tracking-wider text-blue block mb-1">
+              The Fix: {market.fix.title}
+            </span>
+            <ul className="space-y-1">
+              {market.fix.mechanics.map((mechanic, i) => (
+                <li key={i} className="flex items-start gap-1.5 text-xs text-black/80">
+                  <span className="text-blue mt-0.5">+</span>
+                  {mechanic}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// =============================================================================
+// Solutions CTA Section
+// =============================================================================
+interface SolutionsCTAProps {
+  onOpenModal: () => void;
+}
+
+function SolutionsCTA({ onOpenModal }: SolutionsCTAProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section className="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28 bg-white border-t border-black/10">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="max-w-xl"
+      >
+        <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
+          <Rocket className="w-3 h-3" />
+          Deploy Now
+        </div>
+        <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+          Ready to fix your growth?
+          <br />
+          <span className="text-black/40">Let's diagnose together</span>
+        </h2>
+        <p className="text-base text-black/60 mb-6">
+          We've built solutions for stablecoins, lending, perps, and beyond. Tell us your challenge—we'll map the fix.
+        </p>
+        <div className="flex flex-wrap items-center gap-4">
+          <Button variant="accent" onClick={onOpenModal}>
+            Get Started
+            <ArrowUpRight className="w-4 h-4 ml-2" />
+          </Button>
+          <Button variant="outline" href="/playbooks">
+            View Playbooks
+            <ArrowUpRight className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+

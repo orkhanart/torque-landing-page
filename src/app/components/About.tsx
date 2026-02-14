@@ -1,7 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { Trophy } from "lucide-react";
+import { useRef } from "react";
+import { SmartImage } from "@/components/ascii/SmartImage";
+import { Button } from "@/components/ui/button";
+import { Trophy, ArrowUpRight, Users } from "lucide-react";
+import { motion, useInView } from "framer-motion";
 
 export default function About() {
   return (
@@ -42,8 +45,8 @@ export default function About() {
               </div>
             </div>
             <div className="flex justify-center lg:justify-end">
-              <Image
-                src="/about-image.svg"
+              <SmartImage
+                src="/generated/image/light-mono/floating-mass-01.jpg"
                 alt="About Torque illustration"
                 width={500}
                 height={500}
@@ -62,8 +65,8 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Metaplex Award */}
           <div className="bg-white rounded-xl border border-border p-8 hover:shadow-card transition-shadow">
-            <Image
-              src="/metaplex-chack.svg"
+            <SmartImage
+              src="/generated/image/light-mono/ascending-platforms.jpg"
               alt="Metaplex cHack Hackathon"
               width={120}
               height={120}
@@ -80,8 +83,8 @@ export default function About() {
 
           {/* Colosseum Award */}
           <div className="bg-white rounded-xl border border-border p-8 hover:shadow-card transition-shadow">
-            <Image
-              src="/colosseum.svg"
+            <SmartImage
+              src="/generated/image/light-mono/cluster-cubes-01.jpg"
               alt="Colosseum Infrastructure Track Hackathon"
               width={120}
               height={120}
@@ -96,6 +99,52 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* CTA Section */}
+      <AboutCTA />
     </div>
+  );
+}
+
+// =============================================================================
+// About CTA Section
+// =============================================================================
+function AboutCTA() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section className="max-w-[1400px] mx-auto px-6 md:px-8 py-20 md:py-28 border-t border-border">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="max-w-xl"
+      >
+        <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          <Users className="w-3 h-3" />
+          Partner With Us
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-sans font-medium text-foreground leading-[1.1] tracking-tight mb-4">
+          Build growth together
+          <br />
+          <span className="text-muted-foreground">with battle-tested infrastructure</span>
+        </h2>
+        <p className="text-base text-muted-foreground mb-6">
+          Whether you're launching a new protocol or scaling an existing one, we've solved these problems before.
+        </p>
+        <div className="flex flex-wrap items-center gap-4">
+          <Button variant="accent" href="https://cal.com/torque">
+            Book a Call
+            <ArrowUpRight className="w-4 h-4 ml-2" />
+          </Button>
+          <Button variant="outline" href="/solutions">
+            See What We Built
+            <ArrowUpRight className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+      </motion.div>
+    </section>
   );
 }
