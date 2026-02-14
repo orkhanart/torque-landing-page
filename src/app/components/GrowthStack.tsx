@@ -1,249 +1,223 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import Image from "next/image";
-import { Code, Trophy, Brain, Zap, ArrowUpRight } from "lucide-react";
+import React from "react";
+import { Code, Trophy, Brain, Zap, ArrowUpRight, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, useInView, useSpring, useTransform } from "framer-motion";
 
-// 3D Tilt Card Component
-interface TiltCardProps {
-  children: React.ReactNode;
-  className?: string;
-  intensity?: number;
-}
-
-function TiltCard({ children, className = "", intensity = 10 }: TiltCardProps) {
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const springConfig = { stiffness: 300, damping: 30 };
-  const rotateXSpring = useSpring(rotateX, springConfig);
-  const rotateYSpring = useSpring(rotateY, springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-
-    const rect = cardRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const mouseX = e.clientX - centerX;
-    const mouseY = e.clientY - centerY;
-
-    const rotateXVal = (mouseY / (rect.height / 2)) * -intensity;
-    const rotateYVal = (mouseX / (rect.width / 2)) * intensity;
-
-    setRotateX(rotateXVal);
-    setRotateY(rotateYVal);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
-
-  return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX: rotateXSpring,
-        rotateY: rotateYSpring,
-        transformStyle: "preserve-3d",
-        perspective: 1000,
-      }}
-      whileHover={{ scale: 1.02, z: 20 }}
-      transition={{ duration: 0.2 }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
-
+// =============================================================================
+// Growth Stack Section
+// =============================================================================
 export default function GrowthStack() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
     <section id="growth-stack" className="w-full bg-white border-t border-black/10">
-      <div className="w-full px-6 md:px-12 lg:px-20 py-20 md:py-32" ref={ref}>
+      <div className="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16"
-        >
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 md:mb-10">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/40 border border-black/10 px-3 py-1.5 rounded-[3px]">
-              <span className="w-1.5 h-1.5 bg-blue rounded-full" />
+            <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40 border border-black/10 px-2 py-1 rounded-[3px]">
+              <span className="w-1 h-1 bg-blue rounded-full" />
               Platform Features
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight">
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-black leading-[1.1] tracking-tight">
               Your Complete
               <br />
               <span className="text-black/40">Growth Stack</span>
             </h2>
+            <p className="text-base md:text-lg text-black/60 mt-4 max-w-xl">
+              Everything you need to acquire, retain, and grow your user base.
+            </p>
           </div>
           <Button variant="outline" href="/platform" className="w-fit">
             Explore Platform
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
-        </motion.div>
+        </div>
 
         {/* Bento Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-          style={{ perspective: 1000 }}
-        >
-
-          {/* Large Card - Programmable Rewards (spans 2 cols on lg) */}
-          <motion.div variants={cardVariants} className="md:col-span-2 lg:col-span-2">
-            <TiltCard intensity={5} className="h-full">
-              <div className="bg-black text-white p-8 md:p-10 rounded-[3px] group hover:bg-black-light transition-all duration-300 h-full hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)]">
-                <div className="flex flex-col h-full">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-[3px] bg-white/10 flex items-center justify-center">
-                      <Code className="w-5 h-5" />
-                    </div>
-                    <span className="font-mono text-xs uppercase tracking-wider text-white/50">Core Feature</span>
-                  </div>
-
-                  <h3 className="font-display text-2xl md:text-3xl font-medium mb-4">
-                    Programmable Rewards
-                  </h3>
-
-                  <p className="text-white/60 text-base md:text-lg leading-relaxed mb-8 max-w-xl">
-                    Set conditions like &quot;only reward users who hold &gt;$1K and traded 3+ times this week.&quot; No more paying for bots or one-time farmers.
-                  </p>
-
-                  <div className="mt-auto flex items-center gap-6">
-                    <div className="flex items-center gap-2 text-sm text-white/40">
-                      <Zap className="w-4 h-4" />
-                      <span>Conditional Logic</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-white/40">
-                      <span className="w-1.5 h-1.5 bg-blue rounded-full" />
-                      <span>Real-time</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </TiltCard>
-          </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+          {/* Large Card - Programmable Rewards */}
+          <div className="md:col-span-2 lg:col-span-2">
+            <FeatureCard
+              icon={Code}
+              title="Programmable Rewards"
+              description='Set conditions like "only reward users who hold >$1K and traded 3+ times this week." No more paying for bots or one-time farmers.'
+              image="/generated/image/light-mono/infrastructure-light.jpg"
+              imageAlt="Code editor showing programmable reward logic"
+              filename="rewards.config"
+              features={[
+                { icon: Zap, label: "Conditional Logic" },
+                { dot: true, label: "Real-time" },
+              ]}
+              large
+              featured
+            />
+          </div>
 
           {/* Small Card - Leaderboards */}
-          <motion.div variants={cardVariants}>
-            <TiltCard intensity={8} className="h-full">
-              <div className="bg-white border border-black/10 p-6 md:p-8 rounded-[3px] group hover:border-black/30 transition-all duration-300 h-full hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)]">
-                <div className="flex flex-col h-full">
-                  <div className="w-10 h-10 rounded-[3px] bg-black/5 flex items-center justify-center mb-6 group-hover:bg-blue/10 transition-colors">
-                    <Trophy className="w-5 h-5 text-black group-hover:text-blue transition-colors" />
-                  </div>
-
-                  <h3 className="font-display text-xl md:text-2xl font-medium text-black mb-3">
-                    Leaderboards
-                  </h3>
-
-                  <p className="text-black/50 text-sm leading-relaxed mb-6">
-                    Real-time rankings turn passive holders into competing power users.
-                  </p>
-
-                  <div className="mt-auto">
-                    <span className="inline-flex items-center text-sm font-medium text-black/60 group-hover:text-blue transition-colors">
-                      2.1x volume increase
-                      <ArrowUpRight className="w-4 h-4 ml-1" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </TiltCard>
-          </motion.div>
+          <div>
+            <FeatureCard
+              icon={Trophy}
+              title="Leaderboards"
+              description="Real-time rankings turn passive holders into competing power users."
+              image="/generated/image/light-mono/growth-bars-light.jpg"
+              imageAlt="Leaderboard interface"
+              filename="leaderboard.tsx"
+              metric="2.1x volume increase"
+            />
+          </div>
 
           {/* Small Card - AI Insights */}
-          <motion.div variants={cardVariants}>
-            <TiltCard intensity={8} className="h-full">
-              <div className="bg-white border border-black/10 p-6 md:p-8 rounded-[3px] group hover:border-black/30 transition-all duration-300 h-full hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)]">
-                <div className="flex flex-col h-full">
-                  <div className="w-10 h-10 rounded-[3px] bg-black/5 flex items-center justify-center mb-6 group-hover:bg-blue/10 transition-colors">
-                    <Brain className="w-5 h-5 text-black group-hover:text-blue transition-colors" />
-                  </div>
-
-                  <h3 className="font-display text-xl md:text-2xl font-medium text-black mb-3">
-                    AI Insights
-                  </h3>
-
-                  <p className="text-black/50 text-sm leading-relaxed mb-6">
-                    Ask &quot;Which wallets are about to churn?&quot; and get actionable recommendations.
-                  </p>
-
-                  <div className="mt-auto">
-                    <span className="inline-flex items-center text-sm font-medium text-black/60 group-hover:text-blue transition-colors">
-                      Predictive analytics
-                      <ArrowUpRight className="w-4 h-4 ml-1" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </TiltCard>
-          </motion.div>
+          <div>
+            <FeatureCard
+              icon={Brain}
+              title="AI Insights"
+              description='Ask "Which wallets are about to churn?" and get actionable recommendations.'
+              image="/generated/image/light-mono/data-particles.jpg"
+              imageAlt="AI neural network visualization"
+              filename="intelligence.ai"
+              metric="Predictive analytics"
+            />
+          </div>
 
           {/* Wide Card - API / SDK */}
-          <motion.div variants={cardVariants} className="md:col-span-2">
-            <TiltCard intensity={3} className="h-full">
-              <div className="bg-black/5 border border-black/10 p-6 md:p-8 rounded-[3px] group hover:border-black/30 transition-all duration-300 h-full hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)]">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                  <div>
-                    <h3 className="font-display text-xl font-medium text-black mb-2">
-                      Developer-first Infrastructure
-                    </h3>
-                    <p className="text-black/50 text-sm">
-                      Full API access, webhooks, and SDK for seamless integration with your stack.
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="px-3 py-1.5 bg-black/10 rounded-[3px] font-mono text-xs text-black/60 group-hover:bg-blue/10 group-hover:text-blue transition-colors">REST API</span>
-                    <span className="px-3 py-1.5 bg-black/10 rounded-[3px] font-mono text-xs text-black/60 group-hover:bg-blue/10 group-hover:text-blue transition-colors">Webhooks</span>
-                    <span className="px-3 py-1.5 bg-black/10 rounded-[3px] font-mono text-xs text-black/60 group-hover:bg-blue/10 group-hover:text-blue transition-colors">SDK</span>
-                  </div>
-                </div>
-              </div>
-            </TiltCard>
-          </motion.div>
-
-        </motion.div>
+          <div className="md:col-span-2 lg:col-span-2">
+            <APICard />
+          </div>
+        </div>
       </div>
     </section>
+  );
+}
+
+// =============================================================================
+// Feature Card Component
+// =============================================================================
+interface FeatureCardProps {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  filename: string;
+  features?: Array<{ icon?: React.ComponentType<{ className?: string }>; dot?: boolean; label: string }>;
+  metric?: string;
+  large?: boolean;
+  featured?: boolean;
+}
+
+function FeatureCard({
+  icon: Icon,
+  title,
+  description,
+  image,
+  imageAlt,
+  filename,
+  features,
+  metric,
+  large,
+  featured,
+}: FeatureCardProps) {
+  return (
+    <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/10 hover:border-blue/30"}`}>
+      {/* Gradient Background */}
+      {featured ? (
+        <div className="absolute inset-0 bg-gradient-to-br from-blue/10 via-blue/5 to-transparent z-0" />
+      ) : (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue/5 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-0" />
+        </>
+      )}
+
+      {/* Terminal Header */}
+      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
+        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+        <span className="font-mono text-[9px] text-black/30">{filename}</span>
+      </div>
+
+      {/* Content */}
+      <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
+        <div className="mt-auto">
+          <div className={`w-8 h-8 rounded-[3px] backdrop-blur-sm flex items-center justify-center mb-3 transition-colors ${featured ? "bg-blue/15 group-hover:bg-blue/25" : "bg-white/80 group-hover:bg-blue/10"}`}>
+            <Icon className={`w-4 h-4 transition-colors ${featured ? "text-blue" : "text-black group-hover:text-blue"}`} />
+          </div>
+
+          <h3 className="font-display text-base md:text-lg font-medium mb-1 text-black group-hover:text-blue transition-colors">
+            {title}
+          </h3>
+
+          <p className="text-black/60 text-xs leading-relaxed mb-3">
+            {description}
+          </p>
+
+          {features && (
+            <div className="pt-3 border-t border-black/10 flex items-center gap-4">
+              {features.map((feature, index) => (
+                <div key={index} className="flex items-center gap-1.5 text-[10px] text-black/50">
+                  {feature.icon && <feature.icon className="w-3 h-3" />}
+                  {feature.dot && <span className="w-1 h-1 bg-blue rounded-full" />}
+                  <span className="font-mono">{feature.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {metric && (
+            <div className="pt-3 border-t border-black/10">
+              <span className="inline-flex items-center text-xs font-medium text-blue">
+                {metric}
+                <ArrowUpRight className="w-3 h-3 ml-1" />
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// =============================================================================
+// API Card Component
+// =============================================================================
+function APICard() {
+  return (
+    <div className="relative rounded-[3px] group h-full border border-black/10 hover:border-blue/30 transition-all overflow-hidden min-h-[280px]">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue/5 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-0" />
+
+      {/* Terminal Header */}
+      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
+        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+        <span className="font-mono text-[9px] text-black/30">api.sdk</span>
+      </div>
+
+      {/* Content */}
+      <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
+        <div className="mt-auto">
+          <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+            <Terminal className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
+          </div>
+
+          <h3 className="font-display text-base md:text-lg font-medium mb-1 text-black group-hover:text-blue transition-colors">
+            Developer-first Infrastructure
+          </h3>
+          <p className="text-black/60 text-xs leading-relaxed mb-3">
+            Full API access, webhooks, and SDK for seamless integration.
+          </p>
+
+          <div className="pt-3 border-t border-black/10 flex flex-wrap items-center gap-1.5">
+            {["REST API", "Webhooks", "SDK"].map((item) => (
+              <span
+                key={item}
+                className="px-2 py-1 bg-white/80 backdrop-blur-sm rounded-[2px] font-mono text-[10px] text-black/60"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

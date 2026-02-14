@@ -4,12 +4,11 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaXTwitter, FaDiscord, FaGithub } from "react-icons/fa6";
-import { ArrowUpRight, Terminal } from "lucide-react";
+import { ArrowUpRight, Terminal, LayoutGrid, FileText, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import IntegrationRequestModal from "./IntegrationRequestModal";
 import { motion, useInView } from "framer-motion";
 import { EnergyField } from "@/components/EnergyField";
-import { DistortedText } from "@/components/DistortedText";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -36,80 +35,107 @@ const Footer = () => {
     { icon: FaGithub, href: "https://github.com/torque-labs", label: "GitHub" },
   ];
 
-  return (
-    <footer className="w-full bg-blue overflow-hidden">
-      {/* CTA Section */}
-      <div className="relative w-full px-6 md:px-12 lg:px-20 xl:px-32 py-24 md:py-32" ref={ctaRef}>
-        {/* Energy Field Background */}
-        <EnergyField className="opacity-50" />
+  const agencyFeatures = [
+    {
+      icon: LayoutGrid,
+      title: 'Multi-Tenant "God View"',
+      description: "Manage 10+ client protocols from a single login.",
+    },
+    {
+      icon: FileText,
+      title: "Whitelabel Reporting",
+      description: "Auto-generate branded PDF reports for clients.",
+    },
+    {
+      icon: Code,
+      title: "Agency API",
+      description: "Build custom dashboards on top of Torque.",
+    },
+  ];
 
-        <motion.div
-          className="max-w-3xl mx-auto text-center relative z-10"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          {/* Tag */}
+  return (
+    <footer className="w-full overflow-hidden relative">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-blue-light via-blue to-[#000066]" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-white/10 via-transparent to-black/30" />
+
+      {/* Agencies & Partners Section */}
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24" ref={ctaRef}>
+        <EnergyField className="opacity-30" />
+
+        <div className="relative z-10">
+          {/* Header */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isCtaInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="inline-flex items-center gap-2 mb-8 font-mono text-xs uppercase tracking-wider text-white/60 border border-white/20 px-3 py-1.5 rounded-[3px]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-center mb-12"
           >
-            <Terminal className="w-3 h-3" />
-            <span>Ready to Optimize</span>
+            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-white/60 border border-white/20 px-3 py-1.5 rounded-[3px]">
+              <Terminal className="w-3 h-3" />
+              <span>For Agencies & Partners</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-white mb-4 leading-[1.1] tracking-tight">
+              Run Your Growth Practice on Torque
+            </h2>
+
+            <p className="text-base text-white/60 max-w-xl mx-auto">
+              Join agencies delivering 240% average ROI for their protocol clients.
+            </p>
           </motion.div>
 
-          {/* Headline */}
-          <motion.h2
+          {/* Features Grid */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="font-hero text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6 text-white uppercase"
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-4xl mx-auto"
           >
-            Ready to optimize your
-            <br />
-            <span className="text-white/40">liquidity?</span>
-          </motion.h2>
+            {agencyFeatures.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={index}
+                  className="p-4 rounded-[3px] bg-white/5 border border-white/10"
+                >
+                  <div className="w-10 h-10 rounded-[3px] bg-white/10 flex items-center justify-center mb-3">
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="font-display text-sm font-medium text-white mb-1">
+                    {feature.title}
+                  </h3>
+                  <p className="text-xs text-white/50">{feature.description}</p>
+                </div>
+              );
+            })}
+          </motion.div>
 
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-lg text-white/60 mb-10 max-w-xl mx-auto"
-          >
-            Launch campaigns that target the real issues, not vanity metrics.
-          </motion.p>
-
-          {/* Button */}
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button
               onClick={() => setIsModalOpen(true)}
               variant="inverse"
               className="group"
             >
-              Get audited
+              Apply for Partner Program
               <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Button>
+            <Button variant="inverse-ghost" href="https://docs.torque.so/">
+              View Documentation
+              <ArrowUpRight className="w-4 h-4 ml-2" />
+            </Button>
           </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Huge TORQUE Typography with Distortion */}
-      <div className="relative w-full" style={{ marginTop: "-4vw" }}>
-        <DistortedText
-          text="TORQUE"
-          className="text-[28vw] text-white/10"
-        />
+        </div>
       </div>
 
       {/* Footer Content */}
-      <div className="w-full px-6 py-16">
+      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
@@ -203,8 +229,8 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/20">
-        <div className="w-full px-6 py-6">
+      <div className="relative z-10 border-t border-white/20">
+        <div className="w-full px-6 md:px-8 lg:px-[4.5rem] py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <span className="font-mono text-xs text-white/50">
               © {currentYear} Torque Labs. All rights reserved.

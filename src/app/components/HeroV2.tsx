@@ -1,115 +1,121 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { GlitchText } from "@/components/terminal";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Terminal, CircleDot, CreditCard, TrendingUp, ChevronDown } from "lucide-react";
+import { ArrowUpRight, Terminal, CircleDot, CreditCard, TrendingUp, ChevronDown, Rocket } from "lucide-react";
+import { motion, useInView } from "framer-motion";
 import IntegrationRequestModal from "./IntegrationRequestModal";
 import TrustBar from "./TrustBar";
 import GrowthStack from "./GrowthStack";
 import PlaybooksSection from "./PlaybooksSection";
-// =============================================================================
-// Scramble Text Component - Auto-triggers on mount
-// =============================================================================
-const CHARS = "0123456789$MK+%";
+import { heroStats, heroRotatingPhrases } from "@/app/data/stats";
 
-function ScrambleStat({
-  value,
-  delay = 0
-}: {
-  value: string;
-  delay?: number;
-}) {
-  const [text, setText] = useState(value);
-  const [isMounted, setIsMounted] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const iterationRef = useRef(0);
+// =============================================================================
+// Interactive Gradient Background
+// =============================================================================
+function InteractiveGradient() {
+  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setIsMounted(true);
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    setMousePosition({ x, y });
   }, []);
 
   useEffect(() => {
-    if (!isMounted) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    // Start with random text
-    setText(
-      value.split("").map((char) => {
-        if (char === " " || char === ".") return char;
-        return CHARS[Math.floor(Math.random() * CHARS.length)];
-      }).join("")
-    );
+    container.addEventListener("mousemove", handleMouseMove);
+    return () => container.removeEventListener("mousemove", handleMouseMove);
+  }, [handleMouseMove]);
 
-    // Then scramble to reveal
-    const timeout = setTimeout(() => {
-      iterationRef.current = 0;
+  // Calculate gradient positions based on mouse
+  const primaryX = mousePosition.x * 100;
+  const primaryY = mousePosition.y * 100;
+  const secondaryX = 100 - mousePosition.x * 60;
+  const secondaryY = 100 - mousePosition.y * 60;
 
-      intervalRef.current = setInterval(() => {
-        setText(
-          value
-            .split("")
-            .map((char, index) => {
-              if (index < iterationRef.current) {
-                return value[index];
-              }
-              if (char === " " || char === ".") return char;
-              return CHARS[Math.floor(Math.random() * CHARS.length)];
-            })
-            .join("")
-        );
+  return (
+    <div ref={containerRef} className="absolute inset-0 z-0 overflow-hidden">
+      {/* Base gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-white" />
 
-        if (iterationRef.current >= value.length) {
-          if (intervalRef.current) clearInterval(intervalRef.current);
-        }
+      {/* Primary blob - Cyan/Blue */}
+      <div
+        className="absolute w-[800px] h-[800px] rounded-full opacity-30 blur-[120px] transition-all duration-700 ease-out"
+        style={{
+          background: "radial-gradient(circle, #ABFFFF 0%, transparent 70%)",
+          left: `calc(${primaryX}% - 400px)`,
+          top: `calc(${primaryY}% - 400px)`,
+        }}
+      />
 
-        iterationRef.current += 0.4;
-      }, 50);
-    }, delay);
+      {/* Secondary blob - Coral/Accent */}
+      <div
+        className="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-[100px] transition-all duration-1000 ease-out"
+        style={{
+          background: "radial-gradient(circle, #F1A3A1 0%, transparent 70%)",
+          left: `calc(${secondaryX}% - 300px)`,
+          top: `calc(${secondaryY}% - 300px)`,
+        }}
+      />
 
-    return () => {
-      clearTimeout(timeout);
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isMounted, value, delay]);
+      {/* Tertiary blob - Blue accent */}
+      <div
+        className="absolute w-[500px] h-[500px] rounded-full opacity-15 blur-[80px] transition-all duration-500 ease-out"
+        style={{
+          background: "radial-gradient(circle, #3B82F6 0%, transparent 70%)",
+          left: `calc(${primaryX * 0.7 + 15}% - 250px)`,
+          top: `calc(${primaryY * 0.5 + 25}% - 250px)`,
+        }}
+      />
 
-  return <>{text}</>;
+      {/* Subtle noise texture overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Top fade for navbar blend */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
+
+      {/* Bottom fade */}
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white to-transparent" />
+    </div>
+  );
 }
 
 // =============================================================================
 // Rotating Text Component - Typewriter effect
 // =============================================================================
-const phrases = [
-  "On-chain Growth",
-  "Token Rewards",
-  "Incentives",
-  "Leaderboards",
-  "Competitions",
-];
-
 function RotatingText() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const currentPhrase = phrases[currentIndex];
+    const currentPhrase = heroRotatingPhrases[currentIndex];
 
     const timeout = setTimeout(() => {
       if (!isDeleting) {
-        // Typing
         if (displayText.length < currentPhrase.length) {
           setDisplayText(currentPhrase.slice(0, displayText.length + 1));
         } else {
-          // Pause before deleting
           setTimeout(() => setIsDeleting(true), 1500);
         }
       } else {
-        // Deleting
         if (displayText.length > 0) {
           setDisplayText(displayText.slice(0, -1));
         } else {
           setIsDeleting(false);
-          setCurrentIndex((prev) => (prev + 1) % phrases.length);
+          setCurrentIndex((prev) => (prev + 1) % heroRotatingPhrases.length);
         }
       }
     }, isDeleting ? 30 : 50);
@@ -126,259 +132,106 @@ function RotatingText() {
 }
 
 // =============================================================================
-// Stats Data
-// =============================================================================
-const stats = [
-  { value: "$10M+", label: "Distributed" },
-  { value: "906K", label: "Wallets" },
-  { value: "89M+", label: "Transactions" },
-];
-
-// =============================================================================
 // HeroV2 - Immersive terminal-style hero section
 // =============================================================================
-
 const HeroV2 = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="relative w-full bg-white overflow-hidden">
-      {/* Main Hero Content */}
-      <div className="relative z-20 w-full min-h-[70vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-8">
-        <div className="max-w-4xl">
-          {/* Terminal Tag */}
-          <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
-            <Terminal className="w-3 h-3" />
-            <span>89M+ transactions indexed</span>
-            <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
+    <section className="relative w-full overflow-hidden">
+      {/* Hero Area with Background */}
+      <div ref={heroRef} className="relative w-full min-h-screen overflow-hidden">
+        {/* Interactive Gradient Background */}
+        <InteractiveGradient />
+
+        {/* Main Hero Content */}
+        <div className="relative z-20 w-full h-full min-h-screen flex flex-col items-center justify-between px-6 md:px-12 lg:px-20 pt-24">
+          <div />
+
+          {/* Center Content */}
+          <div className="max-w-4xl text-center">
+            {/* Terminal Tag */}
+            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+              <Terminal className="w-3 h-3" />
+              <span>89M+ transactions indexed</span>
+              <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black">
+              <span className="block whitespace-nowrap">
+                <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
+                  The Intelligence Layer
+                </GlitchText>
+              </span>
+              <span className="block text-black/40 whitespace-nowrap"><RotatingText /></span>
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl mx-auto">
+              40% of incentive spend is wasted. We fix that with data-driven reward optimization.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                variant="accent"
+                className="group"
+              >
+                Get Started
+                <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Button>
+              <Button
+                variant="outline"
+                href="/playbooks"
+              >
+                View Playbooks
+                <ArrowUpRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+
+            {/* Stats Row */}
+            <div className="flex items-center justify-center gap-8 md:gap-12">
+              {heroStats.map((stat, index) => (
+                <div key={index} className="flex flex-col">
+                  <span className="text-xl md:text-2xl lg:text-3xl font-display font-semibold text-black tracking-tight">
+                    {stat.value}
+                  </span>
+                  <span className="text-xs text-black/50 mt-1">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Main Headline - 2 Lines */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black">
-            <span className="block whitespace-nowrap">
-              <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
-                The Intelligence Layer
-              </GlitchText>
-            </span>
-            <span className="block text-black/40 whitespace-nowrap"><RotatingText /></span>
-          </h1>
+          {/* Bottom Section */}
+          <div className="w-full pb-8">
+            <div className="w-full">
+              <TrustBar />
+            </div>
 
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl">
-            40% of incentive spend is wasted. We fix that with data-driven reward optimization.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-start gap-4 mb-16">
-            <Button
-              onClick={() => setIsModalOpen(true)}
-              variant="accent"
-              className="group"
-            >
-              Get Started
-              <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Button>
-            <Button
-              variant="outline"
-              href="/playbooks"
-            >
-              View Playbooks
-              <ArrowUpRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-
-          {/* Stats Row */}
-          <div className="flex items-center gap-12 md:gap-16 lg:gap-20">
-            {stats.map((stat, index) => (
-              <div key={index} className="flex flex-col">
-                <span className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold text-black tracking-tight">
-                  {stat.value}
-                </span>
-                <span className="text-sm text-black/50 mt-1">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
+            <div className="flex items-center justify-center gap-2 text-black/40">
+              <span className="font-mono text-xs uppercase tracking-wider">Scroll to explore</span>
+              <ChevronDown className="w-4 h-4 animate-bounce" />
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Trust Bar - Logos */}
-      <TrustBar />
-
-      {/* Scroll to Explore */}
-      <div className="flex items-center gap-2 text-black/40 pb-16 md:pb-24 px-6 md:px-12 lg:px-20">
-        <span className="font-mono text-xs uppercase tracking-wider">Scroll to explore</span>
-        <ChevronDown className="w-4 h-4 animate-bounce" />
       </div>
 
       {/* Platform Features */}
       <GrowthStack />
 
-      {/* Problem Section - Hidden for now
-      <div className="relative z-10 w-full py-20 md:py-32 bg-white border-t border-black/10">
-        <div className="relative w-full px-6 md:px-12 lg:px-20">
-          <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
-            <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-            <span>The Problem</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-black mb-6 max-w-4xl">
-            Protocols waste <span className="text-red-500">40%</span> of their incentive spend
-          </h2>
-          <p className="text-lg md:text-xl text-black/60 mb-16 max-w-2xl">
-            You&apos;re spending millions on incentives with no idea if it&apos;s working. Essentially throwing money into the void.
-          </p>
-          ...
-        </div>
-      </div>
-      */}
-
       {/* Solution Section */}
-      <div className="relative z-10 w-full py-20 md:py-32 bg-white border-t border-black/10">
-        <div className="relative w-full px-6 md:px-12 lg:px-20">
-          {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
-            <div>
-              {/* Section Tag */}
-              <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
-                <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
-                <span>The Solutions</span>
-              </div>
-
-              {/* Headline */}
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-black mb-6 max-w-4xl">
-                Distribution infrastructure with <span className="text-black/40">intelligence</span>
-              </h2>
-
-              {/* Subheadline */}
-              <p className="text-lg md:text-xl text-black/60 max-w-2xl">
-                Sector-specific strategies for the problems no one else is solving.
-              </p>
-            </div>
-            <Button variant="outline" href="/solutions" className="w-fit">
-              View Solutions
-              <ArrowUpRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-
-          {/* Solution Cards Grid */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Card 1 - Stablecoins */}
-            <div className="bg-white border border-black/10 overflow-hidden group hover:border-black/30 transition-colors rounded-[3px]">
-              <div className="flex items-center gap-2 px-4 py-2 bg-black/5 border-b border-black/10">
-                <div className="flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-black" />
-                  <span className="w-2 h-2 rounded-full bg-black/20" />
-                  <span className="w-2 h-2 rounded-full bg-black/20" />
-                </div>
-                <span className="font-mono text-[10px] text-black/40 uppercase">stablecoin.strategy</span>
-              </div>
-              <div className="p-6 md:p-8">
-                <CircleDot className="w-8 h-8 text-black mb-6" />
-
-                <h3 className="font-display text-2xl font-medium text-black mb-1">
-                  Stablecoins
-                </h3>
-                <p className="text-xs font-mono uppercase tracking-wider text-black/50 mb-6">
-                  Ignite Velocity
-                </p>
-
-                <div className="space-y-3 mb-6">
-                  <div className="bg-black/5 p-4 border-l-2 border-black/30">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">diagnosis</span>
-                    <p className="text-sm text-black/70">High Cap / Low Flow</p>
-                  </div>
-                  <div className="bg-black/5 p-4 border-l-2 border-blue">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">the fix</span>
-                    <p className="text-sm text-black">Referral & Social Layers</p>
-                  </div>
-                </div>
-
-                <a href="/playbooks" className="inline-flex items-center text-sm text-black hover:text-blue transition-colors font-medium">
-                  View Strategy <ArrowUpRight className="w-4 h-4 ml-1" />
-                </a>
-              </div>
-            </div>
-
-            {/* Card 2 - Lending */}
-            <div className="bg-white border border-black/10 overflow-hidden group hover:border-black/30 transition-colors rounded-[3px]">
-              <div className="flex items-center gap-2 px-4 py-2 bg-black/5 border-b border-black/10">
-                <div className="flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-black" />
-                  <span className="w-2 h-2 rounded-full bg-black/20" />
-                  <span className="w-2 h-2 rounded-full bg-black/20" />
-                </div>
-                <span className="font-mono text-[10px] text-black/40 uppercase">lending.strategy</span>
-              </div>
-              <div className="p-6 md:p-8">
-                <CreditCard className="w-8 h-8 text-black mb-6" />
-
-                <h3 className="font-display text-2xl font-medium text-black mb-1">
-                  Lending
-                </h3>
-                <p className="text-xs font-mono uppercase tracking-wider text-black/50 mb-6">
-                  Drive Real Yield
-                </p>
-
-                <div className="space-y-3 mb-6">
-                  <div className="bg-black/5 p-4 border-l-2 border-black/30">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">diagnosis</span>
-                    <p className="text-sm text-black/70">High TVL / Low Borrows</p>
-                  </div>
-                  <div className="bg-black/5 p-4 border-l-2 border-blue">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">the fix</span>
-                    <p className="text-sm text-black">Looping & Borrowing Rewards</p>
-                  </div>
-                </div>
-
-                <a href="/playbooks" className="inline-flex items-center text-sm text-black hover:text-blue transition-colors font-medium">
-                  View Strategy <ArrowUpRight className="w-4 h-4 ml-1" />
-                </a>
-              </div>
-            </div>
-
-            {/* Card 3 - Perps */}
-            <div className="bg-white border border-black/10 overflow-hidden group hover:border-black/30 transition-colors rounded-[3px]">
-              <div className="flex items-center gap-2 px-4 py-2 bg-black/5 border-b border-black/10">
-                <div className="flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-black" />
-                  <span className="w-2 h-2 rounded-full bg-black/20" />
-                  <span className="w-2 h-2 rounded-full bg-black/20" />
-                </div>
-                <span className="font-mono text-[10px] text-black/40 uppercase">perps.strategy</span>
-              </div>
-              <div className="p-6 md:p-8">
-                <TrendingUp className="w-8 h-8 text-black mb-6" />
-
-                <h3 className="font-display text-2xl font-medium text-black mb-1">
-                  Perps
-                </h3>
-                <p className="text-xs font-mono uppercase tracking-wider text-black/50 mb-6">
-                  Automate Retention
-                </p>
-
-                <div className="space-y-3 mb-6">
-                  <div className="bg-black/5 p-4 border-l-2 border-black/30">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">diagnosis</span>
-                    <p className="text-sm text-black/70">High Vol / Low Loyalty</p>
-                  </div>
-                  <div className="bg-black/5 p-4 border-l-2 border-blue">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-black/40 block mb-1">the fix</span>
-                    <p className="text-sm text-black">Trader Progression Systems</p>
-                  </div>
-                </div>
-
-                <a href="/playbooks" className="inline-flex items-center text-sm text-black hover:text-blue transition-colors font-medium">
-                  View Strategy <ArrowUpRight className="w-4 h-4 ml-1" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SolutionSection />
 
       {/* Playbooks Section */}
       <PlaybooksSection />
+
+      {/* Homepage CTA */}
+      <HomepageCTA onOpenModal={() => setIsModalOpen(true)} />
 
       {/* Integration Request Modal */}
       <IntegrationRequestModal
@@ -388,5 +241,178 @@ const HeroV2 = () => {
     </section>
   );
 };
+
+// =============================================================================
+// Solution Section - Extracted for readability
+// =============================================================================
+function SolutionSection() {
+  return (
+    <div className="relative z-10 w-full py-20 md:py-32 bg-white border-t border-black/10">
+      <div className="relative w-full px-6 md:px-12 lg:px-20">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+          <div>
+            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+              <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
+              <span>The Solutions</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
+              Distribution infrastructure
+              <br />
+              <span className="text-black/40">with intelligence</span>
+            </h2>
+
+            <p className="text-lg md:text-xl text-black/60 max-w-2xl">
+              Sector-specific strategies for the problems no one else is solving.
+            </p>
+          </div>
+          <Button variant="outline" href="/solutions" className="w-fit">
+            View Solutions
+            <ArrowUpRight className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+
+        {/* Solution Cards Grid */}
+        <div className="grid md:grid-cols-3 gap-6">
+          <SolutionCard
+            icon={CircleDot}
+            title="Stablecoins"
+            subtitle="Ignite Velocity"
+            filename="stablecoin.strategy"
+            image="/generated/image/light-mono/cluster-spheres.jpg"
+            diagnosis="High Cap / Low Flow"
+            fix="Referral & Social Layers"
+          />
+          <SolutionCard
+            icon={CreditCard}
+            title="Lending"
+            subtitle="Drive Real Yield"
+            filename="lending.strategy"
+            image="/generated/image/light-mono/value-stack-light.jpg"
+            diagnosis="High TVL / Low Borrows"
+            fix="Looping & Borrowing Rewards"
+          />
+          <SolutionCard
+            icon={TrendingUp}
+            title="Perps"
+            subtitle="Automate Retention"
+            filename="perps.strategy"
+            image="/generated/image/light-mono/network-nodes-light.jpg"
+            diagnosis="High Vol / Low Loyalty"
+            fix="Trader Progression Systems"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// =============================================================================
+// Solution Card Component
+// =============================================================================
+interface SolutionCardProps {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  subtitle: string;
+  filename: string;
+  image: string;
+  diagnosis: string;
+  fix: string;
+}
+
+function SolutionCard({ icon: Icon, title, subtitle, filename, image, diagnosis, fix }: SolutionCardProps) {
+  return (
+    <div className="relative rounded-[3px] overflow-hidden group border border-black/10 hover:border-blue/30 transition-all min-h-[780px]">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue/5 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-0" />
+
+      {/* Terminal Header */}
+      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
+        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+        <span className="font-mono text-[9px] text-black/30">{filename}</span>
+      </div>
+
+      {/* Content */}
+      <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
+        <div className="mt-auto">
+          <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+            <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
+          </div>
+
+          <h3 className="font-display text-base md:text-lg font-medium text-black mb-1 group-hover:text-blue transition-colors">
+            {title}
+          </h3>
+          <p className="text-[10px] font-mono uppercase tracking-wider text-black/50 mb-3">
+            {subtitle}
+          </p>
+
+          <div className="space-y-2 mb-4">
+            <div className="bg-white/60 backdrop-blur-sm p-3 border-l-2 border-black/20 rounded-r-[2px]">
+              <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-0.5">diagnosis</span>
+              <p className="text-xs text-black/70">{diagnosis}</p>
+            </div>
+            <div className="bg-white/60 backdrop-blur-sm p-3 border-l-2 border-blue rounded-r-[2px]">
+              <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-0.5">the fix</span>
+              <p className="text-xs text-black">{fix}</p>
+            </div>
+          </div>
+
+          <a href="/playbooks" className="inline-flex items-center text-xs text-blue hover:text-black transition-colors font-medium">
+            View Strategy <ArrowUpRight className="w-3 h-3 ml-1" />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// =============================================================================
+// Homepage CTA Section
+// =============================================================================
+interface HomepageCTAProps {
+  onOpenModal: () => void;
+}
+
+function HomepageCTA({ onOpenModal }: HomepageCTAProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section className="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28 bg-white border-t border-black/10">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="max-w-xl"
+      >
+        <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
+          <Rocket className="w-3 h-3" />
+          Ready to Start?
+        </div>
+        <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+          Turn insights into action
+          <br />
+          <span className="text-black/40">—in minutes</span>
+        </h2>
+        <p className="text-base text-black/60 mb-6">
+          Join 40+ protocols using Torque to optimize their incentive spend and drive sustainable growth.
+        </p>
+        <div className="flex flex-wrap items-center gap-4">
+          <Button variant="accent" onClick={onOpenModal}>
+            Get Whitelisted
+            <ArrowUpRight className="w-4 h-4 ml-2" />
+          </Button>
+          <Button variant="outline" href="/platform">
+            Explore Platform
+            <ArrowUpRight className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
 
 export default HeroV2;
