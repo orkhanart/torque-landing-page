@@ -2,13 +2,21 @@
 
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { AsciiOptions, AsciiCharset, AsciiColorMode } from "./AsciiRenderer";
+import { DitherOptions, DitherAlgorithm, DitherColorMode } from "./DitherRenderer";
+
+export type EffectMode = "none" | "ascii" | "dither";
 
 interface AsciiContextType {
   enabled: boolean;
   setEnabled: (enabled: boolean) => void;
+  effectMode: EffectMode;
+  setEffectMode: (mode: EffectMode) => void;
   options: AsciiOptions;
   setOptions: React.Dispatch<React.SetStateAction<AsciiOptions>>;
   updateOption: <K extends keyof AsciiOptions>(key: K, value: AsciiOptions[K]) => void;
+  ditherOptions: DitherOptions;
+  setDitherOptions: React.Dispatch<React.SetStateAction<DitherOptions>>;
+  updateDitherOption: <K extends keyof DitherOptions>(key: K, value: DitherOptions[K]) => void;
   hideGradients: boolean;
   setHideGradients: (hide: boolean) => void;
 }
@@ -24,19 +32,50 @@ const defaultOptions: AsciiOptions = {
   invert: false,
 };
 
+const defaultDitherOptions: DitherOptions = {
+  algorithm: "floyd-steinberg",
+  colorMode: "monochrome",
+  threshold: 128,
+  scale: 0.5,
+  primaryColor: "#000000",
+  secondaryColor: "#ffffff",
+  tertiaryColor: "#888888",
+  contrast: 1.2,
+  brightness: 0,
+};
+
 const AsciiContext = createContext<AsciiContextType | null>(null);
 
 export function AsciiProvider({ children }: { children: React.ReactNode }) {
   const [enabled, setEnabled] = useState(false);
+  const [effectMode, setEffectMode] = useState<EffectMode>("ascii");
   const [options, setOptions] = useState<AsciiOptions>(defaultOptions);
+  const [ditherOptions, setDitherOptions] = useState<DitherOptions>(defaultDitherOptions);
   const [hideGradients, setHideGradients] = useState(false);
 
   const updateOption = useCallback(<K extends keyof AsciiOptions>(key: K, value: AsciiOptions[K]) => {
     setOptions((prev) => ({ ...prev, [key]: value }));
   }, []);
 
+  const updateDitherOption = useCallback(<K extends keyof DitherOptions>(key: K, value: DitherOptions[K]) => {
+    setDitherOptions((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
   return (
-    <AsciiContext.Provider value={{ enabled, setEnabled, options, setOptions, updateOption, hideGradients, setHideGradients }}>
+    <AsciiContext.Provider value={{
+      enabled,
+      setEnabled,
+      effectMode,
+      setEffectMode,
+      options,
+      setOptions,
+      updateOption,
+      ditherOptions,
+      setDitherOptions,
+      updateDitherOption,
+      hideGradients,
+      setHideGradients
+    }}>
       {children}
     </AsciiContext.Provider>
   );
@@ -77,4 +116,29 @@ export const PRESETS: { name: string; options: Partial<AsciiOptions> }[] = [
   { name: "Detailed", options: { colorMode: "grayscale", charset: "detailed", cellSize: 4 } },
   { name: "Neon", options: { colorMode: "neon", charset: "mixed", backgroundColor: "#0a0010" } },
   { name: "Blocks", options: { colorMode: "grayscale", charset: "blocks", cellSize: 10 } },
+];
+
+export const DITHER_ALGORITHMS: DitherAlgorithm[] = [
+  "floyd-steinberg",
+  "atkinson",
+  "bayer",
+  "ordered",
+  "halftone",
+  "noise",
+];
+
+export const DITHER_COLOR_MODES: DitherColorMode[] = [
+  "monochrome",
+  "grayscale",
+  "duotone",
+  "tritone",
+];
+
+export const DITHER_PRESETS: { name: string; options: Partial<DitherOptions> }[] = [
+  { name: "Classic", options: { algorithm: "floyd-steinberg", colorMode: "monochrome", scale: 0.5 } },
+  { name: "Retro", options: { algorithm: "bayer", colorMode: "monochrome", scale: 0.3 } },
+  { name: "Halftone", options: { algorithm: "halftone", colorMode: "monochrome", scale: 1 } },
+  { name: "Soft", options: { algorithm: "atkinson", colorMode: "grayscale", scale: 0.6 } },
+  { name: "Noise", options: { algorithm: "noise", colorMode: "monochrome", scale: 0.5 } },
+  { name: "Ordered", options: { algorithm: "ordered", colorMode: "monochrome", scale: 0.4 } },
 ];

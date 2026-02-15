@@ -2,11 +2,24 @@
 
 import React, { useState } from "react";
 import { Settings2, ChevronDown, ChevronUp, X } from "lucide-react";
-import { useAscii, CHARSETS, COLOR_MODES, PRESETS } from "./AsciiContext";
+import { useAscii, CHARSETS, COLOR_MODES, PRESETS, DITHER_ALGORITHMS, DITHER_COLOR_MODES, DITHER_PRESETS, EffectMode } from "./AsciiContext";
 import { cn } from "@/lib/utils";
 
 export function AsciiControlPanel() {
-  const { enabled, setEnabled, options, updateOption, setOptions, hideGradients, setHideGradients } = useAscii();
+  const {
+    enabled,
+    setEnabled,
+    effectMode,
+    setEffectMode,
+    options,
+    updateOption,
+    setOptions,
+    ditherOptions,
+    updateDitherOption,
+    setDitherOptions,
+    hideGradients,
+    setHideGradients
+  } = useAscii();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true);
 
@@ -59,7 +72,7 @@ export function AsciiControlPanel() {
       {/* Toggles */}
       <div className="p-3 border-b border-white/10 space-y-3">
         <label className="flex items-center justify-between cursor-pointer">
-          <span className="text-sm">Enable ASCII Effect</span>
+          <span className="text-sm">Enable Effect</span>
           <div
             onClick={() => setEnabled(!enabled)}
             className={cn(
@@ -75,6 +88,36 @@ export function AsciiControlPanel() {
             />
           </div>
         </label>
+
+        {/* Effect Mode Toggle */}
+        {enabled && (
+          <div>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+              Effect Mode
+            </label>
+            <div className="grid grid-cols-2 gap-1.5">
+              <button
+                onClick={() => setEffectMode("ascii")}
+                className={cn(
+                  "px-3 py-2 text-xs rounded transition-colors",
+                  effectMode === "ascii" ? "bg-green-500 text-white" : "bg-white/10 hover:bg-white/20"
+                )}
+              >
+                ASCII
+              </button>
+              <button
+                onClick={() => setEffectMode("dither")}
+                className={cn(
+                  "px-3 py-2 text-xs rounded transition-colors",
+                  effectMode === "dither" ? "bg-green-500 text-white" : "bg-white/10 hover:bg-white/20"
+                )}
+              >
+                Dither
+              </button>
+            </div>
+          </div>
+        )}
+
         <label className="flex items-center justify-between cursor-pointer">
           <span className="text-sm">Hide Image Gradients</span>
           <div
@@ -94,8 +137,8 @@ export function AsciiControlPanel() {
         </label>
       </div>
 
-      {/* Controls */}
-      {!isMinimized && enabled && (
+      {/* ASCII Controls */}
+      {!isMinimized && enabled && effectMode === "ascii" && (
         <div className="p-3 space-y-4 max-h-[60vh] overflow-y-auto">
           {/* Presets */}
           <div>
@@ -234,6 +277,169 @@ export function AsciiControlPanel() {
                   className="w-full h-8 rounded cursor-pointer"
                 />
               </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Dither Controls */}
+      {!isMinimized && enabled && effectMode === "dither" && (
+        <div className="p-3 space-y-4 max-h-[60vh] overflow-y-auto">
+          {/* Dither Presets */}
+          <div>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+              Presets
+            </label>
+            <div className="grid grid-cols-3 gap-1.5">
+              {DITHER_PRESETS.map((preset) => (
+                <button
+                  key={preset.name}
+                  onClick={() => setDitherOptions((prev) => ({ ...prev, ...preset.options }))}
+                  className="px-2 py-1.5 text-xs rounded bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  {preset.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Algorithm */}
+          <div>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+              Algorithm
+            </label>
+            <select
+              value={ditherOptions.algorithm}
+              onChange={(e) => updateDitherOption("algorithm", e.target.value as any)}
+              className="w-full px-3 py-2 text-sm rounded bg-white/10 border border-white/10 focus:outline-none focus:border-white/30"
+            >
+              {DITHER_ALGORITHMS.map((algo) => (
+                <option key={algo} value={algo} className="bg-gray-900">
+                  {algo}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Color Mode */}
+          <div>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+              Color Mode
+            </label>
+            <select
+              value={ditherOptions.colorMode}
+              onChange={(e) => updateDitherOption("colorMode", e.target.value as any)}
+              className="w-full px-3 py-2 text-sm rounded bg-white/10 border border-white/10 focus:outline-none focus:border-white/30"
+            >
+              {DITHER_COLOR_MODES.map((mode) => (
+                <option key={mode} value={mode} className="bg-gray-900">
+                  {mode}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Scale */}
+          <div>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+              Scale: {ditherOptions.scale?.toFixed(2)}
+            </label>
+            <input
+              type="range"
+              min="0.1"
+              max="1"
+              step="0.05"
+              value={ditherOptions.scale}
+              onChange={(e) => updateDitherOption("scale", parseFloat(e.target.value))}
+              className="w-full accent-white"
+            />
+          </div>
+
+          {/* Threshold */}
+          <div>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+              Threshold: {ditherOptions.threshold}
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="255"
+              value={ditherOptions.threshold}
+              onChange={(e) => updateDitherOption("threshold", parseInt(e.target.value))}
+              className="w-full accent-white"
+            />
+          </div>
+
+          {/* Contrast */}
+          <div>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+              Contrast: {ditherOptions.contrast?.toFixed(1)}
+            </label>
+            <input
+              type="range"
+              min="0.5"
+              max="2.5"
+              step="0.1"
+              value={ditherOptions.contrast}
+              onChange={(e) => updateDitherOption("contrast", parseFloat(e.target.value))}
+              className="w-full accent-white"
+            />
+          </div>
+
+          {/* Brightness */}
+          <div>
+            <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+              Brightness: {ditherOptions.brightness?.toFixed(2)}
+            </label>
+            <input
+              type="range"
+              min="-0.5"
+              max="0.5"
+              step="0.05"
+              value={ditherOptions.brightness}
+              onChange={(e) => updateDitherOption("brightness", parseFloat(e.target.value))}
+              className="w-full accent-white"
+            />
+          </div>
+
+          {/* Colors */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+                Primary
+              </label>
+              <input
+                type="color"
+                value={ditherOptions.primaryColor}
+                onChange={(e) => updateDitherOption("primaryColor", e.target.value)}
+                className="w-full h-8 rounded cursor-pointer"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+                Secondary
+              </label>
+              <input
+                type="color"
+                value={ditherOptions.secondaryColor}
+                onChange={(e) => updateDitherOption("secondaryColor", e.target.value)}
+                className="w-full h-8 rounded cursor-pointer"
+              />
+            </div>
+          </div>
+
+          {/* Tertiary color for tritone */}
+          {ditherOptions.colorMode === "tritone" && (
+            <div>
+              <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">
+                Tertiary Color
+              </label>
+              <input
+                type="color"
+                value={ditherOptions.tertiaryColor}
+                onChange={(e) => updateDitherOption("tertiaryColor", e.target.value)}
+                className="w-full h-8 rounded cursor-pointer"
+              />
             </div>
           )}
         </div>

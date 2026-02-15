@@ -4,6 +4,8 @@ import React from "react";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { featuredPlaybooks } from "@/app/data/playbooks";
+import { SmartImage } from "@/components/ascii/SmartImage";
+import { ImageGradient } from "@/components/ascii/ImageGradient";
 
 export default function PlaybooksSection() {
   return (
@@ -57,9 +59,14 @@ function PlaybookCard({ playbook }: PlaybookCardProps) {
       href="/playbooks"
       className="group relative rounded-[3px] overflow-hidden border border-black/10 hover:border-blue/30 transition-all min-h-[720px]"
     >
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50/50 to-blue/5 z-0" />
-      <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-transparent to-white/80 z-0" />
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <SmartImage src={playbook.image} alt={playbook.title} fill className="object-cover" />
+      </div>
+
+      {/* White gradient overlay */}
+      <ImageGradient className="bg-gradient-to-t from-white via-white/85 to-white/60" />
+      <ImageGradient className="bg-gradient-to-br from-white/40 via-transparent to-transparent" />
 
       {/* Card Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">

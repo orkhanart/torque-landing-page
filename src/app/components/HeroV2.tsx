@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { GlitchText } from "@/components/terminal";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Terminal, CircleDot, CreditCard, TrendingUp, ChevronDown, Rocket } from "lucide-react";
@@ -10,84 +10,37 @@ import TrustBar from "./TrustBar";
 import GrowthStack from "./GrowthStack";
 import PlaybooksSection from "./PlaybooksSection";
 import { heroStats, heroRotatingPhrases } from "@/app/data/stats";
+import { SmartImage } from "@/components/ascii/SmartImage";
+import { ImageGradient } from "@/components/ascii/ImageGradient";
 
 // =============================================================================
-// Interactive Gradient Background
+// Interactive Gradient Background with Image
 // =============================================================================
 function InteractiveGradient() {
-  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    setMousePosition({ x, y });
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    container.addEventListener("mousemove", handleMouseMove);
-    return () => container.removeEventListener("mousemove", handleMouseMove);
-  }, [handleMouseMove]);
-
-  // Calculate gradient positions based on mouse
-  const primaryX = mousePosition.x * 100;
-  const primaryY = mousePosition.y * 100;
-  const secondaryX = 100 - mousePosition.x * 60;
-  const secondaryY = 100 - mousePosition.y * 60;
-
   return (
-    <div ref={containerRef} className="absolute inset-0 z-0 overflow-hidden">
-      {/* Base gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-white" />
+    <div className="absolute inset-0 z-0 overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <SmartImage src="/generated/image/mono-3d/hero-glass-architecture.jpg" alt="Hero background" fill className="object-cover" />
+      </div>
 
-      {/* Primary blob - Cyan/Blue */}
-      <div
-        className="absolute w-[800px] h-[800px] rounded-full opacity-30 blur-[120px] transition-all duration-700 ease-out"
-        style={{
-          background: "radial-gradient(circle, #ABFFFF 0%, transparent 70%)",
-          left: `calc(${primaryX}% - 400px)`,
-          top: `calc(${primaryY}% - 400px)`,
-        }}
-      />
-
-      {/* Secondary blob - Coral/Accent */}
-      <div
-        className="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-[100px] transition-all duration-1000 ease-out"
-        style={{
-          background: "radial-gradient(circle, #F1A3A1 0%, transparent 70%)",
-          left: `calc(${secondaryX}% - 300px)`,
-          top: `calc(${secondaryY}% - 300px)`,
-        }}
-      />
-
-      {/* Tertiary blob - Blue accent */}
-      <div
-        className="absolute w-[500px] h-[500px] rounded-full opacity-15 blur-[80px] transition-all duration-500 ease-out"
-        style={{
-          background: "radial-gradient(circle, #3B82F6 0%, transparent 70%)",
-          left: `calc(${primaryX * 0.7 + 15}% - 250px)`,
-          top: `calc(${primaryY * 0.5 + 25}% - 250px)`,
-        }}
-      />
+      {/* White gradient overlays for readability */}
+      <ImageGradient className="bg-gradient-to-b from-white/90 via-white/70 to-white/90" />
+      <ImageGradient className="bg-gradient-to-r from-white/60 via-transparent to-white/60" />
 
       {/* Subtle noise texture overlay */}
       <div
-        className="absolute inset-0 opacity-[0.015]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
       />
 
       {/* Top fade for navbar blend */}
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
+      <ImageGradient className="!inset-auto inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
 
       {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white to-transparent" />
+      <ImageGradient className="!inset-auto inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white to-transparent" />
     </div>
   );
 }
@@ -280,7 +233,7 @@ function SolutionSection() {
             title="Stablecoins"
             subtitle="Ignite Velocity"
             filename="stablecoin.strategy"
-            image="/generated/image/light-mono/cluster-spheres.jpg"
+            image="/generated/image/mono-3d/sphere-cluster.jpg"
             diagnosis="High Cap / Low Flow"
             fix="Referral & Social Layers"
           />
@@ -289,7 +242,7 @@ function SolutionSection() {
             title="Lending"
             subtitle="Drive Real Yield"
             filename="lending.strategy"
-            image="/generated/image/light-mono/value-stack-light.jpg"
+            image="/generated/image/mono-3d/value-stack.jpg"
             diagnosis="High TVL / Low Borrows"
             fix="Looping & Borrowing Rewards"
           />
@@ -298,7 +251,7 @@ function SolutionSection() {
             title="Perps"
             subtitle="Automate Retention"
             filename="perps.strategy"
-            image="/generated/image/light-mono/network-nodes-light.jpg"
+            image="/generated/image/mono-3d/node-connections.jpg"
             diagnosis="High Vol / Low Loyalty"
             fix="Trader Progression Systems"
           />
@@ -324,9 +277,14 @@ interface SolutionCardProps {
 function SolutionCard({ icon: Icon, title, subtitle, filename, image, diagnosis, fix }: SolutionCardProps) {
   return (
     <div className="relative rounded-[3px] overflow-hidden group border border-black/10 hover:border-blue/30 transition-all min-h-[780px]">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue/5 z-0" />
-      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-0" />
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <SmartImage src={image} alt={title} fill className="object-cover" />
+      </div>
+
+      {/* White gradient overlay */}
+      <ImageGradient className="bg-gradient-to-t from-white via-white/85 to-white/60" />
+      <ImageGradient className="bg-gradient-to-br from-white/40 via-transparent to-transparent" />
 
       {/* Terminal Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">

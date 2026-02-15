@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { AsciiImage } from "./AsciiRenderer";
+import { DitherImage } from "./DitherRenderer";
 import { useAscii } from "./AsciiContext";
 import { cn } from "@/lib/utils";
 
@@ -25,9 +26,22 @@ export function SmartImage({
   width,
   height,
 }: SmartImageProps) {
-  const { enabled, options } = useAscii();
+  const { enabled, effectMode, options, ditherOptions } = useAscii();
 
   if (enabled) {
+    if (effectMode === "dither") {
+      return (
+        <DitherImage
+          src={src}
+          alt={alt}
+          className={className}
+          options={ditherOptions}
+          fill={fill}
+        />
+      );
+    }
+
+    // Default to ASCII
     return (
       <AsciiImage
         src={src}

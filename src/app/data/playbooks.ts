@@ -32,7 +32,7 @@ export const featuredPlaybooks: Playbook[] = [
       reward: "Daily Jackpot",
     },
     icon: Zap,
-    image: "/generated/image/light-mono/ascending-platforms.jpg",
+    image: "/generated/image/mono-3d/crystal-growth.jpg",
   },
   {
     id: "02",
@@ -47,7 +47,7 @@ export const featuredPlaybooks: Playbook[] = [
       reward: "$75 / $40 Split",
     },
     icon: Users,
-    image: "/generated/image/light-mono/cluster-cubes-02.jpg",
+    image: "/generated/image/mono-3d/chrome-torus.jpg",
   },
   {
     id: "07",
@@ -58,6 +58,6 @@ export const featuredPlaybooks: Playbook[] = [
       "How a top Solana DEX generated 102 SOL of volume for every 1 SOL spent on rewards.",
     metricBadge: "100x ROI",
     icon: TrendingUp,
-    image: "/generated/image/light-mono/floating-mass-02.jpg",
+    image: "/generated/image/mono-3d/glass-wave.jpg",
   },
 ];
