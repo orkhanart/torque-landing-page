@@ -23,7 +23,15 @@
       "WebSearch",
       "Bash(pnpm add lenis)",
       "Bash(chmod:*)",
-      "Bash(./scripts/generate-light-mono.sh:*)"
+      "Bash(./scripts/generate-light-mono.sh:*)",
+      "WebFetch(domain:tympanus.net)",
+      "Bash(find:*)",
+      "WebFetch(domain:www.matsimon.dev)",
+      "WebFetch(domain:blog.maximeheckel.com)",
+      "WebFetch(domain:mathworld.wolfram.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:pmndrs.github.io)",
+      "WebFetch(domain:medium.com)"
     ],
     "deny": []
   }

@@ -10,37 +10,23 @@ import TrustBar from "./TrustBar";
 import GrowthStack from "./GrowthStack";
 import PlaybooksSection from "./PlaybooksSection";
 import { heroStats, heroRotatingPhrases } from "@/app/data/stats";
-import { SmartImage } from "@/components/ascii/SmartImage";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { VelocityFlow } from "@/components/card-visuals/VelocityFlow";
+import { LiquidityPool } from "@/components/card-visuals/LiquidityPool";
+import { RetentionLoop } from "@/components/card-visuals/RetentionLoop";
+import { TorqueHelicoid } from "@/components/three/TorqueHelicoid";
 
 // =============================================================================
-// Interactive Gradient Background with Image
+// Interactive Gradient Background with Particle Mesh
 // =============================================================================
 function InteractiveGradient() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <SmartImage src="/generated/image/mono-3d/hero-glass-architecture.jpg" alt="Hero background" fill className="object-cover" />
-      </div>
-
-      {/* White gradient overlays for readability */}
-      <ImageGradient className="bg-gradient-to-b from-white/90 via-white/70 to-white/90" />
-      <ImageGradient className="bg-gradient-to-r from-white/60 via-transparent to-white/60" />
-
-      {/* Subtle noise texture overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-        }}
-      />
-
       {/* Top fade for navbar blend */}
-      <ImageGradient className="!inset-auto inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white to-transparent pointer-events-none" />
 
       {/* Bottom fade */}
-      <ImageGradient className="!inset-auto inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white to-transparent pointer-events-none" />
     </div>
   );
 }
@@ -98,12 +84,19 @@ const HeroV2 = () => {
         {/* Interactive Gradient Background */}
         <InteractiveGradient />
 
+        {/* 3D Helicoid Visual — right side, desktop only */}
+        <div className="hidden lg:block absolute right-0 top-0 w-[55%] h-full z-10 pointer-events-none">
+          <div className="w-full h-full pointer-events-auto">
+            <TorqueHelicoid />
+          </div>
+        </div>
+
         {/* Main Hero Content */}
-        <div className="relative z-20 w-full h-full min-h-screen flex flex-col items-center justify-between px-6 md:px-12 lg:px-20 pt-24">
+        <div className="relative z-20 w-full h-full min-h-screen flex flex-col justify-between px-6 md:px-12 lg:px-20 pt-24">
           <div />
 
           {/* Center Content */}
-          <div className="max-w-4xl text-center">
+          <div className="max-w-2xl">
             {/* Terminal Tag */}
             <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
               <Terminal className="w-3 h-3" />
@@ -122,12 +115,12 @@ const HeroV2 = () => {
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl">
               40% of incentive spend is wasted. We fix that with data-driven reward optimization.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+            <div className="flex flex-col sm:flex-row items-start gap-4 mb-16">
               <Button
                 onClick={() => setIsModalOpen(true)}
                 variant="accent"
@@ -146,7 +139,7 @@ const HeroV2 = () => {
             </div>
 
             {/* Stats Row */}
-            <div className="flex items-center justify-center gap-8 md:gap-12">
+            <div className="flex items-start gap-8 md:gap-12">
               {heroStats.map((stat, index) => (
                 <div key={index} className="flex flex-col">
                   <span className="text-xl md:text-2xl lg:text-3xl font-display font-semibold text-black tracking-tight">
@@ -166,7 +159,7 @@ const HeroV2 = () => {
               <TrustBar />
             </div>
 
-            <div className="flex items-center justify-center gap-2 text-black/40">
+            <div className="flex items-center gap-2 text-black/40">
               <span className="font-mono text-xs uppercase tracking-wider">Scroll to explore</span>
               <ChevronDown className="w-4 h-4 animate-bounce" />
             </div>
@@ -233,7 +226,7 @@ function SolutionSection() {
             title="Stablecoins"
             subtitle="Ignite Velocity"
             filename="stablecoin.strategy"
-            image="/generated/image/mono-3d/sphere-cluster.jpg"
+            visual={VelocityFlow}
             diagnosis="High Cap / Low Flow"
             fix="Referral & Social Layers"
           />
@@ -242,7 +235,7 @@ function SolutionSection() {
             title="Lending"
             subtitle="Drive Real Yield"
             filename="lending.strategy"
-            image="/generated/image/mono-3d/value-stack.jpg"
+            visual={LiquidityPool}
             diagnosis="High TVL / Low Borrows"
             fix="Looping & Borrowing Rewards"
           />
@@ -251,7 +244,7 @@ function SolutionSection() {
             title="Perps"
             subtitle="Automate Retention"
             filename="perps.strategy"
-            image="/generated/image/mono-3d/node-connections.jpg"
+            visual={RetentionLoop}
             diagnosis="High Vol / Low Loyalty"
             fix="Trader Progression Systems"
           />
@@ -269,17 +262,17 @@ interface SolutionCardProps {
   title: string;
   subtitle: string;
   filename: string;
-  image: string;
+  visual: React.ComponentType<{ color?: string }>;
   diagnosis: string;
   fix: string;
 }
 
-function SolutionCard({ icon: Icon, title, subtitle, filename, image, diagnosis, fix }: SolutionCardProps) {
+function SolutionCard({ icon: Icon, title, subtitle, filename, visual: Visual, diagnosis, fix }: SolutionCardProps) {
   return (
     <div className="relative rounded-[3px] overflow-hidden group border border-black/10 hover:border-blue/30 transition-all min-h-[780px]">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <SmartImage src={image} alt={title} fill className="object-cover" />
+      {/* Procedural visual background - visible on hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <Visual color="#0000FF" />
       </div>
 
       {/* White gradient overlay */}

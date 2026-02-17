@@ -59,7 +59,7 @@ function ScrambleText({ isHovered }: { isHovered: boolean }) {
   }, [isHovered, scramble]);
 
   return (
-    <span className="font-mono text-sm font-semibold uppercase tracking-wider">
+    <span className="text-sm font-bold uppercase tracking-wider" style={{ fontFamily: "'Unbounded', sans-serif" }}>
       {text}
     </span>
   );
@@ -159,7 +159,7 @@ export default function Navbar() {
               className="h-7 w-auto transition-transform duration-150 ease-out will-change-transform"
             />
             <div
-              className={`transition-all duration-200 ${
+              className={`absolute left-[calc(100%+0.5rem)] transition-all duration-200 ${
                 isLogoHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
               }`}
             >

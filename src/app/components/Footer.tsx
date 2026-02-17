@@ -1,20 +1,14 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaXTwitter, FaDiscord, FaGithub } from "react-icons/fa6";
-import { ArrowUpRight, Terminal, LayoutGrid, FileText, Code } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import IntegrationRequestModal from "./IntegrationRequestModal";
-import { motion, useInView } from "framer-motion";
-import { EnergyField } from "@/components/EnergyField";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const isCtaInView = useInView(ctaRef, { once: true, margin: "-100px" });
 
   const navLinks = [
     { label: "Platform", href: "/platform" },
@@ -35,99 +29,13 @@ const Footer = () => {
     { icon: FaGithub, href: "https://github.com/torque-labs", label: "GitHub" },
   ];
 
-  const agencyFeatures = [
-    {
-      icon: LayoutGrid,
-      title: 'Multi-Tenant "God View"',
-      description: "Manage 10+ client protocols from a single login.",
-    },
-    {
-      icon: FileText,
-      title: "Whitelabel Reporting",
-      description: "Auto-generate branded PDF reports for clients.",
-    },
-    {
-      icon: Code,
-      title: "Agency API",
-      description: "Build custom dashboards on top of Torque.",
-    },
-  ];
-
   return (
-    <footer className="w-full overflow-hidden relative bg-[#0A0F1C]">
+    <footer className="w-full overflow-hidden relative bg-[#0000FF]">
 
-      {/* Agencies & Partners Section */}
-      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24" ref={ctaRef}>
-        <EnergyField className="opacity-30" />
-
-        <div className="relative z-10">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-center mb-12"
-          >
-            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-white/60 border border-white/20 px-3 py-1.5 rounded-[3px]">
-              <Terminal className="w-3 h-3" />
-              <span>For Agencies & Partners</span>
-            </div>
-
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-white mb-4 leading-[1.1] tracking-tight">
-              Run Your Growth Practice on Torque
-            </h2>
-
-            <p className="text-base text-white/60 max-w-xl mx-auto">
-              Join agencies delivering 240% average ROI for their protocol clients.
-            </p>
-          </motion.div>
-
-          {/* Features Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-4xl mx-auto"
-          >
-            {agencyFeatures.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <div
-                  key={index}
-                  className="p-4 rounded-[3px] bg-white/5 border border-white/10"
-                >
-                  <div className="w-10 h-10 rounded-[3px] bg-white/10 flex items-center justify-center mb-3">
-                    <Icon className="w-5 h-5 text-white" />
-                  </div>
-                  <h3 className="font-display text-sm font-medium text-white mb-1">
-                    {feature.title}
-                  </h3>
-                  <p className="text-xs text-white/50">{feature.description}</p>
-                </div>
-              );
-            })}
-          </motion.div>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Button
-              onClick={() => setIsModalOpen(true)}
-              variant="inverse"
-              className="group"
-            >
-              Apply for Partner Program
-              <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Button>
-            <Button variant="inverse-ghost" href="https://docs.torque.so/">
-              View Documentation
-              <ArrowUpRight className="w-4 h-4 ml-2" />
-            </Button>
-          </motion.div>
+      {/* Big TORQUE Text */}
+      <div className="relative z-10 w-full">
+        <div className="text-[20vw] font-bold leading-[0.85] tracking-[-0.05em] text-white/10 select-none overflow-hidden" style={{ fontFamily: "'Unbounded', sans-serif" }}>
+          TORQUE
         </div>
       </div>
 
@@ -156,7 +64,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-[3px] border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all duration-200"
+                  className="w-10 h-10 rounded-[3px] border border-white bg-transparent flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-200"
                   aria-label={social.label}
                 >
                   <social.icon className="w-4 h-4" />
@@ -225,13 +133,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Big TORQUE Text */}
-      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] py-8 border-t border-white/10">
-        <div className="text-[15vw] md:text-[12vw] lg:text-[10vw] font-display font-bold leading-none tracking-tighter text-white/[0.03] select-none">
-          TORQUE
-        </div>
-      </div>
-
       {/* Bottom Bar */}
       <div className="relative z-10 border-t border-white/10">
         <div className="w-full px-6 md:px-8 lg:px-[4.5rem] py-6">
@@ -257,11 +158,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Integration Request Modal */}
-      <IntegrationRequestModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
     </footer>
   );
 };

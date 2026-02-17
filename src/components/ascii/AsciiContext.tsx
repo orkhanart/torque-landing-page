@@ -33,25 +33,25 @@ const defaultOptions: AsciiOptions = {
 };
 
 const defaultDitherOptions: DitherOptions = {
-  algorithm: "floyd-steinberg",
+  algorithm: "bayer",
   colorMode: "monochrome",
   threshold: 128,
-  scale: 0.5,
-  primaryColor: "#000000",
+  scale: 0.35,
+  primaryColor: "#0A0F1C",
   secondaryColor: "#ffffff",
   tertiaryColor: "#888888",
-  contrast: 1.2,
-  brightness: 0,
+  contrast: 1.4,
+  brightness: 0.05,
 };
 
 const AsciiContext = createContext<AsciiContextType | null>(null);
 
 export function AsciiProvider({ children }: { children: React.ReactNode }) {
-  const [enabled, setEnabled] = useState(false);
-  const [effectMode, setEffectMode] = useState<EffectMode>("ascii");
+  const [enabled, setEnabled] = useState(true);
+  const [effectMode, setEffectMode] = useState<EffectMode>("dither");
   const [options, setOptions] = useState<AsciiOptions>(defaultOptions);
   const [ditherOptions, setDitherOptions] = useState<DitherOptions>(defaultDitherOptions);
-  const [hideGradients, setHideGradients] = useState(false);
+  const [hideGradients, setHideGradients] = useState(true);
 
   const updateOption = useCallback(<K extends keyof AsciiOptions>(key: K, value: AsciiOptions[K]) => {
     setOptions((prev) => ({ ...prev, [key]: value }));

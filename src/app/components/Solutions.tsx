@@ -1,9 +1,13 @@
 "use client";
 
 import React from "react";
-import { TerminalCard } from "@/components/terminal";
 import { ArrowRight, DollarSign, Landmark, TrendingUp } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { VelocityFlow } from "@/components/card-visuals/VelocityFlow";
+import { LiquidityPool } from "@/components/card-visuals/LiquidityPool";
+import { RetentionLoop } from "@/components/card-visuals/RetentionLoop";
+
+type VisualType = "velocity" | "liquidity" | "retention";
 
 interface Solution {
   sector: string;
@@ -13,7 +17,14 @@ interface Solution {
   proof: string;
   icon: React.ReactNode;
   terminalTitle: string;
+  visualType: VisualType;
 }
+
+const visualComponents: Record<VisualType, React.ComponentType<{ color?: string }>> = {
+  velocity: VelocityFlow,
+  liquidity: LiquidityPool,
+  retention: RetentionLoop,
+};
 
 const solutions: Solution[] = [
   {
@@ -24,6 +35,7 @@ const solutions: Solution[] = [
     proof: "+40% Velocity Increase",
     icon: <DollarSign className="w-5 h-5" />,
     terminalTitle: "stablecoin.strategy",
+    visualType: "velocity",
   },
   {
     sector: "Lending",
@@ -33,6 +45,7 @@ const solutions: Solution[] = [
     proof: "Highest Utilization in Sector",
     icon: <Landmark className="w-5 h-5" />,
     terminalTitle: "lending.strategy",
+    visualType: "liquidity",
   },
   {
     sector: "Perps",
@@ -42,6 +55,7 @@ const solutions: Solution[] = [
     proof: "3x Increase in Trader Retention",
     icon: <TrendingUp className="w-5 h-5" />,
     terminalTitle: "perps.strategy",
+    visualType: "retention",
   },
 ];
 
@@ -65,67 +79,87 @@ export default function Solutions() {
         {/* Solutions Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {solutions.map((solution, index) => (
-            <TerminalCard
-              key={index}
-              title={solution.terminalTitle}
-              showDots={true}
-              variant="default"
-              className="h-full hover:shadow-lg transition-shadow duration-300"
-            >
-              {/* Icon & Sector */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 border border-black/10 flex items-center justify-center">
-                  {solution.icon}
-                </div>
-                <div>
-                  <h3 className="font-display text-xl font-medium text-black">
-                    {solution.sector}
-                  </h3>
-                </div>
-              </div>
-
-              {/* Title */}
-              <h4 className="font-mono text-sm uppercase tracking-wider text-black mb-4">
-                {solution.title}
-              </h4>
-
-              {/* Diagnosis */}
-              <div className="mb-4 p-3 bg-gray-50 border border-black/5">
-                <p className="font-mono text-[10px] uppercase tracking-wider text-black/40 mb-1">
-                  Diagnosis
-                </p>
-                <p className="text-sm text-black/70">{solution.diagnosis}</p>
-              </div>
-
-              {/* The Torque Fix */}
-              <div className="mb-4">
-                <p className="font-mono text-[10px] uppercase tracking-wider text-black/40 mb-1">
-                  The Fix
-                </p>
-                <p className="text-sm text-black leading-relaxed">
-                  {solution.fix}
-                </p>
-              </div>
-
-              {/* Proof */}
-              <div className="mb-6 p-3 bg-black text-white">
-                <p className="font-mono text-xs font-medium">{solution.proof}</p>
-              </div>
-
-              {/* CTA */}
-              <div className="mt-auto pt-4 border-t border-black/10">
-                <a
-                  href="/solutions"
-                  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-black hover:gap-3 transition-all group"
-                >
-                  <span>View Strategy</span>
-                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                </a>
-              </div>
-            </TerminalCard>
+            <SolutionCard key={index} solution={solution} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function SolutionCard({ solution }: { solution: Solution }) {
+  return (
+    <div className="group relative rounded-[3px] overflow-hidden border border-black/10 hover:border-blue/30 transition-all min-h-[640px]">
+      {/* Procedural visual background - visible on hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        {React.createElement(visualComponents[solution.visualType], { color: "#0000FF" })}
+      </div>
+
+      {/* White gradient overlay */}
+      <ImageGradient className="bg-gradient-to-t from-white via-white/85 to-white/60" />
+      <ImageGradient className="bg-gradient-to-br from-white/40 via-transparent to-transparent" />
+
+      {/* Terminal Header */}
+      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
+        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+        <span className="font-mono text-[9px] text-black/30">
+          {solution.terminalTitle}
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
+        <div className="mt-auto">
+          {/* Icon & Sector */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center group-hover:bg-blue/10 transition-colors">
+              {solution.icon}
+            </div>
+            <h3 className="font-display text-lg font-medium text-black group-hover:text-blue transition-colors">
+              {solution.sector}
+            </h3>
+          </div>
+
+          {/* Title */}
+          <h4 className="font-mono text-sm uppercase tracking-wider text-black mb-4">
+            {solution.title}
+          </h4>
+
+          {/* Diagnosis */}
+          <div className="mb-3 p-3 bg-white/80 backdrop-blur-sm border border-black/5 rounded-[2px]">
+            <p className="font-mono text-[10px] uppercase tracking-wider text-black/40 mb-1">
+              Diagnosis
+            </p>
+            <p className="text-sm text-black/70">{solution.diagnosis}</p>
+          </div>
+
+          {/* The Torque Fix */}
+          <div className="mb-3">
+            <p className="font-mono text-[10px] uppercase tracking-wider text-black/40 mb-1">
+              The Fix
+            </p>
+            <p className="text-sm text-black leading-relaxed">
+              {solution.fix}
+            </p>
+          </div>
+
+          {/* Proof */}
+          <div className="mb-4 p-3 bg-black text-white rounded-[2px]">
+            <p className="font-mono text-xs font-medium">{solution.proof}</p>
+          </div>
+
+          {/* CTA */}
+          <div className="pt-3 border-t border-black/10">
+            <a
+              href="/solutions"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-black hover:gap-3 transition-all group/link"
+            >
+              <span>View Strategy</span>
+              <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

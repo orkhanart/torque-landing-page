@@ -3,9 +3,17 @@
 import React from "react";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { featuredPlaybooks } from "@/app/data/playbooks";
-import { SmartImage } from "@/components/ascii/SmartImage";
+import { featuredPlaybooks, type Playbook } from "@/app/data/playbooks";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { RafflePattern } from "@/components/card-visuals/RafflePattern";
+import { NetworkPattern } from "@/components/card-visuals/NetworkPattern";
+import { GrowthBars } from "@/components/card-visuals/GrowthBars";
+
+const visualComponents: Record<Playbook["visualType"], React.ComponentType<{ color?: string }>> = {
+  raffle: RafflePattern,
+  network: NetworkPattern,
+  growth: GrowthBars,
+};
 
 export default function PlaybooksSection() {
   return (
@@ -59,9 +67,9 @@ function PlaybookCard({ playbook }: PlaybookCardProps) {
       href="/playbooks"
       className="group relative rounded-[3px] overflow-hidden border border-black/10 hover:border-blue/30 transition-all min-h-[720px]"
     >
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <SmartImage src={playbook.image} alt={playbook.title} fill className="object-cover" />
+      {/* Procedural visual background - visible on hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        {React.createElement(visualComponents[playbook.visualType], { color: "#0000FF" })}
       </div>
 
       {/* White gradient overlay */}
