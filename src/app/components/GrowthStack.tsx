@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Code, Trophy, Brain, Zap, ArrowUpRight, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
@@ -24,12 +24,12 @@ export default function GrowthStack() {
               Platform Features
             </div>
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-black leading-[1.1] tracking-tight">
-              Your Complete
+              The Growth
               <br />
-              <span className="text-black/40">Growth Stack</span>
+              <span className="text-black/40">Engine</span>
             </h2>
             <p className="text-base md:text-lg text-black/60 mt-4 max-w-xl">
-              Everything you need to acquire, retain, and grow your user base.
+              An onchain CRM and incentive engine designed to identify, predict, and retain high-value participants with surgical precision.
             </p>
           </div>
           <Button variant="outline" href="/platform" className="w-fit">
@@ -98,7 +98,7 @@ interface FeatureCardProps {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   description: string;
-  visual?: React.ReactNode;
+  visual?: React.ReactElement;
   filename: string;
   features?: Array<{ icon?: React.ComponentType<{ className?: string }>; dot?: boolean; label: string }>;
   metric?: string;
@@ -117,11 +117,13 @@ function FeatureCard({
   large,
   featured,
 }: FeatureCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/5 hover:border-black/15"}`}>
+    <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/5 hover:border-black/15"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 
       {/* Procedural visual background - hidden by default, visible on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">{visual}</div>
+      <div className="absolute inset-0 opacity-15 group-hover:opacity-100 transition-opacity duration-500">{visual && React.cloneElement(visual, { paused: !isHovered })}</div>
 
       {/* White gradient overlay */}
       <ImageGradient className={featured ? "bg-gradient-to-t from-white via-white/85 to-white/60" : "bg-gradient-to-t from-white via-white/90 to-white/70"} />
@@ -178,12 +180,14 @@ function FeatureCard({
 // API Card Component
 // =============================================================================
 function APICard() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className="relative rounded-[3px] group h-full border border-black/5 hover:border-black/15 transition-colors overflow-hidden min-h-[280px]">
+    <div className="relative rounded-[3px] group h-full border border-black/5 hover:border-black/15 transition-colors overflow-hidden min-h-[280px]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 
       {/* Procedural visual background - hidden by default, visible on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        <CircuitPattern color="#0000FF" />
+      <div className="absolute inset-0 opacity-15 group-hover:opacity-100 transition-opacity duration-500">
+        <CircuitPattern color="#0000FF" paused={!isHovered} />
       </div>
 
       {/* White gradient overlay */}

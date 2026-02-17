@@ -176,10 +176,7 @@ export default function Navbar() {
 
           {/* Right: Actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button variant="outline" href="https://docs.torque.so" external size="sm">
-              Docs
-            </Button>
-            <Button size="sm" onClick={() => setIsModalOpen(true)}>
+<Button size="sm" onClick={() => setIsModalOpen(true)}>
               Launch App
             </Button>
           </div>
@@ -281,10 +278,7 @@ function MobileMenu({ menuHeight, pathname, onClose, onModalOpen }: MobileMenuPr
           </Link>
         ))}
         <div className="pt-4 pb-2 space-y-3 border-t border-black/10 mt-2">
-          <Button variant="outline" href="https://docs.torque.so" external className="w-full">
-            Docs
-          </Button>
-          <Button onClick={onModalOpen} className="w-full">
+<Button onClick={onModalOpen} className="w-full">
             Launch App
           </Button>
         </div>

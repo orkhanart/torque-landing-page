@@ -5,8 +5,8 @@ export interface Stat {
 
 export const heroStats: Stat[] = [
   { value: "$10M+", label: "Distributed" },
-  { value: "906K", label: "Wallets" },
-  { value: "89M+", label: "Transactions" },
+  { value: "906K", label: "Wallets Analyzed" },
+  { value: "89M+", label: "Transactions Indexed" },
 ];
 
 // Rotating text phrases for hero

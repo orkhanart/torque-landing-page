@@ -5,11 +5,21 @@ import React, { useEffect, useRef } from "react";
 interface RetentionLoopProps {
   color?: string;
   className?: string;
+  paused?: boolean;
 }
 
-export function RetentionLoop({ color = "#0000FF", className = "" }: RetentionLoopProps) {
+export function RetentionLoop({ color = "#0000FF", className = "", paused = false }: RetentionLoopProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
+  const pausedRef = useRef(paused);
+  const animateFnRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    if (!paused && animateFnRef.current) {
+      animationRef.current = requestAnimationFrame(animateFnRef.current);
+    }
+  }, [paused]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -324,9 +334,12 @@ export function RetentionLoop({ color = "#0000FF", className = "" }: RetentionLo
       ctx.arc(getCx(), getCy(), 4, 0, Math.PI * 2);
       ctx.fill();
 
-      animationRef.current = requestAnimationFrame(animate);
+      if (!pausedRef.current) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
 
+    animateFnRef.current = animate;
     animate();
     window.addEventListener("resize", resize);
 

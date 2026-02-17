@@ -5,11 +5,21 @@ import React, { useEffect, useRef } from "react";
 interface LiquidityPoolProps {
   color?: string;
   className?: string;
+  paused?: boolean;
 }
 
-export function LiquidityPool({ color = "#0000FF", className = "" }: LiquidityPoolProps) {
+export function LiquidityPool({ color = "#0000FF", className = "", paused = false }: LiquidityPoolProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
+  const pausedRef = useRef(paused);
+  const animateFnRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    if (!paused && animateFnRef.current) {
+      animationRef.current = requestAnimationFrame(animateFnRef.current);
+    }
+  }, [paused]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -337,9 +347,12 @@ export function LiquidityPool({ color = "#0000FF", className = "" }: LiquidityPo
       ctx.fillStyle = `${color}${hex((0.08 + labelPulse) * 255)}`;
       ctx.fillText("YIELD ↑", w * 0.55, h * 0.1);
 
-      animationRef.current = requestAnimationFrame(animate);
+      if (!pausedRef.current) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
 
+    animateFnRef.current = animate;
     animate();
     window.addEventListener("resize", resize);
 

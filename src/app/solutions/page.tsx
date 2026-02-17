@@ -62,43 +62,17 @@ interface AdditionalMarket {
 // =============================================================================
 const solutions: Solution[] = [
   {
-    id: "stablecoins",
-    sector: "Stablecoins",
-    icon: CircleDot,
-    filename: "stablecoin.strategy",
-    image: "/generated/image/light-mono/floating-mass-01.jpg",
-    insight: {
-      title: "Ignite Velocity",
-      stat: "Market Cap ($175M) but no Velocity.",
-    },
-    problem: {
-      title: "The Distribution Gap",
-      points: [
-        "Stablecoins sit idle in wallets instead of circulating",
-        "High market cap creates false sense of adoption",
-        "No incentive for holders to actually use the asset",
-      ],
-    },
-    fix: {
-      title: "Turn holders into distribution nodes.",
-      description:
-        "We deployed a native referral layer that rewarded users for transaction volume, not just holding.",
-      mechanics: ["Referral Rebate (0.1% of volume)", "Looping Bonus (Leverage > 3x)"],
-      result: "+40% Velocity Increase",
-    },
-  },
-  {
     id: "lending",
     sector: "Lending",
     icon: CreditCard,
     filename: "lending.strategy",
     image: "/generated/image/light-mono/value-stack-light.jpg",
     insight: {
-      title: "Drive Real Yield",
-      stat: "No liquidity = no product (Cold Start).",
+      title: "Targeted Liquidity Injection",
+      stat: "The Utilization Paradox (High TVL / Low Borrowing).",
     },
     problem: {
-      title: "The Utilization Problem",
+      title: "The Utilization Paradox",
       points: [
         "Massive deposits sitting idle earning minimal yield",
         "Borrowing is under-incentivized compared to lending",
@@ -106,9 +80,9 @@ const solutions: Solution[] = [
       ],
     },
     fix: {
-      title: "Target 'First-Time' LPs.",
+      title: "Reward 'First-Time' LPs with duration-weighted bonuses.",
       description:
-        "Instead of universal APY, we targeted new LPs with a one-time bonus, filtering out wash traders by requiring a 48-hour hold.",
+        "Targeted Liquidity Injection: instead of universal APY, we targeted new LPs with duration-weighted bonuses to prime the pump.",
       mechanics: ["First-Time Deposit Bonus (5-10%)", "Duration-Weighted Rewards"],
       result: "Highest Utilization Rate (53%)",
     },
@@ -120,11 +94,11 @@ const solutions: Solution[] = [
     filename: "perps.strategy",
     image: "/generated/image/light-mono/network-nodes-light.jpg",
     insight: {
-      title: "Automate Retention",
-      stat: "The 'One-and-Done' Trader.",
+      title: "Habit Formation Architecture",
+      stat: "The 'One-and-Done' Trader (High Churn).",
     },
     problem: {
-      title: "The Wash Trading Problem",
+      title: "The One-and-Done Trader",
       points: [
         "High volume metrics hide mercenary trading behavior",
         "Users trade once for rewards, then disappear",
@@ -132,11 +106,37 @@ const solutions: Solution[] = [
       ],
     },
     fix: {
-      title: "Gamify Habit Formation.",
+      title: "Incentivize 'Streaks' over raw volume.",
       description:
-        "We shifted incentives from raw volume to 'Streaks.' Repeat winners drove 75% of total volume while consuming only 54% of the budget.",
+        "Habit Formation Architecture: we shifted incentives from raw volume to 'Streaks' to build habitual protocol usage.",
       mechanics: ["Volume-Based Raffles", "Streak Bonuses"],
       result: "+146% Net Retention",
+    },
+  },
+  {
+    id: "stablecoins",
+    sector: "Stablecoins",
+    icon: CircleDot,
+    filename: "stablecoin.strategy",
+    image: "/generated/image/light-mono/floating-mass-01.jpg",
+    insight: {
+      title: "Distribution Nodes",
+      stat: "The Velocity Gap ($175M+ Cap / 0 Velocity).",
+    },
+    problem: {
+      title: "The Velocity Gap",
+      points: [
+        "Stablecoins sit idle in wallets instead of circulating",
+        "High market cap creates false sense of adoption",
+        "No incentive for holders to actually use the asset",
+      ],
+    },
+    fix: {
+      title: "Turn passive holders into active transaction agents.",
+      description:
+        "Distribution Nodes: use referral rebates to turn passive holders into active transaction agents.",
+      mechanics: ["Referral Rebate (0.1% of volume)", "Looping Bonus (Leverage > 3x)"],
+      result: "+40% Velocity Increase",
     },
   },
 ];
@@ -217,11 +217,10 @@ export default function SolutionsPage() {
               Solutions
             </div>
             <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-              Stop Leaking Revenue
+              Engineering Protocol Equilibrium
             </h1>
             <p className="text-base md:text-lg text-black/60 max-w-2xl mb-6">
-              High TVL does not mean profit. We diagnosed the specific gaps where stablecoins,
-              lending markets, and DEXs lose real value—and built the primitives to fix them.
+              Every sector has a systemic flaw. Torque provides the diagnostics to find the leak and the primitives to fix it.
             </p>
 
             {/* Quick Nav */}
@@ -280,17 +279,17 @@ function SolutionsGrid() {
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
-              Battle-tested fixes
+              Battle-tested mechanical
               <br />
-              <span className="text-black/40">for broken incentives</span>
+              <span className="text-black/40">modules</span>
             </h2>
 
             <p className="text-lg md:text-xl text-black/60 max-w-2xl">
-              Each solution comes with diagnosis, mechanics, and proven results.
+              Each solution comes with diagnosis, mechanical logic, and proven results.
             </p>
           </div>
-          <Button variant="outline" href="/playbooks" className="w-fit">
-            View Playbooks
+          <Button variant="outline" href="/primitives" className="w-fit">
+            Explore Primitives
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
@@ -562,20 +561,20 @@ function SolutionsCTA({ onOpenModal }: SolutionsCTAProps) {
           Deploy Now
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-          Ready to fix your growth?
+          Ready to engineer
           <br />
-          <span className="text-black/40">Let's diagnose together</span>
+          <span className="text-black/40">protocol equilibrium?</span>
         </h2>
         <p className="text-base text-black/60 mb-6">
-          We've built solutions for stablecoins, lending, perps, and beyond. Tell us your challenge—we'll map the fix.
+          Torque exists to replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
         </p>
         <div className="flex flex-wrap items-center gap-4">
           <Button variant="accent" onClick={onOpenModal}>
-            Get Started
+            Deploy Logic
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
-          <Button variant="outline" href="/playbooks">
-            View Playbooks
+          <Button variant="outline" href="/primitives">
+            Explore Primitives
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
         </div>

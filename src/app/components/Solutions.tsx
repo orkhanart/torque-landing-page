@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ArrowRight, DollarSign, Landmark, TrendingUp } from "lucide-react";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
 import { VelocityFlow } from "@/components/card-visuals/VelocityFlow";
@@ -20,7 +20,7 @@ interface Solution {
   visualType: VisualType;
 }
 
-const visualComponents: Record<VisualType, React.ComponentType<{ color?: string }>> = {
+const visualComponents: Record<VisualType, React.ComponentType<{ color?: string; paused?: boolean }>> = {
   velocity: VelocityFlow,
   liquidity: LiquidityPool,
   retention: RetentionLoop,
@@ -28,20 +28,10 @@ const visualComponents: Record<VisualType, React.ComponentType<{ color?: string 
 
 const solutions: Solution[] = [
   {
-    sector: "Stablecoins",
-    title: "Ignite Velocity",
-    diagnosis: "Market Cap ($175M) but no Velocity.",
-    fix: "Referral & Social Layers.",
-    proof: "+40% Velocity Increase",
-    icon: <DollarSign className="w-5 h-5" />,
-    terminalTitle: "stablecoin.strategy",
-    visualType: "velocity",
-  },
-  {
     sector: "Lending",
-    title: "Drive Real Yield",
-    diagnosis: "No liquidity = no product.",
-    fix: "Duration-Weighted LP Rewards.",
+    title: "Targeted Liquidity Injection",
+    diagnosis: "The Utilization Paradox (High TVL / Low Borrowing).",
+    fix: "Reward 'First-Time' LPs with duration-weighted bonuses to prime the pump.",
     proof: "Highest Utilization in Sector",
     icon: <Landmark className="w-5 h-5" />,
     terminalTitle: "lending.strategy",
@@ -49,13 +39,23 @@ const solutions: Solution[] = [
   },
   {
     sector: "Perps",
-    title: "Automate Retention",
-    diagnosis: "One-time traders churn immediately.",
-    fix: "Gamified Volume & Streaks.",
+    title: "Habit Formation Architecture",
+    diagnosis: "The 'One-and-Done' Trader (High Churn).",
+    fix: "Incentivize 'Streaks' over raw volume to build habitual protocol usage.",
     proof: "3x Increase in Trader Retention",
     icon: <TrendingUp className="w-5 h-5" />,
     terminalTitle: "perps.strategy",
     visualType: "retention",
+  },
+  {
+    sector: "Stablecoins",
+    title: "Distribution Nodes",
+    diagnosis: "The Velocity Gap ($175M+ Cap / 0 Velocity).",
+    fix: "Use referral rebates to turn passive holders into active transaction agents.",
+    proof: "+40% Velocity Increase",
+    icon: <DollarSign className="w-5 h-5" />,
+    terminalTitle: "stablecoin.strategy",
+    visualType: "velocity",
   },
 ];
 
@@ -70,10 +70,13 @@ export default function Solutions() {
             Sector Solutions
           </div>
           <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium text-black leading-[1.1] tracking-tight">
-            Sector-Specific
+            Engineering Protocol
             <br />
-            <span className="text-black/40">Strategies</span>
+            <span className="text-black/40">Equilibrium</span>
           </h2>
+          <p className="text-lg text-black/60 mt-6 max-w-2xl">
+            Every sector has a systemic flaw. Torque provides the diagnostics to find the leak and the primitives to fix it.
+          </p>
         </div>
 
         {/* Solutions Grid */}
@@ -88,11 +91,13 @@ export default function Solutions() {
 }
 
 function SolutionCard({ solution }: { solution: Solution }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className="group relative rounded-[3px] overflow-hidden border border-black/10 hover:border-blue/30 transition-all min-h-[640px]">
+    <div className="group relative rounded-[3px] overflow-hidden border border-black/10 hover:border-blue/30 transition-all min-h-[640px]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       {/* Procedural visual background - visible on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        {React.createElement(visualComponents[solution.visualType], { color: "#0000FF" })}
+      <div className="absolute inset-0 opacity-15 group-hover:opacity-100 transition-opacity duration-500">
+        {React.createElement(visualComponents[solution.visualType], { color: "#0000FF", paused: !isHovered })}
       </div>
 
       {/* White gradient overlay */}

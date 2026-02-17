@@ -6,11 +6,22 @@ interface NeuralPulseProps {
   color?: string;
   nodeCount?: number;
   className?: string;
+  paused?: boolean;
 }
 
-export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "" }: NeuralPulseProps) {
+export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "", paused = false }: NeuralPulseProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
+  const pausedRef = useRef(paused);
+  const animateFnRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    if (!paused && animateFnRef.current) {
+      animationRef.current = requestAnimationFrame(animateFnRef.current);
+    }
+  }, [paused]);
+
   const mouseRef = useRef({ x: -1000, y: -1000, active: false });
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
@@ -273,9 +284,12 @@ export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "" 
         ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 70, 0, Math.PI * 2); ctx.fill();
       }
 
-      animationRef.current = requestAnimationFrame(animate);
+      if (!pausedRef.current) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
 
+    animateFnRef.current = animate;
     animate();
 
     const parent = canvas.parentElement;

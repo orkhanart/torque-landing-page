@@ -19,8 +19,11 @@ export default function TorqueIntelligenceFeature() {
               </div>
             </div>
 
+            <h2 className="text-3xl font-display font-medium text-white mb-4">
+              Stop Guessing. Start Observing.
+            </h2>
             <p className="text-xl text-slate-300 mb-8">
-              Turn Raw Data into Revenue. Predict campaign ROI before you spend a single dollar.
+              Our diagnostic core monitors the chain to detect the subtle difference between mercenary churn and long-term alignment. Filter for signal; ignore the noise.
             </p>
 
             {/* Feature List */}

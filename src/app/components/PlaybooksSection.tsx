@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { featuredPlaybooks, type Playbook } from "@/app/data/playbooks";
@@ -9,7 +9,7 @@ import { RafflePattern } from "@/components/card-visuals/RafflePattern";
 import { NetworkPattern } from "@/components/card-visuals/NetworkPattern";
 import { GrowthBars } from "@/components/card-visuals/GrowthBars";
 
-const visualComponents: Record<Playbook["visualType"], React.ComponentType<{ color?: string }>> = {
+const visualComponents: Record<Playbook["visualType"], React.ComponentType<{ color?: string; paused?: boolean }>> = {
   raffle: RafflePattern,
   network: NetworkPattern,
   growth: GrowthBars,
@@ -60,16 +60,19 @@ interface PlaybookCardProps {
 }
 
 function PlaybookCard({ playbook }: PlaybookCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
   const Icon = playbook.icon;
 
   return (
     <a
       href="/playbooks"
       className="group relative rounded-[3px] overflow-hidden border border-black/10 hover:border-blue/30 transition-all min-h-[720px]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Procedural visual background - visible on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        {React.createElement(visualComponents[playbook.visualType], { color: "#0000FF" })}
+      <div className="absolute inset-0 opacity-15 group-hover:opacity-100 transition-opacity duration-500">
+        {React.createElement(visualComponents[playbook.visualType], { color: "#0000FF", paused: !isHovered })}
       </div>
 
       {/* White gradient overlay */}

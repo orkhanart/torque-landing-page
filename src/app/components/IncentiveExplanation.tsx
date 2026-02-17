@@ -2,39 +2,31 @@
 
 import { SmartImage } from "@/components/ascii/SmartImage";
 import { GlassCard } from "@/components/ui/glass-card";
-import { HammerIcon, WandSparklesIcon, RocketIcon, BarChart3Icon } from "lucide-react";
+import { HammerIcon, WandSparklesIcon, BarChart3Icon } from "lucide-react";
 
 const cards = [
   {
     id: 1,
-    title: "Explore",
-    description: "Unlock deep insights into user behavior and holder segments. Discover who your community is and what drives them.",
+    title: "Sync",
+    description: "Embed the SDK to give your protocol sensory input. No engineering bloat; just 100% visibility into user behavior.",
     image: "/generated/image/mono-3d/hero-network-nodes.jpg",
-    alt: "Explore data visualization",
+    alt: "SDK integration visualization",
     icon: BarChart3Icon,
   },
   {
     id: 2,
-    title: "Create Incentive",
-    description: "Design and launch on-chain incentives in minutes. Choose from pre-built modules like leaderboards, raffles, and rebates.",
+    title: "Architect",
+    description: "Define your logic gates. Use our visual builder to set \"Golden Actions\"—ensuring capital only flows to users who meet specific value thresholds.",
     image: "/generated/image/mono-3d/glass-cube-stack.jpg",
-    alt: "Incentive type selection interface",
+    alt: "Visual logic builder interface",
     icon: HammerIcon,
   },
   {
     id: 3,
-    title: "Launch",
-    description: "Allocate tokens and set budgets with built-in analytics. Fund campaigns securely and transparently — right from your wallet.",
-    image: "/generated/image/mono-3d/vault-door.jpg",
-    alt: "Campaign launch interface",
-    icon: RocketIcon,
-  },
-  {
-    id: 4,
-    title: "Optimize",
-    description: "Use Torque Intelligence to measure performance and automatically optimize incentives. Identify what's working — and scale it instantly.",
+    title: "Equilibrate",
+    description: "Monitor real-time ROI telemetry. Torque identifies high-performance paths and automatically scales budget to what works.",
     image: "/generated/image/mono-3d/data-stream.jpg",
-    alt: "AI optimization dashboard",
+    alt: "ROI telemetry dashboard",
     icon: WandSparklesIcon,
   },
 ];
@@ -44,13 +36,13 @@ const IncentiveExplanation = () => {
     <div>
       <div className="flex flex-col md:gap-4 gap-2 mb-8 md:mb-12">
         <span className="text-xs font-mono text-primary uppercase tracking-wider">
-          How It Works
+          The Workflow
         </span>
         <h2 className="text-black text-2xl md:text-4xl lg:text-5xl font-medium">
-          Growth from A to Z
+          The Growth Engine
         </h2>
         <p className="text-black/70 text-sm md:text-base max-w-2xl">
-          Everything you need to design, deploy, and measure on-chain incentives.
+          An onchain CRM and incentive engine designed to identify, predict, and retain high-value participants with surgical precision.
         </p>
       </div>
 
@@ -87,73 +79,40 @@ const IncentiveExplanation = () => {
         ))}
       </div>
 
-      {/* Desktop view: Two-column masonry layout */}
-      <div className="hidden lg:grid lg:grid-cols-2 gap-8">
-        {/* Left column */}
-        <div className="flex flex-col gap-8">
-          {[cards[0], cards[2]].map((card) => (
-            <GlassCard
-              key={card.id}
-              glow={true}
-              scale={false}
-              border="subtle"
-              padding="none"
-              blur={true}
-            >
-              <div className="p-6 md:p-8">
-                <div className="flex items-center justify-between mb-3">
+      {/* Desktop view: Three-column grid */}
+      <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+        {cards.map((card) => (
+          <GlassCard
+            key={card.id}
+            glow={true}
+            scale={false}
+            border="subtle"
+            padding="none"
+            blur={true}
+          >
+            <div className="p-6 md:p-8">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs text-primary/60">0{card.id}</span>
                   <h3 className="text-2xl md:text-3xl font-medium text-black">{card.title}</h3>
-                  <card.icon className="w-7 h-7 md:w-8 md:h-8 text-primary flex-shrink-0" />
                 </div>
-                <p className="text-sm md:text-base text-black/70 mb-6">
-                  {card.description}
-                </p>
+                <card.icon className="w-7 h-7 md:w-8 md:h-8 text-primary flex-shrink-0" />
               </div>
-              <div className="px-4 md:px-5 pb-4 md:pb-5">
-                <SmartImage
-                  src={card.image}
-                  alt={card.alt}
-                  width={840}
-                  height={800}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            </GlassCard>
-          ))}
-        </div>
-
-        {/* Right column - offset for masonry effect */}
-        <div className="flex flex-col gap-8 lg:pt-20">
-          {[cards[1], cards[3]].map((card) => (
-            <GlassCard
-              key={card.id}
-              glow={true}
-              scale={false}
-              border="subtle"
-              padding="none"
-              blur={true}
-            >
-              <div className="p-6 md:p-8">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-2xl md:text-3xl font-medium text-black">{card.title}</h3>
-                  <card.icon className="w-7 h-7 md:w-8 md:h-8 text-primary flex-shrink-0" />
-                </div>
-                <p className="text-sm md:text-base text-black/70 mb-6">
-                  {card.description}
-                </p>
-              </div>
-              <div className="px-4 md:px-5 pb-4 md:pb-5">
-                <SmartImage
-                  src={card.image}
-                  alt={card.alt}
-                  width={840}
-                  height={800}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            </GlassCard>
-          ))}
-        </div>
+              <p className="text-sm md:text-base text-black/70 mb-6">
+                {card.description}
+              </p>
+            </div>
+            <div className="px-4 md:px-5 pb-4 md:pb-5">
+              <SmartImage
+                src={card.image}
+                alt={card.alt}
+                width={840}
+                height={800}
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+          </GlassCard>
+        ))}
       </div>
     </div>
   );

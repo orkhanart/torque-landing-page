@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaXTwitter, FaDiscord, FaGithub } from "react-icons/fa6";
-import { ArrowUpRight } from "lucide-react";
+import { FaXTwitter } from "react-icons/fa6";
+import { ArrowUpRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -15,18 +15,13 @@ const Footer = () => {
     { label: "Solutions", href: "/solutions" },
     { label: "Playbooks", href: "/playbooks" },
     { label: "Company", href: "/company" },
+    { label: "Contacts", href: "/contacts" },
   ];
 
-  const resourceLinks = [
-    { label: "Documentation", href: "https://docs.torque.so/", external: true },
-    { label: "Blog", href: "/blog" },
-    { label: "Changelog", href: "/changelog" },
-  ];
 
   const socialLinks = [
     { icon: FaXTwitter, href: "https://x.com/torqueprotocol", label: "Twitter" },
-    { icon: FaDiscord, href: "https://discord.gg/torque", label: "Discord" },
-    { icon: FaGithub, href: "https://github.com/torque-labs", label: "GitHub" },
+    { icon: Mail, href: "mailto:contact@torque.so", label: "Email" },
   ];
 
   return (
@@ -41,7 +36,7 @@ const Footer = () => {
 
       {/* Footer Content */}
       <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
@@ -54,7 +49,7 @@ const Footer = () => {
               />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-xs">
-              The growth protocol for Solana. Optimize incentives, maximize results.
+              Torque exists to replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
@@ -92,35 +87,13 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Resources Column */}
-          <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-white/50 mb-6">
-              Resources
-            </h4>
-            <ul className="space-y-4">
-              {resourceLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    className="text-white/70 hover:text-white transition-colors duration-300 text-sm inline-flex items-center gap-1"
-                  >
-                    {link.label}
-                    {link.external && <ArrowUpRight className="w-3 h-3" />}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* CTA Column */}
+{/* CTA Column */}
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-white/50 mb-6">
               Get Started
             </h4>
             <p className="text-white/60 text-sm mb-6">
-              Ready to optimize your growth strategy?
+              Ready to engineer protocol equilibrium?
             </p>
             <Button
               href="https://app.torque.so"

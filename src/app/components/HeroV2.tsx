@@ -84,9 +84,9 @@ const HeroV2 = () => {
         {/* Interactive Gradient Background */}
         <InteractiveGradient />
 
-        {/* 3D Helicoid Visual — right side, desktop only */}
-        <div className="hidden lg:block absolute right-0 top-0 w-[55%] h-full z-10 pointer-events-none">
-          <div className="w-full h-full pointer-events-auto">
+        {/* 3D Helicoid Visual — behind content on mobile/tablet, right-aligned on desktop */}
+        <div className="absolute inset-0 lg:left-auto lg:right-0 lg:w-[55%] h-full z-10 pointer-events-none">
+          <div className="w-full h-full pointer-events-auto opacity-25 sm:opacity-35 lg:opacity-100 transition-opacity">
             <TorqueHelicoid />
           </div>
         </div>
@@ -106,17 +106,18 @@ const HeroV2 = () => {
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black">
-              <span className="block whitespace-nowrap">
-                <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
-                  The Intelligence Layer
-                </GlitchText>
-              </span>
-              <span className="block text-black/40 whitespace-nowrap"><RotatingText /></span>
+              <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
+                The Onchain
+              </GlitchText>
+              <br />
+              <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
+                Growth Engine
+              </GlitchText>
             </h1>
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl">
-              40% of incentive spend is wasted. We fix that with data-driven reward optimization.
+              Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.
             </p>
 
             {/* Action Buttons */}
@@ -126,14 +127,14 @@ const HeroV2 = () => {
                 variant="accent"
                 className="group"
               >
-                Get Started
+                Deploy Logic
                 <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Button>
               <Button
                 variant="outline"
-                href="/playbooks"
+                href="/primitives"
               >
-                View Playbooks
+                Explore Primitives
                 <ArrowUpRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
@@ -204,13 +205,13 @@ function SolutionSection() {
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
-              Distribution infrastructure
+              Engineering Protocol
               <br />
-              <span className="text-black/40">with intelligence</span>
+              <span className="text-black/40">Equilibrium</span>
             </h2>
 
             <p className="text-lg md:text-xl text-black/60 max-w-2xl">
-              Sector-specific strategies for the problems no one else is solving.
+              Every sector has a systemic flaw. Torque provides the diagnostics to find the leak and the primitives to fix it.
             </p>
           </div>
           <Button variant="outline" href="/solutions" className="w-fit">
@@ -222,31 +223,31 @@ function SolutionSection() {
         {/* Solution Cards Grid */}
         <div className="grid md:grid-cols-3 gap-6">
           <SolutionCard
-            icon={CircleDot}
-            title="Stablecoins"
-            subtitle="Ignite Velocity"
-            filename="stablecoin.strategy"
-            visual={VelocityFlow}
-            diagnosis="High Cap / Low Flow"
-            fix="Referral & Social Layers"
-          />
-          <SolutionCard
             icon={CreditCard}
             title="Lending"
-            subtitle="Drive Real Yield"
+            subtitle="Targeted Liquidity Injection"
             filename="lending.strategy"
             visual={LiquidityPool}
-            diagnosis="High TVL / Low Borrows"
-            fix="Looping & Borrowing Rewards"
+            diagnosis="The Utilization Paradox (High TVL / Low Borrowing)"
+            fix="Reward 'First-Time' LPs with duration-weighted bonuses to prime the pump."
           />
           <SolutionCard
             icon={TrendingUp}
             title="Perps"
-            subtitle="Automate Retention"
+            subtitle="Habit Formation Architecture"
             filename="perps.strategy"
             visual={RetentionLoop}
-            diagnosis="High Vol / Low Loyalty"
-            fix="Trader Progression Systems"
+            diagnosis="The 'One-and-Done' Trader (High Churn)"
+            fix="Incentivize 'Streaks' over raw volume to build habitual protocol usage."
+          />
+          <SolutionCard
+            icon={CircleDot}
+            title="Stablecoins"
+            subtitle="Distribution Nodes"
+            filename="stablecoin.strategy"
+            visual={VelocityFlow}
+            diagnosis="The Velocity Gap ($175M+ Cap / 0 Velocity)"
+            fix="Use referral rebates to turn passive holders into active transaction agents."
           />
         </div>
       </div>
@@ -262,17 +263,19 @@ interface SolutionCardProps {
   title: string;
   subtitle: string;
   filename: string;
-  visual: React.ComponentType<{ color?: string }>;
+  visual: React.ComponentType<{ color?: string; paused?: boolean }>;
   diagnosis: string;
   fix: string;
 }
 
 function SolutionCard({ icon: Icon, title, subtitle, filename, visual: Visual, diagnosis, fix }: SolutionCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className="relative rounded-[3px] overflow-hidden group border border-black/10 hover:border-blue/30 transition-all min-h-[780px]">
+    <div className="relative rounded-[3px] overflow-hidden group border border-black/10 hover:border-blue/30 transition-all min-h-[780px]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       {/* Procedural visual background - visible on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        <Visual color="#0000FF" />
+      <div className="absolute inset-0 opacity-15 group-hover:opacity-100 transition-opacity duration-500">
+        <Visual color="#0000FF" paused={!isHovered} />
       </div>
 
       {/* White gradient overlay */}
@@ -341,23 +344,23 @@ function HomepageCTA({ onOpenModal }: HomepageCTAProps) {
       >
         <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
           <Rocket className="w-3 h-3" />
-          Ready to Start?
+          Ready to Deploy?
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-          Turn insights into action
+          Ready to engineer
           <br />
-          <span className="text-black/40">—in minutes</span>
+          <span className="text-black/40">protocol equilibrium?</span>
         </h2>
         <p className="text-base text-black/60 mb-6">
-          Join 40+ protocols using Torque to optimize their incentive spend and drive sustainable growth.
+          Torque exists to replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
         </p>
         <div className="flex flex-wrap items-center gap-4">
           <Button variant="accent" onClick={onOpenModal}>
-            Get Whitelisted
+            Deploy Logic
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
-          <Button variant="outline" href="/platform">
-            Explore Platform
+          <Button variant="outline" href="/primitives">
+            Explore Primitives
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
         </div>

@@ -5,11 +5,21 @@ import React, { useEffect, useRef } from "react";
 interface RewardFlowProps {
   color?: string;
   className?: string;
+  paused?: boolean;
 }
 
-export function RewardFlow({ color = "#0000FF", className = "" }: RewardFlowProps) {
+export function RewardFlow({ color = "#0000FF", className = "", paused = false }: RewardFlowProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
+  const pausedRef = useRef(paused);
+  const animateFnRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    if (!paused && animateFnRef.current) {
+      animationRef.current = requestAnimationFrame(animateFnRef.current);
+    }
+  }, [paused]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -301,9 +311,12 @@ export function RewardFlow({ color = "#0000FF", className = "" }: RewardFlowProp
         }
       });
 
-      animationRef.current = requestAnimationFrame(animate);
+      if (!pausedRef.current) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
 
+    animateFnRef.current = animate;
     animate();
 
     window.addEventListener("resize", resizeCanvas);

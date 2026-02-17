@@ -58,7 +58,7 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
     // ---- ASCII Effect ----
-    const ascii = new AsciiEffect(renderer, " .,:;+*?%S#@", {
+    const ascii = new AsciiEffect(renderer, " .,:;+*?%T#@", {
       resolution: 0.15,
       scale: 1,
       color: false,
@@ -122,11 +122,16 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
           vec3 pos = position;
           vec3 norm = normal;
 
-          // Twist deformation
+          // Twist deformation (X mouse controls twist, Y mouse controls warp)
           float tw = 1.5 + uMouse.x * 0.8 + uScroll * 1.5;
           float ang = pos.y * tw + uTime * 0.3;
           pos.xz = rot2(ang) * pos.xz;
           norm.xz = rot2(ang) * norm.xz;
+
+          // Vertical warp from mouse Y
+          float vertWarp = uMouse.y * 0.5;
+          pos.yz = rot2(vertWarp * pos.x) * pos.yz;
+          norm.yz = rot2(vertWarp * pos.x) * norm.yz;
 
           // Breathing
           pos *= 1.0 + sin(uTime * 0.5) * 0.04;
@@ -195,7 +200,7 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
       uScroll.value += (scroll.current - uScroll.value) * 0.05;
 
       mesh.rotation.y += 0.003;
-      mesh.rotation.x = Math.sin(t * 0.2) * 0.1;
+      mesh.rotation.x = Math.sin(t * 0.2) * 0.1 + mouse.current.y * 0.3;
 
       // Camera parallax from mouse
       camera.position.x +=
@@ -220,6 +225,14 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
       mouse.current.y = -((e.clientY - r.top) / r.height) * 2 + 1;
     };
 
+    const onTouch = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      const r = el.getBoundingClientRect();
+      mouse.current.x = ((touch.clientX - r.left) / r.width) * 2 - 1;
+      mouse.current.y = -((touch.clientY - r.top) / r.height) * 2 + 1;
+    };
+
     const onScroll = () => {
       scroll.current = Math.min(window.scrollY / window.innerHeight, 1);
     };
@@ -234,6 +247,7 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
     };
 
     window.addEventListener("mousemove", onMove);
+    window.addEventListener("touchmove", onTouch, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
 
@@ -242,6 +256,7 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
       dead = true;
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("touchmove", onTouch);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       geo.dispose();

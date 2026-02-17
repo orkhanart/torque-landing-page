@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 interface CodeStreamProps {
   color?: string;
   className?: string;
+  paused?: boolean;
 }
 
 const codeSnippets = [
@@ -29,10 +30,19 @@ const codeSnippets = [
   "});",
 ];
 
-export function CodeStream({ color = "#0000FF", className = "" }: CodeStreamProps) {
+export function CodeStream({ color = "#0000FF", className = "", paused = false }: CodeStreamProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>(0);
+  const pausedRef = useRef(paused);
+  const animateFnRef = useRef<(() => void) | null>(null);
   const offsetRef = useRef(0);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    if (!paused && animateFnRef.current) {
+      animationRef.current = requestAnimationFrame(animateFnRef.current);
+    }
+  }, [paused]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -50,9 +60,12 @@ export function CodeStream({ color = "#0000FF", className = "" }: CodeStreamProp
 
       container.style.transform = `translateY(-${offsetRef.current}px)`;
 
-      animationRef.current = requestAnimationFrame(animate);
+      if (!pausedRef.current) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
 
+    animateFnRef.current = animate;
     animate();
 
     return () => {

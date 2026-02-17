@@ -12,32 +12,32 @@ interface Primitive {
 
 const primitives: Primitive[] = [
   {
-    name: "Incentives",
-    newName: "Smart Rewards",
+    name: "DEX Liquidity Incentive",
+    newName: "Liquidity Velocity Multiplier",
     description:
-      "Move beyond APY. Program incentives based on user quality and retention. Stop rewarding mercenary capital.",
-    icon: "🎯",
+      "Leverages lottery psychology to drive 100x volume per dollar spent.",
+    icon: "⚡",
   },
   {
-    name: "Leaderboards",
-    newName: "Velocity Context",
+    name: "Onchain User Retention",
+    newName: "Duration-Weighted Retention",
     description:
-      "Visualize competition to drive usage. Perfect for solving low-velocity gaps in Stablecoins and Lending.",
-    icon: "📊",
+      "Rewards users based on time-weighted participation to filter out mercenary capital.",
+    icon: "⏱",
   },
   {
-    name: "Referrals",
-    newName: "The Social Graph",
+    name: "Referral & Social Distribution",
+    newName: "Viral Growth Coefficient",
     description:
-      "Turn passive holders into active distribution nodes. Fix the 'distribution gap' seen in major assets.",
+      "Turn holders into distribution nodes with multi-tier onchain attribution.",
     icon: "🔗",
   },
   {
-    name: "Data",
-    newName: "Quality Scoring",
+    name: "Habit Formation Architecture",
+    newName: "Iterative Interaction Loops",
     description:
-      "Measure what matters: user retention, velocity, and network effects. Not just TVL.",
-    icon: "🧮",
+      "Shift rewards from raw volume to 'Streaks' to build consistent user retention.",
+    icon: "🔄",
   },
 ];
 
@@ -47,10 +47,10 @@ export default function GrowthPrimitives() {
       {/* Section Header */}
       <div className="mb-12 text-center">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans font-normal text-foreground mb-4">
-          The Growth Stack
+          Strategic Primitives Library
         </h2>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          The building blocks for durable onchain networks.
+          Composable building blocks for onchain growth. Deploy proven logic to solve specific gaps in velocity, retention, and liquidity.
         </p>
       </div>
 

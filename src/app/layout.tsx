@@ -4,11 +4,10 @@ import "./globals.css";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { AsciiProvider } from "@/components/ascii/AsciiContext";
-import { AsciiControlPanel } from "@/components/ascii/AsciiControlPanel";
 
 export const metadata: Metadata = {
-  title: "Torque | The Revenue Engine for On-Chain Growth",
-  description: "Stop renting mercenary TVL. Torque is the intelligent growth stack for Solana protocols, driving retention and revenue through programmable incentives.",
+  title: "Torque | The Growth Engine for Onchain Economies",
+  description: "Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.",
   icons: {
     icon: [
       { url: "/logos/torque-symbol-app.svg", type: "image/svg+xml" },
@@ -17,8 +16,8 @@ export const metadata: Metadata = {
     apple: "/logos/torque-symbol-app.svg",
   },
   openGraph: {
-    title: "Torque | The Revenue Engine for On-Chain Growth",
-    description: "Stop renting mercenary TVL. Torque is the intelligent growth stack for Solana protocols, driving retention and revenue through programmable incentives.",
+    title: "Torque | The Growth Engine for Onchain Economies",
+    description: "Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.",
     url: "https://torque.so",
     siteName: "Torque",
     images: [
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
         url: "/og-image-light-mode.png",
         width: 1200,
         height: 675,
-        alt: "Torque - The Revenue Engine for On-Chain Growth",
+        alt: "Torque - The Growth Engine for Onchain Economies",
       },
     ],
     locale: "en_US",
@@ -34,8 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Torque | The Revenue Engine for On-Chain Growth",
-    description: "Stop renting mercenary TVL. Torque is the intelligent growth stack for Solana protocols, driving retention and revenue through programmable incentives.",
+    title: "Torque | The Growth Engine for Onchain Economies",
+    description: "Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.",
     images: ["/og-image-light-mode.png"],
   },
 };
@@ -71,7 +70,6 @@ export default function RootLayout({
           <ScrollProvider>
             <ScrollProgress />
             {children}
-            <AsciiControlPanel />
           </ScrollProvider>
         </AsciiProvider>
       </body>

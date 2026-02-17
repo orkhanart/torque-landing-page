@@ -5,11 +5,21 @@ import React, { useEffect, useRef } from "react";
 interface GrowthBarsProps {
   color?: string;
   className?: string;
+  paused?: boolean;
 }
 
-export function GrowthBars({ color = "#0000FF", className = "" }: GrowthBarsProps) {
+export function GrowthBars({ color = "#0000FF", className = "", paused = false }: GrowthBarsProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
+  const pausedRef = useRef(paused);
+  const animateFnRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    if (!paused && animateFnRef.current) {
+      animationRef.current = requestAnimationFrame(animateFnRef.current);
+    }
+  }, [paused]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -239,9 +249,12 @@ export function GrowthBars({ color = "#0000FF", className = "" }: GrowthBarsProp
       ctx.closePath();
       ctx.fill();
 
-      animationRef.current = requestAnimationFrame(animate);
+      if (!pausedRef.current) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
 
+    animateFnRef.current = animate;
     animate();
     window.addEventListener("resize", resize);
 

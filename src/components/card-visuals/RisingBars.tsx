@@ -6,15 +6,26 @@ interface RisingBarsProps {
   color?: string;
   barCount?: number;
   className?: string;
+  paused?: boolean;
 }
 
 export function RisingBars({
   color = "#0000FF",
   barCount = 8,
   className = "",
+  paused = false,
 }: RisingBarsProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
+  const pausedRef = useRef(paused);
+  const animateFnRef = useRef<((timestamp: number) => void) | null>(null);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    if (!paused && animateFnRef.current) {
+      animationRef.current = requestAnimationFrame(animateFnRef.current);
+    }
+  }, [paused]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -124,9 +135,12 @@ export function RisingBars({
         }
       });
 
-      animationRef.current = requestAnimationFrame(animate);
+      if (!pausedRef.current) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
 
+    animateFnRef.current = animate;
     animationRef.current = requestAnimationFrame(animate);
 
     window.addEventListener("resize", resizeCanvas);
