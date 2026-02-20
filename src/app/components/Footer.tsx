@@ -49,7 +49,7 @@ const Footer = () => {
               />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-xs">
-              Torque exists to replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
+              The onchain growth engine for Solana. Programmable incentives that drive real results.
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
@@ -93,7 +93,7 @@ const Footer = () => {
               Get Started
             </h4>
             <p className="text-white/60 text-sm mb-6">
-              Ready to engineer protocol equilibrium?
+              Ready to start driving measurable growth?
             </p>
             <Button
               href="https://app.torque.so"

@@ -42,12 +42,12 @@ export default function PlatformPage() {
               The Growth Operating System
             </h1>
             <p className="text-base md:text-lg text-black/60 max-w-2xl">
-              On-Chain CRM and Incentive Engine that helps you identify high-value users,
-              predict their behavior, and retain them with surgical precision.
+              An onchain CRM and incentive engine that helps you identify high-value users,
+              predict their behavior, and keep them coming back.
             </p>
             <div className="flex flex-wrap items-center gap-4 mt-6">
-              <Button variant="accent" href="https://platform.torque.so/">
-                Launch Platform
+              <Button variant="accent" href="https://app.torque.so">
+                Launch App
                 <ArrowUpRight className="w-4 h-4 ml-2" />
               </Button>
               <Button variant="outline" href="https://docs.torque.so/">
@@ -113,7 +113,7 @@ export default function PlatformPage() {
           icon={Zap}
           label="Growth Engines"
           title="Launch High-ROI Campaigns"
-          description="Deploy mechanics that drive viral loops and retention."
+          description="Deploy incentive mechanics that drive compounding engagement and retention."
           image="/generated/image/light-mono/ascending-platforms.jpg"
           imageAlt="Growth Mechanics"
           imagePosition="right"
@@ -229,8 +229,8 @@ export default function PlatformPage() {
               Join leading protocols using Torque to drive sustainable growth.
             </p>
             <div className="flex flex-wrap items-center gap-4">
-              <Button variant="accent" href="https://platform.torque.so/">
-                Get API Keys
+              <Button variant="accent" href="https://app.torque.so">
+                Launch App
                 <ArrowUpRight className="w-4 h-4 ml-2" />
               </Button>
               <Button variant="outline" href="https://docs.torque.so/">

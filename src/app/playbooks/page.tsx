@@ -121,10 +121,10 @@ export default function PlaybooksPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button
                   variant="accent"
-                  onClick={() => setIsModalOpen(true)}
+                  href="https://app.torque.so"
                   className="group"
                 >
-                  Open Builder
+                  Launch App
                   <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Button>
                 <Button variant="outline" href="https://docs.torque.so">

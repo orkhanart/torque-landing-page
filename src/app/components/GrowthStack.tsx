@@ -21,15 +21,15 @@ export default function GrowthStack() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40 border border-black/10 px-2 py-1 rounded-[3px]">
               <span className="w-1 h-1 bg-blue rounded-full" />
-              Platform Features
+              Platform
             </div>
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-black leading-[1.1] tracking-tight">
-              The Growth
+              Identify. Target.
               <br />
-              <span className="text-black/40">Engine</span>
+              <span className="text-black/40">Retain.</span>
             </h2>
             <p className="text-base md:text-lg text-black/60 mt-4 max-w-xl">
-              An onchain CRM and incentive engine designed to identify, predict, and retain high-value participants with surgical precision.
+              An onchain CRM and incentive engine that finds your highest-value users, predicts their next move, and keeps them coming back.
             </p>
           </div>
           <Button variant="outline" href="/platform" className="w-fit">
@@ -77,7 +77,7 @@ export default function GrowthStack() {
               description='Ask "Which wallets are about to churn?" and get actionable recommendations.'
               visual={<NeuralPulse color="#0000FF" nodeCount={10} />}
               filename="intelligence.ai"
-              metric="Predictive analytics"
+              metric="15K+ sybils filtered"
             />
           </div>
 
@@ -211,7 +211,7 @@ function APICard() {
             Developer-first Infrastructure
           </h3>
           <p className="text-black/60 text-xs leading-relaxed mb-3">
-            Full API access, webhooks, and SDK for seamless integration.
+            Full API, webhooks, and SDK. Integrate in minutes, not sprints.
           </p>
 
           <div className="pt-3 border-t border-black/10 flex flex-wrap items-center gap-1.5">

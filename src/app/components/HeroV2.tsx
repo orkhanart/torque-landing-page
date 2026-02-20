@@ -113,24 +113,24 @@ const HeroV2 = () => {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl">
-              Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.
+              Turn raw Solana data into high-ROI incentives. Automate acquisition, retention, and liquidity — so every dollar drives measurable growth.
             </p>
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-start gap-4 mb-16">
               <Button
-                onClick={() => setIsModalOpen(true)}
+                href="https://app.torque.so"
                 variant="accent"
                 className="group"
               >
-                Deploy Logic
+                Launch App
                 <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Button>
               <Button
                 variant="outline"
-                href="/primitives"
+                href="/playbooks"
               >
-                Explore Primitives
+                Explore Playbooks
                 <ArrowUpRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
@@ -197,17 +197,17 @@ function SolutionSection() {
           <div>
             <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
               <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
-              <span>The Solutions</span>
+              <span>Solutions</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
-              Engineering Protocol
+              Every sector has
               <br />
-              <span className="text-black/40">Equilibrium</span>
+              <span className="text-black/40">a growth problem</span>
             </h2>
 
             <p className="text-lg md:text-xl text-black/60 max-w-2xl">
-              Every sector has a systemic flaw. Torque provides the diagnostics to find the leak and the primitives to fix it.
+              Torque diagnoses the specific flaw in your sector and deploys the right incentive logic to fix it.
             </p>
           </div>
           <Button variant="outline" href="/solutions" className="w-fit">
@@ -243,7 +243,7 @@ function SolutionSection() {
             filename="stablecoin.strategy"
             visual={VelocityFlow}
             diagnosis="The Velocity Gap ($175M+ Cap / 0 Velocity)"
-            fix="Use referral rebates to turn passive holders into active transaction agents."
+            fix="Use referral rebates to turn passive holders into active distributors."
           />
         </div>
       </div>
@@ -340,23 +340,23 @@ function HomepageCTA({ onOpenModal }: HomepageCTAProps) {
       >
         <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
           <Rocket className="w-3 h-3" />
-          Ready to Deploy?
+          Get Started
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-          Ready to engineer
+          Stop guessing.
           <br />
-          <span className="text-black/40">protocol equilibrium?</span>
+          <span className="text-black/40">Start engineering growth.</span>
         </h2>
         <p className="text-base text-black/60 mb-6">
-          Torque exists to replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
+          Replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
         </p>
         <div className="flex flex-wrap items-center gap-4">
-          <Button variant="accent" onClick={onOpenModal}>
-            Deploy Logic
+          <Button variant="accent" href="https://app.torque.so">
+            Launch App
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
-          <Button variant="outline" href="/primitives">
-            Explore Primitives
+          <Button variant="outline" href="/playbooks">
+            Explore Playbooks
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
         </div>

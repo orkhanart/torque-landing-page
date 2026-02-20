@@ -104,8 +104,8 @@ export default function CompanyPage() {
               <span className="text-black/40">we wished we had.</span>
             </h1>
             <p className="text-base md:text-lg text-black/60 max-w-2xl">
-              Torque is the on-chain revenue infrastructure for Solana. We exist to replace
-              "vibes-based" marketing with deterministic, programmable ROI.
+              Torque is the onchain growth engine for Solana. We exist to replace
+              &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI.
             </p>
           </div>
         </header>
@@ -334,12 +334,12 @@ function CTASection() {
           Join Us
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-          Building the future
+          Want to build
           <br />
-          <span className="text-black/40">of on-chain growth?</span>
+          <span className="text-black/40">the growth engine with us?</span>
         </h2>
         <p className="text-base text-black/60 mb-6">
-          We're always looking for exceptional builders to join our team.
+          We&apos;re always looking for exceptional builders to join our team.
         </p>
         <div className="flex flex-wrap items-center gap-4">
           <Button variant="accent" href="/careers">
