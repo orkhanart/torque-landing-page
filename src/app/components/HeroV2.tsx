@@ -107,11 +107,7 @@ const HeroV2 = () => {
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black">
               <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
-                The Onchain
-              </GlitchText>
-              <br />
-              <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
-                Growth Engine
+                Your Growth Engine
               </GlitchText>
             </h1>
 
