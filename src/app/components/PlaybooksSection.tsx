@@ -32,7 +32,7 @@ export default function PlaybooksSection() {
               <span className="text-black/40">Strategies</span>
             </h2>
             <p className="text-base md:text-lg text-black/60 mt-4 max-w-xl">
-              Proven growth frameworks from top DeFi protocols.
+              Don&apos;t start from scratch. Deploy proven recipes from top DeFi protocols.
             </p>
           </div>
           <Button variant="outline" href="/playbooks" className="w-fit">

@@ -132,9 +132,9 @@ const solutions: Solution[] = [
       ],
     },
     fix: {
-      title: "Turn passive holders into active transaction agents.",
+      title: "Turn passive holders into active distributors.",
       description:
-        "Distribution Nodes: use referral rebates to turn passive holders into active transaction agents.",
+        "Distribution Nodes: use referral rebates to turn passive holders into active distributors.",
       mechanics: ["Referral Rebate (0.1% of volume)", "Looping Bonus (Leverage > 3x)"],
       result: "+40% Velocity Increase",
     },
@@ -217,10 +217,10 @@ export default function SolutionsPage() {
               Solutions
             </div>
             <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-              Engineering Protocol Equilibrium
+              Every Sector Has a Growth Problem
             </h1>
             <p className="text-base md:text-lg text-black/60 max-w-2xl mb-6">
-              Every sector has a systemic flaw. Torque provides the diagnostics to find the leak and the primitives to fix it.
+              Torque diagnoses the specific flaw in your sector and deploys the right incentive logic to fix it.
             </p>
 
             {/* Quick Nav */}
@@ -279,17 +279,17 @@ function SolutionsGrid() {
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
-              Battle-tested mechanical
+              Battle-tested
               <br />
-              <span className="text-black/40">modules</span>
+              <span className="text-black/40">growth playbooks</span>
             </h2>
 
             <p className="text-lg md:text-xl text-black/60 max-w-2xl">
-              Each solution comes with diagnosis, mechanical logic, and proven results.
+              Each solution comes with a diagnosis, incentive logic, and proven results.
             </p>
           </div>
-          <Button variant="outline" href="/primitives" className="w-fit">
-            Explore Primitives
+          <Button variant="outline" href="/playbooks" className="w-fit">
+            Explore Playbooks
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
@@ -444,14 +444,13 @@ function AdditionalMarketsSection() {
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
-              Also optimized
+              Built for
               <br />
-              <span className="text-black/40">for high-velocity markets</span>
+              <span className="text-black/40">high-velocity markets</span>
             </h2>
 
             <p className="text-lg md:text-xl text-black/60 max-w-2xl">
-              Torque primitives are sector-agnostic. We support the highest-velocity economies on
-              Solana.
+              Torque&apos;s incentive engine is sector-agnostic. We support the fastest-moving economies on Solana.
             </p>
           </div>
         </div>
@@ -558,23 +557,23 @@ function SolutionsCTA({ onOpenModal }: SolutionsCTAProps) {
       >
         <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
           <Rocket className="w-3 h-3" />
-          Deploy Now
+          Get Started
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-          Ready to engineer
+          See your sector&apos;s
           <br />
-          <span className="text-black/40">protocol equilibrium?</span>
+          <span className="text-black/40">growth playbook in action.</span>
         </h2>
         <p className="text-base text-black/60 mb-6">
-          Torque exists to replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
+          Replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
         </p>
         <div className="flex flex-wrap items-center gap-4">
-          <Button variant="accent" onClick={onOpenModal}>
-            Deploy Logic
+          <Button variant="accent" href="https://app.torque.so">
+            Launch App
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
-          <Button variant="outline" href="/primitives">
-            Explore Primitives
+          <Button variant="outline" href="/playbooks">
+            Explore Playbooks
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
