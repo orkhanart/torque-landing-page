@@ -42,7 +42,7 @@ export default function PlaybooksSection() {
         </div>
 
         {/* Playbooks Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 gap-4 md:gap-6">
           {featuredPlaybooks.map((playbook) => (
             <PlaybookCard key={playbook.id} playbook={playbook} />
           ))}
@@ -66,53 +66,53 @@ function PlaybookCard({ playbook }: PlaybookCardProps) {
   return (
     <a
       href="/playbooks"
-      className="group relative rounded-[3px] overflow-hidden border border-black/10 hover:border-blue/30 transition-all min-h-[720px]"
+      className="group relative rounded-[3px] overflow-hidden border border-black/10 hover:border-blue/30 transition-all flex flex-col md:flex-row"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Procedural visual background - visible on hover */}
-      <div className="absolute inset-0 opacity-15 group-hover:opacity-100 transition-opacity duration-500">
-        {React.createElement(visualComponents[playbook.visualType], { color: "#0000FF", paused: !isHovered })}
-      </div>
-
-      {/* White gradient overlay */}
-      <ImageGradient className="bg-gradient-to-t from-white via-white/85 to-white/60" />
-      <ImageGradient className="bg-gradient-to-br from-white/40 via-transparent to-transparent" />
-
-      {/* Card Header */}
-      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
-        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
-        <span className="font-mono text-[9px] text-black/30">
-          {playbook.type === "CASE_STUDY" ? "case_study" : playbook.type.toLowerCase()}.{playbook.sector.toLowerCase()}
-        </span>
-      </div>
-
-      {/* Card Body */}
-      <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
-        <div className="mt-auto">
-          <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
-            <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
-          </div>
-
-          <h3 className="font-display text-base md:text-lg font-medium text-black mb-1 group-hover:text-blue transition-colors">
-            {playbook.title}
-          </h3>
-
-          <p className="text-xs text-black/60 leading-relaxed mb-3">
-            {playbook.description}
-          </p>
-
-          {/* Formula or Metric */}
-          {playbook.formula ? (
-            <PlaybookFormula formula={playbook.formula} />
-          ) : playbook.metricBadge ? (
-            <div className="pt-3 border-t border-black/10">
-              <span className="inline-flex items-center px-2 py-1 bg-white/80 backdrop-blur-sm text-blue text-xs font-medium rounded-[2px]">
-                {playbook.metricBadge}
-              </span>
-            </div>
-          ) : null}
+      {/* Visual area */}
+      <div className="relative w-full md:w-2/5 aspect-[4/3] md:aspect-auto md:min-h-[360px] overflow-hidden">
+        <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+          {React.createElement(visualComponents[playbook.visualType], { color: "#0000FF", paused: !isHovered })}
         </div>
+        <ImageGradient className="bg-gradient-to-b from-white/70 via-white/40 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+        <ImageGradient className="bg-gradient-to-bl from-white/30 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+        {/* Terminal Header */}
+        <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
+          <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+          <span className="font-mono text-[9px] text-black/30">
+            {playbook.type === "CASE_STUDY" ? "case_study" : playbook.type.toLowerCase()}.{playbook.sector.toLowerCase()}
+          </span>
+        </div>
+      </div>
+
+      {/* White gradient bleed over visual edge */}
+      <div className="hidden md:block absolute top-0 bottom-0 left-[38%] w-24 z-[5] bg-gradient-to-r from-transparent to-white pointer-events-none" />
+
+      {/* Content area */}
+      <div className="relative z-10 flex flex-col justify-center p-5 md:p-8 md:w-3/5 bg-white">
+        <div className="w-8 h-8 rounded-[3px] bg-black/5 flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+          <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
+        </div>
+
+        <h3 className="font-display text-base md:text-lg font-medium text-black mb-1 group-hover:text-blue transition-colors">
+          {playbook.title}
+        </h3>
+
+        <p className="text-xs text-black/60 leading-relaxed mb-3">
+          {playbook.description}
+        </p>
+
+        {/* Formula or Metric */}
+        {playbook.formula ? (
+          <PlaybookFormula formula={playbook.formula} />
+        ) : playbook.metricBadge ? (
+          <div className="pt-3 border-t border-black/10">
+            <span className="inline-flex items-center px-2 py-1 bg-white/80 backdrop-blur-sm text-blue text-xs font-medium rounded-[2px]">
+              {playbook.metricBadge}
+            </span>
+          </div>
+        ) : null}
       </div>
     </a>
   );

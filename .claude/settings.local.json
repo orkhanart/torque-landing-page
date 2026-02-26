@@ -31,7 +31,8 @@
       "WebFetch(domain:mathworld.wolfram.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:pmndrs.github.io)",
-      "WebFetch(domain:medium.com)"
+      "WebFetch(domain:medium.com)",
+      "Bash(head:*)"
     ],
     "deny": []
   }

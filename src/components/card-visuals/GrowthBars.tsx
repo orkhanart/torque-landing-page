@@ -65,7 +65,7 @@ export function GrowthBars({ color = "#0000FF", className = "", paused = false }
         const cy = r * cellH * 0.5;
         // Fill level based on vertical position (bottom = full, top = empty)
         const heightRatio = 1 - cy / h;
-        const baseFill = Math.max(0, 1 - heightRatio * 1.4);
+        const baseFill = Math.max(0, 1 - heightRatio * 0.9);
         cells.push({
           cx, cy, col: c, row: r,
           fillLevel: baseFill,
@@ -98,8 +98,8 @@ export function GrowthBars({ color = "#0000FF", className = "", paused = false }
     const pulses: Pulse[] = [];
 
     // Growth fill wave
-    let fillWaveY = h; // starts at bottom, moves up
-    let fillTarget = h * 0.8;
+    let fillWaveY = h * 0.95; // starts near bottom, moves up
+    let fillTarget = h * 0.35;
     let fillCycle = 0;
 
     let time = 0;

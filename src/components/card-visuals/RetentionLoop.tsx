@@ -136,7 +136,7 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
         else ctx.lineTo(p.x, p.y);
       }
       ctx.closePath();
-      ctx.strokeStyle = `${color}${hex(12)}`;
+      ctx.strokeStyle = `${color}${hex(35)}`;
       ctx.lineWidth = 1;
       ctx.stroke();
 
@@ -157,7 +157,7 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
         if (i === 0) ctx.moveTo(px, py);
         else ctx.lineTo(px, py);
       }
-      ctx.strokeStyle = `${color}${hex(6)}`;
+      ctx.strokeStyle = `${color}${hex(18)}`;
       ctx.lineWidth = 0.5;
       ctx.stroke();
       ctx.setLineDash([]);
@@ -214,7 +214,7 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
         attractorPos.x, attractorPos.y, 0,
         attractorPos.x, attractorPos.y, 25
       );
-      permGlow.addColorStop(0, `${color}${hex(12)}`);
+      permGlow.addColorStop(0, `${color}${hex(35)}`);
       permGlow.addColorStop(1, `${color}00`);
       ctx.fillStyle = permGlow;
       ctx.beginPath();
@@ -290,7 +290,7 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
 
         // Outer glow
         const og = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s * 2);
-        og.addColorStop(0, `${color}${hex((0.05 + retainGlow * 0.12) * 255)}`);
+        og.addColorStop(0, `${color}${hex((0.15 + retainGlow * 0.2) * 255)}`);
         og.addColorStop(1, `${color}00`);
         ctx.fillStyle = og;
         ctx.beginPath();
@@ -299,13 +299,13 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
 
         // Dot
         ctx.beginPath();
-        ctx.fillStyle = `${color}${hex((0.1 + pulse * 0.06 + retainGlow * 0.3) * 255)}`;
+        ctx.fillStyle = `${color}${hex((0.25 + pulse * 0.1 + retainGlow * 0.35) * 255)}`;
         ctx.arc(drawX, drawY, s, 0, Math.PI * 2);
         ctx.fill();
 
         // Ring
         ctx.beginPath();
-        ctx.strokeStyle = `${color}${hex((0.08 + retainGlow * 0.2) * 255)}`;
+        ctx.strokeStyle = `${color}${hex((0.2 + retainGlow * 0.25) * 255)}`;
         ctx.lineWidth = 0.6;
         ctx.arc(drawX, drawY, s + 1.5, 0, Math.PI * 2);
         ctx.stroke();
@@ -330,7 +330,7 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
       // Center crossing point decoration
       const center = getLoopPos(Math.PI / 2);
       ctx.beginPath();
-      ctx.fillStyle = `${color}${hex(8)}`;
+      ctx.fillStyle = `${color}${hex(25)}`;
       ctx.arc(getCx(), getCy(), 4, 0, Math.PI * 2);
       ctx.fill();
 

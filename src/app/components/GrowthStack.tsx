@@ -122,12 +122,12 @@ function FeatureCard({
   return (
     <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/5 hover:border-black/15"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 
-      {/* Procedural visual background - hidden by default, visible on hover */}
-      <div className="absolute inset-0 opacity-15 group-hover:opacity-100 transition-opacity duration-500">{visual && React.cloneElement(visual, { paused: !isHovered })}</div>
+      {/* Procedural visual background */}
+      <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-500">{visual && React.cloneElement(visual, { paused: !isHovered })}</div>
 
-      {/* White gradient overlay */}
-      <ImageGradient className={featured ? "bg-gradient-to-t from-white via-white/85 to-white/60" : "bg-gradient-to-t from-white via-white/90 to-white/70"} />
-      <ImageGradient className="bg-gradient-to-br from-white/50 via-transparent to-transparent" />
+      {/* White gradient overlay - fades out on hover to reveal visual */}
+      <ImageGradient className={`transition-opacity duration-500 group-hover:opacity-0 ${featured ? "bg-gradient-to-t from-white/40 via-white/20 to-transparent" : "bg-gradient-to-t from-white/50 via-white/25 to-transparent"}`} />
+      <ImageGradient className="bg-gradient-to-br from-white/15 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
 
       {/* Terminal Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
@@ -137,21 +137,24 @@ function FeatureCard({
 
       {/* Content */}
       <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
-        <div className="mt-auto">
-          <div className={`w-8 h-8 rounded-[3px] backdrop-blur-sm flex items-center justify-center mb-3 transition-colors ${featured ? "bg-blue/15 group-hover:bg-blue/25" : "bg-white/80 group-hover:bg-blue/10"}`}>
+        <div className="mt-auto relative">
+          {/* Soft white gradient backdrop behind text for readability */}
+          <div className="absolute -inset-x-4 -top-8 -bottom-4 bg-gradient-to-t from-white via-white/95 to-transparent pointer-events-none" />
+
+          <div className={`relative w-8 h-8 rounded-[3px] backdrop-blur-sm flex items-center justify-center mb-3 transition-colors ${featured ? "bg-blue/15 group-hover:bg-blue/25" : "bg-white/80 group-hover:bg-blue/10"}`}>
             <Icon className={`w-4 h-4 transition-colors ${featured ? "text-blue" : "text-black group-hover:text-blue"}`} />
           </div>
 
-          <h3 className="font-display text-base md:text-lg font-medium mb-1 text-black group-hover:text-blue transition-colors">
+          <h3 className="relative font-display text-base md:text-lg font-medium mb-1 text-black group-hover:text-blue transition-colors">
             {title}
           </h3>
 
-          <p className="text-black/60 text-xs leading-relaxed mb-3">
+          <p className="relative text-black/60 text-xs leading-relaxed mb-3">
             {description}
           </p>
 
           {features && (
-            <div className="pt-3 border-t border-black/10 flex items-center gap-4">
+            <div className="relative pt-3 border-t border-black/10 flex items-center gap-4">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-center gap-1.5 text-[10px] text-black/50">
                   {feature.icon && <feature.icon className="w-3 h-3" />}
@@ -163,7 +166,7 @@ function FeatureCard({
           )}
 
           {metric && (
-            <div className="pt-3 border-t border-black/10">
+            <div className="relative pt-3 border-t border-black/10">
               <span className="inline-flex items-center text-xs font-medium text-blue">
                 {metric}
                 <ArrowUpRight className="w-3 h-3 ml-1" />
@@ -185,14 +188,14 @@ function APICard() {
   return (
     <div className="relative rounded-[3px] group h-full border border-black/5 hover:border-black/15 transition-colors overflow-hidden min-h-[280px]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 
-      {/* Procedural visual background - hidden by default, visible on hover */}
-      <div className="absolute inset-0 opacity-15 group-hover:opacity-100 transition-opacity duration-500">
+      {/* Procedural visual background */}
+      <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-500">
         <CircuitPattern color="#0000FF" paused={!isHovered} />
       </div>
 
-      {/* White gradient overlay */}
-      <ImageGradient className="bg-gradient-to-t from-white via-white/90 to-white/70" />
-      <ImageGradient className="bg-gradient-to-br from-white/50 via-transparent to-transparent" />
+      {/* White gradient overlay - fades out on hover to reveal visual */}
+      <ImageGradient className="bg-gradient-to-t from-white/50 via-white/25 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+      <ImageGradient className="bg-gradient-to-br from-white/15 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
 
       {/* Terminal Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
@@ -202,19 +205,22 @@ function APICard() {
 
       {/* Content */}
       <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
-        <div className="mt-auto">
-          <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+        <div className="mt-auto relative">
+          {/* Soft white gradient backdrop behind text for readability */}
+          <div className="absolute -inset-x-4 -top-8 -bottom-4 bg-gradient-to-t from-white via-white/95 to-transparent pointer-events-none" />
+
+          <div className="relative w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
             <Terminal className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
           </div>
 
-          <h3 className="font-display text-base md:text-lg font-medium mb-1 text-black group-hover:text-blue transition-colors">
+          <h3 className="relative font-display text-base md:text-lg font-medium mb-1 text-black group-hover:text-blue transition-colors">
             Developer-first Infrastructure
           </h3>
-          <p className="text-black/60 text-xs leading-relaxed mb-3">
+          <p className="relative text-black/60 text-xs leading-relaxed mb-3">
             Full API access, webhooks, and SDK for seamless integration.
           </p>
 
-          <div className="pt-3 border-t border-black/10 flex flex-wrap items-center gap-1.5">
+          <div className="relative pt-3 border-t border-black/10 flex flex-wrap items-center gap-1.5">
             {["REST API", "Webhooks", "SDK"].map((item) => (
               <span
                 key={item}

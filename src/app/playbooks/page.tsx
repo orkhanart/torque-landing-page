@@ -7,6 +7,16 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { STRATEGIES, type CardType, type StrategyCard } from "./strategies";
 import IntegrationRequestModal from "../components/IntegrationRequestModal";
+import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { RaffleWheel } from "@/components/card-visuals/RaffleWheel";
+import { ROICascade } from "@/components/card-visuals/ROICascade";
+import { ReferralTree } from "@/components/card-visuals/ReferralTree";
+import { StandardsGrid } from "@/components/card-visuals/StandardsGrid";
+import { LeverageSpiral } from "@/components/card-visuals/LeverageSpiral";
+import { TokenPairLink } from "@/components/card-visuals/TokenPairLink";
+import { DurationLock } from "@/components/card-visuals/DurationLock";
+import { AnchorLock } from "@/components/card-visuals/AnchorLock";
+import { WelcomeGate } from "@/components/card-visuals/WelcomeGate";
 
 // =============================================================================
 // Filter Types
@@ -151,12 +161,25 @@ export default function PlaybooksPage() {
 // =============================================================================
 // Strategy Card Component
 // =============================================================================
+const strategyVisuals: Record<string, React.ReactElement> = {
+  "01": <RaffleWheel color="#0000FF" />,
+  "07": <ROICascade color="#0000FF" />,
+  "02": <ReferralTree color="#0000FF" />,
+  "09": <StandardsGrid color="#0000FF" />,
+  "04": <LeverageSpiral color="#0000FF" />,
+  "08": <TokenPairLink color="#0000FF" />,
+  "03": <DurationLock color="#0000FF" />,
+  "05": <AnchorLock color="#0000FF" />,
+  "06": <WelcomeGate color="#0000FF" />,
+};
+
 interface StrategyCardComponentProps {
   strategy: StrategyCard;
 }
 
 function StrategyCardComponent({ strategy }: StrategyCardComponentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const Icon = strategy.icon;
 
   const handleCardClick = () => {
@@ -167,8 +190,19 @@ function StrategyCardComponent({ strategy }: StrategyCardComponentProps) {
     <>
       <div
         onClick={handleCardClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-all duration-200 min-h-[420px] cursor-pointer"
       >
+
+        {/* Procedural visual background */}
+        {strategyVisuals[strategy.id] && (
+          <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+            {React.cloneElement(strategyVisuals[strategy.id], { paused: !isHovered })}
+          </div>
+        )}
+        <ImageGradient className="bg-gradient-to-t from-white/80 via-white/50 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+        <ImageGradient className="bg-gradient-to-br from-white/30 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
 
         {/* Terminal Header */}
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-3 py-1.5 z-10">

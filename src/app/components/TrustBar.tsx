@@ -34,7 +34,7 @@ const itemVariants = {
   },
 };
 
-export default function TrustBar() {
+export default function TrustBar({ trailing }: { trailing?: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -80,6 +80,7 @@ export default function TrustBar() {
               />
             </motion.div>
           ))}
+          {trailing}
         </motion.div>
       </div>
     </section>

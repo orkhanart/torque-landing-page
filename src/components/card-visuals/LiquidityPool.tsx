@@ -45,6 +45,7 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
 
     // Three gravitational pools connected by flow channels
     interface Pool {
+      xFrac: number; yFrac: number;
       x: number; y: number;
       radius: number;
       energy: number; // how full / active
@@ -53,9 +54,9 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
     }
 
     const pools: Pool[] = [
-      { x: w * 0.22, y: h * 0.3, radius: 35, energy: 0.3, phase: 0, particles: 0 },
-      { x: w * 0.55, y: h * 0.55, radius: 45, energy: 0.5, phase: Math.PI * 0.7, particles: 0 },
-      { x: w * 0.8, y: h * 0.28, radius: 38, energy: 0.4, phase: Math.PI * 1.3, particles: 0 },
+      { xFrac: 0.22, yFrac: 0.3, x: 0, y: 0, radius: 35, energy: 0.3, phase: 0, particles: 0 },
+      { xFrac: 0.55, yFrac: 0.55, x: 0, y: 0, radius: 45, energy: 0.5, phase: Math.PI * 0.7, particles: 0 },
+      { xFrac: 0.8, yFrac: 0.28, x: 0, y: 0, radius: 38, energy: 0.4, phase: Math.PI * 1.3, particles: 0 },
     ];
 
     // Connections between pools (flow channels)
@@ -119,6 +120,9 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
       ctx.clearRect(0, 0, w, h);
       time += 0.016;
 
+      // Recompute pool positions from current dimensions
+      pools.forEach(p => { p.x = p.xFrac * w; p.y = p.yFrac * h; });
+
       // Trigger particle flow between pools every 2s
       flowTimer += 0.016;
       if (flowTimer > 2) {
@@ -179,7 +183,7 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
         ctx.quadraticCurveTo(midX, midY, to.x, to.y);
-        ctx.strokeStyle = `${color}${hex(10)}`;
+        ctx.strokeStyle = `${color}${hex(30)}`;
         ctx.lineWidth = 6;
         ctx.stroke();
 
@@ -187,7 +191,7 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
         ctx.quadraticCurveTo(midX, midY, to.x, to.y);
-        ctx.strokeStyle = `${color}${hex(18)}`;
+        ctx.strokeStyle = `${color}${hex(50)}`;
         ctx.lineWidth = 1;
         ctx.stroke();
 
@@ -196,7 +200,7 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
         ctx.setLineDash([3, 5]);
         ctx.moveTo(from.x, from.y);
         ctx.quadraticCurveTo(midX + 5, midY + 5, to.x, to.y);
-        ctx.strokeStyle = `${color}${hex(8)}`;
+        ctx.strokeStyle = `${color}${hex(22)}`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
         ctx.setLineDash([]);
@@ -209,17 +213,17 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
         const r = pool.radius + pulse * 3;
 
         // Outer glow
-        const og = ctx.createRadialGradient(pool.x, pool.y, r * 0.3, pool.x, pool.y, r * 2);
-        og.addColorStop(0, `${color}${hex((0.04 + e * 0.08) * 255)}`);
-        og.addColorStop(0.6, `${color}${hex((0.02 + e * 0.03) * 255)}`);
+        const og = ctx.createRadialGradient(pool.x, pool.y, r * 0.3, pool.x, pool.y, r * 1.3);
+        og.addColorStop(0, `${color}${hex((0.06 + e * 0.08) * 255)}`);
+        og.addColorStop(0.6, `${color}${hex((0.03 + e * 0.04) * 255)}`);
         og.addColorStop(1, `${color}00`);
         ctx.fillStyle = og;
-        ctx.beginPath(); ctx.arc(pool.x, pool.y, r * 2, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(pool.x, pool.y, r * 1.3, 0, Math.PI * 2); ctx.fill();
 
         // Pool body (concentric rings)
         for (let ring = 3; ring >= 0; ring--) {
           const ringR = r * (0.4 + ring * 0.2);
-          const ringAlpha = (0.03 + e * 0.04) * (1 - ring * 0.2);
+          const ringAlpha = (0.08 + e * 0.1) * (1 - ring * 0.2);
           ctx.beginPath();
           ctx.strokeStyle = `${color}${hex(ringAlpha * 255)}`;
           ctx.lineWidth = ring === 0 ? 1.5 : 0.8;
@@ -229,15 +233,15 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
 
         // Inner fill
         const ig = ctx.createRadialGradient(pool.x, pool.y, 0, pool.x, pool.y, r * 0.5);
-        ig.addColorStop(0, `${color}${hex((0.06 + e * 0.1) * 255)}`);
-        ig.addColorStop(1, `${color}${hex((0.02 + e * 0.03) * 255)}`);
+        ig.addColorStop(0, `${color}${hex((0.08 + e * 0.1) * 255)}`);
+        ig.addColorStop(1, `${color}${hex((0.03 + e * 0.04) * 255)}`);
         ctx.fillStyle = ig;
         ctx.beginPath(); ctx.arc(pool.x, pool.y, r * 0.5, 0, Math.PI * 2); ctx.fill();
 
         // Particle count label
         ctx.font = "bold 8px system-ui";
         ctx.textAlign = "center";
-        ctx.fillStyle = `${color}${hex((0.12 + e * 0.2) * 255)}`;
+        ctx.fillStyle = `${color}${hex((0.25 + e * 0.3) * 255)}`;
         ctx.fillText(`${pool.particles}`, pool.x, pool.y + 3);
       });
 
@@ -291,7 +295,7 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
           const ox = pool.x + Math.cos(p.angle) * p.orbitR;
           const oy = pool.y + Math.sin(p.angle) * p.orbitR * 0.7; // slightly elliptical
 
-          const alpha = 0.08 + pulse * 0.06 + pool.energy * 0.08;
+          const alpha = 0.2 + pulse * 0.1 + pool.energy * 0.15;
 
           // Glow
           const pg = ctx.createRadialGradient(ox, oy, 0, ox, oy, p.size * 2.5);
@@ -341,10 +345,10 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
       }
 
       // "YIELD" label near top
-      const labelPulse = Math.sin(time * 0.6) * 0.03;
+      const labelPulse = Math.sin(time * 0.6) * 0.05;
       ctx.font = "bold 7px system-ui";
       ctx.textAlign = "center";
-      ctx.fillStyle = `${color}${hex((0.08 + labelPulse) * 255)}`;
+      ctx.fillStyle = `${color}${hex((0.2 + labelPulse) * 255)}`;
       ctx.fillText("YIELD ↑", w * 0.55, h * 0.1);
 
       if (!pausedRef.current) {

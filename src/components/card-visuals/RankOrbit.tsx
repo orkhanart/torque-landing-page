@@ -55,8 +55,6 @@ export function RankOrbit({ color = "#0000FF", competitorCount = 6, className = 
     };
     resize();
 
-    const cx = w / 2, cy = h / 2;
-    const maxR = Math.min(w, h) * 0.4;
     const hex = (v: number) => Math.floor(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0");
 
     interface Comp {
@@ -92,6 +90,9 @@ export function RankOrbit({ color = "#0000FF", competitorCount = 6, className = 
       ctx.clearRect(0, 0, w, h);
       time += 0.016;
       const mouse = mouseRef.current;
+
+      const cx = w / 2, cy = h / 2;
+      const maxR = Math.min(w, h) * 0.4;
 
       // Rank shuffle every 4s
       if (time - lastShuffle > 4) {

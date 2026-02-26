@@ -16,6 +16,13 @@ import {
   Rocket,
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
+import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { UtilizationMeter } from "@/components/card-visuals/UtilizationMeter";
+import { StreakChain } from "@/components/card-visuals/StreakChain";
+import { DistributionWeb } from "@/components/card-visuals/DistributionWeb";
+import { DiamondHold } from "@/components/card-visuals/DiamondHold";
+import { OddsMatrix } from "@/components/card-visuals/OddsMatrix";
+import { LoyaltyLayers } from "@/components/card-visuals/LoyaltyLayers";
 
 // =============================================================================
 // Types
@@ -308,6 +315,12 @@ function SolutionsGrid() {
 // =============================================================================
 // Solution Card
 // =============================================================================
+const solutionVisuals: Record<string, React.ReactElement> = {
+  lending: <UtilizationMeter color="#0000FF" />,
+  perps: <StreakChain color="#0000FF" />,
+  stablecoins: <DistributionWeb color="#0000FF" />,
+};
+
 interface SolutionCardProps {
   solution: Solution;
 }
@@ -316,6 +329,7 @@ function SolutionCard({ solution }: SolutionCardProps) {
   const Icon = solution.icon;
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
@@ -324,8 +338,19 @@ function SolutionCard({ solution }: SolutionCardProps) {
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors"
+      className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
+
+      {/* Procedural visual background */}
+      {solutionVisuals[solution.id] && (
+        <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+          {React.cloneElement(solutionVisuals[solution.id], { paused: !isHovered })}
+        </div>
+      )}
+      <ImageGradient className="bg-gradient-to-t from-white/80 via-white/50 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+      <ImageGradient className="bg-gradient-to-br from-white/30 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
 
       {/* Terminal Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-4 py-2 z-10">
@@ -470,6 +495,12 @@ function AdditionalMarketsSection() {
 // =============================================================================
 // Market Card
 // =============================================================================
+const marketVisuals = [
+  <DiamondHold key="diamond" color="#0000FF" />,
+  <OddsMatrix key="odds" color="#0000FF" />,
+  <LoyaltyLayers key="loyalty" color="#0000FF" />,
+];
+
 interface MarketCardProps {
   market: AdditionalMarket;
   index: number;
@@ -479,6 +510,7 @@ function MarketCard({ market, index }: MarketCardProps) {
   const Icon = market.icon;
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
@@ -487,7 +519,16 @@ function MarketCard({ market, index }: MarketCardProps) {
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
       className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors min-h-[720px]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
+
+      {/* Procedural visual background */}
+      <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+        {React.cloneElement(marketVisuals[index], { paused: !isHovered })}
+      </div>
+      <ImageGradient className="bg-gradient-to-t from-white/80 via-white/50 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+      <ImageGradient className="bg-gradient-to-br from-white/30 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
 
       {/* Terminal Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">

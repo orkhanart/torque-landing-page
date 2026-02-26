@@ -1,9 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
+import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { DataLens } from "@/components/card-visuals/DataLens";
+import { CampaignRadar } from "@/components/card-visuals/CampaignRadar";
+import { SDKModules } from "@/components/card-visuals/SDKModules";
+import { IntegrationPlug } from "@/components/card-visuals/IntegrationPlug";
+import { BuilderCanvas } from "@/components/card-visuals/BuilderCanvas";
+import { MetricPulse } from "@/components/card-visuals/MetricPulse";
 import {
   ArrowUpRight,
   Code,
@@ -82,8 +89,7 @@ export default function PlatformPage() {
           label="Torque Intelligence"
           title="Turn Raw Data into Revenue"
           description="Stop guessing. Surface actionable campaigns to drive engagement and retention."
-          image="/generated/image/light-mono/data-particles.jpg"
-          imageAlt="Torque Intelligence Dashboard"
+          visual={<DataLens color="#0000FF" />}
           features={[
             {
               icon: Database,
@@ -114,9 +120,7 @@ export default function PlatformPage() {
           label="Growth Engines"
           title="Launch High-ROI Campaigns"
           description="Deploy mechanics that drive viral loops and retention."
-          image="/generated/image/light-mono/ascending-platforms.jpg"
-          imageAlt="Growth Mechanics"
-          imagePosition="right"
+          visual={<CampaignRadar color="#0000FF" />}
           features={[
             {
               icon: Code,
@@ -133,6 +137,11 @@ export default function PlatformPage() {
               title: "On-Chain Referrals",
               description: "Native referral programs with multi-tier attribution. $50M+ volume driven.",
             },
+            {
+              icon: TrendingUp,
+              title: "Dynamic Budget Allocation",
+              description: "Auto-shift spend to top-performing campaigns. Maximize ROI without manual tuning.",
+            },
           ]}
         />
 
@@ -142,8 +151,7 @@ export default function PlatformPage() {
           label="Native Experience"
           title="Your Brand. Your UI. Our Engine."
           description="Embed directly into your dApp. Users never leave."
-          image="/generated/image/light-mono/infrastructure-light.jpg"
-          imageAlt="Integration SDK"
+          visual={<SDKModules color="#0000FF" />}
           features={[
             {
               icon: Terminal,
@@ -169,8 +177,8 @@ export default function PlatformPage() {
         />
 
         {/* How It Works */}
-        <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-black/10 bg-gray-50/50">
-          <div className="mb-8">
+        <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-black/10">
+          <div className="mb-12">
             <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
               <BarChart3 className="w-3 h-3" />
               How It Works
@@ -180,41 +188,13 @@ export default function PlatformPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
             {[
-              {
-                step: "01",
-                title: "Connect",
-                description: "Integrate with our SDK. No engineering resources required.",
-                image: "/generated/image/light-mono/cluster-cubes-01.jpg",
-              },
-              {
-                step: "02",
-                title: "Build",
-                description: "Create incentive programs with our visual builder.",
-                image: "/generated/image/light-mono/horizon-minimal.jpg",
-              },
-              {
-                step: "03",
-                title: "Optimize",
-                description: "Monitor metrics and reallocate budgets dynamically.",
-                image: "/generated/image/light-mono/floating-mass-02.jpg",
-              },
-            ].map((item) => (
-              <div
-                key={item.step}
-                className="relative rounded-[3px] overflow-hidden group border border-black/5 hover:border-black/15 transition-colors h-[48rem]"
-              >
-                <div className="absolute inset-0 z-10 flex flex-col justify-end p-4">
-                  <div className="text-3xl font-display font-bold text-black/10 mb-2">
-                    {item.step}
-                  </div>
-                  <h3 className="font-display text-base font-medium text-black mb-1 group-hover:text-blue transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-black/60">{item.description}</p>
-                </div>
-              </div>
+              { step: "01", title: "Connect", description: "Integrate with our SDK. No engineering resources required." },
+              { step: "02", title: "Build", description: "Create incentive programs with our visual builder." },
+              { step: "03", title: "Optimize", description: "Monitor metrics and reallocate budgets dynamically." },
+            ].map((item, index) => (
+              <HowItWorksCard key={item.step} item={item} index={index} />
             ))}
           </div>
         </section>
@@ -261,10 +241,8 @@ interface FeatureSectionProps {
   label: string;
   title: string;
   description: string;
-  image: string;
-  imageAlt: string;
-  imagePosition?: "left" | "right";
   features: FeatureItem[];
+  visual?: React.ReactElement;
 }
 
 function FeatureSection({
@@ -272,62 +250,96 @@ function FeatureSection({
   label,
   title,
   description,
-  image,
-  imageAlt,
-  imagePosition = "left",
   features,
+  visual,
 }: FeatureSectionProps) {
-  const imageContent = (
-    <div className="relative h-[300px] md:h-full min-h-[400px] rounded-[3px] overflow-hidden border border-black/5 bg-gray-50">
-    </div>
-  );
-
-  const textContent = (
-    <div className="flex flex-col justify-center py-4">
-      <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
-        <Icon className="w-3 h-3" />
-        {label}
-      </div>
-      <h2 className="font-display text-xl sm:text-2xl font-medium text-black leading-[1.1] tracking-tight mb-2">
-        {title}
-      </h2>
-      <p className="text-sm text-black/60 mb-6 max-w-md">{description}</p>
-
-      <div className="space-y-4">
-        {features.map((feature, index) => (
-          <div key={index} className="flex gap-3 group">
-            <div className="flex-shrink-0 w-8 h-8 rounded-[3px] bg-gray-50 border border-black/5 flex items-center justify-center group-hover:bg-blue/5 group-hover:border-blue/20 transition-colors">
-              <feature.icon className="w-4 h-4 text-black/40 group-hover:text-blue transition-colors" />
-            </div>
-            <div>
-              <h3 className="font-display text-sm font-medium text-black mb-0.5 group-hover:text-blue transition-colors">
-                {feature.title}
-              </h3>
-              <p className="text-xs text-black/55 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-black/10">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-        {imagePosition === "left" ? (
-          <>
-            {imageContent}
-            {textContent}
-          </>
-        ) : (
-          <>
-            {textContent}
-            {imageContent}
-          </>
-        )}
+    <section
+      className="relative w-full px-6 md:px-12 lg:px-20 py-20 md:py-32 border-t border-black/10 overflow-hidden min-h-[600px] lg:min-h-[700px]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Background Visual */}
+      {visual && (
+        <div className={`absolute inset-0 transition-opacity duration-700 ${isHovered ? "opacity-100" : "opacity-50"}`}>
+          {React.cloneElement(visual, { paused: !isHovered })}
+        </div>
+      )}
+
+      {/* White gradient — top for header */}
+      <div className="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-white via-white/80 to-transparent z-[1] pointer-events-none" />
+      {/* White gradient — bottom for features */}
+      <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-white via-white/80 to-transparent z-[1] pointer-events-none" />
+
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col justify-between min-h-[inherit]">
+        {/* Header - top */}
+        <div>
+          <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
+            <Icon className="w-3 h-3" />
+            {label}
+          </div>
+          <h2 className="font-display text-xl sm:text-2xl font-medium text-black leading-[1.1] tracking-tight mb-2">
+            {title}
+          </h2>
+          <p className="text-sm text-black/60 max-w-md">{description}</p>
+        </div>
+
+        {/* 2x2 Feature Grid - pinned to bottom */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 mt-auto pt-12">
+          {features.map((feature, index) => (
+            <div key={index} className="flex items-start gap-3 py-4 border-t border-black/6">
+              <feature.icon className="w-4 h-4 mt-0.5 flex-shrink-0 text-black/30" />
+              <div>
+                <h3 className="font-display text-sm font-medium text-black mb-0.5">
+                  {feature.title}
+                </h3>
+                <p className="text-xs text-black/50 leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
+  );
+}
+
+// =============================================================================
+// How It Works Card Component
+// =============================================================================
+function HowItWorksCard({ item, index }: { item: { step: string; title: string; description: string }; index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const visuals = [
+    <IntegrationPlug key="plug" color="#0000FF" />,
+    <BuilderCanvas key="builder" color="#0000FF" />,
+    <MetricPulse key="metric" color="#0000FF" />,
+  ];
+
+  return (
+    <div
+      className="group relative border-t md:border-t-0 md:border-l first:border-l-0 first:border-t-0 border-black/8"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Text */}
+      <div className="px-5 pt-5 pb-3">
+        <span className="font-mono text-[10px] text-black/25 tracking-wider">{item.step}</span>
+        <h3 className="font-display text-lg font-medium text-black mt-1 mb-1 group-hover:text-blue transition-colors">
+          {item.title}
+        </h3>
+        <p className="text-xs text-black/50 leading-relaxed">{item.description}</p>
+      </div>
+
+      {/* Visual */}
+      <div className="relative h-[200px] mx-5 mb-5 rounded-[3px] bg-gray-50/60 overflow-hidden">
+        <div className={`absolute inset-0 transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-60"}`}>
+          {React.cloneElement(visuals[index], { paused: !isHovered })}
+        </div>
+      </div>
+    </div>
   );
 }

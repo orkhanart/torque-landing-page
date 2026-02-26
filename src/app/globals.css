@@ -555,6 +555,24 @@
   .count-up {
     font-variant-numeric: tabular-nums;
   }
+
+  /* Mask fade for hero ASCII animation — smooth left-edge dissolve */
+  .mask-fade-right {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
+    mask-image: linear-gradient(to right, transparent 0%, black 40%);
+  }
+  @media (min-width: 640px) {
+    .mask-fade-right {
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%);
+      mask-image: linear-gradient(to right, transparent 0%, black 35%);
+    }
+  }
+  @media (min-width: 1024px) {
+    .mask-fade-right {
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%);
+      mask-image: linear-gradient(to right, transparent 0%, black 25%);
+    }
+  }
 }
 
 /* ===================================

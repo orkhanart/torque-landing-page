@@ -1,4 +1,8 @@
-import HeroV2 from "./components/HeroV2";
+import Hero from "./components/Hero";
+import GrowthStack from "./components/GrowthStack";
+import Solutions from "./components/Solutions";
+import PlaybooksSection from "./components/PlaybooksSection";
+import HomepageCTA from "./components/HomepageCTA";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
@@ -7,8 +11,20 @@ export default function Home() {
     <>
       <Navbar />
 
-      {/* Section 1: Hero & Trust */}
-      <HeroV2 />
+      {/* Hero */}
+      <Hero />
+
+      {/* Platform Features */}
+      <GrowthStack />
+
+      {/* Solutions */}
+      <Solutions />
+
+      {/* Playbooks */}
+      <PlaybooksSection />
+
+      {/* CTA */}
+      <HomepageCTA />
 
       {/* Footer */}
       <Footer />

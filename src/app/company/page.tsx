@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Users, Trophy, Briefcase, Building2, Rocket } from "lucide-react";
 import { motion, useInView } from "framer-motion";
+import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { TrophyBurst } from "@/components/card-visuals/TrophyBurst";
+import { AcceleratorPath } from "@/components/card-visuals/AcceleratorPath";
 
 // =============================================================================
 // Types
@@ -188,6 +191,54 @@ function BackingSection() {
 }
 
 // =============================================================================
+// Milestone Visuals & Card
+// =============================================================================
+const milestoneVisuals = [
+  <TrophyBurst key="trophy" color="#0000FF" />,
+  <AcceleratorPath key="accelerator" color="#0000FF" />,
+];
+
+function MilestoneCard({ milestone, index, isInView }: { milestone: Milestone; index: number; isInView: boolean }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const Icon = milestone.icon;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, delay: 0.1 + index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors h-[480px]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Procedural visual background */}
+      <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+        {React.cloneElement(milestoneVisuals[index], { paused: !isHovered })}
+      </div>
+      <ImageGradient className="bg-gradient-to-t from-white/80 via-white/50 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+      <ImageGradient className="bg-gradient-to-br from-white/30 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+
+      {/* Terminal Header */}
+      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
+        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+        <span className="font-mono text-[9px] text-black/30">milestone.{index + 1}</span>
+      </div>
+
+      {/* Content */}
+      <div className="absolute inset-0 z-10 flex flex-col justify-end p-4">
+        <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+          <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
+        </div>
+        <h3 className="font-display text-base font-medium text-black mb-1 group-hover:text-blue transition-colors">
+          {milestone.label}
+        </h3>
+        <p className="font-mono text-xs text-black/50">{milestone.date}</p>
+      </div>
+    </motion.div>
+  );
+}
+
+// =============================================================================
 // Journey Section
 // =============================================================================
 function JourneySection() {
@@ -215,36 +266,9 @@ function JourneySection() {
 
         {/* Milestones Grid */}
         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-          {milestones.map((milestone, index) => {
-            const Icon = milestone.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.5, delay: 0.1 + index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors h-[480px]"
-              >
-
-                {/* Terminal Header */}
-                <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
-                  <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
-                  <span className="font-mono text-[9px] text-black/30">milestone.{index + 1}</span>
-                </div>
-
-                {/* Content */}
-                <div className="absolute inset-0 z-10 flex flex-col justify-end p-4">
-                  <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
-                    <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
-                  </div>
-                  <h3 className="font-display text-base font-medium text-black mb-1 group-hover:text-blue transition-colors">
-                    {milestone.label}
-                  </h3>
-                  <p className="font-mono text-xs text-black/50">{milestone.date}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+          {milestones.map((milestone, index) => (
+            <MilestoneCard key={index} milestone={milestone} index={index} isInView={isInView} />
+          ))}
         </div>
       </div>
     </section>
@@ -296,6 +320,15 @@ function TeamSection() {
                 <span className="font-mono text-[9px] text-black/30">team.member</span>
               </div>
 
+              {/* Profile Photo */}
+              <div className="relative w-full aspect-square bg-gray-50 overflow-hidden">
+                <Image
+                  src={member.pfpImage}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
               {/* Card Details */}
               <div className="p-4">

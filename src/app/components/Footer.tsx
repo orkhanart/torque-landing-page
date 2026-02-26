@@ -1,15 +1,56 @@
 "use client";
 
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaXTwitter } from "react-icons/fa6";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SCRAMBLE_CHARS } from "@/app/data/stats";
+
+const TORQUE_TEXT = "TORQUE";
+
+function ScrambleLetter({ char }: { char: string }) {
+  const [display, setDisplay] = useState(char);
+  const [isHovered, setIsHovered] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    if (isHovered) {
+      countRef.current = 0;
+      intervalRef.current = setInterval(() => {
+        countRef.current++;
+        if (countRef.current > 6) {
+          setDisplay(char);
+          if (intervalRef.current) clearInterval(intervalRef.current);
+        } else {
+          setDisplay(SCRAMBLE_CHARS.text[Math.floor(Math.random() * SCRAMBLE_CHARS.text.length)]);
+        }
+      }, 50);
+    } else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      setDisplay(char);
+    }
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isHovered, char]);
+
+  return (
+    <span
+      className="relative inline-block cursor-default"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <span className="invisible">{char}</span>
+      <span className="absolute inset-0 flex items-center justify-center">{display}</span>
+    </span>
+  );
+}
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
   const navLinks = [
     { label: "Platform", href: "/platform" },
     { label: "Solutions", href: "/solutions" },
@@ -29,8 +70,13 @@ const Footer = () => {
 
       {/* Big TORQUE Text */}
       <div className="relative z-10 w-full">
-        <div className="text-[20vw] font-bold leading-[0.85] tracking-[-0.05em] text-white/10 select-none overflow-hidden" style={{ fontFamily: "'Unbounded', sans-serif" }}>
-          TORQUE
+        <div
+          className="text-[20vw] font-bold leading-[0.85] tracking-[-0.05em] text-white/10 select-none overflow-hidden"
+          style={{ fontFamily: "'Unbounded', sans-serif" }}
+        >
+          {TORQUE_TEXT.split("").map((char, i) => (
+            <ScrambleLetter key={i} char={char} />
+          ))}
         </div>
       </div>
 
@@ -59,7 +105,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-[3px] border border-white bg-transparent flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-200"
+                  className="strobe-glitch w-10 h-10 rounded-[3px] border border-white bg-transparent flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-200"
                   aria-label={social.label}
                 >
                   <social.icon className="w-4 h-4" />

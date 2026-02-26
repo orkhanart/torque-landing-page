@@ -8,11 +8,92 @@ interface RewardFlowProps {
   paused?: boolean;
 }
 
+interface FlowNode {
+  x: number;
+  y: number;
+  type: "entry" | "condition" | "reward";
+  connections: number[];
+  pulsePhase: number;
+  size: number;
+}
+
+interface Particle {
+  fromNode: number;
+  toNode: number;
+  progress: number;
+  speed: number;
+  trail: { x: number; y: number; alpha: number }[];
+}
+
+function generateNodes(width: number, height: number): FlowNode[] {
+  const nodes: FlowNode[] = [];
+
+  // Entry nodes (left side) — pushed closer to edge
+  const entryCount = 3;
+  for (let i = 0; i < entryCount; i++) {
+    nodes.push({
+      x: width * 0.05,
+      y: height * (0.2 + (i * 0.6) / (entryCount - 1)),
+      type: "entry",
+      connections: [],
+      pulsePhase: Math.random() * Math.PI * 2,
+      size: 4,
+    });
+  }
+
+  // Condition nodes (middle, staggered)
+  const condCount = 4;
+  for (let i = 0; i < condCount; i++) {
+    nodes.push({
+      x: width * (0.3 + (i % 2) * 0.15),
+      y: height * (0.15 + (i * 0.7) / (condCount - 1)),
+      type: "condition",
+      connections: [],
+      pulsePhase: Math.random() * Math.PI * 2,
+      size: 5,
+    });
+  }
+
+  // Reward nodes (right side) — pushed closer to edge, smaller variance
+  const rewardCount = 3;
+  for (let i = 0; i < rewardCount; i++) {
+    nodes.push({
+      x: width * 0.9 + (Math.random() - 0.5) * width * 0.06,
+      y: height * (0.2 + (i * 0.6) / (rewardCount - 1)),
+      type: "reward",
+      connections: [],
+      pulsePhase: Math.random() * Math.PI * 2,
+      size: 6,
+    });
+  }
+
+  // Connect entries to conditions
+  for (let i = 0; i < entryCount; i++) {
+    const c1 = entryCount + (i % condCount);
+    const c2 = entryCount + ((i + 1) % condCount);
+    nodes[i].connections.push(c1);
+    if (c1 !== c2) nodes[i].connections.push(c2);
+  }
+
+  // Connect conditions to rewards
+  for (let i = 0; i < condCount; i++) {
+    const r1 = entryCount + condCount + (i % rewardCount);
+    const r2 = entryCount + condCount + ((i + 1) % rewardCount);
+    nodes[entryCount + i].connections.push(r1);
+    if (r1 !== r2 && Math.random() > 0.4) {
+      nodes[entryCount + i].connections.push(r2);
+    }
+  }
+
+  return nodes;
+}
+
 export function RewardFlow({ color = "#0000FF", className = "", paused = false }: RewardFlowProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
   const animateFnRef = useRef<(() => void) | null>(null);
+  const nodesRef = useRef<FlowNode[]>([]);
 
   useEffect(() => {
     pausedRef.current = paused;
@@ -35,100 +116,26 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
         canvas.height = rect.height * window.devicePixelRatio;
         canvas.style.width = `${rect.width}px`;
         canvas.style.height = `${rect.height}px`;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+        // Regenerate nodes at new dimensions
+        const w = rect.width;
+        const h = rect.height;
+        nodesRef.current = generateNodes(w, h);
       }
     };
 
     resizeCanvas();
 
-    // Flow nodes: entry → condition diamonds → reward endpoints
-    interface FlowNode {
-      x: number;
-      y: number;
-      type: "entry" | "condition" | "reward";
-      connections: number[];
-      pulsePhase: number;
-      size: number;
-    }
-
-    interface Particle {
-      fromNode: number;
-      toNode: number;
-      progress: number;
-      speed: number;
-      trail: { x: number; y: number; alpha: number }[];
-    }
-
-    const width = canvas.width / window.devicePixelRatio;
-    const height = canvas.height / window.devicePixelRatio;
-
-    // Create a flow graph: left entries → middle conditions → right rewards
-    const nodes: FlowNode[] = [];
-
-    // Entry nodes (left side)
-    const entryCount = 3;
-    for (let i = 0; i < entryCount; i++) {
-      nodes.push({
-        x: width * 0.1,
-        y: height * (0.2 + (i * 0.6) / (entryCount - 1)),
-        type: "entry",
-        connections: [],
-        pulsePhase: Math.random() * Math.PI * 2,
-        size: 4,
-      });
-    }
-
-    // Condition nodes (middle, staggered)
-    const condCount = 4;
-    for (let i = 0; i < condCount; i++) {
-      nodes.push({
-        x: width * (0.35 + (i % 2) * 0.15),
-        y: height * (0.15 + (i * 0.7) / (condCount - 1)),
-        type: "condition",
-        connections: [],
-        pulsePhase: Math.random() * Math.PI * 2,
-        size: 5,
-      });
-    }
-
-    // Reward nodes (right side)
-    const rewardCount = 3;
-    for (let i = 0; i < rewardCount; i++) {
-      nodes.push({
-        x: width * 0.8 + (Math.random() - 0.5) * width * 0.1,
-        y: height * (0.2 + (i * 0.6) / (rewardCount - 1)),
-        type: "reward",
-        connections: [],
-        pulsePhase: Math.random() * Math.PI * 2,
-        size: 6,
-      });
-    }
-
-    // Connect entries to conditions
-    for (let i = 0; i < entryCount; i++) {
-      // Each entry connects to 1-2 conditions
-      const c1 = entryCount + (i % condCount);
-      const c2 = entryCount + ((i + 1) % condCount);
-      nodes[i].connections.push(c1);
-      if (c1 !== c2) nodes[i].connections.push(c2);
-    }
-
-    // Connect conditions to rewards
-    for (let i = 0; i < condCount; i++) {
-      const r1 = entryCount + condCount + (i % rewardCount);
-      const r2 = entryCount + condCount + ((i + 1) % rewardCount);
-      nodes[entryCount + i].connections.push(r1);
-      if (r1 !== r2 && Math.random() > 0.4) {
-        nodes[entryCount + i].connections.push(r2);
-      }
-    }
-
     // Particles flowing along edges
     const particles: Particle[] = [];
     let time = 0;
+    const entryCount = 3;
 
     const spawnParticle = () => {
-      // Pick a random entry node
+      const nodes = nodesRef.current;
+      if (nodes.length === 0) return;
       const entryIdx = Math.floor(Math.random() * entryCount);
       const node = nodes[entryIdx];
       if (node.connections.length === 0) return;
@@ -144,6 +151,7 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
     };
 
     const animate = () => {
+      const nodes = nodesRef.current;
       const w = canvas.width / window.devicePixelRatio;
       const h = canvas.height / window.devicePixelRatio;
 
@@ -160,7 +168,6 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
         node.connections.forEach((connIdx) => {
           const target = nodes[connIdx];
 
-          // Curved path
           const midX = (node.x + target.x) / 2;
           const midY = (node.y + target.y) / 2;
           const cpOffset = (target.y - node.y) * 0.2;
@@ -181,6 +188,10 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
 
         const from = nodes[p.fromNode];
         const to = nodes[p.toNode];
+        if (!from || !to) {
+          particles.splice(i, 1);
+          continue;
+        }
 
         // Quadratic bezier position
         const t = p.progress;
@@ -229,7 +240,7 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
         // When particle arrives, chain to next connection
         if (p.progress >= 1) {
           const arrivedNode = nodes[p.toNode];
-          if (arrivedNode.connections.length > 0) {
+          if (arrivedNode && arrivedNode.connections.length > 0) {
             const nextIdx = arrivedNode.connections[Math.floor(Math.random() * arrivedNode.connections.length)];
             particles[i] = {
               fromNode: p.toNode,
@@ -249,10 +260,8 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
         const pulse = Math.sin(time * 1.5 + node.pulsePhase) * 0.5 + 0.5;
 
         if (node.type === "condition") {
-          // Diamond shape for conditions
           const s = node.size + pulse * 2;
 
-          // Glow
           const glow = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, s * 3);
           glow.addColorStop(0, `${color}20`);
           glow.addColorStop(1, `${color}00`);
@@ -268,10 +277,8 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
           ctx.fillRect(-s / 2, -s / 2, s, s);
           ctx.restore();
         } else if (node.type === "reward") {
-          // Hexagon-ish circle for rewards
           const s = node.size + pulse * 2;
 
-          // Outer glow
           const glow = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, s * 3);
           glow.addColorStop(0, `${color}25`);
           glow.addColorStop(1, `${color}00`);
@@ -280,20 +287,17 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
           ctx.arc(node.x, node.y, s * 3, 0, Math.PI * 2);
           ctx.fill();
 
-          // Ring
           ctx.beginPath();
           ctx.strokeStyle = `${color}${Math.floor((0.3 + pulse * 0.3) * 255).toString(16).padStart(2, "0")}`;
           ctx.lineWidth = 1.5;
           ctx.arc(node.x, node.y, s, 0, Math.PI * 2);
           ctx.stroke();
 
-          // Core dot
           ctx.beginPath();
           ctx.fillStyle = `${color}${Math.floor((0.4 + pulse * 0.4) * 255).toString(16).padStart(2, "0")}`;
           ctx.arc(node.x, node.y, s * 0.4, 0, Math.PI * 2);
           ctx.fill();
         } else {
-          // Simple dot for entries
           const s = node.size + pulse;
 
           const glow = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, s * 2.5);

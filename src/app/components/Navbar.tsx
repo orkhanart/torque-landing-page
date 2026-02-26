@@ -146,7 +146,7 @@ export default function Navbar() {
           {/* Left: Logo */}
           <Link
             href="/"
-            className="group flex items-center flex-shrink-0 gap-2"
+            className="relative group flex items-center flex-shrink-0 gap-2"
             onMouseEnter={() => setIsLogoHovered(true)}
             onMouseLeave={() => setIsLogoHovered(false)}
           >

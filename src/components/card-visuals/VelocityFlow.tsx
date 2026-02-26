@@ -46,7 +46,7 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
     // Horizontal flow lanes — particles stream L→R, accelerating
     const laneCount = 7;
     interface Lane {
-      y: number;
+      yFrac: number;
       baseSpeed: number;
       waveAmp: number;
       waveFreq: number;
@@ -56,8 +56,8 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
     const lanes: Lane[] = [];
     for (let i = 0; i < laneCount; i++) {
       lanes.push({
-        y: h * (0.12 + (i / (laneCount - 1)) * 0.76),
-        baseSpeed: 1.2 + Math.random() * 1.5,
+        yFrac: 0.12 + (i / (laneCount - 1)) * 0.76,
+        baseSpeed: 0.4 + Math.random() * 0.5,
         waveAmp: 8 + Math.random() * 12,
         waveFreq: 0.008 + Math.random() * 0.006,
         phase: Math.random() * Math.PI * 2,
@@ -77,43 +77,34 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
 
     const particles: StreamParticle[] = [];
 
-    // Speed burst zones
-    interface SpeedZone {
-      x: number;
-      age: number;
-      maxAge: number;
+    // Pre-seed particles so the visual isn't empty on first frame
+    const seedCount = 18;
+    for (let i = 0; i < seedCount; i++) {
+      const li = Math.floor(Math.random() * laneCount);
+      const lane = lanes[li];
+      const startX = w * (0.05 + Math.random() * 0.85);
+      particles.push({
+        x: startX,
+        lane: li,
+        speed: lane.baseSpeed * (0.7 + Math.random() * 0.6),
+        size: 1.5 + Math.random() * 2.5,
+        alpha: 0.5 + Math.random() * 0.5,
+        accel: 1 + (startX / w) * 0.5,
+        trail: [],
+      });
     }
-    const speedZones: SpeedZone[] = [];
 
     let time = 0;
-    let zoneTimer = 0;
 
     const getLaneY = (lane: Lane, x: number, t: number) => {
-      return lane.y +
+      return lane.yFrac * h +
         Math.sin(x * lane.waveFreq + t * 0.8 + lane.phase) * lane.waveAmp +
         Math.sin(x * lane.waveFreq * 2.2 + t * 1.3 + lane.phase * 0.7) * lane.waveAmp * 0.3;
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
-      time += 0.016;
-
-      // Trigger speed zone every 2s
-      zoneTimer += 0.016;
-      if (zoneTimer > 2) {
-        zoneTimer = 0;
-        speedZones.push({
-          x: w * (0.3 + Math.random() * 0.4),
-          age: 0,
-          maxAge: 1.8,
-        });
-      }
-
-      // Update speed zones
-      for (let i = speedZones.length - 1; i >= 0; i--) {
-        speedZones[i].age += 0.016;
-        if (speedZones[i].age >= speedZones[i].maxAge) speedZones.splice(i, 1);
-      }
+      time += 0.008;
 
       // Draw lane paths (flowing wave lines)
       lanes.forEach(lane => {
@@ -123,40 +114,9 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
           if (x === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = `${color}${hex(10)}`;
+        ctx.strokeStyle = `${color}${hex(30)}`;
         ctx.lineWidth = 0.8;
         ctx.stroke();
-      });
-
-      // Draw speed zone effects
-      speedZones.forEach(zone => {
-        const t = zone.age / zone.maxAge;
-        const alpha = (1 - t) * 0.12;
-        const zoneW = 60 + t * 40;
-
-        // Vertical glow band
-        const zg = ctx.createLinearGradient(zone.x - zoneW / 2, 0, zone.x + zoneW / 2, 0);
-        zg.addColorStop(0, `${color}00`);
-        zg.addColorStop(0.3, `${color}${hex(alpha * 255)}`);
-        zg.addColorStop(0.5, `${color}${hex(alpha * 1.5 * 255)}`);
-        zg.addColorStop(0.7, `${color}${hex(alpha * 255)}`);
-        zg.addColorStop(1, `${color}00`);
-        ctx.fillStyle = zg;
-        ctx.fillRect(zone.x - zoneW / 2, 0, zoneW, h);
-
-        // Chevron arrows pointing right
-        const arrowCount = 3;
-        for (let a = 0; a < arrowCount; a++) {
-          const ax = zone.x - 15 + a * 15 + t * 30;
-          const arrowAlpha = alpha * 0.6 * (1 - Math.abs(a - 1) * 0.3);
-          ctx.beginPath();
-          ctx.strokeStyle = `${color}${hex(arrowAlpha * 255)}`;
-          ctx.lineWidth = 1.5;
-          ctx.moveTo(ax - 6, h * 0.35);
-          ctx.lineTo(ax + 6, h * 0.45);
-          ctx.lineTo(ax - 6, h * 0.55);
-          ctx.stroke();
-        }
       });
 
       // Spawn particles on left edge
@@ -181,19 +141,9 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
 
         // Acceleration as particle crosses canvas (velocity increases)
         const progress = p.x / w;
-        p.accel = 1 + progress * 1.5;
+        p.accel = 1 + progress * 0.5;
 
-        // Speed boost from zones
-        let zoneBoost = 1;
-        for (const zone of speedZones) {
-          const dist = Math.abs(p.x - zone.x);
-          if (dist < 50) {
-            const t = zone.age / zone.maxAge;
-            zoneBoost += (1 - dist / 50) * (1 - t) * 2;
-          }
-        }
-
-        p.x += p.speed * p.accel * zoneBoost;
+        p.x += p.speed * p.accel;
 
         // Remove if past right edge
         if (p.x > w + 20) {
@@ -209,7 +159,7 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
         p.trail = p.trail.filter(tp => tp.a > 0.02);
 
         // Draw trail (speed streaks)
-        const trailLen = Math.min(p.trail.length, Math.floor(6 + p.accel * zoneBoost * 4));
+        const trailLen = Math.min(p.trail.length, Math.floor(6 + p.accel * 4));
         const startIdx = Math.max(0, p.trail.length - trailLen);
         for (let j = startIdx; j < p.trail.length - 1; j++) {
           const tp = p.trail[j];
@@ -224,8 +174,8 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
         }
 
         // Particle glow (brighter when faster)
-        const glowIntensity = 0.06 + (p.accel * zoneBoost - 1) * 0.04;
-        const glowR = p.size * 3 + (zoneBoost - 1) * 4;
+        const glowIntensity = 0.15 + (p.accel - 1) * 0.08;
+        const glowR = p.size * 3;
         const pg = ctx.createRadialGradient(p.x, y, 0, p.x, y, glowR);
         pg.addColorStop(0, `${color}${hex(glowIntensity * p.alpha * 255)}`);
         pg.addColorStop(1, `${color}00`);
@@ -233,7 +183,7 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
         ctx.beginPath(); ctx.arc(p.x, y, glowR, 0, Math.PI * 2); ctx.fill();
 
         // Core dot
-        const coreAlpha = (0.15 + progress * 0.15 + (zoneBoost - 1) * 0.2) * p.alpha;
+        const coreAlpha = (0.35 + progress * 0.2) * p.alpha;
         ctx.beginPath();
         ctx.fillStyle = `${color}${hex(coreAlpha * 255)}`;
         ctx.arc(p.x, y, p.size, 0, Math.PI * 2);
@@ -243,18 +193,18 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
       // Left side: slow indicator
       ctx.font = "bold 8px system-ui";
       ctx.textAlign = "left";
-      ctx.fillStyle = `${color}${hex(12)}`;
+      ctx.fillStyle = `${color}${hex(35)}`;
       ctx.fillText("IDLE", 8, h * 0.5);
 
       // Right side: velocity indicator
       ctx.textAlign = "right";
-      ctx.fillStyle = `${color}${hex(20)}`;
+      ctx.fillStyle = `${color}${hex(50)}`;
       ctx.fillText("VELOCITY", w - 8, h * 0.5);
 
       // Directional arrow at bottom
       const arrowY = h * 0.92;
       ctx.beginPath();
-      ctx.strokeStyle = `${color}${hex(8)}`;
+      ctx.strokeStyle = `${color}${hex(25)}`;
       ctx.lineWidth = 1;
       ctx.setLineDash([6, 4]);
       ctx.moveTo(w * 0.1, arrowY);
@@ -264,7 +214,7 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
 
       // Arrow head
       ctx.beginPath();
-      ctx.fillStyle = `${color}${hex(15)}`;
+      ctx.fillStyle = `${color}${hex(40)}`;
       ctx.moveTo(w * 0.9, arrowY);
       ctx.lineTo(w * 0.9 - 8, arrowY - 4);
       ctx.lineTo(w * 0.9 - 8, arrowY + 4);
