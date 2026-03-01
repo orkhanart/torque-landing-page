@@ -45,10 +45,12 @@ export function TokenPairLink({ color = "#0000FF", className = "", paused = fals
 
     // Token circles
     const tokenCount = 6;
-    const leftX = w * 0.2;
-    const rightX = w * 0.8;
+    const padding = w * 0.06;
+    const leftX = padding + 20;
+    const rightX = w - padding - 20;
     const startY = h * 0.12;
-    const spacingY = (h * 0.7) / (tokenCount - 1);
+    const endY = h * 0.56 + 8;
+    const spacingY = (endY - startY) / (tokenCount - 1);
 
     interface Token {
       x: number;
@@ -81,10 +83,6 @@ export function TokenPairLink({ color = "#0000FF", className = "", paused = fals
     let connectTimer = 0;
     let pairCount = 0;
 
-    // Growth bar
-    let growthBarTarget = 0;
-    let growthBarCurrent = 0;
-
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
       time += 0.016;
@@ -111,8 +109,6 @@ export function TokenPairLink({ color = "#0000FF", className = "", paused = fals
             born: time,
           });
           pairCount++;
-          growthBarTarget = Math.min(1, pairCount / (tokenCount * 1.5));
-
           // Pulse the connected tokens
           leftTokens[li].pulse = 1;
           rightTokens[ri].pulse = 1;
@@ -220,34 +216,6 @@ export function TokenPairLink({ color = "#0000FF", className = "", paused = fals
       leftTokens.forEach(drawToken);
       rightTokens.forEach(drawToken);
 
-      // Growth bar on the right side
-      const barX = w * 0.92;
-      const barY = startY;
-      const barH = h * 0.7;
-      const barW = 4;
-
-      // Bar background
-      ctx.fillStyle = `${color}06`;
-      ctx.fillRect(barX - barW / 2, barY, barW, barH);
-
-      // Bar fill (animated)
-      growthBarCurrent += (growthBarTarget - growthBarCurrent) * 0.02;
-      const fillH = barH * growthBarCurrent;
-      if (fillH > 0) {
-        const bg = ctx.createLinearGradient(0, barY + barH, 0, barY + barH - fillH);
-        bg.addColorStop(0, `${color}${hex(0.2 * 255)}`);
-        bg.addColorStop(1, `${color}${hex(0.08 * 255)}`);
-        ctx.fillStyle = bg;
-        ctx.fillRect(barX - barW / 2, barY + barH - fillH, barW, fillH);
-      }
-
-      // Bar label
-      ctx.font = "7px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillStyle = `${color}20`;
-      ctx.fillText(`${pairCount}`, barX, barY + barH + 14);
-      ctx.fillText("pairs", barX, barY + barH + 22);
-
       // Reset cycle after many connections
       if (connections.length >= tokenCount * 2) {
         // Slowly fade and reset
@@ -255,7 +223,6 @@ export function TokenPairLink({ color = "#0000FF", className = "", paused = fals
         if (allOld) {
           connections.length = 0;
           pairCount = 0;
-          growthBarTarget = 0;
           connectTimer = 0;
         }
       }

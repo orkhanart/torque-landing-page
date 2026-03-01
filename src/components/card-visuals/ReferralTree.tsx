@@ -6,9 +6,10 @@ interface ReferralTreeProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  speed?: number;
 }
 
-export function ReferralTree({ color = "#0000FF", className = "", paused = false }: ReferralTreeProps) {
+export function ReferralTree({ color = "#0000FF", className = "", paused = false, speed = 1 }: ReferralTreeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -69,8 +70,10 @@ export function ReferralTree({ color = "#0000FF", className = "", paused = false
     let phase: "growing" | "holding" | "fading" = "growing";
     let holdTimer = 0;
 
-    const levelSpacing = 55;
     const maxLevel = 4;
+    const treeTop = 35;
+    const treeBottom = h * 0.68;
+    const levelSpacing = (treeBottom - treeTop) / maxLevel;
 
     const initTree = () => {
       nodes = [];
@@ -105,7 +108,7 @@ export function ReferralTree({ color = "#0000FF", className = "", paused = false
       if (childCount >= 2) return; // Max 2 children per node
 
       // Calculate position based on tree structure
-      const levelWidth = w * (0.6 + parent.level * 0.05);
+      const levelWidth = w * (0.78 + parent.level * 0.05);
       const expectedAtLevel = Math.pow(2, parent.level + 1);
       const spacing = levelWidth / (expectedAtLevel + 1);
 
@@ -139,13 +142,13 @@ export function ReferralTree({ color = "#0000FF", className = "", paused = false
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
-      time += 0.016;
+      time += 0.016 * speed;
 
       const globalAlpha = phase === "fading" ? Math.max(0, 1 - fadeOut) : 1;
 
       // Growth phase: add one node at a time
       if (phase === "growing") {
-        growTimer += 0.016;
+        growTimer += 0.016 * speed;
         if (growTimer > 0.7) {
           growTimer = 0;
 
@@ -168,7 +171,7 @@ export function ReferralTree({ color = "#0000FF", className = "", paused = false
       }
 
       if (phase === "holding") {
-        holdTimer += 0.016;
+        holdTimer += 0.016 * speed;
         if (holdTimer > 3) {
           phase = "fading";
           fadeOut = 0;
@@ -176,7 +179,7 @@ export function ReferralTree({ color = "#0000FF", className = "", paused = false
       }
 
       if (phase === "fading") {
-        fadeOut += 0.012;
+        fadeOut += 0.012 * speed;
         if (fadeOut >= 1) {
           initTree();
         }
@@ -184,9 +187,9 @@ export function ReferralTree({ color = "#0000FF", className = "", paused = false
 
       // Update node alphas (fade in)
       nodes.forEach(node => {
-        node.alpha = Math.min(1, node.alpha + 0.03);
+        node.alpha = Math.min(1, node.alpha + 0.03 * speed);
         if (node.ripple < 1) {
-          node.ripple = Math.min(1, node.ripple + 0.025);
+          node.ripple = Math.min(1, node.ripple + 0.025 * speed);
         }
       });
 
@@ -211,7 +214,7 @@ export function ReferralTree({ color = "#0000FF", className = "", paused = false
       // Draw and update pulses
       for (let i = pulses.length - 1; i >= 0; i--) {
         const pulse = pulses[i];
-        pulse.progress += 0.015;
+        pulse.progress += 0.015 * speed;
 
         if (pulse.progress >= 1) {
           pulses.splice(i, 1);
@@ -305,7 +308,7 @@ export function ReferralTree({ color = "#0000FF", className = "", paused = false
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, speed]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }

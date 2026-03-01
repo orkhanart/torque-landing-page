@@ -44,7 +44,7 @@ export function LeverageSpiral({ color = "#0000FF", className = "", paused = fal
     const hex = (v: number) => Math.floor(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0");
 
     const cx = w / 2;
-    const cy = h / 2;
+    const cy = h * 0.37;
     const maxRadius = Math.min(w, h) * 0.38;
     const totalTurns = 3.5;
     const totalAngle = totalTurns * Math.PI * 2;

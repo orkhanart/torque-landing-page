@@ -87,7 +87,7 @@ export function RaffleWheel({ color = "#0000FF", className = "", paused = false 
       ctx.clearRect(0, 0, w, h);
 
       const cx = w / 2;
-      const cy = h * 0.48;
+      const cy = h * 0.37;
       const radius = Math.min(w, h) * 0.28;
 
       // Spin state machine

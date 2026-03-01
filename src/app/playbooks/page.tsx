@@ -206,7 +206,9 @@ const strategyVisuals: Record<string, React.ReactElement> = {
 };
 
 const strategySpeeds: Record<string, number> = {
-  "02": 1.2,
+  "02": 4,
+  "03": 1.2,
+  "05": 1.3,
 };
 
 interface StrategyCardComponentProps {

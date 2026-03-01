@@ -6,9 +6,10 @@ interface DurationLockProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  speed?: number;
 }
 
-export function DurationLock({ color = "#0000FF", className = "", paused = false }: DurationLockProps) {
+export function DurationLock({ color = "#0000FF", className = "", paused = false, speed: speedProp = 1 }: DurationLockProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -44,14 +45,14 @@ export function DurationLock({ color = "#0000FF", className = "", paused = false
     const hex = (v: number) => Math.floor(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0");
 
     // Progress bars configuration
-    const barCount = 5;
-    const barPadding = 30;
-    const barLeft = w * 0.1;
-    const barRight = w * 0.78;
+    const barCount = 4;
+    const barPadding = w * 0.06;
+    const barLeft = barPadding;
+    const barRight = w - barPadding - 30; // 30 for lock icon space
     const barWidth = barRight - barLeft;
-    const totalHeight = h * 0.65;
-    const barStartY = h * 0.15;
-    const barSpacing = totalHeight / barCount;
+    const barStartY = h * 0.12;
+    const barEndY = h * 0.56;
+    const barSpacing = (barEndY - barStartY) / (barCount - 1);
     const barHeight = 6;
 
     interface ProgressBar {
@@ -75,8 +76,8 @@ export function DurationLock({ color = "#0000FF", className = "", paused = false
     }
 
     const bars: ProgressBar[] = [];
-    const thresholds = [0.4, 0.6, 0.75, 0.55, 0.85];
-    const speeds = [0.0025, 0.0018, 0.0012, 0.0022, 0.001];
+    const thresholds = [0.4, 0.6, 0.75, 0.55];
+    const speeds = [0.0025, 0.0018, 0.0012, 0.0022];
 
     for (let i = 0; i < barCount; i++) {
       bars.push({
@@ -126,11 +127,11 @@ export function DurationLock({ color = "#0000FF", className = "", paused = false
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
-      time += 0.016;
+      time += 0.016 * speedProp;
 
       // Time markers along bottom
       const timeMarkers = ["0h", "10h", "20h"];
-      const markerY = barStartY + barSpacing * (barCount - 1) + 30;
+      const markerY = barEndY + 25;
       timeMarkers.forEach((label, i) => {
         const mx = barLeft + (i / (timeMarkers.length - 1)) * barWidth;
         ctx.font = "7px system-ui";
@@ -153,7 +154,7 @@ export function DurationLock({ color = "#0000FF", className = "", paused = false
 
         // Update progress
         if (!bar.unlocked) {
-          bar.progress = Math.min(1, bar.progress + bar.speed);
+          bar.progress = Math.min(1, bar.progress + bar.speed * speedProp);
         }
 
         // Check threshold
@@ -273,16 +274,16 @@ export function DurationLock({ color = "#0000FF", className = "", paused = false
         }
       });
 
-      // Reset cycle when all bars are fully filled and unlocked
-      if (bars.every(b => b.unlocked && b.progress >= 1 && b.rebateParticles.length === 0)) {
-        if (time % 12 < 0.02) {
-          bars.forEach(b => {
-            b.progress = 0;
-            b.unlocked = false;
-            b.unlockGlow = 0;
-            b.rebateFired = false;
-          });
-        }
+      // Reset cycle when all bars are unlocked and particles done
+      if (bars.every(b => b.unlocked && b.rebateParticles.length === 0)) {
+        bars.forEach(b => {
+          b.progress = 0;
+          b.threshold = 0.3 + Math.random() * 0.55;
+          b.speed = 0.001 + Math.random() * 0.002;
+          b.unlocked = false;
+          b.unlockGlow = 0;
+          b.rebateFired = false;
+        });
       }
 
       if (!pausedRef.current) {
@@ -298,7 +299,7 @@ export function DurationLock({ color = "#0000FF", className = "", paused = false
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, speedProp]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }

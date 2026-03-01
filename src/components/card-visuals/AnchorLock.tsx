@@ -6,9 +6,10 @@ interface AnchorLockProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  speed?: number;
 }
 
-export function AnchorLock({ color = "#0000FF", className = "", paused = false }: AnchorLockProps) {
+export function AnchorLock({ color = "#0000FF", className = "", paused = false, speed: speedProp = 1 }: AnchorLockProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -44,7 +45,7 @@ export function AnchorLock({ color = "#0000FF", className = "", paused = false }
     const hex = (v: number) => Math.floor(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0");
 
     const cx = w / 2;
-    const cy = h / 2;
+    const cy = h * 0.37;
     const vaultRadius = Math.min(w, h) * 0.15;
 
     // Token dots that drift inward
@@ -83,15 +84,49 @@ export function AnchorLock({ color = "#0000FF", className = "", paused = false }
 
     const rings: Ring[] = [];
 
+    // Orbiting arcs — spawn randomly, rotate 1-2 turns then fade
+    interface OrbArc {
+      radius: number;       // distance from center
+      startAngle: number;   // current start angle
+      sweep: number;        // arc length in radians
+      rotSpeed: number;     // rotation speed (rad/frame)
+      life: number;         // 0-1, fades out
+      maxLife: number;      // total life
+      alpha: number;        // base opacity
+      lineWidth: number;    // stroke width
+    }
+
+    const orbArcs: OrbArc[] = [];
+    let arcSpawnTimer = 1;
+
+    const spawnArc = () => {
+      const turns = 1 + Math.random(); // 1-2 turns
+      const rotSpeed = (0.015 + Math.random() * 0.01) * (Math.random() > 0.5 ? 1 : -1);
+      const totalLife = (turns * Math.PI * 2) / Math.abs(rotSpeed); // frames to complete turns
+      orbArcs.push({
+        radius: vaultRadius * (1.2 + Math.random() * 1.3),
+        startAngle: Math.random() * Math.PI * 2,
+        sweep: Math.PI * (0.3 + Math.random() * 0.8),
+        rotSpeed,
+        life: 1,
+        maxLife: totalLife,
+        alpha: 0.15 + Math.random() * 0.2,
+        lineWidth: 1 + Math.random() * 3,
+      });
+    };
+
+    // Seed initial arcs immediately
+    for (let i = 0; i < 3; i++) spawnArc();
+
     let time = 0;
-    let fillArc = 0; // 0 to 2*PI
+    let fillArc = 0;
     let tokenSpawnTimer = 0;
     let rebateTimer = 0;
     let ringTimer = 0;
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
-      time += 0.016;
+      time += 0.016 * speedProp;
 
       // Spawn tokens from edges
       tokenSpawnTimer += 0.016;
@@ -140,27 +175,44 @@ export function AnchorLock({ color = "#0000FF", className = "", paused = false }
         fillArc = Math.max(0, fillArc - Math.PI * 0.3);
       }
 
-      // Central vault
-      // Outer ring (fill arc)
+      // Spawn new arcs periodically (keep 2-3 alive)
+      arcSpawnTimer += 0.016 * speedProp;
+      if (arcSpawnTimer > 1.5 && orbArcs.length < 3) {
+        arcSpawnTimer = 0;
+        spawnArc();
+      }
+
+      // Central vault outer ring
       ctx.beginPath();
       ctx.arc(cx, cy, vaultRadius + 8, 0, Math.PI * 2);
       ctx.strokeStyle = `${color}08`;
       ctx.lineWidth = 3;
       ctx.stroke();
 
-      // Fill arc
-      if (fillArc > 0) {
+      // Update and draw orbiting arcs
+      for (let i = orbArcs.length - 1; i >= 0; i--) {
+        const arc = orbArcs[i];
+        arc.startAngle += arc.rotSpeed * speedProp;
+        arc.life -= (1 / arc.maxLife) * speedProp;
+
+        if (arc.life <= 0) { orbArcs.splice(i, 1); continue; }
+
+        // Fade in at start, fade out at end
+        const fadeFactor = arc.life < 0.2 ? arc.life / 0.2 : arc.life > 0.8 ? (1 - arc.life) / 0.2 : 1;
+        const a = arc.alpha * fadeFactor;
+
+        // Arc stroke
         ctx.beginPath();
-        ctx.arc(cx, cy, vaultRadius + 8, -Math.PI / 2, -Math.PI / 2 + fillArc);
-        ctx.strokeStyle = `${color}${hex(0.3 * 255)}`;
-        ctx.lineWidth = 3;
+        ctx.arc(cx, cy, arc.radius, arc.startAngle, arc.startAngle + arc.sweep);
+        ctx.strokeStyle = `${color}${hex(a * 255)}`;
+        ctx.lineWidth = arc.lineWidth;
         ctx.stroke();
 
-        // Glow on fill arc
+        // Arc glow
         ctx.beginPath();
-        ctx.arc(cx, cy, vaultRadius + 8, -Math.PI / 2, -Math.PI / 2 + fillArc);
-        ctx.strokeStyle = `${color}${hex(0.08 * 255)}`;
-        ctx.lineWidth = 10;
+        ctx.arc(cx, cy, arc.radius, arc.startAngle, arc.startAngle + arc.sweep);
+        ctx.strokeStyle = `${color}${hex(a * 0.3 * 255)}`;
+        ctx.lineWidth = arc.lineWidth * 3;
         ctx.stroke();
       }
 
@@ -298,7 +350,7 @@ export function AnchorLock({ color = "#0000FF", className = "", paused = false }
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, speedProp]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }
