@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import type { Orientation } from "@/components/card-visuals/useOrientation";
 
 interface GrowthBarsProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  orientation?: Orientation;
 }
 
-export function GrowthBars({ color = "#0000FF", className = "", paused = false }: GrowthBarsProps) {
+export function GrowthBars({ color = "#0000FF", className = "", paused = false, orientation = "vertical" }: GrowthBarsProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -47,7 +49,7 @@ export function GrowthBars({ color = "#0000FF", className = "", paused = false }
     const cellSize = 18;
     const cellH = cellSize * Math.sqrt(3);
     const cols = Math.ceil(w / (cellSize * 1.5)) + 2;
-    const rows = Math.ceil(h / cellH) + 2;
+    const rows = Math.ceil(h / (cellH * 0.5)) + 2;
 
     interface HexCell {
       cx: number; cy: number;
@@ -98,8 +100,9 @@ export function GrowthBars({ color = "#0000FF", className = "", paused = false }
     const pulses: Pulse[] = [];
 
     // Growth fill wave
-    let fillWaveY = h * 0.95; // starts near bottom, moves up
-    let fillTarget = h * 0.35;
+    const isHorizontal = orientation === "horizontal";
+    let fillWaveY = isHorizontal ? h * 1.1 : h * -0.1; // horizontal: below canvas up, vertical: above canvas down
+    let fillTarget = isHorizontal ? h * 0.1 : h * 0.65;
     let fillCycle = 0;
 
     let time = 0;
@@ -132,7 +135,7 @@ export function GrowthBars({ color = "#0000FF", className = "", paused = false }
       fillCycle += 0.016;
       if (fillCycle > 5) {
         fillCycle = 0;
-        fillTarget = h * (0.3 + Math.random() * 0.4);
+        fillTarget = h * (isHorizontal ? 0.05 + Math.random() * 0.25 : 0.5 + Math.random() * 0.3);
       }
       fillWaveY += (fillTarget - fillWaveY) * 0.01;
 
@@ -140,10 +143,20 @@ export function GrowthBars({ color = "#0000FF", className = "", paused = false }
       cells.forEach(cell => {
         // Base fill from current wave position
         const distFromFill = cell.cy - fillWaveY;
-        if (distFromFill > 0) {
-          cell.targetFill = Math.max(0, 1 - distFromFill / (h * 0.3));
+        if (isHorizontal) {
+          // Horizontal: wave moves up, below wave = filled, above = fade
+          if (distFromFill > 0) {
+            cell.targetFill = Math.max(0, 1 - distFromFill / (h * 0.3));
+          } else {
+            cell.targetFill = 1;
+          }
         } else {
-          cell.targetFill = Math.min(1, 1 + distFromFill / (h * 0.15));
+          // Vertical: wave moves down, above wave = filled, below = fade
+          if (distFromFill < 0) {
+            cell.targetFill = Math.max(0, 1 + distFromFill / (h * 0.3));
+          } else {
+            cell.targetFill = Math.max(0, 1 - distFromFill / (h * 0.3));
+          }
         }
 
         cell.fillLevel += (cell.targetFill - cell.fillLevel) * 0.04;
@@ -262,7 +275,7 @@ export function GrowthBars({ color = "#0000FF", className = "", paused = false }
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, orientation]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }

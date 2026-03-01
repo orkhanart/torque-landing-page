@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import type { Orientation } from "@/components/card-visuals/useOrientation";
 
 interface RetentionLoopProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  orientation?: Orientation;
 }
 
-export function RetentionLoop({ color = "#0000FF", className = "", paused = false }: RetentionLoopProps) {
+export function RetentionLoop({ color = "#0000FF", className = "", paused = false, orientation = "vertical" }: RetentionLoopProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -44,10 +46,11 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
     const hex = (v: number) => Math.floor(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0");
 
     // Figure-8 / lemniscate path
+    const isHorizontal = orientation === "horizontal";
     const getCx = () => w * 0.5;
-    const getCy = () => h * 0.35;
-    const getScaleX = () => w * 0.3;
-    const getScaleY = () => h * 0.22;
+    const getCy = () => h * (isHorizontal ? 0.5 : 0.35);
+    const getScaleX = () => w * (isHorizontal ? 0.38 : 0.3);
+    const getScaleY = () => h * (isHorizontal ? 0.35 : 0.22);
 
     const getLoopPos = (t: number) => {
       // Lemniscate of Bernoulli
@@ -352,7 +355,7 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, orientation]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }

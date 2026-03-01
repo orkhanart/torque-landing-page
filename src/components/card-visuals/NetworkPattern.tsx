@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import type { Orientation } from "@/components/card-visuals/useOrientation";
 
 interface NetworkPatternProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  orientation?: Orientation;
 }
 
-export function NetworkPattern({ color = "#0000FF", className = "", paused = false }: NetworkPatternProps) {
+export function NetworkPattern({ color = "#0000FF", className = "", paused = false, orientation = "vertical" }: NetworkPatternProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -58,14 +60,15 @@ export function NetworkPattern({ color = "#0000FF", className = "", paused = fal
     }
 
     const nodes: TreeNode[] = [];
-    const maxDepth = 5;
+    const isHorizontal = orientation === "horizontal";
+    const maxDepth = isHorizontal ? 7 : 5;
 
-    // Create 2-3 root seeds spread across the canvas
-    const seedCount = 3;
+    // Create root seeds spread across the canvas
+    const seedCount = isHorizontal ? 5 : 3;
     for (let s = 0; s < seedCount; s++) {
       nodes.push({
         x: w * (0.2 + s * 0.3) + (Math.random() - 0.5) * w * 0.1,
-        y: h * (0.3 + (Math.random() - 0.5) * 0.3),
+        y: h * ((isHorizontal ? 0.45 : 0.3) + (Math.random() - 0.5) * 0.3),
         parent: -1,
         children: [],
         depth: 0,
@@ -82,7 +85,9 @@ export function NetworkPattern({ color = "#0000FF", className = "", paused = fal
     const branchFrom = (parentIdx: number, depth: number) => {
       if (depth >= maxDepth) return;
       const parent = nodes[parentIdx];
-      const childCount = depth === 0 ? 3 + Math.floor(Math.random() * 2) : 1 + Math.floor(Math.random() * 3);
+      const childCount = depth === 0
+        ? (isHorizontal ? 4 : 3) + Math.floor(Math.random() * 2)
+        : (isHorizontal ? 2 : 1) + Math.floor(Math.random() * 3);
       const baseAngle = parent.parent === -1
         ? Math.random() * Math.PI * 2
         : parent.angle;
@@ -121,7 +126,7 @@ export function NetworkPattern({ color = "#0000FF", className = "", paused = fal
         parent.children.push(idx);
 
         // Recurse with decreasing probability
-        if (Math.random() < 0.7 - depth * 0.1) {
+        if (Math.random() < (isHorizontal ? 0.85 : 0.7) - depth * 0.1) {
           branchFrom(idx, depth + 1);
         }
       }
@@ -294,7 +299,7 @@ export function NetworkPattern({ color = "#0000FF", className = "", paused = fal
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, orientation]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }

@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import type { Orientation } from "@/components/card-visuals/useOrientation";
 
 interface LiquidityPoolProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  orientation?: Orientation;
 }
 
-export function LiquidityPool({ color = "#0000FF", className = "", paused = false }: LiquidityPoolProps) {
+export function LiquidityPool({ color = "#0000FF", className = "", paused = false, orientation = "vertical" }: LiquidityPoolProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -54,10 +56,11 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
     }
 
     // Inverted isosceles triangle — wide top, narrow bottom
+    const isHorizontal = orientation === "horizontal";
     const pools: Pool[] = [
-      { xFrac: 0.15, yFrac: 0.14, x: 0, y: 0, radius: 40, energy: 0.4, phase: 0, particles: 0 },
-      { xFrac: 0.85, yFrac: 0.14, x: 0, y: 0, radius: 40, energy: 0.4, phase: Math.PI * 0.667, particles: 0 },
-      { xFrac: 0.5, yFrac: 0.6, x: 0, y: 0, radius: 40, energy: 0.4, phase: Math.PI * 1.333, particles: 0 },
+      { xFrac: 0.15, yFrac: isHorizontal ? 0.22 : 0.14, x: 0, y: 0, radius: 40, energy: 0.4, phase: 0, particles: 0 },
+      { xFrac: 0.85, yFrac: isHorizontal ? 0.22 : 0.14, x: 0, y: 0, radius: 40, energy: 0.4, phase: Math.PI * 0.667, particles: 0 },
+      { xFrac: 0.5, yFrac: isHorizontal ? 0.80 : 0.6, x: 0, y: 0, radius: 40, energy: 0.4, phase: Math.PI * 1.333, particles: 0 },
     ];
 
     // Connections between pools (flow channels)
@@ -370,7 +373,7 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, orientation]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }

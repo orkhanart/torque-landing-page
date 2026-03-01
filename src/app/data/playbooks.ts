@@ -16,6 +16,7 @@ export interface Playbook {
   metricBadge?: string;
   icon: LucideIcon;
   visualType: "raffle" | "network" | "growth";
+  visualFill?: "box" | "full";
 }
 
 export const featuredPlaybooks: Playbook[] = [
@@ -33,6 +34,7 @@ export const featuredPlaybooks: Playbook[] = [
     },
     icon: Zap,
     visualType: "raffle",
+    visualFill: "full",
   },
   {
     id: "02",
@@ -48,6 +50,7 @@ export const featuredPlaybooks: Playbook[] = [
     },
     icon: Users,
     visualType: "network",
+    visualFill: "full",
   },
   {
     id: "07",
@@ -59,5 +62,6 @@ export const featuredPlaybooks: Playbook[] = [
     metricBadge: "100x ROI",
     icon: TrendingUp,
     visualType: "growth",
+    visualFill: "full",
   },
 ];

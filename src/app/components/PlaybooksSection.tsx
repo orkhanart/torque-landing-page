@@ -68,6 +68,7 @@ function PlaybookCard({ playbook }: PlaybookCardProps) {
       visual={<VisualComponent />}
       filename={`${playbook.type === "CASE_STUDY" ? "case_study" : playbook.type.toLowerCase()}.${playbook.sector.toLowerCase()}`}
       layout="adaptive"
+      visualFill={playbook.visualFill}
       href="/playbooks"
     >
       <div className="relative w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">

@@ -19,14 +19,16 @@ interface SolutionCardProps {
   visual: React.ComponentType<{ color?: string; paused?: boolean }>;
   diagnosis: string;
   fix: string;
+  visualFill?: "box" | "full";
 }
 
-function SolutionCard({ icon: Icon, title, subtitle, filename, visual: Visual, diagnosis, fix }: SolutionCardProps) {
+function SolutionCard({ icon: Icon, title, subtitle, filename, visual: Visual, diagnosis, fix, visualFill }: SolutionCardProps) {
   return (
     <VisualCard
       visual={<Visual />}
       filename={filename}
       layout="adaptive"
+      visualFill={visualFill}
     >
       <div className="relative w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
         <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
@@ -114,6 +116,7 @@ export default function Solutions() {
             subtitle="Distribution Nodes"
             filename="stablecoin.strategy"
             visual={VelocityFlow}
+            visualFill="full"
             diagnosis="The Velocity Gap ($175M+ Cap / 0 Velocity)"
             fix="Use referral rebates to turn passive holders into active transaction agents."
           />

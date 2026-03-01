@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import type { Orientation } from "@/components/card-visuals/useOrientation";
 
 type CardVisualState = "OFF_SCREEN" | "PREVIEWING" | "IDLE" | "PLAYING";
 
 interface CardVisualWrapperProps {
-  children: React.ReactElement<{ color?: string; paused?: boolean; speed?: number }>;
+  children: React.ReactElement<{ color?: string; paused?: boolean; speed?: number; orientation?: Orientation }>;
   aspectRatio?: string;
   speed?: number;
   color?: string;
+  orientation?: Orientation;
   className?: string;
   threshold?: number;
   previewDuration?: number;
@@ -19,6 +21,7 @@ export function CardVisualWrapper({
   aspectRatio,
   speed = 1,
   color,
+  orientation,
   className,
   threshold = 0.3,
   previewDuration = 1500,
@@ -122,6 +125,9 @@ export function CardVisualWrapper({
   const childProps: Record<string, unknown> = { paused, speed };
   if (color !== undefined) {
     childProps.color = color;
+  }
+  if (orientation !== undefined) {
+    childProps.orientation = orientation;
   }
 
   return (

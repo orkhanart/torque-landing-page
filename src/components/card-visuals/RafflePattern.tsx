@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import type { Orientation } from "@/components/card-visuals/useOrientation";
 
 interface RafflePatternProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  orientation?: Orientation;
 }
 
-export function RafflePattern({ color = "#0000FF", className = "", paused = false }: RafflePatternProps) {
+export function RafflePattern({ color = "#0000FF", className = "", paused = false, orientation = "vertical" }: RafflePatternProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -232,7 +234,7 @@ export function RafflePattern({ color = "#0000FF", className = "", paused = fals
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, orientation]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }

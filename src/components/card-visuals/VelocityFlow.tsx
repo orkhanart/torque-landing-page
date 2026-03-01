@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import type { Orientation } from "@/components/card-visuals/useOrientation";
 
 interface VelocityFlowProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  orientation?: Orientation;
 }
 
-export function VelocityFlow({ color = "#0000FF", className = "", paused = false }: VelocityFlowProps) {
+export function VelocityFlow({ color = "#0000FF", className = "", paused = false, orientation = "vertical" }: VelocityFlowProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -53,10 +55,13 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
       phase: number;
     }
 
+    const isHorizontal = orientation === "horizontal";
     const lanes: Lane[] = [];
     for (let i = 0; i < laneCount; i++) {
       lanes.push({
-        yFrac: 0.12 + (i / (laneCount - 1)) * 0.76,
+        yFrac: isHorizontal
+          ? 0.08 + (i / (laneCount - 1)) * 0.84
+          : 0.12 + (i / (laneCount - 1)) * 0.76,
         baseSpeed: 0.4 + Math.random() * 0.5,
         waveAmp: 8 + Math.random() * 12,
         waveFreq: 0.008 + Math.random() * 0.006,
@@ -238,7 +243,7 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, orientation]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }
