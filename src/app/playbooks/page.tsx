@@ -226,8 +226,7 @@ function StrategyCardComponent({ strategy }: StrategyCardComponentProps) {
         visual={visual}
         visualSpeed={strategySpeeds[strategy.id] ?? 1}
         filename={`${strategy.type === "CASE_STUDY" ? "case_study" : strategy.type.toLowerCase()}.${strategy.sector.toLowerCase()}`}
-        minHeight="min-h-[420px]"
-        className="border-black/5 hover:border-black/15 cursor-pointer"
+        className="aspect-square border-black/5 hover:border-black/15 cursor-pointer"
         onClick={() => setIsModalOpen(true)}
         headerRight={
           strategy.difficulty ? (

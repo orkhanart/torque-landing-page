@@ -504,7 +504,7 @@ function AdditionalMarketsSection() {
         </div>
 
         {/* Markets Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
           {additionalMarkets.map((market, index) => (
             <MarketCard key={index} market={market} index={index} />
           ))}
@@ -535,7 +535,8 @@ function MarketCard({ market, index }: MarketCardProps) {
       <VisualCard
         visual={marketVisuals[index]}
         filename={market.filename}
-        minHeight="min-h-[720px]"
+        layout="adaptive"
+        visualFill="full"
         className="border-black/5 hover:border-black/15"
       >
         {/* Icon */}

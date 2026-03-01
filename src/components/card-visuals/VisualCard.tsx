@@ -159,7 +159,7 @@ export function VisualCard({
 
   if (href) {
     return (
-      <a href={href} className={wrapperClassName}>
+      <a href={href} className={cn("block", wrapperClassName)}>
         {inner}
       </a>
     );
