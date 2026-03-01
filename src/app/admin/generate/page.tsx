@@ -7,9 +7,9 @@ import { AIGenerationPanel } from "@/components/ai/AIGenerationPanel";
 
 export default function AdminGeneratePage() {
   return (
-    <div className="min-h-screen bg-[#0A0F1C]">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <header className="border-b border-[#333] bg-[#0A0F1C]/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-black-light bg-black/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
@@ -20,7 +20,7 @@ export default function AdminGeneratePage() {
                 <ArrowLeft className="h-4 w-4" />
                 Back
               </Link>
-              <div className="h-6 w-px bg-[#333]" />
+              <div className="h-6 w-px bg-black-light" />
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-primary" />
                 <h1 className="text-lg font-semibold text-white">
@@ -79,14 +79,14 @@ function InfoCard({
   models: string[];
 }) {
   return (
-    <div className="p-6 rounded-lg bg-[#1a1a2e] border border-[#333]">
+    <div className="p-6 rounded-lg bg-black-light border border-black-light">
       <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
       <p className="text-gray-400 text-sm mb-4">{description}</p>
       <div className="flex flex-wrap gap-2">
         {models.map((model) => (
           <span
             key={model}
-            className="px-2 py-1 text-xs bg-[#333] text-gray-300 rounded"
+            className="px-2 py-1 text-xs bg-black-light text-gray-300 rounded"
           >
             {model}
           </span>

@@ -20,36 +20,51 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-				// Brand Colors - Digital Blue + Black/White/Gray
-				offwhite: {
-					DEFAULT: '#FAFAFA',
-					dark: '#F5F5F5',
+				// Brand Colors
+				aquamarine: {
+					DEFAULT: '#5DFDCB',
+					light: '#8FFEDD',
+					dark: '#3DDAA8',
+				},
+				'maya-blue': {
+					DEFAULT: '#7CC6FE',
+					light: '#A6D8FF',
+					dark: '#5BB0F0',
+				},
+				'alice-blue': {
+					DEFAULT: '#F4FAFF',
+					dark: '#E8F2FB',
 					light: '#FFFFFF',
 				},
 				blue: {
-					DEFAULT: '#0000FF',
-					light: '#3333FF',
-					dark: '#0000CC',
+					DEFAULT: '#0008FF',
+					light: '#3338FF',
+					dark: '#0006CC',
 				},
 				black: {
-					DEFAULT: '#000000',
-					light: '#1F1F1F',
+					DEFAULT: '#08090A',
+					light: '#1A1C1E',
 					dark: '#000000',
 				},
 				// Legacy aliases for compatibility
+				offwhite: {
+					DEFAULT: '#F4FAFF',
+					dark: '#E8F2FB',
+					light: '#FFFFFF',
+				},
 				cream: {
-					DEFAULT: '#FAFAFA',
-					dark: '#F5F5F5',
+					DEFAULT: '#F4FAFF',
+					dark: '#E8F2FB',
 					light: '#FFFFFF',
 				},
 				terracotta: {
-					DEFAULT: '#0000FF',
-					light: '#3333FF',
-					dark: '#0000CC',
+					DEFAULT: '#0008FF',
+					light: '#3338FF',
+					dark: '#0006CC',
 				},
 				charcoal: {
-					DEFAULT: '#000000',
-					light: '#1F1F1F',
+					DEFAULT: '#08090A',
+					light: '#1A1C1E',
 					dark: '#000000',
 				},
   			card: {
@@ -154,18 +169,21 @@ const config: Config = {
         '56': '56px',
       },
 			backgroundImage: {
-				'custom-gradient': 'linear-gradient(90deg, #FFFFFF -7.54%, #ABFFFF 60.87%, #F1A3A1 100%)',
-				'blue-gradient': 'linear-gradient(135deg, #0000FF 0%, #0000BB 100%)',
-				'blue-radial': 'radial-gradient(ellipse at center, #3333FF 0%, #0000FF 100%)',
-				'glass-gradient': 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
+				'custom-gradient': 'linear-gradient(90deg, #F4FAFF -7.54%, #5DFDCB 50%, #7CC6FE 100%)',
+				'blue-gradient': 'linear-gradient(135deg, #0008FF 0%, #0006CC 100%)',
+				'blue-radial': 'radial-gradient(ellipse at center, #3338FF 0%, #0008FF 100%)',
+				'aqua-gradient': 'linear-gradient(135deg, #5DFDCB 0%, #7CC6FE 100%)',
+				'glass-gradient': 'linear-gradient(135deg, rgba(244,250,255,0.9) 0%, rgba(244,250,255,0.7) 100%)',
       },
 			boxShadow: {
-				'blue-glow': '0 0 30px 0 rgba(0, 0, 255, 0.25)',
-				'blue-glow-lg': '0 0 50px 0 rgba(0, 0, 255, 0.35)',
-				'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
-				'glass-hover': '0 12px 40px 0 rgba(0, 0, 0, 0.12)',
-				'subtle': '0 1px 3px 0 rgb(0 0 0 / 0.08)',
-				'card': '0 4px 20px -2px rgb(0 0 0 / 0.06)',
+				'blue-glow': '0 0 30px 0 rgba(0, 8, 255, 0.25)',
+				'blue-glow-lg': '0 0 50px 0 rgba(0, 8, 255, 0.35)',
+				'aqua-glow': '0 0 30px 0 rgba(93, 253, 203, 0.3)',
+				'aqua-glow-lg': '0 0 50px 0 rgba(93, 253, 203, 0.4)',
+				'glass': '0 8px 32px 0 rgba(8, 9, 10, 0.08)',
+				'glass-hover': '0 12px 40px 0 rgba(8, 9, 10, 0.12)',
+				'subtle': '0 1px 3px 0 rgb(8 9 10 / 0.08)',
+				'card': '0 4px 20px -2px rgb(8 9 10 / 0.06)',
 			},
   	}
   },

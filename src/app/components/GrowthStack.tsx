@@ -46,7 +46,7 @@ export default function GrowthStack() {
               icon={Code}
               title="Programmable Rewards"
               description='Set conditions like "only reward users who hold >$1K and traded 3+ times this week." No more paying for bots or one-time farmers.'
-              visual={<RewardFlow color="#0000FF" />}
+              visual={<RewardFlow color="#0008FF" />}
               filename="rewards.config"
               features={[
                 { icon: Zap, label: "Conditional Logic" },
@@ -63,7 +63,7 @@ export default function GrowthStack() {
               icon={Trophy}
               title="Leaderboards"
               description="Real-time rankings turn passive holders into competing power users."
-              visual={<RankOrbit color="#0000FF" competitorCount={6} />}
+              visual={<RankOrbit color="#0008FF" competitorCount={6} />}
               filename="leaderboard.tsx"
               metric="2.1x volume increase"
             />
@@ -75,7 +75,7 @@ export default function GrowthStack() {
               icon={Brain}
               title="AI Insights"
               description='Ask "Which wallets are about to churn?" and get actionable recommendations.'
-              visual={<NeuralPulse color="#0000FF" nodeCount={10} />}
+              visual={<NeuralPulse color="#0008FF" nodeCount={10} />}
               filename="intelligence.ai"
               metric="Predictive analytics"
             />
@@ -190,7 +190,7 @@ function APICard() {
 
       {/* Procedural visual background */}
       <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-500">
-        <CircuitPattern color="#0000FF" paused={!isHovered} />
+        <CircuitPattern color="#0008FF" paused={!isHovered} />
       </div>
 
       {/* White gradient overlay - fades out on hover to reveal visual */}

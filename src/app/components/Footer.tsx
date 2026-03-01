@@ -66,7 +66,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full overflow-hidden relative bg-[#0000FF]">
+    <footer className="w-full overflow-hidden relative bg-blue">
 
       {/* Big TORQUE Text */}
       <div className="relative z-10 w-full">

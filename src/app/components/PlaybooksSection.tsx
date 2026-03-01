@@ -72,7 +72,7 @@ function PlaybookCard({ playbook }: PlaybookCardProps) {
     >
       {/* Procedural visual background */}
       <div className="absolute inset-0 sm:relative sm:w-2/5 sm:inset-auto xl:absolute xl:inset-0 xl:w-auto 3xl:relative 3xl:w-2/5 3xl:inset-auto opacity-50 group-hover:opacity-100 transition-all duration-500">
-        {React.createElement(visualComponents[playbook.visualType], { color: "#0000FF", paused: !isHovered })}
+        {React.createElement(visualComponents[playbook.visualType], { color: "#0008FF", paused: !isHovered })}
         {/* Terminal Header */}
         <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
           <span className="w-1.5 h-1.5 rounded-full bg-black/20" />

@@ -85,27 +85,31 @@
     --font-mono: 'Geist Mono', monospace;
 
     /* Core Colors */
-    --black: 0 0% 0%;            /* #000000 - pure black */
-    --white: 0 0% 100%;          /* #FFFFFF - pure white */
-    --off-white: 0 0% 98%;       /* #FAFAFA - very light gray bg */
-    --off-white-dark: 0 0% 96%;  /* #F5F5F5 - slightly darker */
+    --black: 210 11% 4%;            /* #08090A - near black */
+    --white: 0 0% 100%;             /* #FFFFFF - pure white */
+    --off-white: 207 100% 98%;      /* #F4FAFF - alice blue bg */
+    --off-white-dark: 207 60% 95%;  /* slightly darker alice blue */
 
-    /* Accent - Digital Pure Blue */
-    --blue: 240 100% 50%;        /* #0000FF - pure digital blue */
-    --blue-light: 240 100% 60%;  /* lighter blue for hover */
-    --blue-dark: 240 100% 40%;   /* darker blue */
+    /* Accent - Blue */
+    --blue: 238 100% 50%;           /* #0008FF - blue */
+    --blue-light: 206 98% 74%;      /* #7CC6FE - maya blue */
+    --blue-dark: 238 100% 40%;      /* darker blue */
 
-    /* Gray Scale (pure, no tint) */
-    --gray-50: 0 0% 98%;         /* #FAFAFA */
-    --gray-100: 0 0% 96%;        /* #F5F5F5 */
-    --gray-200: 0 0% 90%;        /* #E5E5E5 */
-    --gray-300: 0 0% 80%;        /* #CCCCCC */
-    --gray-400: 0 0% 60%;        /* #999999 */
-    --gray-500: 0 0% 45%;        /* #737373 */
-    --gray-600: 0 0% 32%;        /* #525252 */
-    --gray-700: 0 0% 22%;        /* #383838 */
-    --gray-800: 0 0% 12%;        /* #1F1F1F */
-    --gray-900: 0 0% 6%;         /* #0F0F0F */
+    /* Accent - Aquamarine */
+    --aquamarine: 161 97% 68%;      /* #5DFDCB - aquamarine */
+    --maya-blue: 206 98% 74%;       /* #7CC6FE - maya blue */
+
+    /* Gray Scale (cool-tinted) */
+    --gray-50: 207 100% 98%;        /* #F4FAFF */
+    --gray-100: 207 40% 96%;        /* cool gray 100 */
+    --gray-200: 210 20% 90%;        /* cool gray 200 */
+    --gray-300: 210 15% 80%;        /* cool gray 300 */
+    --gray-400: 210 10% 60%;        /* cool gray 400 */
+    --gray-500: 210 8% 45%;         /* cool gray 500 */
+    --gray-600: 210 8% 32%;         /* cool gray 600 */
+    --gray-700: 210 10% 22%;        /* cool gray 700 */
+    --gray-800: 210 11% 12%;        /* cool gray 800 */
+    --gray-900: 210 11% 4%;         /* #08090A */
 
     /* Semantic Mappings */
     --background: var(--white);
@@ -628,19 +632,19 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
+  background: hsl(210 20% 90%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a3a3a3;
+  background: hsl(210 10% 60%);
 }
 
 /* Dark mode scrollbar */
 .dark ::-webkit-scrollbar-thumb {
-  background: #404040;
+  background: hsl(210 10% 22%);
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #525252;
+  background: hsl(210 8% 32%);
 }

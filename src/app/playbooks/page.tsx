@@ -162,15 +162,15 @@ export default function PlaybooksPage() {
 // Strategy Card Component
 // =============================================================================
 const strategyVisuals: Record<string, React.ReactElement> = {
-  "01": <RaffleWheel color="#0000FF" />,
-  "07": <ROICascade color="#0000FF" />,
-  "02": <ReferralTree color="#0000FF" />,
-  "09": <StandardsGrid color="#0000FF" />,
-  "04": <LeverageSpiral color="#0000FF" />,
-  "08": <TokenPairLink color="#0000FF" />,
-  "03": <DurationLock color="#0000FF" />,
-  "05": <AnchorLock color="#0000FF" />,
-  "06": <WelcomeGate color="#0000FF" />,
+  "01": <RaffleWheel color="#0008FF" />,
+  "07": <ROICascade color="#0008FF" />,
+  "02": <ReferralTree color="#0008FF" />,
+  "09": <StandardsGrid color="#0008FF" />,
+  "04": <LeverageSpiral color="#0008FF" />,
+  "08": <TokenPairLink color="#0008FF" />,
+  "03": <DurationLock color="#0008FF" />,
+  "05": <AnchorLock color="#0008FF" />,
+  "06": <WelcomeGate color="#0008FF" />,
 };
 
 interface StrategyCardComponentProps {
