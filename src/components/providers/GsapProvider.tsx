@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Preloader } from "@/components/animations/Preloader";
@@ -23,6 +24,7 @@ interface GsapProviderProps {
 
 export function GsapProvider({ children }: GsapProviderProps) {
   const [ready, setReady] = useState(false);
+  const pathname = usePathname();
 
   // Set up ScrollTrigger.batch for data-animate elements after preloader reveals
   useEffect(() => {
@@ -89,7 +91,7 @@ export function GsapProvider({ children }: GsapProviderProps) {
         }
       });
     };
-  }, [ready]);
+  }, [ready, pathname]);
 
   const handleReveal = () => {
     setReady(true);
