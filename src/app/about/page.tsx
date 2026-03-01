@@ -1,15 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Users, Trophy, Briefcase, Building2, Rocket } from "lucide-react";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
-import { TrophyBurst } from "@/components/card-visuals/TrophyBurst";
-import { AcceleratorPath } from "@/components/card-visuals/AcceleratorPath";
 import { SplitText } from "@/components/animations/SplitText";
+
+const TrophyBurst = dynamic(
+  () => import("@/components/card-visuals/TrophyBurst").then(mod => ({ default: mod.TrophyBurst })),
+  { ssr: false }
+);
+const AcceleratorPath = dynamic(
+  () => import("@/components/card-visuals/AcceleratorPath").then(mod => ({ default: mod.AcceleratorPath })),
+  { ssr: false }
+);
 
 // =============================================================================
 // Types

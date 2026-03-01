@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import IntegrationRequestModal from "../components/IntegrationRequestModal";
 import { Button } from "@/components/ui/button";
 import {
   ArrowUpRight,
@@ -16,13 +16,36 @@ import {
   Rocket,
 } from "lucide-react";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
-import { UtilizationMeter } from "@/components/card-visuals/UtilizationMeter";
-import { StreakChain } from "@/components/card-visuals/StreakChain";
-import { DistributionWeb } from "@/components/card-visuals/DistributionWeb";
-import { DiamondHold } from "@/components/card-visuals/DiamondHold";
-import { OddsMatrix } from "@/components/card-visuals/OddsMatrix";
-import { LoyaltyLayers } from "@/components/card-visuals/LoyaltyLayers";
 import { SplitText } from "@/components/animations/SplitText";
+
+const IntegrationRequestModal = dynamic(
+  () => import("../components/IntegrationRequestModal"),
+  { ssr: false }
+);
+const UtilizationMeter = dynamic(
+  () => import("@/components/card-visuals/UtilizationMeter").then(mod => ({ default: mod.UtilizationMeter })),
+  { ssr: false }
+);
+const StreakChain = dynamic(
+  () => import("@/components/card-visuals/StreakChain").then(mod => ({ default: mod.StreakChain })),
+  { ssr: false }
+);
+const DistributionWeb = dynamic(
+  () => import("@/components/card-visuals/DistributionWeb").then(mod => ({ default: mod.DistributionWeb })),
+  { ssr: false }
+);
+const DiamondHold = dynamic(
+  () => import("@/components/card-visuals/DiamondHold").then(mod => ({ default: mod.DiamondHold })),
+  { ssr: false }
+);
+const OddsMatrix = dynamic(
+  () => import("@/components/card-visuals/OddsMatrix").then(mod => ({ default: mod.OddsMatrix })),
+  { ssr: false }
+);
+const LoyaltyLayers = dynamic(
+  () => import("@/components/card-visuals/LoyaltyLayers").then(mod => ({ default: mod.LoyaltyLayers })),
+  { ssr: false }
+);
 
 // =============================================================================
 // Types

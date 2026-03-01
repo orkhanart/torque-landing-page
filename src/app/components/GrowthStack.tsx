@@ -1,14 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { Code, Trophy, Brain, Zap, ArrowUpRight, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
-import { RewardFlow } from "@/components/card-visuals/RewardFlow";
-import { RankOrbit } from "@/components/card-visuals/RankOrbit";
-import { NeuralPulse } from "@/components/card-visuals/NeuralPulse";
-import { CircuitPattern } from "@/components/card-visuals/CircuitPattern";
 import { SplitText } from "@/components/animations/SplitText";
+
+const RewardFlow = dynamic(
+  () => import("@/components/card-visuals/RewardFlow").then(mod => ({ default: mod.RewardFlow })),
+  { ssr: false }
+);
+const RankOrbit = dynamic(
+  () => import("@/components/card-visuals/RankOrbit").then(mod => ({ default: mod.RankOrbit })),
+  { ssr: false }
+);
+const NeuralPulse = dynamic(
+  () => import("@/components/card-visuals/NeuralPulse").then(mod => ({ default: mod.NeuralPulse })),
+  { ssr: false }
+);
+const CircuitPattern = dynamic(
+  () => import("@/components/card-visuals/CircuitPattern").then(mod => ({ default: mod.CircuitPattern })),
+  { ssr: false }
+);
 
 // =============================================================================
 // Growth Stack Section

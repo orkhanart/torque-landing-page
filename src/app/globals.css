@@ -525,6 +525,15 @@
     100% { transform: translateY(100%); }
   }
 
+  @keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
   /* GSAP ScrollTrigger — hide elements until animated */
   [data-animate] {
     opacity: 0;

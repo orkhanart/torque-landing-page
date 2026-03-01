@@ -1,14 +1,25 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { featuredPlaybooks, type Playbook } from "@/app/data/playbooks";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
-import { RafflePattern } from "@/components/card-visuals/RafflePattern";
-import { NetworkPattern } from "@/components/card-visuals/NetworkPattern";
-import { GrowthBars } from "@/components/card-visuals/GrowthBars";
 import { SplitText } from "@/components/animations/SplitText";
+
+const RafflePattern = dynamic(
+  () => import("@/components/card-visuals/RafflePattern").then(mod => ({ default: mod.RafflePattern })),
+  { ssr: false }
+);
+const NetworkPattern = dynamic(
+  () => import("@/components/card-visuals/NetworkPattern").then(mod => ({ default: mod.NetworkPattern })),
+  { ssr: false }
+);
+const GrowthBars = dynamic(
+  () => import("@/components/card-visuals/GrowthBars").then(mod => ({ default: mod.GrowthBars })),
+  { ssr: false }
+);
 
 const visualComponents: Record<Playbook["visualType"], React.ComponentType<{ color?: string; paused?: boolean }>> = {
   raffle: RafflePattern,

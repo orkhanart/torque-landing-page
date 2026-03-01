@@ -1,13 +1,24 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { ArrowUpRight, CircleDot, CreditCard, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
-import { VelocityFlow } from "@/components/card-visuals/VelocityFlow";
-import { LiquidityPool } from "@/components/card-visuals/LiquidityPool";
-import { RetentionLoop } from "@/components/card-visuals/RetentionLoop";
 import { SplitText } from "@/components/animations/SplitText";
+
+const VelocityFlow = dynamic(
+  () => import("@/components/card-visuals/VelocityFlow").then(mod => ({ default: mod.VelocityFlow })),
+  { ssr: false }
+);
+const LiquidityPool = dynamic(
+  () => import("@/components/card-visuals/LiquidityPool").then(mod => ({ default: mod.LiquidityPool })),
+  { ssr: false }
+);
+const RetentionLoop = dynamic(
+  () => import("@/components/card-visuals/RetentionLoop").then(mod => ({ default: mod.RetentionLoop })),
+  { ssr: false }
+);
 
 // =============================================================================
 // Solution Card Component

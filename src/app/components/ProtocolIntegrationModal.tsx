@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dialog";
 import { CustomButton } from "@/components/ui/custom-button";
 import { CheckCircle2, Upload } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface ProtocolIntegrationModalProps {
   isOpen: boolean;
@@ -109,10 +108,8 @@ export default function ProtocolIntegrationModal({
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="sm:max-w-[500px] bg-white border-2 border-primary/30">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="flex flex-col items-center justify-center py-8 text-center"
+          <div
+            className="animate-scale-in flex flex-col items-center justify-center py-8 text-center"
           >
             <CheckCircle2 className="w-16 h-16 text-primary mb-4" />
             <h3 className="text-2xl font-semibold text-black mb-2">
@@ -122,7 +119,7 @@ export default function ProtocolIntegrationModal({
               We will verify your IDL and whitelist your wallet within 24 hours.
               You'll receive a confirmation at {formData.contactInfo}.
             </p>
-          </motion.div>
+          </div>
         </DialogContent>
       </Dialog>
     );
@@ -189,9 +186,8 @@ export default function ProtocolIntegrationModal({
             </label>
 
             {/* File Upload */}
-            <motion.div
-              whileHover={{ borderColor: "rgba(0, 179, 179, 0.5)" }}
-              className="border-2 border-dashed border-black/20 rounded-lg p-6 transition-colors cursor-pointer"
+            <div
+              className="border-2 border-dashed border-black/20 rounded-lg p-6 transition-colors cursor-pointer hover:border-primary/50"
             >
               <div className="flex flex-col items-center gap-2">
                 <Upload className="w-8 h-8 text-black/50" />
@@ -211,7 +207,7 @@ export default function ProtocolIntegrationModal({
                   className="hidden"
                 />
               </div>
-            </motion.div>
+            </div>
 
             {/* OR URL Input */}
             <div className="text-center text-sm text-black/50 py-2">OR</div>

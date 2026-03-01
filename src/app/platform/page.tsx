@@ -1,16 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
-import { DataLens } from "@/components/card-visuals/DataLens";
-import { CampaignRadar } from "@/components/card-visuals/CampaignRadar";
-import { SDKModules } from "@/components/card-visuals/SDKModules";
-import { IntegrationPlug } from "@/components/card-visuals/IntegrationPlug";
-import { BuilderCanvas } from "@/components/card-visuals/BuilderCanvas";
-import { MetricPulse } from "@/components/card-visuals/MetricPulse";
 import {
   ArrowUpRight,
   Code,
@@ -28,6 +23,31 @@ import {
   Terminal,
   Check,
 } from "lucide-react";
+
+const DataLens = dynamic(
+  () => import("@/components/card-visuals/DataLens").then(mod => ({ default: mod.DataLens })),
+  { ssr: false }
+);
+const CampaignRadar = dynamic(
+  () => import("@/components/card-visuals/CampaignRadar").then(mod => ({ default: mod.CampaignRadar })),
+  { ssr: false }
+);
+const SDKModules = dynamic(
+  () => import("@/components/card-visuals/SDKModules").then(mod => ({ default: mod.SDKModules })),
+  { ssr: false }
+);
+const IntegrationPlug = dynamic(
+  () => import("@/components/card-visuals/IntegrationPlug").then(mod => ({ default: mod.IntegrationPlug })),
+  { ssr: false }
+);
+const BuilderCanvas = dynamic(
+  () => import("@/components/card-visuals/BuilderCanvas").then(mod => ({ default: mod.BuilderCanvas })),
+  { ssr: false }
+);
+const MetricPulse = dynamic(
+  () => import("@/components/card-visuals/MetricPulse").then(mod => ({ default: mod.MetricPulse })),
+  { ssr: false }
+);
 
 // =============================================================================
 // Platform Page

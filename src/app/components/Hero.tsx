@@ -1,13 +1,21 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Terminal, ChevronDown } from "lucide-react";
-import IntegrationRequestModal from "./IntegrationRequestModal";
 import TrustBar from "./TrustBar";
 import { heroStats, heroRotatingPhrases } from "@/app/data/stats";
-import { TorqueHelicoid } from "@/components/three/TorqueHelicoid";
 import { SplitText } from "@/components/animations/SplitText";
+
+const TorqueHelicoid = dynamic(
+  () => import("@/components/three/TorqueHelicoid").then(mod => ({ default: mod.TorqueHelicoid })),
+  { ssr: false }
+);
+const IntegrationRequestModal = dynamic(
+  () => import("./IntegrationRequestModal"),
+  { ssr: false }
+);
 
 // =============================================================================
 // Interactive Gradient Background with Particle Mesh

@@ -1,23 +1,55 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { SplitText } from "@/components/animations/SplitText";
 import { STRATEGIES, type CardType, type StrategyCard } from "./strategies";
-import IntegrationRequestModal from "../components/IntegrationRequestModal";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
-import { RaffleWheel } from "@/components/card-visuals/RaffleWheel";
-import { ROICascade } from "@/components/card-visuals/ROICascade";
-import { ReferralTree } from "@/components/card-visuals/ReferralTree";
-import { StandardsGrid } from "@/components/card-visuals/StandardsGrid";
-import { LeverageSpiral } from "@/components/card-visuals/LeverageSpiral";
-import { TokenPairLink } from "@/components/card-visuals/TokenPairLink";
-import { DurationLock } from "@/components/card-visuals/DurationLock";
-import { AnchorLock } from "@/components/card-visuals/AnchorLock";
-import { WelcomeGate } from "@/components/card-visuals/WelcomeGate";
+
+const IntegrationRequestModal = dynamic(
+  () => import("../components/IntegrationRequestModal"),
+  { ssr: false }
+);
+const RaffleWheel = dynamic(
+  () => import("@/components/card-visuals/RaffleWheel").then(mod => ({ default: mod.RaffleWheel })),
+  { ssr: false }
+);
+const ROICascade = dynamic(
+  () => import("@/components/card-visuals/ROICascade").then(mod => ({ default: mod.ROICascade })),
+  { ssr: false }
+);
+const ReferralTree = dynamic(
+  () => import("@/components/card-visuals/ReferralTree").then(mod => ({ default: mod.ReferralTree })),
+  { ssr: false }
+);
+const StandardsGrid = dynamic(
+  () => import("@/components/card-visuals/StandardsGrid").then(mod => ({ default: mod.StandardsGrid })),
+  { ssr: false }
+);
+const LeverageSpiral = dynamic(
+  () => import("@/components/card-visuals/LeverageSpiral").then(mod => ({ default: mod.LeverageSpiral })),
+  { ssr: false }
+);
+const TokenPairLink = dynamic(
+  () => import("@/components/card-visuals/TokenPairLink").then(mod => ({ default: mod.TokenPairLink })),
+  { ssr: false }
+);
+const DurationLock = dynamic(
+  () => import("@/components/card-visuals/DurationLock").then(mod => ({ default: mod.DurationLock })),
+  { ssr: false }
+);
+const AnchorLock = dynamic(
+  () => import("@/components/card-visuals/AnchorLock").then(mod => ({ default: mod.AnchorLock })),
+  { ssr: false }
+);
+const WelcomeGate = dynamic(
+  () => import("@/components/card-visuals/WelcomeGate").then(mod => ({ default: mod.WelcomeGate })),
+  { ssr: false }
+);
 
 // =============================================================================
 // Filter Types
