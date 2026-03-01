@@ -106,32 +106,69 @@ export default function AboutPage() {
       <Navbar />
 
       <main className="min-h-screen bg-white pt-24 md:pt-32">
-        {/* Page Header */}
+        {/* Page Header + Backed Side-by-Side */}
         <header className="w-full px-6 md:px-12 lg:px-20 pb-12 md:pb-16 border-b border-black/10">
-          <div className="max-w-4xl">
-            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
-              <span className="w-1 h-1 bg-blue rounded-full" />
-              Company
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+            {/* Left — Hero Text */}
+            <div className="flex flex-col">
+              <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
+                <span className="w-1 h-1 bg-blue rounded-full" />
+                Company
+              </div>
+              <SplitText tag="h1" className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight">
+                <span>We built the growth engine</span>
+                <span className="text-black/40">we wished we had.</span>
+              </SplitText>
+              <div className="flex-1" />
+              <p data-animate="fade-up" className="text-base md:text-lg text-black/60 max-w-2xl mt-6">
+                Torque is the on-chain revenue infrastructure for Solana. We exist to replace
+                &quot;vibes-based&quot; marketing with deterministic, programmable ROI.
+              </p>
             </div>
-            <SplitText tag="h1" className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-              <span>We built the growth engine</span>
-              <span className="text-black/40">we wished we had.</span>
-            </SplitText>
-            <p data-animate="fade-up" className="text-base md:text-lg text-black/60 max-w-2xl">
-              Torque is the on-chain revenue infrastructure for Solana. We exist to replace
-              &quot;vibes-based&quot; marketing with deterministic, programmable ROI.
-            </p>
+
+            {/* Right — Backed by the Best */}
+            <div className="flex flex-col">
+              <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
+                <Building2 className="w-3 h-3" />
+                Backed by the Best
+              </div>
+              <div data-animate="fade-up" className="flex items-baseline gap-4 mb-2">
+                <h2 className="font-display text-4xl sm:text-5xl font-semibold text-blue leading-[1.1] tracking-tight">
+                  $3M
+                </h2>
+                <span className="text-lg text-black/40">Raised</span>
+              </div>
+              <p data-animate="fade-up" className="text-sm text-black/60 max-w-md">
+                Supported by the ecosystem&apos;s leading infrastructure funds
+                and strategic partners building the future of Solana.
+              </p>
+              <div className="flex-1" />
+              <div className="flex items-center gap-10 flex-wrap mt-6">
+                {backers.map((backer, index) => (
+                  <div
+                    key={index}
+                    data-animate="fade-up"
+                    className="flex items-center"
+                  >
+                    <Image
+                      src={backer.logo}
+                      alt={`${backer.name} logo`}
+                      width={120}
+                      height={48}
+                      className="h-7 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </header>
 
-        {/* Who We Are Section */}
-        <WhoWeAreSection />
-
-        {/* Backing Section */}
-        <BackingSection />
-
         {/* Journey Section */}
         <JourneySection />
+
+        {/* Who We Are Section */}
+        <WhoWeAreSection />
 
         {/* Team Section */}
         <TeamSection />
@@ -244,53 +281,6 @@ function WhoWeAreSection() {
               </p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// Backing Section
-// =============================================================================
-function BackingSection() {
-  return (
-    <section className="relative w-full overflow-hidden border-b border-black/10">
-      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-28">
-        {/* Section Header */}
-        <div className="mb-12">
-          <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
-            <Building2 className="w-3 h-3" />
-            Backed by the Best
-          </div>
-          <div data-animate="fade-up" className="flex items-baseline gap-4 mb-2">
-            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-blue leading-[1.1] tracking-tight">
-              $3M
-            </h2>
-            <span className="text-lg text-black/40">Raised</span>
-          </div>
-          <p data-animate="fade-up" className="text-sm text-black/60 max-w-md">
-            Supported by the ecosystem&apos;s leading infrastructure funds.
-          </p>
-        </div>
-
-        {/* Logo Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl">
-          {backers.map((backer, index) => (
-            <div
-              key={index}
-              data-animate="fade-up"
-              className="h-16 flex items-center justify-center p-4 rounded-[3px] bg-white/60 backdrop-blur-sm border border-black/5 hover:border-black/15 transition-colors"
-            >
-              <Image
-                src={backer.logo}
-                alt={`${backer.name} logo`}
-                width={120}
-                height={48}
-                className="h-8 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
-              />
-            </div>
-          ))}
         </div>
       </div>
     </section>

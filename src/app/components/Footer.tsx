@@ -59,7 +59,7 @@ const Footer = () => {
 
   const companyLinks = [
     { label: "About", href: "/about" },
-    { label: "Contacts", href: "/contacts" },
+    { label: "Support", href: "/support" },
   ];
 
 
@@ -155,7 +155,7 @@ const Footer = () => {
             </ul>
           </div>
 
-{/* CTA Column */}
+          {/* CTA Column */}
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-white/50 mb-6">
               Get Started
