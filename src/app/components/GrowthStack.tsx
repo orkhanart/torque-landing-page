@@ -8,6 +8,7 @@ import { RewardFlow } from "@/components/card-visuals/RewardFlow";
 import { RankOrbit } from "@/components/card-visuals/RankOrbit";
 import { NeuralPulse } from "@/components/card-visuals/NeuralPulse";
 import { CircuitPattern } from "@/components/card-visuals/CircuitPattern";
+import { SplitText } from "@/components/animations/SplitText";
 
 // =============================================================================
 // Growth Stack Section
@@ -19,29 +20,30 @@ export default function GrowthStack() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 md:mb-10">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40 border border-black/10 px-2 py-1 rounded-[3px]">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40 border border-black/10 px-2 py-1 rounded-[3px]">
               <span className="w-1 h-1 bg-blue rounded-full" />
               Platform Features
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-black leading-[1.1] tracking-tight">
-              The Growth
-              <br />
+            <SplitText tag="h2" className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-black leading-[1.1] tracking-tight">
+              <span>The Growth</span>
               <span className="text-black/40">Engine</span>
-            </h2>
-            <p className="text-base md:text-lg text-black/60 mt-4 max-w-xl">
+            </SplitText>
+            <p data-animate="fade-up" className="text-base md:text-lg text-black/60 mt-4 max-w-xl">
               An onchain CRM and incentive engine designed to identify, predict, and retain high-value participants with surgical precision.
             </p>
           </div>
-          <Button variant="outline" href="/platform" className="w-fit">
-            Explore Platform
-            <ArrowUpRight className="w-4 h-4 ml-2" />
-          </Button>
+          <div data-animate="fade-up">
+            <Button variant="outline" href="/platform" className="w-fit">
+              Explore Platform
+              <ArrowUpRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
         </div>
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {/* Large Card - Programmable Rewards */}
-          <div className="md:col-span-2 lg:col-span-2">
+          <div data-animate="fade-up" className="md:col-span-2 lg:col-span-2">
             <FeatureCard
               icon={Code}
               title="Programmable Rewards"
@@ -58,7 +60,7 @@ export default function GrowthStack() {
           </div>
 
           {/* Small Card - Leaderboards */}
-          <div>
+          <div data-animate="fade-up">
             <FeatureCard
               icon={Trophy}
               title="Leaderboards"
@@ -70,7 +72,7 @@ export default function GrowthStack() {
           </div>
 
           {/* Small Card - AI Insights */}
-          <div>
+          <div data-animate="fade-up">
             <FeatureCard
               icon={Brain}
               title="AI Insights"
@@ -82,7 +84,7 @@ export default function GrowthStack() {
           </div>
 
           {/* Wide Card - API / SDK */}
-          <div className="md:col-span-2 lg:col-span-2">
+          <div data-animate="fade-up" className="md:col-span-2 lg:col-span-2">
             <APICard />
           </div>
         </div>

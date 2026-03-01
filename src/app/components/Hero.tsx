@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { GlitchText } from "@/components/terminal";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Terminal, ChevronDown } from "lucide-react";
 import IntegrationRequestModal from "./IntegrationRequestModal";
 import TrustBar from "./TrustBar";
 import { heroStats, heroRotatingPhrases } from "@/app/data/stats";
 import { TorqueHelicoid } from "@/components/three/TorqueHelicoid";
+import { SplitText } from "@/components/animations/SplitText";
 
 // =============================================================================
 // Interactive Gradient Background with Particle Mesh
@@ -91,30 +91,40 @@ const Hero = () => {
           {/* Center Content */}
           <div className="max-w-2xl">
             {/* Terminal Tag */}
-            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+            <div
+              data-animate="fade-up"
+              className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]"
+            >
               <Terminal className="w-3 h-3" />
               <span>89M+ transactions indexed</span>
               <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black">
-              <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
-                The Onchain
-              </GlitchText>
-              <br />
-              <GlitchText intensity="subtle" triggerOnView={true} triggerOnHover={false}>
-                Growth Engine
-              </GlitchText>
-            </h1>
+            {/* Main Headline — SplitText line reveal */}
+            <SplitText
+              tag="h1"
+              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black"
+              delay={0.1}
+            >
+              <span>The Onchain</span>
+              <span>Growth Engine</span>
+            </SplitText>
 
             {/* Subheadline */}
-            <p className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl">
+            <p
+              data-animate="fade-up"
+              data-animate-delay="0.2"
+              className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl"
+            >
               Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-start gap-4 mb-16">
+            <div
+              data-animate="fade-up"
+              data-animate-delay="0.3"
+              className="flex flex-col sm:flex-row items-start gap-4 mb-16"
+            >
               <Button
                 onClick={() => setIsModalOpen(true)}
                 variant="accent"
@@ -133,7 +143,11 @@ const Hero = () => {
             </div>
 
             {/* Stats Row */}
-            <div className="flex items-start gap-8 md:gap-12">
+            <div
+              data-animate="fade-up"
+              data-animate-delay="0.4"
+              className="flex items-start gap-8 md:gap-12"
+            >
               {heroStats.map((stat, index) => (
                 <div key={index} className="flex flex-col">
                   <span className="text-xl md:text-2xl lg:text-3xl font-display font-semibold text-black tracking-tight">

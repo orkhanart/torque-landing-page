@@ -1,0 +1,78 @@
+"use client";
+
+import React, { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGsap } from "@/components/providers/GsapProvider";
+
+gsap.registerPlugin(ScrollTrigger);
+
+interface SplitTextProps {
+  children: React.ReactNode;
+  tag?: "h1" | "h2" | "h3" | "h4" | "p" | "span" | "div";
+  className?: string;
+  delay?: number;
+  triggerStart?: string;
+}
+
+export function SplitText({
+  children,
+  tag: Tag = "h2",
+  className,
+  delay = 0,
+  triggerStart = "top 85%",
+}: SplitTextProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { ready } = useGsap();
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || !ready) return;
+
+    const lines = el.querySelectorAll<HTMLElement>(".split-line-inner");
+    if (lines.length === 0) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set(lines, { y: "0%" });
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        lines,
+        { y: "101%" },
+        {
+          y: "0%",
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          delay,
+          scrollTrigger: {
+            trigger: el,
+            start: triggerStart,
+            once: true,
+          },
+        }
+      );
+    });
+
+    return () => ctx.revert();
+  }, [ready, delay, triggerStart]);
+
+  const childArray = React.Children.toArray(children);
+
+  return (
+    <Tag ref={containerRef as React.RefObject<never>} className={className}>
+      {childArray.map((child, i) => (
+        <span key={i} className="block overflow-hidden">
+          <span
+            className="split-line-inner block"
+            style={{ transform: "translateY(101%)" }}
+          >
+            {child}
+          </span>
+        </span>
+      ))}
+    </Tag>
+  );
+}

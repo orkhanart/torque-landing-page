@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
+import { GsapProvider } from "@/components/providers/GsapProvider";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { AsciiProvider } from "@/components/ascii/AsciiContext";
 
@@ -68,8 +69,10 @@ export default function RootLayout({
         </Script>
         <AsciiProvider>
           <ScrollProvider>
-            <ScrollProgress />
-            {children}
+            <GsapProvider>
+              <ScrollProgress />
+              {children}
+            </GsapProvider>
           </ScrollProvider>
         </AsciiProvider>
       </body>

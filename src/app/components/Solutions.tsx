@@ -7,6 +7,7 @@ import { ImageGradient } from "@/components/ascii/ImageGradient";
 import { VelocityFlow } from "@/components/card-visuals/VelocityFlow";
 import { LiquidityPool } from "@/components/card-visuals/LiquidityPool";
 import { RetentionLoop } from "@/components/card-visuals/RetentionLoop";
+import { SplitText } from "@/components/animations/SplitText";
 
 // =============================================================================
 // Solution Card Component
@@ -88,56 +89,63 @@ export default function Solutions() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div>
-            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
               <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
               <span>The Solutions</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
-              Engineering Protocol
-              <br />
+            <SplitText tag="h2" className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
+              <span>Engineering Protocol</span>
               <span className="text-black/40">Equilibrium</span>
-            </h2>
+            </SplitText>
 
-            <p className="text-lg md:text-xl text-black/60 max-w-2xl">
+            <p data-animate="fade-up" className="text-lg md:text-xl text-black/60 max-w-2xl">
               Every sector has a systemic flaw. Torque provides the diagnostics to find the leak and the primitives to fix it.
             </p>
           </div>
-          <Button variant="outline" href="/solutions" className="w-fit">
-            View Solutions
-            <ArrowUpRight className="w-4 h-4 ml-2" />
-          </Button>
+          <div data-animate="fade-up">
+            <Button variant="outline" href="/solutions" className="w-fit">
+              View Solutions
+              <ArrowUpRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
         </div>
 
         {/* Solution Cards Grid */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <SolutionCard
-            icon={CreditCard}
-            title="Lending"
-            subtitle="Targeted Liquidity Injection"
-            filename="lending.strategy"
-            visual={LiquidityPool}
-            diagnosis="The Utilization Paradox (High TVL / Low Borrowing)"
-            fix="Reward 'First-Time' LPs with duration-weighted bonuses to prime the pump."
-          />
-          <SolutionCard
-            icon={TrendingUp}
-            title="Perps"
-            subtitle="Habit Formation Architecture"
-            filename="perps.strategy"
-            visual={RetentionLoop}
-            diagnosis="The 'One-and-Done' Trader (High Churn)"
-            fix="Incentivize 'Streaks' over raw volume to build habitual protocol usage."
-          />
-          <SolutionCard
-            icon={CircleDot}
-            title="Stablecoins"
-            subtitle="Distribution Nodes"
-            filename="stablecoin.strategy"
-            visual={VelocityFlow}
-            diagnosis="The Velocity Gap ($175M+ Cap / 0 Velocity)"
-            fix="Use referral rebates to turn passive holders into active transaction agents."
-          />
+          <div data-animate="fade-up">
+            <SolutionCard
+              icon={CreditCard}
+              title="Lending"
+              subtitle="Targeted Liquidity Injection"
+              filename="lending.strategy"
+              visual={LiquidityPool}
+              diagnosis="The Utilization Paradox (High TVL / Low Borrowing)"
+              fix="Reward 'First-Time' LPs with duration-weighted bonuses to prime the pump."
+            />
+          </div>
+          <div data-animate="fade-up">
+            <SolutionCard
+              icon={TrendingUp}
+              title="Perps"
+              subtitle="Habit Formation Architecture"
+              filename="perps.strategy"
+              visual={RetentionLoop}
+              diagnosis="The 'One-and-Done' Trader (High Churn)"
+              fix="Incentivize 'Streaks' over raw volume to build habitual protocol usage."
+            />
+          </div>
+          <div data-animate="fade-up">
+            <SolutionCard
+              icon={CircleDot}
+              title="Stablecoins"
+              subtitle="Distribution Nodes"
+              filename="stablecoin.strategy"
+              visual={VelocityFlow}
+              diagnosis="The Velocity Gap ($175M+ Cap / 0 Velocity)"
+              fix="Use referral rebates to turn passive holders into active transaction agents."
+            />
+          </div>
         </div>
       </div>
     </div>
