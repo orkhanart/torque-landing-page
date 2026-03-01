@@ -12,6 +12,7 @@ interface AsciiPortraitProps {
 
 export function AsciiPortrait({ src, alt = "", className = "" }: AsciiPortraitProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const hoverRef = useRef(0);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -23,6 +24,7 @@ export function AsciiPortrait({ src, alt = "", className = "" }: AsciiPortraitPr
 
     let dead = false;
     let raf = 0;
+    let hoverTarget = 0;
 
     // Renderer (offscreen — AsciiEffect reads from it)
     const renderer = new THREE.WebGLRenderer({ antialias: false });
@@ -47,9 +49,10 @@ export function AsciiPortrait({ src, alt = "", className = "" }: AsciiPortraitPr
       width: "100%",
       height: "100%",
       overflow: "hidden",
-      color: "#0008FF",
+      color: "#888888",
       backgroundColor: "white",
-      textShadow: "0 0 3px rgba(0,8,255,0.35), 0 0 8px rgba(0,8,255,0.15)",
+      textShadow: "none",
+      transition: "color 0.5s ease, text-shadow 0.5s ease",
     });
 
     // Scene
@@ -62,11 +65,13 @@ export function AsciiPortrait({ src, alt = "", className = "" }: AsciiPortraitPr
 
     // Uniforms
     const uTime = { value: 0 };
+    const uHover = { value: 0 };
 
-    // Shader material — subtle scan lines + noise to keep it alive
+    // Shader material with idle + hover effects
     const mat = new THREE.ShaderMaterial({
       uniforms: {
         uTime,
+        uHover,
         uTexture: { value: null },
       },
       vertexShader: /* glsl */ `
@@ -78,28 +83,53 @@ export function AsciiPortrait({ src, alt = "", className = "" }: AsciiPortraitPr
       `,
       fragmentShader: /* glsl */ `
         uniform float uTime;
+        uniform float uHover;
         uniform sampler2D uTexture;
         varying vec2 vUv;
 
-        // Simple hash noise
         float hash(vec2 p) {
           return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
         }
 
         void main() {
-          vec4 tex = texture2D(uTexture, vUv);
+          vec2 uv = vUv;
+
+          // --- Hover: horizontal glitch displacement ---
+          float glitchStrength = uHover * 0.025;
+          float row = floor(uv.y * 60.0);
+          float glitchRand = hash(vec2(row, floor(uTime * 8.0)));
+          // Only glitch ~30% of rows at a time
+          float glitchMask = step(0.7, glitchRand);
+          uv.x += glitchMask * glitchStrength * (hash(vec2(row, uTime)) - 0.5) * 2.0;
+
+          // --- Hover: wave distortion ---
+          float wave = sin(uv.y * 20.0 + uTime * 4.0) * 0.006 * uHover;
+          uv.x += wave;
+
+          vec4 tex = texture2D(uTexture, uv);
           float gray = dot(tex.rgb, vec3(0.299, 0.587, 0.114));
 
-          // Slow horizontal scan line (subtle brightness wave)
+          // Idle: subtle scan line
           float scan = sin(vUv.y * 40.0 - uTime * 1.5) * 0.03;
 
-          // Very subtle character flicker noise
+          // Idle: subtle flicker noise
           float noise = (hash(vUv * 100.0 + uTime * 0.3) - 0.5) * 0.04;
 
-          // Gentle breathing (global brightness oscillation)
+          // Idle: gentle breathing
           float breath = sin(uTime * 0.8) * 0.02;
 
-          float brightness = gray + scan + noise + breath;
+          // --- Hover: intensify effects ---
+          // Stronger scan lines on hover
+          float hoverScan = sin(vUv.y * 80.0 - uTime * 6.0) * 0.06 * uHover;
+
+          // Heavier noise on hover
+          float hoverNoise = (hash(vUv * 200.0 + uTime * 2.0) - 0.5) * 0.1 * uHover;
+
+          // Contrast boost on hover (push darks darker, lights lighter)
+          float contrast = 1.0 + uHover * 0.4;
+
+          float brightness = gray + scan + noise + breath + hoverScan + hoverNoise;
+          brightness = (brightness - 0.5) * contrast + 0.5;
           brightness = clamp(brightness, 0.0, 1.0);
 
           gl_FragColor = vec4(vec3(brightness), 1.0);
@@ -119,7 +149,6 @@ export function AsciiPortrait({ src, alt = "", className = "" }: AsciiPortraitPr
       texture.magFilter = THREE.LinearFilter;
       mat.uniforms.uTexture.value = texture;
 
-      // Scale plane to cover container (like object-cover)
       const imgAspect = texture.image.width / texture.image.height;
       const containerAspect = w / h;
       if (imgAspect > containerAspect) {
@@ -137,9 +166,28 @@ export function AsciiPortrait({ src, alt = "", className = "" }: AsciiPortraitPr
       raf = requestAnimationFrame(tick);
 
       uTime.value = clock.getElapsedTime();
+
+      // Smooth lerp hover 0↔1
+      hoverRef.current += (hoverTarget - hoverRef.current) * 0.08;
+      uHover.value = hoverRef.current;
+
       ascii.render(scene, camera);
     };
     tick();
+
+    // Hover events — also transition color gray → blue
+    const onEnter = () => {
+      hoverTarget = 1;
+      ascii.domElement.style.color = "#0008FF";
+      ascii.domElement.style.textShadow = "0 0 3px rgba(0,8,255,0.35), 0 0 8px rgba(0,8,255,0.15)";
+    };
+    const onLeave = () => {
+      hoverTarget = 0;
+      ascii.domElement.style.color = "#888888";
+      ascii.domElement.style.textShadow = "none";
+    };
+    el.addEventListener("mouseenter", onEnter);
+    el.addEventListener("mouseleave", onLeave);
 
     // Resize
     const onResize = () => {
@@ -166,6 +214,8 @@ export function AsciiPortrait({ src, alt = "", className = "" }: AsciiPortraitPr
     return () => {
       dead = true;
       cancelAnimationFrame(raf);
+      el.removeEventListener("mouseenter", onEnter);
+      el.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("resize", onResize);
       geo.dispose();
       mat.dispose();
