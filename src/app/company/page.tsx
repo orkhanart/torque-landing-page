@@ -194,8 +194,8 @@ function BackingSection() {
 // Milestone Visuals & Card
 // =============================================================================
 const milestoneVisuals = [
-  <TrophyBurst key="trophy" color="#0000FF" />,
-  <AcceleratorPath key="accelerator" color="#0000FF" />,
+  <TrophyBurst key="trophy" color="#0008FF" />,
+  <AcceleratorPath key="accelerator" color="#0008FF" />,
 ];
 
 function MilestoneCard({ milestone, index, isInView }: { milestone: Milestone; index: number; isInView: boolean }) {
@@ -360,7 +360,7 @@ function CTASection() {
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="max-w-xl"
+        className="max-w-xl mx-auto text-center"
       >
         <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
           <Briefcase className="w-3 h-3" />
@@ -374,7 +374,7 @@ function CTASection() {
         <p className="text-base text-black/60 mb-6">
           We're always looking for exceptional builders to join our team.
         </p>
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Button variant="accent" href="/careers">
             View Open Roles
             <ArrowUpRight className="w-4 h-4 ml-2" />

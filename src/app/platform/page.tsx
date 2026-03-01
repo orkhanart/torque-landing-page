@@ -89,7 +89,7 @@ export default function PlatformPage() {
           label="Torque Intelligence"
           title="Turn Raw Data into Revenue"
           description="Stop guessing. Surface actionable campaigns to drive engagement and retention."
-          visual={<DataLens color="#0000FF" />}
+          visual={<DataLens color="#0008FF" />}
           features={[
             {
               icon: Database,
@@ -120,7 +120,7 @@ export default function PlatformPage() {
           label="Growth Engines"
           title="Launch High-ROI Campaigns"
           description="Deploy mechanics that drive viral loops and retention."
-          visual={<CampaignRadar color="#0000FF" />}
+          visual={<CampaignRadar color="#0008FF" />}
           features={[
             {
               icon: Code,
@@ -151,7 +151,7 @@ export default function PlatformPage() {
           label="Native Experience"
           title="Your Brand. Your UI. Our Engine."
           description="Embed directly into your dApp. Users never leave."
-          visual={<SDKModules color="#0000FF" />}
+          visual={<SDKModules color="#0008FF" />}
           features={[
             {
               icon: Terminal,
@@ -201,14 +201,14 @@ export default function PlatformPage() {
 
         {/* CTA */}
         <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-black/10">
-          <div className="max-w-xl">
+          <div className="max-w-xl mx-auto text-center">
             <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
               Ready to embed growth into your protocol?
             </h2>
             <p className="text-base text-black/60 mb-6">
               Join leading protocols using Torque to drive sustainable growth.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-4">
               <Button variant="accent" href="https://platform.torque.so/">
                 Get API Keys
                 <ArrowUpRight className="w-4 h-4 ml-2" />
@@ -314,9 +314,9 @@ function FeatureSection({
 function HowItWorksCard({ item, index }: { item: { step: string; title: string; description: string }; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
   const visuals = [
-    <IntegrationPlug key="plug" color="#0000FF" />,
-    <BuilderCanvas key="builder" color="#0000FF" />,
-    <MetricPulse key="metric" color="#0000FF" />,
+    <IntegrationPlug key="plug" color="#0008FF" />,
+    <BuilderCanvas key="builder" color="#0008FF" />,
+    <MetricPulse key="metric" color="#0008FF" />,
   ];
 
   return (
