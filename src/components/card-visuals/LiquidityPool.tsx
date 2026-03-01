@@ -53,10 +53,11 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
       particles: number; // count of particles inside
     }
 
+    // Inverted isosceles triangle — wide top, narrow bottom
     const pools: Pool[] = [
-      { xFrac: 0.22, yFrac: 0.3, x: 0, y: 0, radius: 35, energy: 0.3, phase: 0, particles: 0 },
-      { xFrac: 0.55, yFrac: 0.55, x: 0, y: 0, radius: 45, energy: 0.5, phase: Math.PI * 0.7, particles: 0 },
-      { xFrac: 0.8, yFrac: 0.28, x: 0, y: 0, radius: 38, energy: 0.4, phase: Math.PI * 1.3, particles: 0 },
+      { xFrac: 0.15, yFrac: 0.14, x: 0, y: 0, radius: 40, energy: 0.4, phase: 0, particles: 0 },
+      { xFrac: 0.85, yFrac: 0.14, x: 0, y: 0, radius: 40, energy: 0.4, phase: Math.PI * 0.667, particles: 0 },
+      { xFrac: 0.5, yFrac: 0.6, x: 0, y: 0, radius: 40, energy: 0.4, phase: Math.PI * 1.333, particles: 0 },
     ];
 
     // Connections between pools (flow channels)
@@ -172,34 +173,37 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
       // Decay pool energy
       pools.forEach(p => { p.energy *= 0.98; p.energy = Math.max(0.15, p.energy); });
 
-      // Draw flow channels (curved lines between pools)
+      // Triangle centroid for inward curve
+      const centX = (pools[0].x + pools[1].x + pools[2].x) / 3;
+      const centY = (pools[0].y + pools[1].y + pools[2].y) / 3;
+
+      // Draw flow channels (curved inward toward centroid)
       connections.forEach(conn => {
         const from = pools[conn.from];
         const to = pools[conn.to];
-        const midX = (from.x + to.x) / 2 + (to.y - from.y) * 0.3;
-        const midY = (from.y + to.y) / 2 - (to.x - from.x) * 0.15;
+        const edgeMidX = (from.x + to.x) / 2;
+        const edgeMidY = (from.y + to.y) / 2;
+        // Pull control point toward centroid for concave (inward) curve
+        const midX = edgeMidX + (centX - edgeMidX) * 0.5;
+        const midY = edgeMidY + (centY - edgeMidY) * 0.5;
 
-        // Channel glow
+        // Channel with shadowBlur glow
+        ctx.save();
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 20;
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
         ctx.quadraticCurveTo(midX, midY, to.x, to.y);
-        ctx.strokeStyle = `${color}${hex(30)}`;
-        ctx.lineWidth = 6;
+        ctx.strokeStyle = `${color}${hex(80)}`;
+        ctx.lineWidth = 2;
         ctx.stroke();
+        ctx.restore();
 
-        // Channel line
-        ctx.beginPath();
-        ctx.moveTo(from.x, from.y);
-        ctx.quadraticCurveTo(midX, midY, to.x, to.y);
-        ctx.strokeStyle = `${color}${hex(50)}`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Dashed secondary
+        // Dashed secondary (no shadow)
         ctx.beginPath();
         ctx.setLineDash([3, 5]);
         ctx.moveTo(from.x, from.y);
-        ctx.quadraticCurveTo(midX + 5, midY + 5, to.x, to.y);
+        ctx.quadraticCurveTo(midX + 3, midY + 3, to.x, to.y);
         ctx.strokeStyle = `${color}${hex(22)}`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
@@ -255,8 +259,10 @@ export function LiquidityPool({ color = "#0000FF", className = "", paused = fals
 
           const from = pools[p.fromPool];
           const to = pools[p.toPool];
-          const midX = (from.x + to.x) / 2 + (to.y - from.y) * 0.3;
-          const midY = (from.y + to.y) / 2 - (to.x - from.x) * 0.15;
+          const edgeMidX = (from.x + to.x) / 2;
+          const edgeMidY = (from.y + to.y) / 2;
+          const midX = edgeMidX + (centX - edgeMidX) * 0.5;
+          const midY = edgeMidY + (centY - edgeMidY) * 0.5;
 
           const t = p.flowT;
           const px = (1 - t) * (1 - t) * from.x + 2 * (1 - t) * t * midX + t * t * to.x;

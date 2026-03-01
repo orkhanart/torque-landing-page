@@ -163,7 +163,7 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
         spawnParticle();
       }
 
-      // Draw edges
+      // Draw edges — shadowBlur glow technique
       nodes.forEach((node) => {
         node.connections.forEach((connIdx) => {
           const target = nodes[connIdx];
@@ -172,12 +172,16 @@ export function RewardFlow({ color = "#0000FF", className = "", paused = false }
           const midY = (node.y + target.y) / 2;
           const cpOffset = (target.y - node.y) * 0.2;
 
+          ctx.save();
+          ctx.shadowColor = color;
+          ctx.shadowBlur = 20;
           ctx.beginPath();
-          ctx.strokeStyle = `${color}12`;
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = `${color}50`;
+          ctx.lineWidth = 1.5;
           ctx.moveTo(node.x, node.y);
           ctx.quadraticCurveTo(midX + cpOffset, midY - cpOffset, target.x, target.y);
           ctx.stroke();
+          ctx.restore();
         });
       });
 

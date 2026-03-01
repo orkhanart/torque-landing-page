@@ -45,7 +45,7 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
 
     // Figure-8 / lemniscate path
     const getCx = () => w * 0.5;
-    const getCy = () => h * 0.45;
+    const getCy = () => h * 0.35;
     const getScaleX = () => w * 0.3;
     const getScaleY = () => h * 0.22;
 
@@ -126,9 +126,14 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
         if (attractorPulseAge > 2) attractorActive = false;
       }
 
-      // Draw the figure-8 path
-      ctx.beginPath();
+      // Draw the figure-8 path — shadowBlur glow technique
       const pathSteps = 200;
+
+      // Single stroke with shadowBlur for real gaussian glow
+      ctx.save();
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 20;
+      ctx.beginPath();
       for (let i = 0; i <= pathSteps; i++) {
         const t = (Math.PI * 2 * i) / pathSteps;
         const p = getLoopPos(t);
@@ -136,17 +141,17 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
         else ctx.lineTo(p.x, p.y);
       }
       ctx.closePath();
-      ctx.strokeStyle = `${color}${hex(35)}`;
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = `${color}${hex(80)}`;
+      ctx.lineWidth = 2;
       ctx.stroke();
+      ctx.restore();
 
-      // Draw secondary dashed inner path
+      // Dashed secondary (no shadow)
       ctx.beginPath();
-      ctx.setLineDash([4, 6]);
+      ctx.setLineDash([3, 5]);
       for (let i = 0; i <= pathSteps; i++) {
         const t = (Math.PI * 2 * i) / pathSteps;
         const p = getLoopPos(t);
-        // Slightly offset
         const p2 = getLoopPos(t + 0.02);
         const nx = -(p2.y - p.y);
         const ny = p2.x - p.x;
@@ -157,7 +162,7 @@ export function RetentionLoop({ color = "#0000FF", className = "", paused = fals
         if (i === 0) ctx.moveTo(px, py);
         else ctx.lineTo(px, py);
       }
-      ctx.strokeStyle = `${color}${hex(18)}`;
+      ctx.strokeStyle = `${color}${hex(22)}`;
       ctx.lineWidth = 0.5;
       ctx.stroke();
       ctx.setLineDash([]);

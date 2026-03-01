@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { CardVisualWrapper } from "@/components/card-visuals/CardVisualWrapper";
+import { VisualCard } from "@/components/card-visuals/VisualCard";
 import { UtilizationMeter } from "@/components/card-visuals/UtilizationMeter";
 import { StreakChain } from "@/components/card-visuals/StreakChain";
 import { DistributionWeb } from "@/components/card-visuals/DistributionWeb";
@@ -329,7 +331,6 @@ function SolutionCard({ solution }: SolutionCardProps) {
   const Icon = solution.icon;
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
@@ -339,8 +340,6 @@ function SolutionCard({ solution }: SolutionCardProps) {
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
       className="group rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="flex flex-col md:flex-row">
         {/* Left: Content stacked */}
@@ -438,7 +437,9 @@ function SolutionCard({ solution }: SolutionCardProps) {
           {/* Procedural visual */}
           {solutionVisuals[solution.id] && (
             <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
-              {React.cloneElement(solutionVisuals[solution.id], { paused: !isHovered })}
+              <CardVisualWrapper color="#0008FF" className="relative w-full h-full">
+                {solutionVisuals[solution.id]}
+              </CardVisualWrapper>
             </div>
           )}
           <ImageGradient className="bg-gradient-to-r from-white via-white/40 to-transparent transition-opacity duration-500 group-hover:opacity-0 hidden md:block" />
@@ -512,7 +513,6 @@ function MarketCard({ market, index }: MarketCardProps) {
   const Icon = market.icon;
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
@@ -520,61 +520,46 @@ function MarketCard({ market, index }: MarketCardProps) {
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors min-h-[720px]"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-
-      {/* Procedural visual background */}
-      <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
-        {React.cloneElement(marketVisuals[index], { paused: !isHovered })}
-      </div>
-      <ImageGradient className="bg-gradient-to-t from-white/80 via-white/50 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
-      <ImageGradient className="bg-gradient-to-br from-white/30 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
-
-      {/* Terminal Header */}
-      <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
-        <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
-        <span className="font-mono text-[9px] text-black/30">{market.filename}</span>
-      </div>
-
-      {/* Content */}
-      <div className="absolute inset-0 z-10 flex flex-col p-4 pt-8">
-        <div className="mt-auto">
-          {/* Icon */}
-          <div className="w-10 h-10 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
-            <Icon className="w-5 h-5 text-black group-hover:text-blue transition-colors" />
-          </div>
-
-          {/* Title */}
-          <h3 className="font-display text-lg font-medium text-black mb-4 group-hover:text-blue transition-colors">
-            {market.headline}
-          </h3>
-
-          {/* Problem */}
-          <div className="mb-4 p-3 bg-white/60 backdrop-blur-sm rounded-[3px] border-l-2 border-black/20">
-            <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-1">
-              The Problem: {market.problem.title}
-            </span>
-            <p className="text-xs text-black/70 leading-relaxed">{market.problem.description}</p>
-          </div>
-
-          {/* Fix */}
-          <div className="p-3 bg-white/60 backdrop-blur-sm rounded-[3px] border-l-2 border-blue">
-            <span className="text-[9px] font-mono uppercase tracking-wider text-blue block mb-1">
-              The Fix: {market.fix.title}
-            </span>
-            <ul className="space-y-1">
-              {market.fix.mechanics.map((mechanic, i) => (
-                <li key={i} className="flex items-start gap-1.5 text-xs text-black/80">
-                  <span className="text-blue mt-0.5">+</span>
-                  {mechanic}
-                </li>
-              ))}
-            </ul>
-          </div>
+      <VisualCard
+        visual={marketVisuals[index]}
+        filename={market.filename}
+        minHeight="min-h-[720px]"
+        className="border-black/5 hover:border-black/15"
+      >
+        {/* Icon */}
+        <div className="relative w-10 h-10 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+          <Icon className="w-5 h-5 text-black group-hover:text-blue transition-colors" />
         </div>
-      </div>
+
+        {/* Title */}
+        <h3 className="relative font-display text-lg font-medium text-black mb-4 group-hover:text-blue transition-colors">
+          {market.headline}
+        </h3>
+
+        {/* Problem */}
+        <div className="relative mb-4 p-3 bg-white/60 backdrop-blur-sm rounded-[3px] border-l-2 border-black/20">
+          <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-1">
+            The Problem: {market.problem.title}
+          </span>
+          <p className="text-xs text-black/70 leading-relaxed">{market.problem.description}</p>
+        </div>
+
+        {/* Fix */}
+        <div className="relative p-3 bg-white/60 backdrop-blur-sm rounded-[3px] border-l-2 border-blue">
+          <span className="text-[9px] font-mono uppercase tracking-wider text-blue block mb-1">
+            The Fix: {market.fix.title}
+          </span>
+          <ul className="space-y-1">
+            {market.fix.mechanics.map((mechanic, i) => (
+              <li key={i} className="flex items-start gap-1.5 text-xs text-black/80">
+                <span className="text-blue mt-0.5">+</span>
+                {mechanic}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </VisualCard>
     </motion.div>
   );
 }

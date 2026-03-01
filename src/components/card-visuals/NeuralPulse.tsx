@@ -7,12 +7,14 @@ interface NeuralPulseProps {
   nodeCount?: number;
   className?: string;
   paused?: boolean;
+  speed?: number;
 }
 
-export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "", paused = false }: NeuralPulseProps) {
+export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "", paused = false, speed = 1 }: NeuralPulseProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
+  const speedRef = useRef(speed);
   const animateFnRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -21,6 +23,10 @@ export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "",
       animationRef.current = requestAnimationFrame(animateFnRef.current);
     }
   }, [paused]);
+
+  useEffect(() => {
+    speedRef.current = speed;
+  }, [speed]);
 
   const mouseRef = useRef({ x: -1000, y: -1000, active: false });
 
@@ -109,30 +115,34 @@ export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "",
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
-      time += 0.016;
+      const dt = 0.016 * speedRef.current;
+      time += dt;
       const mouse = mouseRef.current;
 
       // Decay energies
       nodes.forEach(n => {
-        n.energy *= 0.94;
-        n.fireTimer = Math.max(0, n.fireTimer - 0.016);
+        n.energy *= Math.pow(0.94, speedRef.current);
+        n.fireTimer = Math.max(0, n.fireTimer - dt);
       });
 
       // Fire input nodes periodically
-      if (time - lastFire > 3) {
+      if (time - lastFire > 1.2) {
         lastFire = time;
-        // Pick 1 random input node
+        // Pick 2-3 random input nodes simultaneously
         const inputCount = layers[0];
-        const ni = Math.floor(Math.random() * inputCount);
-        nodes[ni].energy = 1;
-        nodes[ni].fireTimer = 0.3;
-        fireRings.push({ x: nodes[ni].x, y: nodes[ni].y, age: 0, max: 0.5 });
+        const fireCount = 2 + Math.floor(Math.random() * 2);
+        const indices = Array.from({ length: inputCount }, (_, i) => i).sort(() => Math.random() - 0.5).slice(0, fireCount);
+        indices.forEach(ni => {
+          nodes[ni].energy = 1;
+          nodes[ni].fireTimer = 0.3;
+          fireRings.push({ x: nodes[ni].x, y: nodes[ni].y, age: 0, max: 0.5 });
 
-        // Send signal to 1-2 random connections (not all)
-        const shuffled = [...nodes[ni].conn].sort(() => Math.random() - 0.5);
-        const pick = shuffled.slice(0, 1 + Math.floor(Math.random() * 2));
-        pick.forEach(ci => {
-          signals.push({ from: ni, to: ci, t: 0, speed: 0.003 + Math.random() * 0.003 });
+          // Send signal to 2-3 random connections
+          const shuffled = [...nodes[ni].conn].sort(() => Math.random() - 0.5);
+          const pick = shuffled.slice(0, 2 + Math.floor(Math.random() * 2));
+          pick.forEach(ci => {
+            signals.push({ from: ni, to: ci, t: 0, speed: 0.003 + Math.random() * 0.003 });
+          });
         });
       }
 
@@ -154,6 +164,9 @@ export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "",
 
           const alpha = baseAlpha + energyAlpha + mAlpha;
 
+          ctx.save();
+          ctx.shadowColor = color;
+          ctx.shadowBlur = 6 + energyAlpha * 10;
           ctx.beginPath();
           ctx.strokeStyle = `${color}${hex(alpha * 255)}`;
           ctx.lineWidth = 0.8 + energyAlpha * 3;
@@ -163,13 +176,14 @@ export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "",
           const cpy = (node.y + target.y) / 2 + (node.y - target.y) * 0.1;
           ctx.quadraticCurveTo(cpx, cpy, target.x, target.y);
           ctx.stroke();
+          ctx.restore();
         });
       });
 
       // Update signals
       for (let i = signals.length - 1; i >= 0; i--) {
         const s = signals[i];
-        s.t += s.speed;
+        s.t += s.speed * speedRef.current;
 
         const from = nodes[s.from], to = nodes[s.to];
         const cpx = (from.x + to.x) / 2;
@@ -214,7 +228,7 @@ export function NeuralPulse({ color = "#0000FF", nodeCount = 12, className = "",
       // Fire rings
       for (let i = fireRings.length - 1; i >= 0; i--) {
         const fr = fireRings[i];
-        fr.age += 0.016;
+        fr.age += dt;
         const t = fr.age / fr.max;
         if (t >= 1) { fireRings.splice(i, 1); continue; }
 

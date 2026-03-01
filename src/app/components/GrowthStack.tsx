@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Code, Trophy, Brain, Zap, ArrowUpRight, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { CardVisualWrapper } from "@/components/card-visuals/CardVisualWrapper";
 import { RewardFlow } from "@/components/card-visuals/RewardFlow";
 import { RankOrbit } from "@/components/card-visuals/RankOrbit";
 import { NeuralPulse } from "@/components/card-visuals/NeuralPulse";
@@ -78,6 +79,7 @@ export default function GrowthStack() {
               visual={<NeuralPulse color="#0008FF" nodeCount={10} />}
               filename="intelligence.ai"
               metric="Predictive analytics"
+              speed={1.5}
             />
           </div>
 
@@ -104,6 +106,7 @@ interface FeatureCardProps {
   metric?: string;
   large?: boolean;
   featured?: boolean;
+  speed?: number;
 }
 
 function FeatureCard({
@@ -116,14 +119,13 @@ function FeatureCard({
   metric,
   large,
   featured,
+  speed,
 }: FeatureCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
-    <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/5 hover:border-black/15"}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/5 hover:border-black/15"}`}>
 
       {/* Procedural visual background */}
-      <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-500">{visual && React.cloneElement(visual, { paused: !isHovered })}</div>
+      <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-500">{visual && <CardVisualWrapper color="#0008FF" speed={speed} className="relative w-full h-full">{visual}</CardVisualWrapper>}</div>
 
       {/* White gradient overlay - fades out on hover to reveal visual */}
       <ImageGradient className={`transition-opacity duration-500 group-hover:opacity-0 ${featured ? "bg-gradient-to-t from-white/40 via-white/20 to-transparent" : "bg-gradient-to-t from-white/50 via-white/25 to-transparent"}`} />
@@ -183,14 +185,14 @@ function FeatureCard({
 // API Card Component
 // =============================================================================
 function APICard() {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
-    <div className="relative rounded-[3px] group h-full border border-black/5 hover:border-black/15 transition-colors overflow-hidden min-h-[280px]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <div className="relative rounded-[3px] group h-full border border-black/5 hover:border-black/15 transition-colors overflow-hidden min-h-[280px]">
 
       {/* Procedural visual background */}
       <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-500">
-        <CircuitPattern color="#0008FF" paused={!isHovered} />
+        <CardVisualWrapper color="#0008FF" speed={1.5} className="relative w-full h-full">
+          <CircuitPattern />
+        </CardVisualWrapper>
       </div>
 
       {/* White gradient overlay - fades out on hover to reveal visual */}

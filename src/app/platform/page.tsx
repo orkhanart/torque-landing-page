@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
-import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { CardVisualWrapper } from "@/components/card-visuals/CardVisualWrapper";
 import { DataLens } from "@/components/card-visuals/DataLens";
 import { CampaignRadar } from "@/components/card-visuals/CampaignRadar";
 import { SDKModules } from "@/components/card-visuals/SDKModules";
@@ -253,18 +253,16 @@ function FeatureSection({
   features,
   visual,
 }: FeatureSectionProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <section
-      className="relative w-full px-6 md:px-12 lg:px-20 py-20 md:py-32 border-t border-black/10 overflow-hidden min-h-[600px] lg:min-h-[700px]"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="group relative w-full px-6 md:px-12 lg:px-20 py-20 md:py-32 border-t border-black/10 overflow-hidden min-h-[600px] lg:min-h-[700px]"
     >
       {/* Background Visual */}
       {visual && (
-        <div className={`absolute inset-0 transition-opacity duration-700 ${isHovered ? "opacity-100" : "opacity-50"}`}>
-          {React.cloneElement(visual, { paused: !isHovered })}
+        <div className="absolute inset-0 transition-opacity duration-700 opacity-50 group-hover:opacity-100">
+          <CardVisualWrapper color="#0008FF" className="relative w-full h-full">
+            {visual}
+          </CardVisualWrapper>
         </div>
       )}
 
@@ -312,18 +310,15 @@ function FeatureSection({
 // How It Works Card Component
 // =============================================================================
 function HowItWorksCard({ item, index }: { item: { step: string; title: string; description: string }; index: number }) {
-  const [isHovered, setIsHovered] = useState(false);
   const visuals = [
-    <IntegrationPlug key="plug" color="#0008FF" />,
-    <BuilderCanvas key="builder" color="#0008FF" />,
-    <MetricPulse key="metric" color="#0008FF" />,
+    <IntegrationPlug key="plug" />,
+    <BuilderCanvas key="builder" />,
+    <MetricPulse key="metric" />,
   ];
 
   return (
     <div
       className="group relative border-t md:border-t-0 md:border-l first:border-l-0 first:border-t-0 border-black/8"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Text */}
       <div className="px-5 pt-5 pb-3">
@@ -336,8 +331,10 @@ function HowItWorksCard({ item, index }: { item: { step: string; title: string; 
 
       {/* Visual */}
       <div className="relative h-[200px] mx-5 mb-5 rounded-[3px] bg-gray-50/60 overflow-hidden">
-        <div className={`absolute inset-0 transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-60"}`}>
-          {React.cloneElement(visuals[index], { paused: !isHovered })}
+        <div className="absolute inset-0 transition-opacity duration-500 opacity-60 group-hover:opacity-100">
+          <CardVisualWrapper color="#0008FF" className="relative w-full h-full">
+            {visuals[index]}
+          </CardVisualWrapper>
         </div>
       </div>
     </div>

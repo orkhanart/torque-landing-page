@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { ArrowUpRight, CircleDot, CreditCard, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { VisualCard } from "@/components/card-visuals/VisualCard";
 import { VelocityFlow } from "@/components/card-visuals/VelocityFlow";
 import { LiquidityPool } from "@/components/card-visuals/LiquidityPool";
 import { RetentionLoop } from "@/components/card-visuals/RetentionLoop";
@@ -22,59 +22,38 @@ interface SolutionCardProps {
 }
 
 function SolutionCard({ icon: Icon, title, subtitle, filename, visual: Visual, diagnosis, fix }: SolutionCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
-    <div
-      className="relative rounded-[3px] overflow-hidden group border border-black/10 hover:border-blue/30 transition-all min-h-[660px] sm:min-h-0 xl:min-h-[660px] sm:flex sm:flex-row-reverse xl:block"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <VisualCard
+      visual={<Visual />}
+      filename={filename}
+      layout="adaptive"
     >
-      {/* Procedural visual background */}
-      <div className="absolute inset-0 sm:relative sm:w-2/5 sm:inset-auto sm:scale-y-[0.6] sm:origin-center xl:scale-y-100 xl:absolute xl:inset-0 xl:w-auto opacity-50 group-hover:opacity-100 transition-all duration-500">
-        <Visual color="#0008FF" paused={!isHovered} />
-        {/* Terminal Header — scoped to visual area */}
-        <div className="absolute top-0 left-0 right-0 flex items-center gap-1.5 px-3 py-1.5 z-10">
-          <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
-          <span className="font-mono text-[9px] text-black/30">{filename}</span>
+      <div className="relative w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+        <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
+      </div>
+
+      <h3 className="relative font-display text-base md:text-lg font-medium text-black mb-1 group-hover:text-blue transition-colors">
+        {title}
+      </h3>
+      <p className="relative text-[10px] font-mono uppercase tracking-wider text-black/50 mb-3">
+        {subtitle}
+      </p>
+
+      <div className="relative space-y-2 mb-4">
+        <div className="p-3 border-l-2 border-black/20 rounded-r-[2px]">
+          <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-0.5">diagnosis</span>
+          <p className="text-xs text-black/70">{diagnosis}</p>
+        </div>
+        <div className="p-3 border-l-2 border-blue rounded-r-[2px]">
+          <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-0.5">the fix</span>
+          <p className="text-xs text-black">{fix}</p>
         </div>
       </div>
 
-      {/* White gradient overlay - fades out on hover to reveal visual */}
-      <ImageGradient className="bg-gradient-to-t from-white/70 via-white/40 to-transparent transition-opacity duration-500 group-hover:opacity-0 sm:hidden xl:block" />
-      <ImageGradient className="bg-gradient-to-br from-white/30 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0 sm:hidden xl:block" />
-
-      {/* Content */}
-      <div className="absolute inset-0 sm:relative sm:w-3/5 sm:inset-auto xl:absolute xl:inset-0 xl:w-auto z-10 flex flex-col p-4 pt-8 sm:p-5 sm:pt-5 xl:p-4 xl:pt-8">
-        <div className="mt-auto sm:mt-0 xl:mt-auto">
-          <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
-            <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
-          </div>
-
-          <h3 className="font-display text-base md:text-lg font-medium text-black mb-1 group-hover:text-blue transition-colors">
-            {title}
-          </h3>
-          <p className="text-[10px] font-mono uppercase tracking-wider text-black/50 mb-3">
-            {subtitle}
-          </p>
-
-          <div className="space-y-2 mb-4">
-            <div className="bg-white/60 backdrop-blur-sm p-3 border-l-2 border-black/20 rounded-r-[2px]">
-              <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-0.5">diagnosis</span>
-              <p className="text-xs text-black/70">{diagnosis}</p>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm p-3 border-l-2 border-blue rounded-r-[2px]">
-              <span className="text-[9px] font-mono uppercase tracking-wider text-black/40 block mb-0.5">the fix</span>
-              <p className="text-xs text-black">{fix}</p>
-            </div>
-          </div>
-
-          <a href="/playbooks" className="inline-flex items-center text-xs text-blue hover:text-black transition-colors font-medium">
-            View Strategy <ArrowUpRight className="w-3 h-3 ml-1" />
-          </a>
-        </div>
-      </div>
-    </div>
+      <a href="/playbooks" className="relative inline-flex items-center text-xs text-blue hover:text-black transition-colors font-medium">
+        View Strategy <ArrowUpRight className="w-3 h-3 ml-1" />
+      </a>
+    </VisualCard>
   );
 }
 

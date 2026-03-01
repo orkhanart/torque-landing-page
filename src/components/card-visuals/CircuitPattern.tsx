@@ -6,12 +6,14 @@ interface CircuitPatternProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  speed?: number;
 }
 
-export function CircuitPattern({ color = "#0000FF", className = "", paused = false }: CircuitPatternProps) {
+export function CircuitPattern({ color = "#0000FF", className = "", paused = false, speed = 1 }: CircuitPatternProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
+  const speedRef = useRef(speed);
   const animateFnRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -20,6 +22,10 @@ export function CircuitPattern({ color = "#0000FF", className = "", paused = fal
       animationRef.current = requestAnimationFrame(animateFnRef.current);
     }
   }, [paused]);
+
+  useEffect(() => {
+    speedRef.current = speed;
+  }, [speed]);
 
   const mouseRef = useRef({ x: -1000, y: -1000, active: false });
 
@@ -152,11 +158,12 @@ export function CircuitPattern({ color = "#0000FF", className = "", paused = fal
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
-      time += 0.016;
+      const dt = 0.016 * speedRef.current;
+      time += dt;
       const mouse = mouseRef.current;
 
       // Decay energies
-      nodes.forEach(n => { n.energy *= 0.96; });
+      nodes.forEach(n => { n.energy *= Math.pow(0.96, speedRef.current); });
 
       // Subtle grid
       ctx.strokeStyle = `${color}06`;
@@ -184,36 +191,33 @@ export function CircuitPattern({ color = "#0000FF", className = "", paused = fal
 
         const alpha = 0.08 + avgE * 0.2 + mAlpha;
 
+        ctx.save();
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 10 + avgE * 14;
         ctx.beginPath();
         ctx.strokeStyle = `${color}${hex(alpha * 255)}`;
-        ctx.lineWidth = 1 + avgE * 2;
+        ctx.lineWidth = 1.5 + avgE * 1.5;
         ctx.moveTo(trace.points[0].x, trace.points[0].y);
         for (let i = 1; i < trace.points.length; i++) {
           ctx.lineTo(trace.points[i].x, trace.points[i].y);
         }
         ctx.stroke();
-
-        // Glow on energized traces
-        if (avgE > 0.1) {
-          ctx.beginPath();
-          ctx.strokeStyle = `${color}${hex(avgE * 20)}`;
-          ctx.lineWidth = 5 + avgE * 6;
-          ctx.moveTo(trace.points[0].x, trace.points[0].y);
-          for (let i = 1; i < trace.points.length; i++) ctx.lineTo(trace.points[i].x, trace.points[i].y);
-          ctx.stroke();
-        }
+        ctx.restore();
       });
 
-      // Spawn pulses
-      if (Math.random() < 0.03 && pulses.length < 8 && traces.length > 0) {
-        const ti = Math.floor(Math.random() * traces.length);
-        pulses.push({ traceIdx: ti, t: 0, speed: (0.003 + Math.random() * 0.004) / Math.max(1, traces[ti].length / 100), dir: 1, trail: [] });
+      // Spawn pulses — 2-3 simultaneously
+      if (Math.random() < 0.08 && pulses.length < 16 && traces.length > 0) {
+        const spawnCount = 2 + Math.floor(Math.random() * 2);
+        for (let s = 0; s < spawnCount; s++) {
+          const ti = Math.floor(Math.random() * traces.length);
+          pulses.push({ traceIdx: ti, t: 0, speed: (0.003 + Math.random() * 0.004) / Math.max(1, traces[ti].length / 100), dir: 1, trail: [] });
+        }
       }
 
       // Update and draw pulses
       for (let i = pulses.length - 1; i >= 0; i--) {
         const p = pulses[i];
-        p.t += p.speed * p.dir;
+        p.t += p.speed * p.dir * speedRef.current;
 
         if (p.t >= 1 || p.t <= 0) {
           // Energize arrival node

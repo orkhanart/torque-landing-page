@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { STRATEGIES, type CardType, type StrategyCard } from "./strategies";
 import IntegrationRequestModal from "../components/IntegrationRequestModal";
-import { ImageGradient } from "@/components/ascii/ImageGradient";
+import { VisualCard } from "@/components/card-visuals/VisualCard";
 import { RaffleWheel } from "@/components/card-visuals/RaffleWheel";
 import { ROICascade } from "@/components/card-visuals/ROICascade";
 import { ReferralTree } from "@/components/card-visuals/ReferralTree";
@@ -173,49 +173,32 @@ const strategyVisuals: Record<string, React.ReactElement> = {
   "06": <WelcomeGate color="#0008FF" />,
 };
 
+const strategySpeeds: Record<string, number> = {
+  "02": 1.2,
+};
+
 interface StrategyCardComponentProps {
   strategy: StrategyCard;
 }
 
 function StrategyCardComponent({ strategy }: StrategyCardComponentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const Icon = strategy.icon;
 
-  const handleCardClick = () => {
-    setIsModalOpen(true);
-  };
+  const visual = strategyVisuals[strategy.id];
+  if (!visual) return null;
 
   return (
     <>
-      <div
-        onClick={handleCardClick}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-all duration-200 min-h-[420px] cursor-pointer"
-      >
-
-        {/* Procedural visual background */}
-        {strategyVisuals[strategy.id] && (
-          <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
-            {React.cloneElement(strategyVisuals[strategy.id], { paused: !isHovered })}
-          </div>
-        )}
-        <ImageGradient className="bg-gradient-to-t from-white/80 via-white/50 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
-        <ImageGradient className="bg-gradient-to-br from-white/30 via-transparent to-transparent transition-opacity duration-500 group-hover:opacity-0" />
-
-        {/* Terminal Header */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-3 py-1.5 z-10">
-          <div className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
-            <span className="font-mono text-[9px] text-black/30">
-              {strategy.type === "CASE_STUDY"
-                ? "case_study"
-                : strategy.type.toLowerCase()}
-              .{strategy.sector.toLowerCase()}
-            </span>
-          </div>
-          {strategy.difficulty && (
+      <VisualCard
+        visual={visual}
+        visualSpeed={strategySpeeds[strategy.id] ?? 1}
+        filename={`${strategy.type === "CASE_STUDY" ? "case_study" : strategy.type.toLowerCase()}.${strategy.sector.toLowerCase()}`}
+        minHeight="min-h-[420px]"
+        className="border-black/5 hover:border-black/15 cursor-pointer"
+        onClick={() => setIsModalOpen(true)}
+        headerRight={
+          strategy.difficulty ? (
             <span
               className={`font-mono text-[9px] px-1.5 py-0.5 rounded-[2px] ${
                 strategy.difficulty === "Easy"
@@ -227,50 +210,47 @@ function StrategyCardComponent({ strategy }: StrategyCardComponentProps) {
             >
               {strategy.difficulty}
             </span>
-          )}
+          ) : undefined
+        }
+        badge={
+          strategy.metricBadge ? (
+            <div className="absolute top-8 right-3 z-10">
+              <span className="inline-flex items-center px-2 py-1 bg-blue/10 backdrop-blur-sm text-blue text-xs font-medium rounded-[2px] border border-blue/20">
+                {strategy.metricBadge}
+              </span>
+            </div>
+          ) : undefined
+        }
+      >
+        {/* Icon */}
+        <div className="relative w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
+          <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
         </div>
 
-        {/* Metric Badge (Case Studies) */}
-        {strategy.metricBadge && (
-          <div className="absolute top-8 right-3 z-10">
-            <span className="inline-flex items-center px-2 py-1 bg-blue/10 backdrop-blur-sm text-blue text-xs font-medium rounded-[2px] border border-blue/20">
-              {strategy.metricBadge}
+        {/* Title */}
+        <h3 className="relative font-display text-base md:text-lg font-medium text-black mb-1 group-hover:text-blue transition-colors">
+          {strategy.title}
+        </h3>
+
+        {/* Description */}
+        <p className="relative text-xs text-black/60 leading-relaxed mb-3">
+          {strategy.description}
+        </p>
+
+        {/* Formula or Metric */}
+        <div className="relative">
+        {strategy.formula ? (
+          <FormulaBlock formula={strategy.formula} />
+        ) : (
+          <div className="pt-3 border-t border-black/10">
+            <span className="inline-flex items-center text-xs font-medium text-blue">
+              Read Case Study
+              <ArrowUpRight className="w-3 h-3 ml-1" />
             </span>
           </div>
         )}
-
-        {/* Card Body */}
-        <div className="absolute inset-0 z-10 flex flex-col p-4 pt-10">
-          <div className="mt-auto">
-            {/* Icon */}
-            <div className="w-8 h-8 rounded-[3px] bg-white/80 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-blue/10 transition-colors">
-              <Icon className="w-4 h-4 text-black group-hover:text-blue transition-colors" />
-            </div>
-
-            {/* Title */}
-            <h3 className="font-display text-base md:text-lg font-medium text-black mb-1 group-hover:text-blue transition-colors">
-              {strategy.title}
-            </h3>
-
-            {/* Description */}
-            <p className="text-xs text-black/60 leading-relaxed mb-3">
-              {strategy.description}
-            </p>
-
-            {/* Formula or Metric */}
-            {strategy.formula ? (
-              <FormulaBlock formula={strategy.formula} />
-            ) : (
-              <div className="pt-3 border-t border-black/10">
-                <span className="inline-flex items-center text-xs font-medium text-blue">
-                  Read Case Study
-                  <ArrowUpRight className="w-3 h-3 ml-1" />
-                </span>
-              </div>
-            )}
-          </div>
         </div>
-      </div>
+      </VisualCard>
 
       {/* Integration Request Modal */}
       <IntegrationRequestModal

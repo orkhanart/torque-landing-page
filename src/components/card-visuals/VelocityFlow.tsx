@@ -106,17 +106,21 @@ export function VelocityFlow({ color = "#0000FF", className = "", paused = false
       ctx.clearRect(0, 0, w, h);
       time += 0.008;
 
-      // Draw lane paths (flowing wave lines)
+      // Draw lane paths — shadowBlur glow technique
       lanes.forEach(lane => {
+        ctx.save();
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 18;
         ctx.beginPath();
         for (let x = 0; x <= w; x += 3) {
           const y = getLaneY(lane, x, time);
           if (x === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = `${color}${hex(30)}`;
-        ctx.lineWidth = 0.8;
+        ctx.strokeStyle = `${color}${hex(70)}`;
+        ctx.lineWidth = 1.5;
         ctx.stroke();
+        ctx.restore();
       });
 
       // Spawn particles on left edge
