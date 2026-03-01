@@ -1,13 +1,25 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { featuredPlaybooks, type Playbook } from "@/app/data/playbooks";
 import { VisualCard } from "@/components/card-visuals/VisualCard";
-import { RafflePattern } from "@/components/card-visuals/RafflePattern";
-import { NetworkPattern } from "@/components/card-visuals/NetworkPattern";
-import { GrowthBars } from "@/components/card-visuals/GrowthBars";
+import { SplitText } from "@/components/animations/SplitText";
+
+const RafflePattern = dynamic(
+  () => import("@/components/card-visuals/RafflePattern").then(mod => ({ default: mod.RafflePattern })),
+  { ssr: false }
+);
+const NetworkPattern = dynamic(
+  () => import("@/components/card-visuals/NetworkPattern").then(mod => ({ default: mod.NetworkPattern })),
+  { ssr: false }
+);
+const GrowthBars = dynamic(
+  () => import("@/components/card-visuals/GrowthBars").then(mod => ({ default: mod.GrowthBars })),
+  { ssr: false }
+);
 
 const visualComponents: Record<Playbook["visualType"], React.ComponentType<{ color?: string; paused?: boolean }>> = {
   raffle: RafflePattern,
@@ -22,29 +34,32 @@ export default function PlaybooksSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div>
-            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
               <BookOpen className="w-3 h-3" />
               <span>Growth Playbooks</span>
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-black leading-[1.1] tracking-tight">
-              Battle-tested
-              <br />
+            <SplitText tag="h2" className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-black leading-[1.1] tracking-tight">
+              <span>Battle-tested</span>
               <span className="text-black/40">Strategies</span>
-            </h2>
-            <p className="text-base md:text-lg text-black/60 mt-4 max-w-xl">
+            </SplitText>
+            <p data-animate="fade-up" className="text-base md:text-lg text-black/60 mt-4 max-w-xl">
               Proven growth frameworks from top DeFi protocols.
             </p>
           </div>
-          <Button variant="outline" href="/playbooks" className="w-fit">
-            View All Playbooks
-            <ArrowUpRight className="w-4 h-4 ml-2" />
-          </Button>
+          <div data-animate="fade-up">
+            <Button variant="outline" href="/playbooks" className="w-fit">
+              View All Playbooks
+              <ArrowUpRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
         </div>
 
         {/* Playbooks Grid — 3 vertical cols at xl, single-col horizontal at 3xl */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           {featuredPlaybooks.map((playbook) => (
-            <PlaybookCard key={playbook.id} playbook={playbook} />
+            <div key={playbook.id} data-animate="fade-up">
+              <PlaybookCard playbook={playbook} />
+            </div>
           ))}
         </div>
       </div>

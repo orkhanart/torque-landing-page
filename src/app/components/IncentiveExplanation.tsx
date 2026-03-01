@@ -1,6 +1,6 @@
 "use client";
 
-import { SmartImage } from "@/components/ascii/SmartImage";
+import Image from "next/image";
 import { GlassCard } from "@/components/ui/glass-card";
 import { HammerIcon, WandSparklesIcon, BarChart3Icon } from "lucide-react";
 
@@ -67,7 +67,7 @@ const IncentiveExplanation = () => {
               </p>
             </div>
             <div className="px-4 pb-4">
-              <SmartImage
+              <Image
                 src={card.image}
                 alt={card.alt}
                 width={840}
@@ -103,7 +103,7 @@ const IncentiveExplanation = () => {
               </p>
             </div>
             <div className="px-4 md:px-5 pb-4 md:pb-5">
-              <SmartImage
+              <Image
                 src={card.image}
                 alt={card.alt}
                 width={840}

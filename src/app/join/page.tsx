@@ -89,8 +89,8 @@ function JoinForm() {
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-foreground mb-4">Join Torque</h1>
-      <p className="text-muted-foreground mb-8 text-center max-w-md">
+      <h1 data-animate="fade-up" className="text-4xl font-bold text-foreground mb-4">Join Torque</h1>
+      <p data-animate="fade-up" className="text-muted-foreground mb-8 text-center max-w-md">
         Get in touch with us to learn more about Torque.
       </p>
       <form onSubmit={validateAndSubmit} className="w-full max-w-lg space-y-5" noValidate>

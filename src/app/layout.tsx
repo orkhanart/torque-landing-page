@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
+import { GsapProvider } from "@/components/providers/GsapProvider";
 import { ScrollProgress } from "@/components/ScrollProgress";
-import { AsciiProvider } from "@/components/ascii/AsciiContext";
+import { PostHogProvider } from "@/components/providers/PostHogProvider";
 
 export const metadata: Metadata = {
   title: "Torque | The Growth Engine for Onchain Economies",
@@ -66,12 +67,14 @@ export default function RootLayout({
             gtag('config', 'G-8CM307NTBB');
           `}
         </Script>
-        <AsciiProvider>
+        <PostHogProvider>
           <ScrollProvider>
-            <ScrollProgress />
-            {children}
+            <GsapProvider>
+              <ScrollProgress />
+              {children}
+            </GsapProvider>
           </ScrollProvider>
-        </AsciiProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

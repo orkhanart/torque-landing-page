@@ -525,35 +525,19 @@
     100% { transform: translateY(100%); }
   }
 
-  /* Fade Up */
-  .animate-fade-up {
-    animation: fadeUp 0.6s var(--ease-out) forwards;
+  @keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  /* GSAP ScrollTrigger — hide elements until animated */
+  [data-animate] {
     opacity: 0;
   }
-
-  @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Stagger children */
-  .stagger-children > * {
-    opacity: 0;
-    animation: fadeUp 0.5s var(--ease-out) forwards;
-  }
-
-  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
-  .stagger-children > *:nth-child(2) { animation-delay: 100ms; }
-  .stagger-children > *:nth-child(3) { animation-delay: 200ms; }
-  .stagger-children > *:nth-child(4) { animation-delay: 300ms; }
-  .stagger-children > *:nth-child(5) { animation-delay: 400ms; }
-  .stagger-children > *:nth-child(6) { animation-delay: 500ms; }
 
   /* Count up number animation placeholder */
   .count-up {
@@ -576,6 +560,17 @@
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%);
       mask-image: linear-gradient(to right, transparent 0%, black 25%);
     }
+  }
+}
+
+/* Reduced motion: show everything immediately */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .split-line-inner {
+    transform: none !important;
   }
 }
 

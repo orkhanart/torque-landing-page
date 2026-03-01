@@ -1,16 +1,12 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { CardVisualWrapper } from "@/components/card-visuals/CardVisualWrapper";
-import { DataLens } from "@/components/card-visuals/DataLens";
-import { CampaignRadar } from "@/components/card-visuals/CampaignRadar";
-import { SDKModules } from "@/components/card-visuals/SDKModules";
-import { IntegrationPlug } from "@/components/card-visuals/IntegrationPlug";
-import { BuilderCanvas } from "@/components/card-visuals/BuilderCanvas";
-import { MetricPulse } from "@/components/card-visuals/MetricPulse";
+import { ImageGradient } from "@/components/ascii/ImageGradient";
 import {
   ArrowUpRight,
   Code,
@@ -29,6 +25,31 @@ import {
   Check,
 } from "lucide-react";
 
+const DataLens = dynamic(
+  () => import("@/components/card-visuals/DataLens").then(mod => ({ default: mod.DataLens })),
+  { ssr: false }
+);
+const CampaignRadar = dynamic(
+  () => import("@/components/card-visuals/CampaignRadar").then(mod => ({ default: mod.CampaignRadar })),
+  { ssr: false }
+);
+const SDKModules = dynamic(
+  () => import("@/components/card-visuals/SDKModules").then(mod => ({ default: mod.SDKModules })),
+  { ssr: false }
+);
+const IntegrationPlug = dynamic(
+  () => import("@/components/card-visuals/IntegrationPlug").then(mod => ({ default: mod.IntegrationPlug })),
+  { ssr: false }
+);
+const BuilderCanvas = dynamic(
+  () => import("@/components/card-visuals/BuilderCanvas").then(mod => ({ default: mod.BuilderCanvas })),
+  { ssr: false }
+);
+const MetricPulse = dynamic(
+  () => import("@/components/card-visuals/MetricPulse").then(mod => ({ default: mod.MetricPulse })),
+  { ssr: false }
+);
+
 // =============================================================================
 // Platform Page
 // =============================================================================
@@ -41,18 +62,18 @@ export default function PlatformPage() {
         {/* Page Header */}
         <header className="w-full px-6 md:px-12 lg:px-20 pb-12 md:pb-16 border-b border-black/10">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
               <span className="w-1 h-1 bg-blue rounded-full" />
               Platform
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+            <h1 data-animate="fade-up" className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
               The Growth Operating System
             </h1>
-            <p className="text-base md:text-lg text-black/60 max-w-2xl">
+            <p data-animate="fade-up" className="text-base md:text-lg text-black/60 max-w-2xl">
               On-Chain CRM and Incentive Engine that helps you identify high-value users,
               predict their behavior, and retain them with surgical precision.
             </p>
-            <div className="flex flex-wrap items-center gap-4 mt-6">
+            <div data-animate="fade-up" className="flex flex-wrap items-center gap-4 mt-6">
               <Button variant="accent" href="https://platform.torque.so/">
                 Launch Platform
                 <ArrowUpRight className="w-4 h-4 ml-2" />
@@ -73,7 +94,7 @@ export default function PlatformPage() {
               { value: "5min", label: "Integration" },
               { value: "Real-time", label: "AI Optimization" },
             ].map((stat, index) => (
-              <div key={index} className="flex items-baseline gap-2">
+              <div key={index} data-animate="fade-up" className="flex items-baseline gap-2">
                 <span className="font-display text-xl font-semibold text-black">
                   {stat.value}
                 </span>
@@ -179,11 +200,11 @@ export default function PlatformPage() {
         {/* How It Works */}
         <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-black/10">
           <div className="mb-12">
-            <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
               <BarChart3 className="w-3 h-3" />
               How It Works
             </div>
-            <h2 className="font-display text-xl sm:text-2xl font-medium text-black leading-[1.1] tracking-tight">
+            <h2 data-animate="fade-up" className="font-display text-xl sm:text-2xl font-medium text-black leading-[1.1] tracking-tight">
               Three Steps to Growth
             </h2>
           </div>
@@ -202,13 +223,13 @@ export default function PlatformPage() {
         {/* CTA */}
         <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-20 border-t border-black/10">
           <div className="max-w-xl mx-auto text-center">
-            <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+            <h2 data-animate="fade-up" className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
               Ready to embed growth into your protocol?
             </h2>
-            <p className="text-base text-black/60 mb-6">
+            <p data-animate="fade-up" className="text-base text-black/60 mb-6">
               Join leading protocols using Torque to drive sustainable growth.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            <div data-animate="fade-up" className="flex flex-wrap items-center justify-center gap-4">
               <Button variant="accent" href="https://platform.torque.so/">
                 Get API Keys
                 <ArrowUpRight className="w-4 h-4 ml-2" />
@@ -275,20 +296,20 @@ function FeatureSection({
       <div className="relative z-10 h-full flex flex-col justify-between min-h-[inherit]">
         {/* Header - top */}
         <div>
-          <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
+          <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
             <Icon className="w-3 h-3" />
             {label}
           </div>
-          <h2 className="font-display text-xl sm:text-2xl font-medium text-black leading-[1.1] tracking-tight mb-2">
+          <h2 data-animate="fade-up" className="font-display text-xl sm:text-2xl font-medium text-black leading-[1.1] tracking-tight mb-2">
             {title}
           </h2>
-          <p className="text-sm text-black/60 max-w-md">{description}</p>
+          <p data-animate="fade-up" className="text-sm text-black/60 max-w-md">{description}</p>
         </div>
 
         {/* 2x2 Feature Grid - pinned to bottom */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4 mt-auto pt-12">
           {features.map((feature, index) => (
-            <div key={index} className="flex items-start gap-3 py-4 border-t border-black/6">
+            <div key={index} data-animate="fade-up" className="flex items-start gap-3 py-4 border-t border-black/6">
               <feature.icon className="w-4 h-4 mt-0.5 flex-shrink-0 text-black/30" />
               <div>
                 <h3 className="font-display text-sm font-medium text-black mb-0.5">
@@ -318,6 +339,7 @@ function HowItWorksCard({ item, index }: { item: { step: string; title: string; 
 
   return (
     <div
+      data-animate="fade-up"
       className="group relative border-t md:border-t-0 md:border-l first:border-l-0 first:border-t-0 border-black/8"
     >
       {/* Text */}

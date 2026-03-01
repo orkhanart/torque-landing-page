@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import IntegrationRequestModal from "../components/IntegrationRequestModal";
 import { Button } from "@/components/ui/button";
 import {
   ArrowUpRight,
@@ -15,16 +15,39 @@ import {
   Terminal,
   Rocket,
 } from "lucide-react";
-import { motion, useInView } from "framer-motion";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
 import { CardVisualWrapper } from "@/components/card-visuals/CardVisualWrapper";
 import { VisualCard } from "@/components/card-visuals/VisualCard";
-import { UtilizationMeter } from "@/components/card-visuals/UtilizationMeter";
-import { StreakChain } from "@/components/card-visuals/StreakChain";
-import { DistributionWeb } from "@/components/card-visuals/DistributionWeb";
-import { DiamondHold } from "@/components/card-visuals/DiamondHold";
-import { OddsMatrix } from "@/components/card-visuals/OddsMatrix";
-import { LoyaltyLayers } from "@/components/card-visuals/LoyaltyLayers";
+import { SplitText } from "@/components/animations/SplitText";
+
+const IntegrationRequestModal = dynamic(
+  () => import("../components/IntegrationRequestModal"),
+  { ssr: false }
+);
+const UtilizationMeter = dynamic(
+  () => import("@/components/card-visuals/UtilizationMeter").then(mod => ({ default: mod.UtilizationMeter })),
+  { ssr: false }
+);
+const StreakChain = dynamic(
+  () => import("@/components/card-visuals/StreakChain").then(mod => ({ default: mod.StreakChain })),
+  { ssr: false }
+);
+const DistributionWeb = dynamic(
+  () => import("@/components/card-visuals/DistributionWeb").then(mod => ({ default: mod.DistributionWeb })),
+  { ssr: false }
+);
+const DiamondHold = dynamic(
+  () => import("@/components/card-visuals/DiamondHold").then(mod => ({ default: mod.DiamondHold })),
+  { ssr: false }
+);
+const OddsMatrix = dynamic(
+  () => import("@/components/card-visuals/OddsMatrix").then(mod => ({ default: mod.OddsMatrix })),
+  { ssr: false }
+);
+const LoyaltyLayers = dynamic(
+  () => import("@/components/card-visuals/LoyaltyLayers").then(mod => ({ default: mod.LoyaltyLayers })),
+  { ssr: false }
+);
 
 // =============================================================================
 // Types
@@ -221,19 +244,19 @@ export default function SolutionsPage() {
         {/* Page Header */}
         <header className="w-full px-6 md:px-12 lg:px-20 pb-12 md:pb-16 border-b border-black/10">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
               <span className="w-1 h-1 bg-blue rounded-full" />
               Solutions
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+            <h1 data-animate="fade-up" className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
               Engineering Protocol Equilibrium
             </h1>
-            <p className="text-base md:text-lg text-black/60 max-w-2xl mb-6">
+            <p data-animate="fade-up" className="text-base md:text-lg text-black/60 max-w-2xl mb-6">
               Every sector has a systemic flaw. Torque provides the diagnostics to find the leak and the primitives to fix it.
             </p>
 
             {/* Quick Nav */}
-            <div className="flex flex-wrap items-center gap-2">
+            <div data-animate="fade-up" className="flex flex-wrap items-center gap-2">
               {solutions.map((solution) => {
                 const Icon = solution.icon;
                 return (
@@ -282,25 +305,26 @@ function SolutionsGrid() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div>
-            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
               <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
               <span>Core Solutions</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
-              Battle-tested mechanical
-              <br />
+            <SplitText tag="h2" className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
+              <span>Battle-tested mechanical</span>
               <span className="text-black/40">modules</span>
-            </h2>
+            </SplitText>
 
-            <p className="text-lg md:text-xl text-black/60 max-w-2xl">
+            <p data-animate="fade-up" className="text-lg md:text-xl text-black/60 max-w-2xl">
               Each solution comes with diagnosis, mechanical logic, and proven results.
             </p>
           </div>
-          <Button variant="outline" href="/primitives" className="w-fit">
-            Explore Primitives
-            <ArrowUpRight className="w-4 h-4 ml-2" />
-          </Button>
+          <div data-animate="fade-up">
+            <Button variant="outline" href="/primitives" className="w-fit">
+              Explore Primitives
+              <ArrowUpRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
         </div>
 
         {/* Solutions */}
@@ -329,16 +353,12 @@ interface SolutionCardProps {
 
 function SolutionCard({ solution }: SolutionCardProps) {
   const Icon = solution.icon;
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div
-      ref={ref}
+    <div
       id={solution.id}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+      data-animate="fade-up"
       className="group rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors"
     >
       <div className="flex flex-col md:flex-row">
@@ -452,7 +472,7 @@ function SolutionCard({ solution }: SolutionCardProps) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -466,18 +486,17 @@ function AdditionalMarketsSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div>
-            <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
               <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
               <span>More Sectors</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
-              Also optimized
-              <br />
+            <SplitText tag="h2" className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black mb-6 max-w-4xl leading-[1.1] tracking-tight">
+              <span>Also optimized</span>
               <span className="text-black/40">for high-velocity markets</span>
-            </h2>
+            </SplitText>
 
-            <p className="text-lg md:text-xl text-black/60 max-w-2xl">
+            <p data-animate="fade-up" className="text-lg md:text-xl text-black/60 max-w-2xl">
               Torque primitives are sector-agnostic. We support the highest-velocity economies on
               Solana.
             </p>
@@ -511,16 +530,8 @@ interface MarketCardProps {
 
 function MarketCard({ market, index }: MarketCardProps) {
   const Icon = market.icon;
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-    >
+    <div data-animate="fade-up">
       <VisualCard
         visual={marketVisuals[index]}
         filename={market.filename}
@@ -560,7 +571,7 @@ function MarketCard({ market, index }: MarketCardProps) {
           </ul>
         </div>
       </VisualCard>
-    </motion.div>
+    </div>
   );
 }
 
@@ -572,31 +583,21 @@ interface SolutionsCTAProps {
 }
 
 function SolutionsCTA({ onOpenModal }: SolutionsCTAProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
     <section className="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28 bg-white border-t border-black/10">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="max-w-xl mx-auto text-center"
-      >
-        <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
+      <div className="max-w-xl mx-auto text-center">
+        <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
           <Rocket className="w-3 h-3" />
           Deploy Now
         </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
-          Ready to engineer
-          <br />
+        <SplitText tag="h2" className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+          <span>Ready to engineer</span>
           <span className="text-black/40">protocol equilibrium?</span>
-        </h2>
-        <p className="text-base text-black/60 mb-6">
+        </SplitText>
+        <p data-animate="fade-up" className="text-base text-black/60 mb-6">
           Torque exists to replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-4">
+        <div data-animate="fade-up" className="flex flex-wrap items-center justify-center gap-4">
           <Button variant="accent" onClick={onOpenModal}>
             Deploy Logic
             <ArrowUpRight className="w-4 h-4 ml-2" />
@@ -606,8 +607,7 @@ function SolutionsCTA({ onOpenModal }: SolutionsCTAProps) {
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
-

@@ -1,22 +1,55 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Sparkles } from "lucide-react";
+import { SplitText } from "@/components/animations/SplitText";
 import { STRATEGIES, type CardType, type StrategyCard } from "./strategies";
-import IntegrationRequestModal from "../components/IntegrationRequestModal";
 import { VisualCard } from "@/components/card-visuals/VisualCard";
-import { RaffleWheel } from "@/components/card-visuals/RaffleWheel";
-import { ROICascade } from "@/components/card-visuals/ROICascade";
-import { ReferralTree } from "@/components/card-visuals/ReferralTree";
-import { StandardsGrid } from "@/components/card-visuals/StandardsGrid";
-import { LeverageSpiral } from "@/components/card-visuals/LeverageSpiral";
-import { TokenPairLink } from "@/components/card-visuals/TokenPairLink";
-import { DurationLock } from "@/components/card-visuals/DurationLock";
-import { AnchorLock } from "@/components/card-visuals/AnchorLock";
-import { WelcomeGate } from "@/components/card-visuals/WelcomeGate";
+
+const IntegrationRequestModal = dynamic(
+  () => import("../components/IntegrationRequestModal"),
+  { ssr: false }
+);
+const RaffleWheel = dynamic(
+  () => import("@/components/card-visuals/RaffleWheel").then(mod => ({ default: mod.RaffleWheel })),
+  { ssr: false }
+);
+const ROICascade = dynamic(
+  () => import("@/components/card-visuals/ROICascade").then(mod => ({ default: mod.ROICascade })),
+  { ssr: false }
+);
+const ReferralTree = dynamic(
+  () => import("@/components/card-visuals/ReferralTree").then(mod => ({ default: mod.ReferralTree })),
+  { ssr: false }
+);
+const StandardsGrid = dynamic(
+  () => import("@/components/card-visuals/StandardsGrid").then(mod => ({ default: mod.StandardsGrid })),
+  { ssr: false }
+);
+const LeverageSpiral = dynamic(
+  () => import("@/components/card-visuals/LeverageSpiral").then(mod => ({ default: mod.LeverageSpiral })),
+  { ssr: false }
+);
+const TokenPairLink = dynamic(
+  () => import("@/components/card-visuals/TokenPairLink").then(mod => ({ default: mod.TokenPairLink })),
+  { ssr: false }
+);
+const DurationLock = dynamic(
+  () => import("@/components/card-visuals/DurationLock").then(mod => ({ default: mod.DurationLock })),
+  { ssr: false }
+);
+const AnchorLock = dynamic(
+  () => import("@/components/card-visuals/AnchorLock").then(mod => ({ default: mod.AnchorLock })),
+  { ssr: false }
+);
+const WelcomeGate = dynamic(
+  () => import("@/components/card-visuals/WelcomeGate").then(mod => ({ default: mod.WelcomeGate })),
+  { ssr: false }
+);
 
 // =============================================================================
 // Filter Types
@@ -50,20 +83,20 @@ export default function PlaybooksPage() {
         {/* Page Header */}
         <header className="w-full px-6 md:px-12 lg:px-20 pb-12 md:pb-16 border-b border-black/10">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-wider text-black/40">
               <span className="w-1 h-1 bg-blue rounded-full" />
               Playbooks
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+            <h1 data-animate="fade-up" className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-black leading-[1.1] tracking-tight mb-4">
               Growth Strategy Library
             </h1>
-            <p className="text-base md:text-lg text-black/60 max-w-2xl mb-6">
+            <p data-animate="fade-up" className="text-base md:text-lg text-black/60 max-w-2xl mb-6">
               Don&apos;t start from scratch. Deploy battle-tested recipes to solve
               specific gaps in Velocity, Retention, and Liquidity.
             </p>
 
             {/* Filter Buttons */}
-            <div className="flex flex-wrap items-center gap-2">
+            <div data-animate="fade-up" className="flex flex-wrap items-center gap-2">
               {FILTER_OPTIONS.map((option) => (
                 <button
                   key={option.value}
@@ -109,26 +142,25 @@ export default function PlaybooksPage() {
           <div className="w-full px-6 md:px-12 lg:px-20">
             <div className="max-w-3xl mx-auto text-center">
               {/* Tag */}
-              <div className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
+              <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]">
                 <Sparkles className="w-3 h-3" />
                 <span>Custom Strategies</span>
               </div>
 
               {/* Heading */}
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black leading-[1.1] tracking-tight mb-4">
-                Have a custom strategy
-                <br />
+              <SplitText tag="h2" className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-black leading-[1.1] tracking-tight mb-4">
+                <span>Have a custom strategy</span>
                 <span className="text-black/40">in mind?</span>
-              </h2>
+              </SplitText>
 
               {/* Description */}
-              <p className="text-lg text-black/60 mb-8 max-w-xl mx-auto">
+              <p data-animate="fade-up" className="text-lg text-black/60 mb-8 max-w-xl mx-auto">
                 Use our drag-and-drop builder to create any combination of
                 Triggers, Conditions, and Rewards.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div data-animate="fade-up" className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button
                   variant="accent"
                   onClick={() => setIsModalOpen(true)}

@@ -51,12 +51,15 @@ function ScrambleLetter({ char }: { char: string }) {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const navLinks = [
+  const productLinks = [
     { label: "Platform", href: "/platform" },
     { label: "Solutions", href: "/solutions" },
     { label: "Playbooks", href: "/playbooks" },
-    { label: "Company", href: "/company" },
-    { label: "Contacts", href: "/contacts" },
+  ];
+
+  const companyLinks = [
+    { label: "About", href: "/about" },
+    { label: "Support", href: "/support" },
   ];
 
 
@@ -69,7 +72,7 @@ const Footer = () => {
     <footer className="w-full overflow-hidden relative bg-blue">
 
       {/* Big TORQUE Text */}
-      <div className="relative z-10 w-full">
+      <div className="relative z-10 w-full" data-animate="fade-in">
         <div
           className="text-[20vw] font-bold leading-[0.85] tracking-[-0.05em] text-white/10 select-none overflow-hidden"
           style={{ fontFamily: "'Unbounded', sans-serif" }}
@@ -82,7 +85,7 @@ const Footer = () => {
 
       {/* Footer Content */}
       <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
@@ -114,13 +117,13 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Navigation Column */}
+          {/* Product Column */}
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-white/50 mb-6">
               Product
             </h4>
             <ul className="space-y-4">
-              {navLinks.map((link) => (
+              {productLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
@@ -133,7 +136,26 @@ const Footer = () => {
             </ul>
           </div>
 
-{/* CTA Column */}
+          {/* Company Column */}
+          <div>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-white/50 mb-6">
+              Company
+            </h4>
+            <ul className="space-y-4">
+              {companyLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-white/70 hover:text-white transition-colors duration-300 text-sm"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* CTA Column */}
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-white/50 mb-6">
               Get Started

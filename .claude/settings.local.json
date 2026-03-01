@@ -32,7 +32,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:pmndrs.github.io)",
       "WebFetch(domain:medium.com)",
-      "Bash(head:*)"
+      "Bash(head:*)",
+      "Bash(pnpm add:*)",
+      "Bash(curl:*)"
     ],
     "deny": []
   }

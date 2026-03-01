@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SmartImage } from "@/components/ascii/SmartImage";
+import Image from "next/image";
 
 interface DesignerPlaceholderProps {
   type: 'image' | 'video' | 'illustration';
@@ -35,7 +35,7 @@ export default function DesignerPlaceholder({
   if (assetPath) {
     return (
       <div className={`relative w-full ${className}`} style={{ aspectRatio }}>
-        <SmartImage
+        <Image
           src={assetPath}
           alt={label}
           fill
