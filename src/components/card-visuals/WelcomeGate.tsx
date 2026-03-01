@@ -6,9 +6,10 @@ interface WelcomeGateProps {
   color?: string;
   className?: string;
   paused?: boolean;
+  speed?: number;
 }
 
-export function WelcomeGate({ color = "#0000FF", className = "", paused = false }: WelcomeGateProps) {
+export function WelcomeGate({ color = "#0000FF", className = "", paused = false, speed: speedProp = 1 }: WelcomeGateProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const pausedRef = useRef(paused);
@@ -43,259 +44,248 @@ export function WelcomeGate({ color = "#0000FF", className = "", paused = false 
 
     const hex = (v: number) => Math.floor(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0");
 
-    // Gate configuration
-    const gateX = w / 2;
-    const gateY = h * 0.45;
-    const gateWidth = 40;
-    const gateHeight = 60;
-    const archRadius = gateWidth / 2;
+    // Pulse / heartbeat monitor — flatline then activation
+    const padding = w * 0.06;
+    const lineLeft = padding;
+    const lineRight = w - padding;
+    const lineWidth = lineRight - lineLeft;
+    const baseY = h * 0.35;
 
-    // Celebration particles
-    interface Particle {
+    // The pulse waveform: normalized x (0-1) → y offset
+    // Flatline → hook spike → alive heartbeats
+    const hookPoint = 0.3; // where the "hook" activation happens
+
+    // Beat particles
+    interface BeatParticle {
       x: number;
       y: number;
       vx: number;
       vy: number;
-      life: number;
       size: number;
       alpha: number;
+      life: number;
     }
 
-    let particles: Particle[] = [];
+    let beatParticles: BeatParticle[] = [];
 
-    // User dot state
-    let dotX = 0;
-    let dotBrightness = 0.4;
-    let phase: "approaching" | "entering" | "celebrating" | "exiting" | "waiting" = "waiting";
-    let phaseTimer = 0;
-    let burstTriggered = false;
-    let starAlpha = 0;
-    let welcomeAlpha = 0;
+    // Scanning cursor position (0-1)
+    let cursor = 0;
+    let time = 0;
+    let activated = false;
+    let activationFlash = 0;
 
-    const resetCycle = () => {
-      dotX = w * 0.08;
-      dotBrightness = 0.4;
-      phase = "approaching";
-      phaseTimer = 0;
-      burstTriggered = false;
-      starAlpha = 0;
-      welcomeAlpha = 0;
-      particles = [];
+    // Build waveform path points
+    const getWaveY = (t: number): number => {
+      if (t < hookPoint - 0.02) {
+        // Flatline with very subtle noise
+        return Math.sin(t * 80) * 0.5;
+      }
+      if (t < hookPoint + 0.02) {
+        // The hook spike — sharp up then down
+        const local = (t - (hookPoint - 0.02)) / 0.04;
+        if (local < 0.3) return -local * 90;
+        if (local < 0.5) return -27 + (local - 0.3) * 180;
+        if (local < 0.7) return 9 - (local - 0.5) * 90;
+        return -9 + (local - 0.7) * 30;
+      }
+      // After hook — alive heartbeats
+      const afterHook = t - hookPoint - 0.02;
+      const beatFreq = 14;
+      const beatPhase = afterHook * beatFreq * Math.PI * 2;
+      // ECG-like shape: sharp peak then small dip
+      const beat = Math.sin(beatPhase);
+      const sharp = Math.exp(-Math.pow((beatPhase % (Math.PI * 2)) - 1, 2) * 2);
+      const amplitude = 18 + afterHook * 15; // grows stronger
+      return -(beat * 0.3 + sharp * 0.7) * amplitude;
     };
 
-    resetCycle();
+    const spawnBeatBurst = (bx: number, by: number) => {
+      const count = 6;
+      for (let i = 0; i < count; i++) {
+        const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+        const speed = 0.8 + Math.random() * 1.5;
+        beatParticles.push({
+          x: bx,
+          y: by,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: 1 + Math.random() * 1.5,
+          alpha: 0.4 + Math.random() * 0.3,
+          life: 1,
+        });
+      }
+    };
+
+    let lastBeatSign = 0;
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
-      phaseTimer += 0.016;
+      time += 0.016 * speedProp;
 
-      const dotY = gateY + gateHeight * 0.3;
+      // Advance cursor
+      cursor += 0.003 * speedProp;
+      if (cursor > 1.15) {
+        cursor = 0;
+        activated = false;
+        lastBeatSign = 0;
+        beatParticles = [];
+      }
 
-      // Draw the gate structure
-      // Left pillar
-      ctx.fillStyle = `${color}12`;
-      ctx.fillRect(gateX - gateWidth / 2 - 4, gateY, 4, gateHeight);
+      // Activation flash
+      if (!activated && cursor >= hookPoint) {
+        activated = true;
+        activationFlash = 1;
+        spawnBeatBurst(lineLeft + hookPoint * lineWidth, baseY + getWaveY(hookPoint));
+      }
 
-      // Right pillar
-      ctx.fillRect(gateX + gateWidth / 2, gateY, 4, gateHeight);
+      if (activationFlash > 0) {
+        activationFlash -= 0.02 * speedProp;
+        if (activationFlash < 0) activationFlash = 0;
 
-      // Arch
+        const flashX = lineLeft + hookPoint * lineWidth;
+        const flashR = 40 + activationFlash * 30;
+        const fg = ctx.createRadialGradient(flashX, baseY, 0, flashX, baseY, flashR);
+        fg.addColorStop(0, `${color}${hex(activationFlash * 0.3 * 255)}`);
+        fg.addColorStop(0.5, `${color}${hex(activationFlash * 0.08 * 255)}`);
+        fg.addColorStop(1, `${color}00`);
+        ctx.fillStyle = fg;
+        ctx.beginPath();
+        ctx.arc(flashX, baseY, flashR, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Detect heartbeat peaks for particle bursts (after activation)
+      if (cursor > hookPoint + 0.04) {
+        const currentY = getWaveY(cursor);
+        const currentSign = currentY < -10 ? -1 : 0;
+        if (currentSign === -1 && lastBeatSign === 0) {
+          const bx = lineLeft + cursor * lineWidth;
+          const by = baseY + currentY;
+          spawnBeatBurst(bx, by);
+        }
+        lastBeatSign = currentSign;
+      }
+
+      // Draw baseline (subtle)
       ctx.beginPath();
-      ctx.arc(gateX, gateY, archRadius, Math.PI, 0);
-      ctx.strokeStyle = `${color}18`;
-      ctx.lineWidth = 3;
-      ctx.stroke();
-
-      // Arch glow (subtle)
-      const ag = ctx.createRadialGradient(gateX, gateY, archRadius - 5, gateX, gateY, archRadius + 10);
-      ag.addColorStop(0, `${color}00`);
-      ag.addColorStop(0.5, `${color}06`);
-      ag.addColorStop(1, `${color}00`);
-      ctx.fillStyle = ag;
-      ctx.beginPath(); ctx.arc(gateX, gateY, archRadius + 10, Math.PI, 0); ctx.fill();
-
-      // Base line
-      ctx.beginPath();
-      ctx.moveTo(gateX - gateWidth / 2 - 4, gateY + gateHeight);
-      ctx.lineTo(gateX + gateWidth / 2 + 4, gateY + gateHeight);
-      ctx.strokeStyle = `${color}10`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      // Ground line
-      ctx.beginPath();
-      ctx.moveTo(w * 0.05, dotY + 8);
-      ctx.lineTo(w * 0.95, dotY + 8);
+      ctx.moveTo(lineLeft, baseY);
+      ctx.lineTo(lineRight, baseY);
       ctx.strokeStyle = `${color}06`;
       ctx.lineWidth = 0.5;
       ctx.setLineDash([4, 8]);
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Phase logic
-      if (phase === "approaching") {
-        dotX += 0.8;
-        if (dotX >= gateX - gateWidth / 2 - 5) {
-          phase = "entering";
-          phaseTimer = 0;
-        }
-      } else if (phase === "entering") {
-        dotX += 0.6;
-        // Brighten as entering gate
-        dotBrightness = Math.min(0.7, dotBrightness + 0.005);
-        if (dotX >= gateX && !burstTriggered) {
-          burstTriggered = true;
-          phase = "celebrating";
-          phaseTimer = 0;
-          // Spawn celebration particles
-          for (let i = 0; i < 24; i++) {
-            const angle = (i / 24) * Math.PI * 2;
-            const speed = 1 + Math.random() * 2.5;
-            particles.push({
-              x: gateX,
-              y: gateY - 5,
-              vx: Math.cos(angle) * speed,
-              vy: Math.sin(angle) * speed - 1,
-              life: 1,
-              size: 1 + Math.random() * 2,
-              alpha: 0.6 + Math.random() * 0.4,
-            });
-          }
-        }
-      } else if (phase === "celebrating") {
-        dotX += 0.3;
-        dotBrightness = Math.min(0.9, dotBrightness + 0.01);
-        starAlpha = Math.min(1, starAlpha + 0.03);
-        welcomeAlpha = Math.min(1, welcomeAlpha + 0.02);
-        if (phaseTimer > 2.5) {
-          phase = "exiting";
-          phaseTimer = 0;
-        }
-      } else if (phase === "exiting") {
-        dotX += 1;
-        starAlpha = Math.max(0, starAlpha - 0.02);
-        welcomeAlpha = Math.max(0, welcomeAlpha - 0.02);
-        dotBrightness = Math.max(0.6, dotBrightness);
-        if (dotX > w * 0.95) {
-          phase = "waiting";
-          phaseTimer = 0;
-        }
-      } else if (phase === "waiting") {
-        if (phaseTimer > 1.5) {
-          resetCycle();
-        }
-      }
-
-      // Update and draw particles
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.03; // gravity
-        p.life -= 0.012;
-        p.alpha = p.life * 0.6;
-
-        if (p.life <= 0) {
-          particles.splice(i, 1);
-          continue;
-        }
-
-        // Particle glow
-        const pg = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
-        pg.addColorStop(0, `${color}${hex(p.alpha * 40)}`);
-        pg.addColorStop(1, `${color}00`);
-        ctx.fillStyle = pg;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2); ctx.fill();
-
-        // Particle core
+      // Draw the waveform trail (only up to cursor)
+      const drawEnd = Math.min(cursor, 1);
+      const steps = Math.floor(drawEnd * 200);
+      if (steps > 1) {
+        // Pre-hook section (dim)
         ctx.beginPath();
-        ctx.fillStyle = `${color}${hex(p.alpha * 0.7 * 255)}`;
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // Draw star/reward above gate during celebration
-      if (starAlpha > 0) {
-        const starX = gateX;
-        const starY = gateY - archRadius - 18;
-
-        // Star glow
-        const sg = ctx.createRadialGradient(starX, starY, 0, starX, starY, 14);
-        sg.addColorStop(0, `${color}${hex(starAlpha * 50)}`);
-        sg.addColorStop(1, `${color}00`);
-        ctx.fillStyle = sg;
-        ctx.beginPath(); ctx.arc(starX, starY, 14, 0, Math.PI * 2); ctx.fill();
-
-        // 4-pointed star shape
-        const sa = starAlpha * 0.6;
-        ctx.beginPath();
-        for (let i = 0; i < 8; i++) {
-          const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
-          const r = i % 2 === 0 ? 7 : 3;
-          const sx = starX + Math.cos(a) * r;
-          const sy = starY + Math.sin(a) * r;
-          if (i === 0) ctx.moveTo(sx, sy);
-          else ctx.lineTo(sx, sy);
+        let started = false;
+        for (let i = 0; i <= steps; i++) {
+          const t = (i / 200);
+          if (t > hookPoint - 0.01) break;
+          const px = lineLeft + t * lineWidth;
+          const py = baseY + getWaveY(t);
+          if (!started) { ctx.moveTo(px, py); started = true; }
+          else ctx.lineTo(px, py);
         }
-        ctx.closePath();
-        ctx.fillStyle = `${color}${hex(sa * 255)}`;
-        ctx.fill();
-      }
-
-      // "welcome" text during celebration
-      if (welcomeAlpha > 0) {
-        ctx.font = "8px system-ui";
-        ctx.textAlign = "center";
-        ctx.fillStyle = `${color}${hex(welcomeAlpha * 0.3 * 255)}`;
-        ctx.fillText("welcome", gateX, gateY + gateHeight + 18);
-      }
-
-      // Draw user dot
-      if (phase !== "waiting") {
-        // Trail behind the dot
-        const trailLen = phase === "exiting" ? 20 : 10;
-        const tg = ctx.createLinearGradient(dotX - trailLen, 0, dotX, 0);
-        tg.addColorStop(0, `${color}00`);
-        tg.addColorStop(1, `${color}${hex(dotBrightness * 0.2 * 255)}`);
-        ctx.beginPath();
-        ctx.moveTo(dotX - trailLen, dotY);
-        ctx.lineTo(dotX, dotY);
-        ctx.strokeStyle = tg;
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = `${color}${hex(0.1 * 255)}`;
+        ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Dot glow
-        const glowSize = 8 + dotBrightness * 6;
-        const dg = ctx.createRadialGradient(dotX, dotY, 0, dotX, dotY, glowSize);
-        dg.addColorStop(0, `${color}${hex(dotBrightness * 40)}`);
-        dg.addColorStop(1, `${color}00`);
-        ctx.fillStyle = dg;
-        ctx.beginPath(); ctx.arc(dotX, dotY, glowSize, 0, Math.PI * 2); ctx.fill();
-
-        // Dot core
-        ctx.beginPath();
-        ctx.fillStyle = `${color}${hex(dotBrightness * 0.8 * 255)}`;
-        ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Brighter ring after activation
-        if (dotBrightness > 0.6) {
+        // Hook spike + post-hook (bright)
+        if (cursor > hookPoint - 0.01) {
           ctx.beginPath();
-          ctx.arc(dotX, dotY, 5.5, 0, Math.PI * 2);
-          ctx.strokeStyle = `${color}${hex((dotBrightness - 0.6) * 0.4 * 255)}`;
-          ctx.lineWidth = 0.5;
+          started = false;
+          for (let i = 0; i <= steps; i++) {
+            const t = (i / 200);
+            if (t < hookPoint - 0.01) continue;
+            const px = lineLeft + t * lineWidth;
+            const py = baseY + getWaveY(t);
+            if (!started) { ctx.moveTo(px, py); started = true; }
+            else ctx.lineTo(px, py);
+          }
+          ctx.strokeStyle = `${color}${hex(0.3 * 255)}`;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          // Glow line on top
+          ctx.beginPath();
+          started = false;
+          for (let i = 0; i <= steps; i++) {
+            const t = (i / 200);
+            if (t < hookPoint - 0.01) continue;
+            const px = lineLeft + t * lineWidth;
+            const py = baseY + getWaveY(t);
+            if (!started) { ctx.moveTo(px, py); started = true; }
+            else ctx.lineTo(px, py);
+          }
+          ctx.strokeStyle = `${color}${hex(0.08 * 255)}`;
+          ctx.lineWidth = 5;
           ctx.stroke();
         }
       }
 
-      // Gate inner glow during entry
-      if (phase === "entering" || phase === "celebrating") {
-        const entryGlow = phase === "celebrating" ? 0.15 : 0.06;
-        const gg = ctx.createRadialGradient(gateX, gateY + gateHeight / 2, 0, gateX, gateY + gateHeight / 2, gateWidth);
-        gg.addColorStop(0, `${color}${hex(entryGlow * 255)}`);
-        gg.addColorStop(1, `${color}00`);
-        ctx.fillStyle = gg;
-        ctx.fillRect(gateX - gateWidth / 2, gateY, gateWidth, gateHeight);
+      // Cursor dot (scanning head)
+      if (cursor <= 1) {
+        const cursorX = lineLeft + cursor * lineWidth;
+        const cursorY = baseY + getWaveY(cursor);
+        const isActive = cursor >= hookPoint;
+
+        // Cursor glow
+        const glowR = isActive ? 12 : 6;
+        const cg = ctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, glowR);
+        cg.addColorStop(0, `${color}${hex((isActive ? 0.35 : 0.15) * 255)}`);
+        cg.addColorStop(1, `${color}00`);
+        ctx.fillStyle = cg;
+        ctx.beginPath();
+        ctx.arc(cursorX, cursorY, glowR, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cursor core
+        ctx.beginPath();
+        ctx.arc(cursorX, cursorY, isActive ? 3 : 2, 0, Math.PI * 2);
+        ctx.fillStyle = `${color}${hex((isActive ? 0.7 : 0.4) * 255)}`;
+        ctx.fill();
+
+        // Vertical scan line
+        ctx.beginPath();
+        ctx.moveTo(cursorX, baseY - 35);
+        ctx.lineTo(cursorX, baseY + 35);
+        ctx.strokeStyle = `${color}${hex(0.04 * 255)}`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+
+      // Update and draw beat particles
+      for (let i = beatParticles.length - 1; i >= 0; i--) {
+        const p = beatParticles[i];
+        p.x += p.vx * speedProp;
+        p.y += p.vy * speedProp;
+        p.vx *= 0.97;
+        p.vy *= 0.97;
+        p.life -= 0.015 * speedProp;
+        p.alpha = p.life * 0.4;
+
+        if (p.life <= 0) {
+          beatParticles.splice(i, 1);
+          continue;
+        }
+
+        const pg = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
+        pg.addColorStop(0, `${color}${hex(p.alpha * 0.3 * 255)}`);
+        pg.addColorStop(1, `${color}00`);
+        ctx.fillStyle = pg;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `${color}${hex(p.alpha * 0.6 * 255)}`;
+        ctx.fill();
       }
 
       if (!pausedRef.current) {
@@ -311,7 +301,7 @@ export function WelcomeGate({ color = "#0000FF", className = "", paused = false 
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [color]);
+  }, [color, speedProp]);
 
   return <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none ${className}`} />;
 }
