@@ -6,7 +6,7 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Users, Trophy, Briefcase, Building2, Rocket } from "lucide-react";
+import { ArrowUpRight, Users, Trophy, Briefcase, Building2, Rocket, Eye, Target, Zap } from "lucide-react";
 import { ImageGradient } from "@/components/ascii/ImageGradient";
 import { SplitText } from "@/components/animations/SplitText";
 
@@ -16,6 +16,10 @@ const TrophyBurst = dynamic(
 );
 const AcceleratorPath = dynamic(
   () => import("@/components/card-visuals/AcceleratorPath").then(mod => ({ default: mod.AcceleratorPath })),
+  { ssr: false }
+);
+const AsciiPortrait = dynamic(
+  () => import("@/components/three/AsciiPortrait").then(mod => ({ default: mod.AsciiPortrait })),
   { ssr: false }
 );
 
@@ -72,8 +76,8 @@ const teamMembers: TeamMember[] = [
 ];
 
 const backers: Backer[] = [
-  { name: "6th Man Ventures", logo: "/logos/6mv.svg" },
-  { name: "Solana Ventures", logo: "/logos/solana-ventures.svg" },
+  { name: "6th Man Ventures", logo: "/logos/6MV.webp" },
+  { name: "Solana Ventures", logo: "/logos/Solana-Ventures.webp" },
   { name: "Colosseum", logo: "/logos/colosseum.svg" },
   { name: "Metaplex", logo: "/logos/metaplex.svg" },
 ];
@@ -120,6 +124,9 @@ export default function AboutPage() {
           </div>
         </header>
 
+        {/* Who We Are Section */}
+        <WhoWeAreSection />
+
         {/* Backing Section */}
         <BackingSection />
 
@@ -135,6 +142,111 @@ export default function AboutPage() {
 
       <Footer />
     </>
+  );
+}
+
+// =============================================================================
+// Who We Are Section
+// =============================================================================
+function WhoWeAreSection() {
+  return (
+    <section className="w-full px-6 md:px-12 lg:px-20 py-20 md:py-28 border-b border-black/10">
+      <div>
+        {/* Section Header */}
+        <div className="mb-16">
+          <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40">
+            <Eye className="w-3 h-3" />
+            Who We Are
+          </div>
+          <SplitText tag="h2" className="font-display text-2xl sm:text-3xl font-medium text-black leading-[1.1] tracking-tight mb-4">
+            <span>Growth should be a protocol,</span>
+            <span className="text-black/40">not a prayer.</span>
+          </SplitText>
+          <p data-animate="fade-up" className="text-base text-black/60 max-w-2xl">
+            We&apos;re a team of protocol engineers and growth operators who got tired of watching
+            Solana projects burn runway on campaigns they couldn&apos;t measure, attribution they
+            couldn&apos;t trust, and incentives they couldn&apos;t verify. So we built the infrastructure
+            to fix it.
+          </p>
+        </div>
+
+        {/* Vision / Mission / Why Grid */}
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+          {/* Vision */}
+          <div
+            data-animate="fade-up"
+            className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors bg-white/80 backdrop-blur-sm"
+          >
+            <div className="flex items-center gap-1.5 px-3 py-1.5 border-b border-black/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+              <span className="font-mono text-[9px] text-black/30">vision</span>
+            </div>
+            <div className="p-6">
+              <div className="w-8 h-8 rounded-[3px] bg-blue/5 flex items-center justify-center mb-4 group-hover:bg-blue/10 transition-colors">
+                <Eye className="w-4 h-4 text-blue" />
+              </div>
+              <h3 className="font-display text-lg font-medium text-black mb-3 group-hover:text-blue transition-colors">
+                Our Vision
+              </h3>
+              <p className="text-sm text-black/60 leading-relaxed">
+                A Solana ecosystem where every marketing dollar is traceable on-chain, every conversion
+                is verifiable, and growth is as composable as DeFi. No middlemen. No guesswork. Just
+                deterministic outcomes anyone can audit.
+              </p>
+            </div>
+          </div>
+
+          {/* Mission */}
+          <div
+            data-animate="fade-up"
+            className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors bg-white/80 backdrop-blur-sm"
+          >
+            <div className="flex items-center gap-1.5 px-3 py-1.5 border-b border-black/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+              <span className="font-mono text-[9px] text-black/30">mission</span>
+            </div>
+            <div className="p-6">
+              <div className="w-8 h-8 rounded-[3px] bg-blue/5 flex items-center justify-center mb-4 group-hover:bg-blue/10 transition-colors">
+                <Target className="w-4 h-4 text-blue" />
+              </div>
+              <h3 className="font-display text-lg font-medium text-black mb-3 group-hover:text-blue transition-colors">
+                Our Mission
+              </h3>
+              <p className="text-sm text-black/60 leading-relaxed">
+                Build the revenue infrastructure layer for Solana&mdash;programmable offers, on-chain
+                attribution, and permissionless reward distribution&mdash;so that any protocol or
+                project can acquire, retain, and monetize users with cryptographic proof of ROI.
+              </p>
+            </div>
+          </div>
+
+          {/* Why */}
+          <div
+            data-animate="fade-up"
+            className="group relative rounded-[3px] overflow-hidden border border-black/5 hover:border-black/15 transition-colors bg-white/80 backdrop-blur-sm"
+          >
+            <div className="flex items-center gap-1.5 px-3 py-1.5 border-b border-black/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-black/20" />
+              <span className="font-mono text-[9px] text-black/30">why</span>
+            </div>
+            <div className="p-6">
+              <div className="w-8 h-8 rounded-[3px] bg-blue/5 flex items-center justify-center mb-4 group-hover:bg-blue/10 transition-colors">
+                <Zap className="w-4 h-4 text-blue" />
+              </div>
+              <h3 className="font-display text-lg font-medium text-black mb-3 group-hover:text-blue transition-colors">
+                Why We Do This
+              </h3>
+              <p className="text-sm text-black/60 leading-relaxed">
+                Crypto promised transparency, yet most projects still run growth the Web2 way&mdash;opaque
+                dashboards, unverifiable claims, wasted spend. We believe the chain itself should be
+                the source of truth for every user action and every reward. That&apos;s the standard
+                we&apos;re building toward.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -294,12 +406,11 @@ function TeamSection() {
               </div>
 
               {/* Profile Photo */}
-              <div className="relative w-full aspect-square bg-gray-50 overflow-hidden">
-                <Image
+              <div className="relative w-full aspect-square bg-white overflow-hidden">
+                <AsciiPortrait
                   src={member.pfpImage}
                   alt={member.name}
-                  fill
-                  className="object-cover"
+                  className="absolute inset-0 w-full h-full"
                 />
               </div>
 

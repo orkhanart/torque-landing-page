@@ -43,257 +43,269 @@ export function TrophyBurst({ color = "#0000FF", className = "", paused = false 
 
     const hex = (v: number) => Math.floor(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0");
 
-    // Parse base color to RGB
-    const parseColor = (c: string) => {
-      const r = parseInt(c.slice(1, 3), 16);
-      const g = parseInt(c.slice(3, 5), 16);
-      const b = parseInt(c.slice(5, 7), 16);
-      return { r, g, b };
-    };
+    // Tournament bracket: 3 tiers converging upward to a winner node
+    // Tier 0 (bottom): 4 nodes
+    // Tier 1 (middle): 2 nodes
+    // Tier 2 (top): 1 node (winner)
 
-    // Mix color toward gold (for warm tones)
-    const warmColor = (base: { r: number; g: number; b: number }, amount: number, alpha: number) => {
-      const goldR = 255, goldG = 215, goldB = 0;
-      const r = base.r + (goldR - base.r) * amount;
-      const g = base.g + (goldG - base.g) * amount;
-      const b = base.b + (goldB - base.b) * amount;
-      return `#${hex(r)}${hex(g)}${hex(b)}${hex(alpha * 255)}`;
-    };
+    interface Node {
+      tx: number; // normalized 0-1
+      ty: number; // normalized 0-1
+      tier: number;
+      filled: number; // 0-1 fill progress
+    }
 
-    const baseRgb = parseColor(color);
+    interface Edge {
+      from: number;
+      to: number;
+      progress: number; // 0-1 how much of the edge is lit
+    }
 
-    // Particle system
+    const nodes: Node[] = [];
+    const edges: Edge[] = [];
+
+    // Build layout (will be positioned relative to canvas size)
+    // Tier 0 - bottom row
+    nodes.push({ tx: 0.15, ty: 0.78, tier: 0, filled: 0 });
+    nodes.push({ tx: 0.38, ty: 0.78, tier: 0, filled: 0 });
+    nodes.push({ tx: 0.62, ty: 0.78, tier: 0, filled: 0 });
+    nodes.push({ tx: 0.85, ty: 0.78, tier: 0, filled: 0 });
+
+    // Tier 1 - middle row
+    nodes.push({ tx: 0.27, ty: 0.50, tier: 1, filled: 0 });
+    nodes.push({ tx: 0.73, ty: 0.50, tier: 1, filled: 0 });
+
+    // Tier 2 - winner
+    nodes.push({ tx: 0.50, ty: 0.22, tier: 2, filled: 0 });
+
+    // Edges: tier 0 → tier 1
+    edges.push({ from: 0, to: 4, progress: 0 });
+    edges.push({ from: 1, to: 4, progress: 0 });
+    edges.push({ from: 2, to: 5, progress: 0 });
+    edges.push({ from: 3, to: 5, progress: 0 });
+
+    // Edges: tier 1 → tier 2
+    edges.push({ from: 4, to: 6, progress: 0 });
+    edges.push({ from: 5, to: 6, progress: 0 });
+
+    // Burst particles at winner node
     interface Particle {
       x: number;
       y: number;
       vx: number;
       vy: number;
       life: number;
-      maxLife: number;
       size: number;
-      rotation: number;
-      rotSpeed: number;
-      type: "burst" | "confetti" | "sparkle" | "star";
-      warmth: number;
     }
-
     const particles: Particle[] = [];
+
     let time = 0;
-    let lastBurst = -3;
+    const cycleDuration = 5;
 
-    // Draw trophy silhouette (centered)
-    const drawTrophy = (cx: number, cy: number, scale: number, glowAlpha: number) => {
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.scale(scale, scale);
+    const getNodePos = (n: Node) => ({
+      x: n.tx * w,
+      y: n.ty * h,
+    });
 
-      // Trophy cup (trapezoid) - wider at top, narrower at bottom
-      const cupTopW = 40;
-      const cupBotW = 24;
-      const cupH = 44;
-      const cupY = -30;
+    const drawNode = (n: Node, radius: number) => {
+      const pos = getNodePos(n);
 
-      // Glow
-      if (glowAlpha > 0) {
-        ctx.shadowColor = warmColor(baseRgb, 0.5, 1);
-        ctx.shadowBlur = 20 * glowAlpha;
-      }
-
-      // Cup body
-      ctx.strokeStyle = warmColor(baseRgb, 0.3, 0.6 + glowAlpha * 0.4);
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(-cupTopW / 2, cupY);
-      ctx.lineTo(cupTopW / 2, cupY);
-      ctx.lineTo(cupBotW / 2, cupY + cupH);
-      ctx.lineTo(-cupBotW / 2, cupY + cupH);
-      ctx.closePath();
-      ctx.stroke();
-
-      // Cup rim
-      ctx.beginPath();
-      ctx.ellipse(0, cupY, cupTopW / 2 + 4, 5, 0, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Handles (left and right arcs)
-      ctx.beginPath();
-      ctx.arc(-cupTopW / 2 - 8, cupY + 14, 10, -Math.PI * 0.5, Math.PI * 0.5);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(cupTopW / 2 + 8, cupY + 14, 10, Math.PI * 0.5, -Math.PI * 0.5);
-      ctx.stroke();
-
-      // Stem
-      ctx.beginPath();
-      ctx.moveTo(-3, cupY + cupH);
-      ctx.lineTo(-3, cupY + cupH + 12);
-      ctx.lineTo(3, cupY + cupH + 12);
-      ctx.lineTo(3, cupY + cupH);
-      ctx.stroke();
-
-      // Base
-      ctx.beginPath();
-      ctx.moveTo(-18, cupY + cupH + 12);
-      ctx.lineTo(18, cupY + cupH + 12);
-      ctx.lineTo(14, cupY + cupH + 18);
-      ctx.lineTo(-14, cupY + cupH + 18);
-      ctx.closePath();
-      ctx.stroke();
-
-      ctx.shadowBlur = 0;
-      ctx.restore();
-    };
-
-    // Draw 4-point star
-    const drawStar = (x: number, y: number, size: number, alpha: number) => {
-      ctx.save();
-      ctx.strokeStyle = warmColor(baseRgb, 0.4, alpha);
+      // Outer ring
+      ctx.strokeStyle = `${color}${hex(0.3 * 255)}`;
       ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(x, y - size);
-      ctx.lineTo(x + size * 0.3, y - size * 0.3);
-      ctx.lineTo(x + size, y);
-      ctx.lineTo(x + size * 0.3, y + size * 0.3);
-      ctx.lineTo(x, y + size);
-      ctx.lineTo(x - size * 0.3, y + size * 0.3);
-      ctx.lineTo(x - size, y);
-      ctx.lineTo(x - size * 0.3, y - size * 0.3);
-      ctx.closePath();
+      ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
       ctx.stroke();
-      ctx.restore();
+
+      // Fill
+      if (n.filled > 0) {
+        ctx.fillStyle = `${color}${hex(n.filled * 0.45 * 255)}`;
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, radius - 1, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Pulse ring when freshly filled
+        if (n.filled > 0.8 && n.filled < 1) {
+          const pulseAlpha = (1 - n.filled) * 2;
+          const pulseRadius = radius + n.filled * 12;
+          ctx.strokeStyle = `${color}${hex(pulseAlpha * 255)}`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, pulseRadius, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      // Inner dot
+      ctx.fillStyle = `${color}${hex((0.3 + n.filled * 0.5) * 255)}`;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 2, 0, Math.PI * 2);
+      ctx.fill();
     };
 
-    // Spawn a burst of particles
-    const spawnBurst = (cx: number, cy: number) => {
-      // Burst particles
-      for (let i = 0; i < 24; i++) {
-        const angle = (Math.PI * 2 * i) / 24 + (Math.random() - 0.5) * 0.3;
-        const speed = 1.5 + Math.random() * 3;
+    const drawEdge = (e: Edge) => {
+      const fromPos = getNodePos(nodes[e.from]);
+      const toPos = getNodePos(nodes[e.to]);
+
+      // Background line (dim)
+      ctx.strokeStyle = `${color}${hex(0.1 * 255)}`;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 7]);
+      ctx.beginPath();
+      ctx.moveTo(fromPos.x, fromPos.y);
+      ctx.lineTo(toPos.x, toPos.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Lit portion
+      if (e.progress > 0) {
+        const endX = fromPos.x + (toPos.x - fromPos.x) * e.progress;
+        const endY = fromPos.y + (toPos.y - fromPos.y) * e.progress;
+
+        ctx.strokeStyle = `${color}${hex(0.5 * 255)}`;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(fromPos.x, fromPos.y);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+
+        // Traveling dot on the edge
+        if (e.progress < 1) {
+          const gradient = ctx.createRadialGradient(endX, endY, 0, endX, endY, 12);
+          gradient.addColorStop(0, `${color}${hex(0.4 * 255)}`);
+          gradient.addColorStop(1, `${color}00`);
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(endX, endY, 12, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = `${color}${hex(0.8 * 255)}`;
+          ctx.beginPath();
+          ctx.arc(endX, endY, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    };
+
+    const spawnWinnerBurst = () => {
+      const pos = getNodePos(nodes[6]);
+      for (let i = 0; i < 18; i++) {
+        const angle = (Math.PI * 2 * i) / 18 + (Math.random() - 0.5) * 0.4;
+        const speed = 1 + Math.random() * 2.5;
         particles.push({
-          x: cx,
-          y: cy - 10,
+          x: pos.x,
+          y: pos.y,
           vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 1,
+          vy: Math.sin(angle) * speed,
           life: 1,
-          maxLife: 1,
-          size: 2 + Math.random() * 2,
-          rotation: Math.random() * Math.PI * 2,
-          rotSpeed: (Math.random() - 0.5) * 0.1,
-          type: "burst",
-          warmth: 0.3 + Math.random() * 0.5,
-        });
-      }
-
-      // Confetti rectangles
-      for (let i = 0; i < 16; i++) {
-        particles.push({
-          x: cx + (Math.random() - 0.5) * 80,
-          y: cy - 40 - Math.random() * 40,
-          vx: (Math.random() - 0.5) * 1.5,
-          vy: 0.3 + Math.random() * 0.8,
-          life: 1,
-          maxLife: 1,
-          size: 3 + Math.random() * 4,
-          rotation: Math.random() * Math.PI * 2,
-          rotSpeed: (Math.random() - 0.5) * 0.15,
-          type: "confetti",
-          warmth: Math.random() * 0.7,
-        });
-      }
-
-      // Stars
-      for (let i = 0; i < 6; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const dist = 30 + Math.random() * 50;
-        particles.push({
-          x: cx + Math.cos(angle) * dist,
-          y: cy + Math.sin(angle) * dist - 20,
-          vx: 0,
-          vy: 0,
-          life: 1,
-          maxLife: 1,
-          size: 6 + Math.random() * 8,
-          rotation: 0,
-          rotSpeed: 0,
-          type: "star",
-          warmth: 0.3 + Math.random() * 0.4,
+          size: 1.5 + Math.random() * 2,
         });
       }
     };
+
+    let hasBurst = false;
 
     const animate = () => {
       ctx.clearRect(0, 0, w, h);
       time += 0.016;
 
-      const cx = w / 2;
-      const cy = h * 0.42;
+      const cycleTime = time % (cycleDuration + 2);
 
-      // Trigger burst every ~4 seconds
-      if (time - lastBurst > 4) {
-        spawnBurst(cx, cy);
-        lastBurst = time;
-      }
+      // Animation phases:
+      // 0-1.2s:    tier 0 nodes fill, edges to tier 1 travel
+      // 1.2-2.5s:  tier 1 nodes fill, edges to tier 2 travel
+      // 2.5-3.8s:  winner node fills + burst
+      // 3.8-5s:    hold
+      // 5-7s:      fade and reset
 
-      // Trophy glow pulsing
-      const burstPhase = time - lastBurst;
-      const glowAlpha = burstPhase < 0.5
-        ? Math.sin(burstPhase * Math.PI / 0.5) * 0.8
-        : 0.15 + Math.sin(time * 2) * 0.1;
+      const phase = cycleTime;
 
-      // Draw trophy
-      drawTrophy(cx, cy, 1.0, glowAlpha);
-
-      // Shimmer dots between bursts
-      if (burstPhase > 1.5) {
-        const shimmerCount = 5;
-        for (let i = 0; i < shimmerCount; i++) {
-          const seed = i * 137.5 + time * 0.5;
-          const sx = cx + Math.sin(seed * 3.7) * 55;
-          const sy = cy + Math.cos(seed * 2.3) * 40 - 10;
-          const shimmerAlpha = (Math.sin(seed * 5) * 0.5 + 0.5) * 0.5;
-          ctx.fillStyle = warmColor(baseRgb, 0.5, shimmerAlpha);
-          ctx.beginPath();
-          ctx.arc(sx, sy, 1.5, 0, Math.PI * 2);
-          ctx.fill();
+      // Tier 0 nodes fill
+      for (let i = 0; i < 4; i++) {
+        if (phase > i * 0.15) {
+          nodes[i].filled = Math.min(1, nodes[i].filled + 0.04);
         }
       }
 
-      // Update and draw particles
+      // Tier 0→1 edges
+      if (phase > 0.5) {
+        const edgeProgress = Math.min(1, (phase - 0.5) / 1.0);
+        for (let i = 0; i < 4; i++) {
+          edges[i].progress = edgeProgress;
+        }
+      }
+
+      // Tier 1 nodes fill
+      if (phase > 1.5) {
+        for (let i = 4; i < 6; i++) {
+          nodes[i].filled = Math.min(1, nodes[i].filled + 0.04);
+        }
+      }
+
+      // Tier 1→2 edges
+      if (phase > 2.0) {
+        const edgeProgress = Math.min(1, (phase - 2.0) / 1.0);
+        edges[4].progress = edgeProgress;
+        edges[5].progress = edgeProgress;
+      }
+
+      // Winner node
+      if (phase > 3.0) {
+        nodes[6].filled = Math.min(1, nodes[6].filled + 0.03);
+        if (nodes[6].filled > 0.9 && !hasBurst) {
+          spawnWinnerBurst();
+          hasBurst = true;
+        }
+      }
+
+      // Reset phase
+      if (phase > cycleDuration + 1) {
+        const resetSpeed = 0.03;
+        for (const n of nodes) n.filled = Math.max(0, n.filled - resetSpeed);
+        for (const e of edges) e.progress = Math.max(0, e.progress - resetSpeed);
+        hasBurst = false;
+      }
+
+      // Draw edges
+      for (const e of edges) drawEdge(e);
+
+      // Draw nodes
+      for (const n of nodes) {
+        const radius = n.tier === 2 ? 10 : n.tier === 1 ? 8 : 6;
+        drawNode(n, radius);
+      }
+
+      // Winner glow when filled
+      if (nodes[6].filled > 0.5) {
+        const pos = getNodePos(nodes[6]);
+        const glowAlpha = (nodes[6].filled - 0.5) * 0.4;
+        const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 30);
+        gradient.addColorStop(0, `${color}${hex(glowAlpha * 255)}`);
+        gradient.addColorStop(1, `${color}00`);
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 30, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Particles
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
-        p.life -= 0.012;
+        p.life -= 0.018;
         if (p.life <= 0) {
           particles.splice(i, 1);
           continue;
         }
-
         p.x += p.vx;
         p.y += p.vy;
-        p.rotation += p.rotSpeed;
+        p.vx *= 0.97;
+        p.vy *= 0.97;
 
-        const alpha = Math.min(1, p.life * 2);
-
-        if (p.type === "burst") {
-          p.vx *= 0.97;
-          p.vy *= 0.97;
-          p.vy += 0.02; // slight gravity
-          ctx.fillStyle = warmColor(baseRgb, p.warmth, alpha * 0.8);
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (p.type === "confetti") {
-          p.vy += 0.01;
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.rotation);
-          ctx.fillStyle = warmColor(baseRgb, p.warmth, alpha * 0.6);
-          ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
-          ctx.restore();
-        } else if (p.type === "star") {
-          const starAlpha = alpha * Math.sin(p.life * Math.PI);
-          drawStar(p.x, p.y, p.size * starAlpha, starAlpha * 0.7);
-        }
+        const alpha = p.life * 0.7;
+        ctx.fillStyle = `${color}${hex(alpha * 255)}`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+        ctx.fill();
       }
 
       if (!pausedRef.current) {

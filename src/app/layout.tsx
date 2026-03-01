@@ -4,7 +4,6 @@ import "./globals.css";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
 import { GsapProvider } from "@/components/providers/GsapProvider";
 import { ScrollProgress } from "@/components/ScrollProgress";
-import { AsciiProvider } from "@/components/ascii/AsciiContext";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 
 export const metadata: Metadata = {
@@ -69,14 +68,12 @@ export default function RootLayout({
           `}
         </Script>
         <PostHogProvider>
-          <AsciiProvider>
-            <ScrollProvider>
-              <GsapProvider>
-                <ScrollProgress />
-                {children}
-              </GsapProvider>
-            </ScrollProvider>
-          </AsciiProvider>
+          <ScrollProvider>
+            <GsapProvider>
+              <ScrollProgress />
+              {children}
+            </GsapProvider>
+          </ScrollProvider>
         </PostHogProvider>
       </body>
     </html>

@@ -1,6 +1,6 @@
 "use client";
 
-import { SmartImage } from "@/components/ascii/SmartImage";
+import Image from "next/image";
 import { GlassCard } from "@/components/ui/glass-card";
 import { platformFeatures } from "@/app/content/platform-features";
 
@@ -22,7 +22,7 @@ function FeatureCard({ image, alt, title, description }: FeatureCardProps) {
       className="h-full"
     >
       <div className="group relative w-full h-full rounded-xl overflow-hidden">
-        <SmartImage
+        <Image
           src={image}
           alt={alt}
           fill
@@ -119,7 +119,7 @@ export function PlatformFeatures() {
               </p>
             </div>
             <div className="bg-black rounded-b-xl">
-              <SmartImage
+              <Image
                 src={leftColumn.rewardEngine.image}
                 alt={leftColumn.rewardEngine.imageAlt}
                 width={840}
@@ -168,7 +168,7 @@ export function PlatformFeatures() {
               <p className="text-base text-white/70 max-w-[50%]">
                 {rightColumn.analytics.description}
               </p>
-              <SmartImage
+              <Image
                 src={rightColumn.analytics.badgesImage}
                 alt="Badges"
                 width={300}
