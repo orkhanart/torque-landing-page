@@ -204,74 +204,75 @@ const Hero = () => {
             willChange: "transform",
           }}
         >
-          <div className="w-full h-full flex flex-col justify-between pt-24 pointer-events-none">
-            <div />
-
-            {/* Center Content */}
-            <div className="flex flex-col items-center text-center px-[1.5rem] md:px-[3.5rem] lg:px-[4.5rem]">
-              {/* Terminal Tag */}
-              <div
-                ref={badgeRef}
-                className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]"
-                style={{ opacity: 0 }}
-              >
-                <Terminal className="w-3 h-3" />
-                <span>89M+ transactions indexed</span>
-                <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
-              </div>
-
-              {/* Main Headline — SplitText line reveal */}
-              <SplitText
-                tag="h1"
-                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black"
-                delay={0.1}
-                stagger={0.3}
-                useScrollTrigger={false}
-              >
-                <span>The Onchain</span>
-                <span>Growth Engine</span>
-              </SplitText>
-
-              {/* Subheadline */}
-              <p
-                ref={subtitleRef}
-                className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl"
-                style={{ opacity: 0 }}
-              >
-                Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.
-              </p>
-
-              {/* Action Buttons */}
-              <div
-                ref={buttonsRef}
-                className="flex flex-col sm:flex-row items-center gap-4 mb-16 pointer-events-auto"
-              >
-                <Button
-                  onClick={() => setIsModalOpen(true)}
-                  variant="accent"
-                  className="group"
+          <div className="w-full h-full flex flex-col justify-end pointer-events-none px-[1.5rem] md:px-[3.5rem] lg:px-[4.5rem] pb-12">
+            {/* Bottom row: hero text left, stats right */}
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+              {/* Left — Hero content */}
+              <div className="flex flex-col items-start text-left max-w-2xl">
+                {/* Terminal Tag */}
+                <div
+                  ref={badgeRef}
+                  className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]"
                   style={{ opacity: 0 }}
                 >
-                  Deploy Logic
-                  <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  href="/primitives"
+                  <Terminal className="w-3 h-3" />
+                  <span>89M+ transactions indexed</span>
+                  <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
+                </div>
+
+                {/* Main Headline — SplitText line reveal */}
+                <SplitText
+                  tag="h1"
+                  className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black"
+                  delay={0.1}
+                  stagger={0.3}
+                  useScrollTrigger={false}
+                >
+                  <span>The Onchain</span>
+                  <span>Growth Engine</span>
+                </SplitText>
+
+                {/* Subheadline */}
+                <p
+                  ref={subtitleRef}
+                  className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed"
                   style={{ opacity: 0 }}
                 >
-                  Explore Primitives
-                  <ArrowUpRight className="w-4 h-4 ml-2" />
-                </Button>
+                  Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.
+                </p>
+
+                {/* Action Buttons */}
+                <div
+                  ref={buttonsRef}
+                  className="flex flex-col sm:flex-row items-start gap-4 pointer-events-auto"
+                >
+                  <Button
+                    onClick={() => setIsModalOpen(true)}
+                    variant="accent"
+                    className="group"
+                    style={{ opacity: 0 }}
+                  >
+                    Deploy Logic
+                    <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    href="/primitives"
+                    style={{ opacity: 0 }}
+                  >
+                    Explore Primitives
+                    <ArrowUpRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
               </div>
 
-              {/* Stats Row */}
+              {/* Right — Stats */}
               <div
                 ref={statsRef}
-                className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 md:gap-12"
+                className="flex flex-row items-start gap-6 sm:gap-8 lg:gap-10"
               >
                 {heroStats.map((stat, index) => (
-                  <div key={index} className="flex flex-col items-center" style={{ opacity: 0 }}>
+                  <div key={index} className="flex flex-col items-start" style={{ opacity: 0 }}>
                     <span className="text-xl md:text-2xl lg:text-3xl font-display font-semibold text-black tracking-tight">
                       {stat.value}
                     </span>
@@ -283,9 +284,9 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Bottom — scroll hint */}
-            <div ref={scrollHintRef} className="w-full pb-8" style={{ opacity: 0 }}>
-              <div className="flex flex-col items-center gap-1 text-black/40">
+            {/* Scroll hint */}
+            <div ref={scrollHintRef} className="mt-8" style={{ opacity: 0 }}>
+              <div className="flex items-center gap-2 text-black/40">
                 <span className="font-mono text-xs uppercase tracking-wider">Scroll to explore</span>
                 <ChevronDown className="w-4 h-4 animate-bounce" />
               </div>
