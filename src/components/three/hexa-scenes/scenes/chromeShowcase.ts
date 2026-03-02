@@ -20,9 +20,40 @@ const factory: SceneFactory = (
   logo: LogoGeometry,
 ): SceneInstance => {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf0f0ee);
+  scene.background = null; // transparent — gradient plane provides bg
   const camera = new THREE.PerspectiveCamera(FOV, ctx.viewport.aspect, 0.1, 50);
   camera.position.z = CAM_Z;
+
+  // ---- Fullscreen gradient plane behind logo ----
+  const gradGeo = new THREE.PlaneGeometry(2, 2);
+  const gradMat = new THREE.ShaderMaterial({
+    uniforms: {
+      uColorTop:    { value: new THREE.Color(0xeeeee8) }, // warm gray
+      uColorBottom: { value: new THREE.Color(0xffffff) }, // white
+    },
+    vertexShader: /* glsl */ `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = vec4(position.xy * 2.0, 0.9999, 1.0); // fullscreen NDC quad, far plane
+      }
+    `,
+    fragmentShader: /* glsl */ `
+      uniform vec3 uColorTop;
+      uniform vec3 uColorBottom;
+      varying vec2 vUv;
+      void main() {
+        vec3 col = mix(uColorBottom, uColorTop, vUv.y);
+        gl_FragColor = vec4(col, 1.0);
+      }
+    `,
+    depthTest: false,
+    depthWrite: false,
+  });
+  const gradQuad = new THREE.Mesh(gradGeo, gradMat);
+  gradQuad.frustumCulled = false;
+  gradQuad.renderOrder = -1;
+  scene.add(gradQuad);
 
   // Bright silver chrome — high reflectivity for text env reflections
   logo.root.traverse((obj) => {
@@ -81,6 +112,8 @@ const factory: SceneFactory = (
 
     dispose() {
       composer.dispose();
+      gradGeo.dispose();
+      gradMat.dispose();
     },
   };
 };

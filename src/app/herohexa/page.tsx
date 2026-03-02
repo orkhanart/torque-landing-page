@@ -93,6 +93,9 @@ const Hero = () => {
             </div>
           </div>
 
+          {/* Soft bottom fade — scene → white page transition */}
+          <div className="absolute inset-x-0 bottom-0 h-56 z-30 pointer-events-none bg-gradient-to-b from-transparent via-white/60 to-white" />
+
           {/* Main Hero Content — centered overlay */}
           <div className="relative z-20 w-full h-full flex flex-col justify-between pt-24 pointer-events-none">
             <div />
@@ -284,6 +287,13 @@ export default function HeroHexaPage() {
   return (
     <main className="bg-white">
       <Hero />
+      {/* Gradient bridge — blends the scene's warm gray into white */}
+      <div
+        className="relative h-32 -mt-32 pointer-events-none"
+        style={{
+          background: "linear-gradient(to bottom, rgba(238,238,232,0) 0%, #ffffff 100%)",
+        }}
+      />
       <ContentSections />
     </main>
   );
