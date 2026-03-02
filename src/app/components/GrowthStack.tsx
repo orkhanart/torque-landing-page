@@ -141,7 +141,7 @@ function FeatureCard({
     <div className={`relative rounded-[3px] group h-full border transition-all overflow-hidden ${large ? "min-h-[392px]" : "min-h-[336px]"} ${featured ? "border-blue/20 hover:border-blue/40 shadow-[0_0_40px_-10px_rgba(0,122,255,0.15)]" : "border-black/5 hover:border-black/15"}`}>
 
       {/* Procedural visual background */}
-      <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-500">{visual && <CardVisualWrapper color="#0008FF" speed={speed} className="relative w-full h-full">{visual}</CardVisualWrapper>}</div>
+      <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-all duration-500">{visual && <CardVisualWrapper color="#0008FF" speed={speed} className="relative w-full h-full">{visual}</CardVisualWrapper>}</div>
 
       {/* White gradient overlay - fades out on hover to reveal visual */}
       <ImageGradient className={`transition-opacity duration-500 group-hover:opacity-0 ${featured ? "bg-gradient-to-t from-white/40 via-white/20 to-transparent" : "bg-gradient-to-t from-white/50 via-white/25 to-transparent"}`} />
@@ -205,7 +205,7 @@ function APICard() {
     <div className="relative rounded-[3px] group h-full border border-black/5 hover:border-black/15 transition-colors overflow-hidden min-h-[280px]">
 
       {/* Procedural visual background */}
-      <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-all duration-500">
+      <div className="absolute inset-0 opacity-50 group-hover:opacity-100 transition-all duration-500">
         <CardVisualWrapper color="#0008FF" speed={1.5} className="relative w-full h-full">
           <CircuitPattern />
         </CardVisualWrapper>

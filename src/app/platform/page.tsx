@@ -288,9 +288,9 @@ function FeatureSection({
       )}
 
       {/* White gradient — top for header */}
-      <div className="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-white via-white/80 to-transparent z-[1] pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-white via-white/80 to-transparent z-[1] pointer-events-none transition-opacity duration-500 group-hover:opacity-0" />
       {/* White gradient — bottom for features */}
-      <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-white via-white/80 to-transparent z-[1] pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-white via-white/80 to-transparent z-[1] pointer-events-none transition-opacity duration-500 group-hover:opacity-0" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-between min-h-[inherit]">
@@ -353,11 +353,12 @@ function HowItWorksCard({ item, index }: { item: { step: string; title: string; 
 
       {/* Visual */}
       <div className="relative h-[200px] mx-5 mb-5 rounded-[3px] bg-gray-50/60 overflow-hidden">
-        <div className="absolute inset-0 transition-opacity duration-500 opacity-60 group-hover:opacity-100">
+        <div className="absolute inset-0 transition-all duration-500 opacity-50 group-hover:opacity-100">
           <CardVisualWrapper color="#0008FF" className="relative w-full h-full">
             {visuals[index]}
           </CardVisualWrapper>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/30 to-transparent transition-opacity duration-500 group-hover:opacity-0 pointer-events-none" />
       </div>
     </div>
   );

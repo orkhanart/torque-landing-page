@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 const buttonVariants = cva(
   // Base styles - clean digital aesthetic
   [
-    "inline-flex items-center justify-center",
+    "inline-flex items-center justify-center whitespace-nowrap",
     "font-mono text-xs uppercase tracking-wider font-medium",
     "rounded-[3px]",
     "transition-all duration-200 ease-out",
