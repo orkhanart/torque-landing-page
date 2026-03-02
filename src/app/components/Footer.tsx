@@ -75,7 +75,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full overflow-hidden relative bg-blue min-h-[700px]">
+    <footer id="site-footer" className="fixed bottom-0 left-0 w-full h-screen overflow-hidden bg-blue z-0 flex flex-col">
 
       {/* ASCII Hexa Logo background */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
@@ -95,7 +95,7 @@ const Footer = () => {
       </div> */}
 
       {/* Footer Content */}
-      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] pt-24 pb-16">
+      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] pt-24 pb-16 flex-1">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
@@ -185,8 +185,8 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="relative z-10 border-t border-white/10">
+      {/* Bottom Bar — pinned to bottom */}
+      <div className="relative z-10 border-t border-white/10 mt-auto">
         <div className="w-full px-6 md:px-8 lg:px-[4.5rem] py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <span className="font-mono text-xs text-white/50">

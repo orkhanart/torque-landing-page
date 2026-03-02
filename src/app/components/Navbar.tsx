@@ -96,13 +96,13 @@ export default function Navbar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [bgOpacity, setBgOpacity] = useState(0);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
   const symbolRef = useRef<HTMLImageElement>(null);
   const pathname = usePathname();
 
-  // Rotate symbol on scroll + fade in glass background
+  // Rotate symbol on scroll + fade in glass background + detect footer
   useEffect(() => {
     let ticking = false;
-
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
@@ -112,6 +112,10 @@ export default function Navbar() {
           }
           // Fade in bg over first 200px of scroll
           setBgOpacity(Math.min(1, window.scrollY / 200));
+          // Hide navbar when scrolled into the footer reveal zone
+          const distanceFromBottom =
+            document.documentElement.scrollHeight - window.scrollY - window.innerHeight;
+          setIsFooterVisible(distanceFromBottom < window.innerHeight - 100);
           ticking = false;
         });
         ticking = true;
@@ -140,7 +144,14 @@ export default function Navbar() {
     <>
       <GlassFilterSVG />
 
-      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] lg:w-[calc(100%-6rem)]">
+      <header
+        className="fixed top-4 left-1/2 z-[1000] w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] lg:w-[calc(100%-6rem)] transition-transform duration-500 ease-in-out"
+        style={{
+          transform: isFooterVisible
+            ? "translateX(-50%) translateY(-120%)"
+            : "translateX(-50%)",
+        }}
+      >
         {/* Glass background layer — fades in on scroll */}
         <GlassBackground opacity={bgOpacity} />
 

@@ -11,22 +11,26 @@ export default function Home() {
     <>
       <Navbar />
 
-      {/* Hero */}
-      <Hero />
+      {/* Main content — sits above the fixed footer */}
+      <div className="relative z-10 bg-background">
+        {/* Hero */}
+        <Hero />
 
-      {/* Platform Features */}
-      <GrowthStack />
+        {/* Platform Features */}
+        <GrowthStack />
 
-      {/* Solutions */}
-      <Solutions />
+        {/* Solutions */}
+        <Solutions />
 
-      {/* Playbooks */}
-      <PlaybooksSection />
+        {/* Playbooks */}
+        <PlaybooksSection />
 
-      {/* CTA */}
-      <HomepageCTA />
+        {/* CTA */}
+        <HomepageCTA />
+      </div>
 
-      {/* Footer */}
+      {/* Footer — fixed behind content, revealed on scroll */}
+      <div className="h-screen" />
       <Footer />
     </>
   );
