@@ -461,9 +461,10 @@ export function ChromeHexaLogo() {
       // Auto-orbit: spins while exploded, fades out as logo assembles
       orbitAngle += 0.5 * dt * smoothScroll;
 
-      // Orbit contribution fades with explode factor so it's zero when assembled,
-      // eliminating the position jump before the scroll-driven 180° spin.
-      scrollGroup.rotation.y = orbitAngle * smoothScroll + smoothRotation;
+      // Orbit accumulates while exploded and naturally stops when assembled
+      // (rate already scales with smoothScroll). The 180° flip adds on top
+      // in the same direction — no mid-assembly reversal.
+      scrollGroup.rotation.y = orbitAngle + smoothRotation;
 
       // Explode elements on scroll
       for (const elem of logo.elements) {

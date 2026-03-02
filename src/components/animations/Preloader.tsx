@@ -15,17 +15,8 @@ export function Preloader({ onReveal, onComplete }: PreloaderProps) {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    // Skip if already preloaded this session
-    if (sessionStorage.getItem("torque-preloaded")) {
-      setIsDone(true);
-      onReveal?.();
-      onComplete?.();
-      return;
-    }
-
     // Skip for reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      sessionStorage.setItem("torque-preloaded", "1");
       setIsDone(true);
       onReveal?.();
       onComplete?.();
@@ -106,7 +97,6 @@ export function Preloader({ onReveal, onComplete }: PreloaderProps) {
       duration: 0.35,
       ease: "power2.inOut",
       onComplete: () => {
-        sessionStorage.setItem("torque-preloaded", "1");
         document.body.style.overflow = "";
         setIsDone(true);
         onComplete?.();

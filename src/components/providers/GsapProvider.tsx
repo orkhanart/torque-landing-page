@@ -23,8 +23,9 @@ interface GsapProviderProps {
 }
 
 export function GsapProvider({ children }: GsapProviderProps) {
-  const [ready, setReady] = useState(false);
   const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [ready, setReady] = useState(!isHome);
 
   // Set up ScrollTrigger.batch for data-animate elements after preloader reveals
   useEffect(() => {
@@ -106,7 +107,7 @@ export function GsapProvider({ children }: GsapProviderProps) {
 
   return (
     <GsapContext.Provider value={{ ready }}>
-      <Preloader onReveal={handleReveal} onComplete={handleComplete} />
+      {isHome && <Preloader onReveal={handleReveal} onComplete={handleComplete} />}
       {children}
     </GsapContext.Provider>
   );
