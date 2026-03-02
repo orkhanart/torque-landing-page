@@ -33,6 +33,120 @@ function makeHelicoid(segs: number): ParametricGeometry {
 }
 
 // =============================================================================
+// Drag-to-rotate manipulator
+// =============================================================================
+function createManipulator(container: HTMLElement) {
+  const pivot = new THREE.Group();
+
+  let dragging = false;
+  let lastX = 0;
+  let lastY = 0;
+  let velX = 0;
+  let velY = 0;
+
+  const ROTATE_SPEED = 0.005;
+  const FRICTION = 0.95;
+
+  const applyRotation = (dx: number, dy: number) => {
+    velX = dx * ROTATE_SPEED;
+    velY = dy * ROTATE_SPEED;
+  };
+
+  const onPointerDown = (e: PointerEvent) => {
+    if (e.button !== 0) return; // left-click only
+    dragging = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    velX = 0;
+    velY = 0;
+    container.setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: PointerEvent) => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    applyRotation(dx, dy);
+  };
+
+  const onPointerUp = (e: PointerEvent) => {
+    dragging = false;
+    container.releasePointerCapture(e.pointerId);
+  };
+
+  let touchDragging = false;
+
+  const onTouchStart = (e: TouchEvent) => {
+    if (e.touches.length === 1) {
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+      touchDragging = true;
+      dragging = true;
+      velX = 0;
+      velY = 0;
+    }
+  };
+
+  const onTouchMove = (e: TouchEvent) => {
+    if (e.touches.length === 1 && touchDragging) {
+      const dx = e.touches[0].clientX - lastX;
+      const dy = e.touches[0].clientY - lastY;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+      applyRotation(dx, dy);
+    }
+  };
+
+  const onTouchEnd = () => {
+    touchDragging = false;
+    dragging = false;
+  };
+
+  container.addEventListener("pointerdown", onPointerDown);
+  container.addEventListener("pointermove", onPointerMove);
+  container.addEventListener("pointerup", onPointerUp);
+  container.addEventListener("pointercancel", onPointerUp);
+  container.addEventListener("touchstart", onTouchStart, { passive: true });
+  container.addEventListener("touchmove", onTouchMove, { passive: true });
+  container.addEventListener("touchend", onTouchEnd);
+
+  return {
+    pivot,
+    dragging: () => dragging,
+    update() {
+      // Apply velocity as quaternion rotation
+      if (Math.abs(velX) > 0.0001 || Math.abs(velY) > 0.0001) {
+        const qx = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(0, 1, 0),
+          velX
+        );
+        const qy = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(1, 0, 0),
+          velY
+        );
+        pivot.quaternion.premultiply(qx).premultiply(qy);
+      }
+      // Friction when not dragging
+      if (!dragging) {
+        velX *= FRICTION;
+        velY *= FRICTION;
+      }
+    },
+    dispose() {
+      container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("pointermove", onPointerMove);
+      container.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("pointercancel", onPointerUp);
+      container.removeEventListener("touchstart", onTouchStart);
+      container.removeEventListener("touchmove", onTouchMove);
+      container.removeEventListener("touchend", onTouchEnd);
+    },
+  };
+}
+
+// =============================================================================
 // TorqueHelicoid Component
 // =============================================================================
 interface TorqueHelicoidProps {
@@ -85,6 +199,9 @@ export function TorqueHelicoid({ className = "", variant = "light" }: TorqueHeli
       textShadow: isDark
         ? "0 0 3px rgba(255,255,255,0.25), 0 0 8px rgba(255,255,255,0.1)"
         : "0 0 3px rgba(0,0,255,0.35), 0 0 8px rgba(0,0,255,0.15)",
+      cursor: "grab",
+      userSelect: "none",
+      WebkitUserSelect: "none",
     });
 
     // ---- Scene ----
@@ -188,7 +305,11 @@ export function TorqueHelicoid({ className = "", variant = "light" }: TorqueHeli
     const mesh = new THREE.Mesh(geo, mat);
     // Dark variant: rotate 90° on X so the helicoid lies horizontal (fills wide footer)
     if (isDark) mesh.rotation.x = Math.PI / 2;
-    scene.add(mesh);
+
+    // ---- Drag-to-rotate manipulator ----
+    const manip = createManipulator(el);
+    manip.pivot.add(mesh);
+    scene.add(manip.pivot);
 
     // Dark variant: pull camera back + widen FOV so it fills the full footer
     if (isDark) {
@@ -211,18 +332,29 @@ export function TorqueHelicoid({ className = "", variant = "light" }: TorqueHeli
       const t = clock.getElapsedTime();
       uTime.value = t;
 
+      // Update drag manipulator (applies inertia/friction)
+      manip.update();
+
+      // Update cursor style
+      ascii.domElement.style.cursor = manip.dragging() ? "grabbing" : "grab";
+
       targetMouse.set(mouse.current.x, mouse.current.y);
       uMouse.value.lerp(targetMouse, 0.05);
       uScroll.value += (scroll.current - uScroll.value) * 0.05;
 
-      mesh.rotation.y += 0.003;
+      // Slow idle auto-rotation (pauses during drag)
+      if (!manip.dragging()) {
+        mesh.rotation.y += 0.003;
+      }
       mesh.rotation.x = baseRotX + Math.sin(t * 0.2) * 0.1 + mouse.current.y * 0.3;
 
-      // Camera parallax from mouse
-      camera.position.x +=
-        (mouse.current.x * 0.4 - camera.position.x) * 0.02;
-      camera.position.y +=
-        (mouse.current.y * 0.3 - camera.position.y) * 0.02;
+      // Camera parallax from mouse (only when not dragging)
+      if (!manip.dragging()) {
+        camera.position.x +=
+          (mouse.current.x * 0.4 - camera.position.x) * 0.02;
+        camera.position.y +=
+          (mouse.current.y * 0.3 - camera.position.y) * 0.02;
+      }
       camera.lookAt(0, 0, 0);
 
       // Fade on scroll (only in light/hero mode)
@@ -273,6 +405,7 @@ export function TorqueHelicoid({ className = "", variant = "light" }: TorqueHeli
     return () => {
       dead = true;
       cancelAnimationFrame(raf);
+      manip.dispose();
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("touchmove", onTouch);
       window.removeEventListener("scroll", onScroll);

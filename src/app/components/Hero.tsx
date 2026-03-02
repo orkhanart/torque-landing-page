@@ -13,8 +13,8 @@ import { useGsap } from "@/components/providers/GsapProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ChromeHexaLogo = dynamic(
-  () => import("@/components/three/ChromeHexaLogo").then(mod => ({ default: mod.ChromeHexaLogo })),
+const TorqueHelicoid = dynamic(
+  () => import("@/components/three/TorqueHelicoid").then(mod => ({ default: mod.TorqueHelicoid })),
   { ssr: false }
 );
 const IntegrationRequestModal = dynamic(
@@ -38,11 +38,10 @@ function InteractiveGradient() {
 }
 
 // =============================================================================
-// Hero - 3D Chrome Hexa Logo with scroll-driven assembly
+// Hero — ASCII Helicoid background with left-aligned content
 // =============================================================================
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const { ready } = useGsap();
 
   // Refs for staggered entrance animation
@@ -51,15 +50,6 @@ const Hero = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrollProgress(window.scrollY / window.innerHeight);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   // Orchestrated hero entrance timeline
   useEffect(() => {
@@ -157,53 +147,25 @@ const Hero = () => {
     return () => ctx.revert();
   }, [ready]);
 
-  // TrustBar fades in after hero text scrolls away (scroll > 0.8vh)
-  // and continuously rises upward as user keeps scrolling
-  const trustBarOpacity = Math.min(1, Math.max(0, (scrollProgress - 0.8) / 0.4));
-  const trustBarY = -Math.max(0, (scrollProgress - 0.8)) * 250;
-
   return (
     <>
-      {/* Assembly (1vh) + dwell (0.5vh) + Y rotation (1vh), then unstick */}
-      <section className="relative w-full" style={{ height: "350vh" }}>
-        {/* Sticky viewport — stays pinned while user scrolls */}
-        <div className="sticky top-0 w-full h-screen z-0">
+      <section className="relative w-full h-screen">
+        {/* Background layers */}
+        <div className="absolute inset-0 z-0">
           <InteractiveGradient />
 
-          {/* 3D Chrome Hexa Logo — centered */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-full h-full">
-              <ChromeHexaLogo />
-            </div>
+          {/* ASCII Helicoid — fills viewport */}
+          <div className="absolute inset-0">
+            <TorqueHelicoid />
           </div>
 
-          {/* Bottom fade — soft transition from scene to white content */}
+          {/* Bottom fade — soft transition to white content */}
           <div className="absolute inset-x-0 bottom-0 h-48 z-10 pointer-events-none bg-gradient-to-b from-transparent via-white/50 to-white" />
 
-          {/* Trust bar — fades in after hero text scrolls away */}
-          <div
-            className="absolute bottom-0 left-0 right-0 z-20 px-[1.5rem] md:px-[3.5rem] lg:px-[4.5rem] pb-12"
-            style={{
-              opacity: trustBarOpacity,
-              transform: `translateY(${trustBarY}px)`,
-              willChange: "transform, opacity",
-              pointerEvents: trustBarOpacity > 0.5 ? "auto" : "none",
-            }}
-          >
-            <TrustBar />
-          </div>
         </div>
 
-        {/* Hero content — overlaps the sticky scene, scrolls away naturally */}
-        <div
-          className="relative z-20"
-          style={{
-            marginTop: "-100vh",
-            height: "100vh",
-            transform: `translateY(${-scrollProgress * 40}px)`,
-            willChange: "transform",
-          }}
-        >
+        {/* Hero content — overlays the scene (pointer-events-none so drag reaches helicoid) */}
+        <div className="absolute inset-0 z-20 pointer-events-none">
           <div className="w-full h-full flex flex-col justify-end pointer-events-none px-[1.5rem] md:px-[3.5rem] lg:px-[4.5rem] pb-12">
             {/* Bottom row: hero text left, stats right */}
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
