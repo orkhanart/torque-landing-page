@@ -7,17 +7,6 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: [
-    // Dynamic accent classes used via props in GrowthStack / Playbooks
-    'text-coral', 'text-coral-dark', 'text-aquamarine', 'text-aquamarine-dark',
-    'bg-coral/15', 'bg-coral/25', 'bg-aquamarine/15', 'bg-aquamarine/25',
-    'bg-blue/15', 'bg-blue/25',
-    'border-coral/20', 'border-coral/40', 'border-aquamarine/20', 'border-aquamarine/40',
-    'border-blue/20', 'border-blue/40',
-    'group-hover:bg-coral/25', 'group-hover:bg-aquamarine/25', 'group-hover:bg-blue/25',
-    'group-hover:text-coral', 'group-hover:text-aquamarine-dark', 'group-hover:text-blue',
-    'hover:border-coral/40', 'hover:border-aquamarine/40', 'hover:border-blue/40',
-  ],
   theme: {
   	screens: {
   		sm: '640px',
@@ -47,26 +36,10 @@ const config: Config = {
 					dark: '#E8F2FB',
 					light: '#FFFFFF',
 				},
-				coral: {
-					DEFAULT: '#F1A3A1',
-					light: '#FFC5C3',
-					dark: '#D88987',
-				},
 				blue: {
 					DEFAULT: '#0008FF',
 					light: '#3338FF',
 					dark: '#0006CC',
-				},
-				'brand-gray': {
-					100: '#F0F2F5',
-					200: '#E0E3E8',
-					300: '#B0B6C0',
-					400: '#808894',
-					500: '#606872',
-					600: '#404650',
-					700: '#2A2E36',
-					800: '#1A1C22',
-					900: '#08090A',
 				},
 				black: {
 					DEFAULT: '#08090A',
@@ -200,7 +173,6 @@ const config: Config = {
 				'blue-gradient': 'linear-gradient(135deg, #0008FF 0%, #0006CC 100%)',
 				'blue-radial': 'radial-gradient(ellipse at center, #3338FF 0%, #0008FF 100%)',
 				'aqua-gradient': 'linear-gradient(135deg, #5DFDCB 0%, #7CC6FE 100%)',
-				'warm-gradient': 'linear-gradient(135deg, #F1A3A1 0%, #FFC5C3 100%)',
 				'glass-gradient': 'linear-gradient(135deg, rgba(244,250,255,0.9) 0%, rgba(244,250,255,0.7) 100%)',
       },
 			boxShadow: {
@@ -208,8 +180,6 @@ const config: Config = {
 				'blue-glow-lg': '0 0 50px 0 rgba(0, 8, 255, 0.35)',
 				'aqua-glow': '0 0 30px 0 rgba(93, 253, 203, 0.3)',
 				'aqua-glow-lg': '0 0 50px 0 rgba(93, 253, 203, 0.4)',
-				'coral-glow': '0 0 30px 0 rgba(241, 163, 161, 0.3)',
-				'coral-glow-lg': '0 0 50px 0 rgba(241, 163, 161, 0.4)',
 				'glass': '0 8px 32px 0 rgba(8, 9, 10, 0.08)',
 				'glass-hover': '0 12px 40px 0 rgba(8, 9, 10, 0.12)',
 				'subtle': '0 1px 3px 0 rgb(8 9 10 / 0.08)',

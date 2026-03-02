@@ -221,7 +221,9 @@ export function buildLogoGeometry(): LogoGeometry {
         disposables.push(geo);
 
         const mat = createChrome(color, 0.18);
-        parent.add(new THREE.Mesh(geo, mat));
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.userData.category = elem.category;
+        parent.add(mesh);
       }
     }
   };
@@ -261,6 +263,7 @@ export function buildLogoGeometry(): LogoGeometry {
         const mat = createChrome(elem.fill || "#4857A3", 0.05);
         const mesh = new THREE.Mesh(geo, mat);
         mesh.position.copy(pos);
+        mesh.userData.isDot = true;
         parent.add(mesh);
       }
     }

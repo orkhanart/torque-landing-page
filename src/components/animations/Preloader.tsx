@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import Image from "next/image";
 
 interface PreloaderProps {
   onReveal?: () => void;
@@ -11,9 +10,8 @@ interface PreloaderProps {
 
 export function Preloader({ onReveal, onComplete }: PreloaderProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-  const counterRef = useRef<HTMLSpanElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
@@ -37,62 +35,83 @@ export function Preloader({ onReveal, onComplete }: PreloaderProps) {
     // Lock scroll during preloader
     document.body.style.overflow = "hidden";
 
-    const counter = { value: 0 };
+    const path = pathRef.current;
+    const svg = svgRef.current;
+    if (!path || !svg) return;
+
+    // Get total path length for stroke-dasharray animation
+    const length = path.getTotalLength();
+
+    // Initial state: stroke hidden, no fill
+    gsap.set(path, {
+      strokeDasharray: length,
+      strokeDashoffset: length,
+      fill: "transparent",
+      stroke: "#010101",
+      strokeWidth: 6,
+    });
+
+    gsap.set(svg, { opacity: 1, scale: 0.95, rotation: -90 });
 
     const tl = gsap.timeline();
 
-    // Phase 1: Logo fade in (0 - 0.4s)
-    tl.fromTo(
-      logoRef.current,
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }
-    );
+    // Phase 1: Stroke draws in + gentle rotation (0 → 1.2s)
+    tl.to(path, {
+      strokeDashoffset: 0,
+      duration: 1.2,
+      ease: "power2.inOut",
+    }, 0);
 
-    // Phase 2: Line expands (0.2 - 0.8s)
-    tl.fromTo(
-      lineRef.current,
-      { scaleX: 0 },
-      { scaleX: 1, duration: 0.6, ease: "power2.inOut" },
-      0.2
-    );
+    tl.to(svg, {
+      rotation: 0,
+      scale: 1,
+      duration: 1.2,
+      ease: "power2.inOut",
+    }, 0);
 
-    // Phase 3: Counter 0 → 100 (0.2 - 1.2s)
-    tl.to(
-      counter,
-      {
-        value: 100,
-        duration: 1.0,
-        ease: "power1.in",
-        onUpdate: () => {
-          if (counterRef.current) {
-            counterRef.current.textContent = Math.round(counter.value).toString();
-          }
-        },
-      },
-      0.2
-    );
+    // Phase 2: Fill fades in, stroke fades out (1.0 → 1.5s)
+    tl.to(path, {
+      fill: "#010101",
+      stroke: "transparent",
+      duration: 0.5,
+      ease: "power1.in",
+    }, 1.0);
 
-    // Phase 4: Signal reveal (at 1.35s — start of exit)
+    // Phase 3: Brief hold + subtle pulse (1.5 → 1.8s)
+    tl.fromTo(svg, {
+      scale: 1,
+    }, {
+      scale: 1.05,
+      duration: 0.15,
+      ease: "power2.out",
+      yoyo: true,
+      repeat: 1,
+    }, 1.5);
+
+    // Phase 4: Signal reveal
     tl.call(() => {
       onReveal?.();
-    }, undefined, 1.35);
+    }, undefined, 1.8);
 
-    // Phase 5: Slide overlay away (1.35 - 1.75s)
-    tl.to(
-      overlayRef.current,
-      {
-        yPercent: -100,
-        duration: 0.4,
-        ease: "power2.inOut",
-        onComplete: () => {
-          sessionStorage.setItem("torque-preloaded", "1");
-          document.body.style.overflow = "";
-          setIsDone(true);
-          onComplete?.();
-        },
+    // Phase 5: Scale up + fade overlay away
+    tl.to(svg, {
+      scale: 1.5,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power2.in",
+    }, 1.8);
+
+    tl.to(overlayRef.current, {
+      opacity: 0,
+      duration: 0.35,
+      ease: "power2.inOut",
+      onComplete: () => {
+        sessionStorage.setItem("torque-preloaded", "1");
+        document.body.style.overflow = "";
+        setIsDone(true);
+        onComplete?.();
       },
-      1.35
-    );
+    }, 1.9);
 
     return () => {
       tl.kill();
@@ -107,30 +126,19 @@ export function Preloader({ onReveal, onComplete }: PreloaderProps) {
       ref={overlayRef}
       className="fixed inset-0 z-[9999] bg-white flex items-center justify-center"
     >
-      <div className="flex flex-col items-center gap-6">
-        <div ref={logoRef} className="opacity-0">
-          <Image
-            src="/logos/torque-symbol.svg"
-            alt=""
-            width={40}
-            height={36}
-            priority
-          />
-        </div>
-        <div className="w-48 h-px bg-black/10 overflow-hidden">
-          <div
-            ref={lineRef}
-            className="h-full bg-black origin-left"
-            style={{ transform: "scaleX(0)" }}
-          />
-        </div>
-        <span
-          ref={counterRef}
-          className="font-mono text-xs text-black/40 tabular-nums"
-        >
-          0
-        </span>
-      </div>
+      <svg
+        ref={svgRef}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 379.7 337.2"
+        className="w-12 h-12 opacity-0"
+      >
+        <path
+          ref={pathRef}
+          d="M269.2,0H110.5c-11.2,0-21.5,5.9-27,15.6L4.2,153c-5.6,9.7-5.6,21.6,0,31.2l79.3,137.4c5.6,9.7,15.9,15.6,27,15.6h158.6c11.1,0,21.5-5.9,27-15.6l79.3-137.4c5.6-9.7,5.6-21.6,0-31.2L296.2,15.6c-5.6-9.7-15.9-15.6-27-15.6ZM210.1,180.3h140.6l-70.3,121.8-70.3-121.8ZM350.7,156.9h-136.1c-11.1,0-21.5-5.9-27-15.6L119.5,23.4h136.1c11.1,0,21.5,5.9,27,15.6l68.1,117.9ZM169.6,156.9H29L99.3,35.1l70.3,121.8ZM29,180.3h136.1c11.1,0,21.5,5.9,27,15.6l68.1,117.9H124c-11.2,0-21.5-5.9-27-15.6L29,180.3Z"
+          fill="transparent"
+          stroke="transparent"
+        />
+      </svg>
     </div>
   );
 }

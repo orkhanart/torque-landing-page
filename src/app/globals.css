@@ -99,11 +99,6 @@
     --aquamarine: 161 97% 68%;      /* #5DFDCB - aquamarine */
     --maya-blue: 206 98% 74%;       /* #7CC6FE - maya blue */
 
-    /* Accent - Coral */
-    --coral: 1 72% 76%;             /* #F1A3A1 - coral */
-    --coral-light: 1 100% 88%;     /* #FFC5C3 - coral light */
-    --coral-dark: 1 52% 69%;       /* #D88987 - coral dark */
-
     /* Gray Scale (cool-tinted) */
     --gray-50: 207 100% 98%;        /* #F4FAFF */
     --gray-100: 207 40% 96%;        /* cool gray 100 */
@@ -209,7 +204,7 @@
 
   /* Selection */
   ::selection {
-    @apply bg-blue text-white;
+    @apply bg-black text-white;
   }
 }
 

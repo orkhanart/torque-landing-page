@@ -84,15 +84,15 @@ const Hero = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // 1. Badge — drops in
+      // 1. SplitText headline handles itself (delay: 0.1, stagger: 0.3)
+
+      // 2. Badge — drops in after headline
       tl.fromTo(
         badgeRef.current,
         { opacity: 0, y: -15, scale: 0.96 },
         { opacity: 1, y: 0, scale: 1, duration: 0.6 },
-        0.1
+        0.8
       );
-
-      // 2. SplitText headline handles itself (delay: 0.4, stagger: 0.15)
 
       // 3. Subtitle — fades up with blur dissolve
       tl.fromTo(
@@ -212,19 +212,19 @@ const Hero = () => {
               {/* Terminal Tag */}
               <div
                 ref={badgeRef}
-                className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-brand-gray-500 border border-black/10 px-3 py-1.5 rounded-[3px]"
+                className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]"
                 style={{ opacity: 0 }}
               >
                 <Terminal className="w-3 h-3" />
                 <span>89M+ transactions indexed</span>
-                <span className="w-1.5 h-1.5 bg-aquamarine rounded-full animate-pulse" />
+                <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
               </div>
 
               {/* Main Headline — SplitText line reveal */}
               <SplitText
                 tag="h1"
                 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black"
-                delay={0.4}
+                delay={0.1}
                 stagger={0.3}
                 useScrollTrigger={false}
               >
@@ -235,7 +235,7 @@ const Hero = () => {
               {/* Subheadline */}
               <p
                 ref={subtitleRef}
-                className="text-lg md:text-xl text-brand-gray-500 mb-8 leading-relaxed max-w-2xl"
+                className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl"
                 style={{ opacity: 0 }}
               >
                 Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.
@@ -275,7 +275,7 @@ const Hero = () => {
                     <span className="text-xl md:text-2xl lg:text-3xl font-display font-semibold text-black tracking-tight">
                       {stat.value}
                     </span>
-                    <span className="text-xs text-brand-gray-400 mt-1">
+                    <span className="text-xs text-black/50 mt-1">
                       {stat.label}
                     </span>
                   </div>
@@ -285,7 +285,7 @@ const Hero = () => {
 
             {/* Bottom — scroll hint */}
             <div ref={scrollHintRef} className="w-full pb-8" style={{ opacity: 0 }}>
-              <div className="flex flex-col items-center gap-1 text-brand-gray-300">
+              <div className="flex flex-col items-center gap-1 text-black/40">
                 <span className="font-mono text-xs uppercase tracking-wider">Scroll to explore</span>
                 <ChevronDown className="w-4 h-4 animate-bounce" />
               </div>

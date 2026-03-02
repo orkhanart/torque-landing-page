@@ -56,14 +56,22 @@ const factory: SceneFactory = (
   scene.add(gradQuad);
 
   // Bright silver chrome — high reflectivity for text env reflections
+  // Dot spheres and gradient triangles get the brand blue color
   logo.root.traverse((obj) => {
     if (obj instanceof THREE.Mesh) {
       const mat = obj.material as THREE.MeshStandardMaterial;
       if (mat.isMeshStandardMaterial) {
-        mat.color.set(0xf0f0f5);
-        mat.metalness = 1.0;
-        mat.roughness = 0.04;
-        mat.envMapIntensity = 2.5;
+        if (obj.userData.isDot || obj.userData.category === "gradient") {
+          mat.color.set(0x0008FF);
+          mat.metalness = 1.0;
+          mat.roughness = 0.04;
+          mat.envMapIntensity = 2.5;
+        } else {
+          mat.color.set(0xf0f0f5);
+          mat.metalness = 1.0;
+          mat.roughness = 0.04;
+          mat.envMapIntensity = 2.5;
+        }
       }
     }
   });
