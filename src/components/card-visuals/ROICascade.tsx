@@ -93,7 +93,7 @@ export function ROICascade({ color = "#0000FF", className = "", paused = false, 
       gravity: number;
     }
 
-    let particles: Particle[] = [];
+    const particles: Particle[] = [];
 
     // Cycle state
     let phase: "dropping" | "burst" | "waiting" = "dropping";

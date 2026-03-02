@@ -6,7 +6,7 @@ import type { Orientation } from "@/components/card-visuals/useOrientation";
 type CardVisualState = "OFF_SCREEN" | "PREVIEWING" | "IDLE" | "PLAYING";
 
 interface CardVisualWrapperProps {
-  children: React.ReactElement<{ color?: string; paused?: boolean; speed?: number; orientation?: Orientation }>;
+  children: React.ReactElement;
   aspectRatio?: string;
   speed?: number;
   color?: string;
