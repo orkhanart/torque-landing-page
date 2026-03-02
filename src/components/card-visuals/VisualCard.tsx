@@ -26,6 +26,9 @@ interface VisualCardProps {
   headerRight?: React.ReactNode;
   badge?: React.ReactNode;
 
+  // Accent color override for hover border
+  hoverBorderClass?: string;
+
   // Interaction
   href?: string;
   onClick?: () => void;
@@ -44,6 +47,7 @@ export function VisualCard({
   featured = false,
   layout = "vertical",
   visualFill = "box",
+  hoverBorderClass,
   headerRight,
   badge,
   href,
@@ -148,7 +152,9 @@ export function VisualCard({
     "group relative rounded-[3px] overflow-hidden border transition-all",
     featured
       ? "border-blue/30 shadow-[0_0_20px_rgba(0,8,255,0.08)]"
-      : "border-black/10 hover:border-blue/30",
+      : hoverBorderClass
+        ? `border-black/10 ${hoverBorderClass}`
+        : "border-black/10 hover:border-blue/30",
     isAdaptive && !isFull &&
       "min-h-[660px] sm:min-h-0 xl:min-h-[660px] sm:flex sm:flex-row-reverse xl:block",
     isAdaptive && isFull &&

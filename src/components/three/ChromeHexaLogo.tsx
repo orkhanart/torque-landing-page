@@ -438,8 +438,8 @@ export function ChromeHexaLogo() {
       // Phase 1 (0 → 1vh): assembly — explode 1 → 0
       scrollTarget = Math.max(0, Math.min(1, 1 - window.scrollY / vh));
       // Phase 2 (1vh → 1.5vh): dwell — just enjoy the assembled logo
-      // Phase 3 (1.5vh → 2.5vh): full 360° Z rotation
-      rotationTarget = Math.max(0, Math.min(1, (window.scrollY - vh * 1.5) / vh)) * Math.PI * 2;
+      // Phase 3 (1.5vh → 2.5vh): 180° Z rotation
+      rotationTarget = Math.max(0, Math.min(1, (window.scrollY - vh * 1.5) / vh)) * Math.PI;
     };
     window.addEventListener("scroll", onPageScroll, { passive: true });
     onPageScroll();

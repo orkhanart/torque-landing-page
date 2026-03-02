@@ -30,13 +30,13 @@ const CircuitPattern = dynamic(
 // =============================================================================
 export default function GrowthStack() {
   return (
-    <section id="growth-stack" className="w-full bg-white border-t border-black/10">
+    <section id="growth-stack" className="w-full bg-white">
       <div className="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 md:mb-10">
           <div className="max-w-2xl">
-            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-black/40 border border-black/10 px-2 py-1 rounded-[3px]">
-              <span className="w-1 h-1 bg-blue rounded-full" />
+            <div data-animate="fade-up" className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-brand-gray-400 border border-black/10 px-2 py-1 rounded-[3px]">
+              <span className="w-1 h-1 bg-aquamarine rounded-full" />
               Platform Features
             </div>
             <SplitText tag="h2" className="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-black leading-[1.1] tracking-tight">

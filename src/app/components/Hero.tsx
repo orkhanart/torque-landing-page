@@ -84,22 +84,22 @@ const Hero = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // 1. Badge — drops in from above with subtle scale
+      // 1. Badge — drops in
       tl.fromTo(
         badgeRef.current,
         { opacity: 0, y: -15, scale: 0.96 },
         { opacity: 1, y: 0, scale: 1, duration: 0.6 },
-        0.05
+        0.1
       );
 
-      // 2. SplitText headline handles itself (delay: 0.1)
+      // 2. SplitText headline handles itself (delay: 0.4, stagger: 0.15)
 
       // 3. Subtitle — fades up with blur dissolve
       tl.fromTo(
         subtitleRef.current,
-        { opacity: 0, y: 30, filter: "blur(6px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8 },
-        0.5
+        { opacity: 0, y: 20, filter: "blur(4px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.7 },
+        1.0
       );
 
       // 4. Buttons — slide up one at a time
@@ -107,28 +107,51 @@ const Hero = () => {
         tl.fromTo(
           Array.from(buttonsRef.current.children),
           { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 },
-          0.7
+          { opacity: 1, y: 0, duration: 0.55, stagger: 0.15 },
+          1.3
         );
       }
 
-      // 5. Stats — stagger in from below
+      // 5. Stats — hidden on load, revealed on first scroll (staggered)
       if (statsRef.current) {
-        tl.fromTo(
-          Array.from(statsRef.current.children),
-          { opacity: 0, y: 25 },
-          { opacity: 1, y: 0, duration: 0.55, stagger: 0.1 },
-          0.9
-        );
+        const statEls = Array.from(statsRef.current.children);
+        gsap.set(statEls, { opacity: 0, y: 25 });
+
+        const onFirstScroll = () => {
+          if (window.scrollY > 50) {
+            gsap.to(statEls, {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: 0.2,
+              ease: "power3.out",
+            });
+            window.removeEventListener("scroll", onFirstScroll);
+          }
+        };
+        window.addEventListener("scroll", onFirstScroll, { passive: true });
       }
 
-      // 6. Scroll hint — gentle fade last
+      // 6. Scroll hint — fade in, then hide on scroll
       tl.fromTo(
         scrollHintRef.current,
         { opacity: 0 },
         { opacity: 1, duration: 0.6 },
-        1.2
+        1.8
       );
+
+      if (scrollHintRef.current) {
+        gsap.to(scrollHintRef.current, {
+          opacity: 0,
+          y: -5,
+          scrollTrigger: {
+            trigger: scrollHintRef.current,
+            start: "top 98%",
+            end: "top 60%",
+            scrub: 1.5,
+          },
+        });
+      }
     });
 
     return () => ctx.revert();
@@ -154,6 +177,9 @@ const Hero = () => {
             </div>
           </div>
 
+          {/* Bottom fade — soft transition from scene to white content */}
+          <div className="absolute inset-x-0 bottom-0 h-48 z-10 pointer-events-none bg-gradient-to-b from-transparent via-white/50 to-white" />
+
           {/* Trust bar — fades in after hero text scrolls away */}
           <div
             className="absolute bottom-0 left-0 right-0 z-20 px-[1.5rem] md:px-[3.5rem] lg:px-[4.5rem] pb-12"
@@ -169,7 +195,15 @@ const Hero = () => {
         </div>
 
         {/* Hero content — overlaps the sticky scene, scrolls away naturally */}
-        <div className="relative z-20" style={{ marginTop: "-100vh", height: "100vh" }}>
+        <div
+          className="relative z-20"
+          style={{
+            marginTop: "-100vh",
+            height: "100vh",
+            transform: `translateY(${-scrollProgress * 40}px)`,
+            willChange: "transform",
+          }}
+        >
           <div className="w-full h-full flex flex-col justify-between pt-24 pointer-events-none">
             <div />
 
@@ -178,19 +212,21 @@ const Hero = () => {
               {/* Terminal Tag */}
               <div
                 ref={badgeRef}
-                className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-black/60 border border-black/10 px-3 py-1.5 rounded-[3px]"
+                className="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase tracking-wider text-brand-gray-500 border border-black/10 px-3 py-1.5 rounded-[3px]"
                 style={{ opacity: 0 }}
               >
                 <Terminal className="w-3 h-3" />
                 <span>89M+ transactions indexed</span>
-                <span className="w-1.5 h-1.5 bg-blue rounded-full animate-pulse" />
+                <span className="w-1.5 h-1.5 bg-aquamarine rounded-full animate-pulse" />
               </div>
 
               {/* Main Headline — SplitText line reveal */}
               <SplitText
                 tag="h1"
                 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-[1.1] tracking-tight mb-6 text-black"
-                delay={0.1}
+                delay={0.4}
+                stagger={0.3}
+                useScrollTrigger={false}
               >
                 <span>The Onchain</span>
                 <span>Growth Engine</span>
@@ -199,7 +235,7 @@ const Hero = () => {
               {/* Subheadline */}
               <p
                 ref={subtitleRef}
-                className="text-lg md:text-xl text-black/60 mb-8 leading-relaxed max-w-2xl"
+                className="text-lg md:text-xl text-brand-gray-500 mb-8 leading-relaxed max-w-2xl"
                 style={{ opacity: 0 }}
               >
                 Turn raw Solana data into surgical incentives. Torque automates the logic of acquisition, retention, and liquidity—eliminating capital friction.
@@ -239,7 +275,7 @@ const Hero = () => {
                     <span className="text-xl md:text-2xl lg:text-3xl font-display font-semibold text-black tracking-tight">
                       {stat.value}
                     </span>
-                    <span className="text-xs text-black/50 mt-1">
+                    <span className="text-xs text-brand-gray-400 mt-1">
                       {stat.label}
                     </span>
                   </div>
@@ -249,7 +285,7 @@ const Hero = () => {
 
             {/* Bottom — scroll hint */}
             <div ref={scrollHintRef} className="w-full pb-8" style={{ opacity: 0 }}>
-              <div className="flex flex-col items-center gap-1 text-black/40">
+              <div className="flex flex-col items-center gap-1 text-brand-gray-300">
                 <span className="font-mono text-xs uppercase tracking-wider">Scroll to explore</span>
                 <ChevronDown className="w-4 h-4 animate-bounce" />
               </div>

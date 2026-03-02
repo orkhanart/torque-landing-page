@@ -12,7 +12,9 @@ interface SplitTextProps {
   tag?: "h1" | "h2" | "h3" | "h4" | "p" | "span" | "div";
   className?: string;
   delay?: number;
+  stagger?: number;
   triggerStart?: string;
+  useScrollTrigger?: boolean;
 }
 
 export function SplitText({
@@ -20,7 +22,9 @@ export function SplitText({
   tag: Tag = "h2",
   className,
   delay = 0,
+  stagger = 0.18,
   triggerStart = "top 85%",
+  useScrollTrigger = true,
 }: SplitTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { ready } = useGsap();
@@ -38,26 +42,27 @@ export function SplitText({
     }
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        lines,
-        { y: "101%" },
-        {
-          y: "0%",
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power2.out",
-          delay,
-          scrollTrigger: {
-            trigger: el,
-            start: triggerStart,
-            once: true,
-          },
-        }
-      );
+      const animConfig: gsap.TweenVars = {
+        y: "0%",
+        duration: 0.8,
+        stagger,
+        ease: "power2.out",
+        delay,
+      };
+
+      if (useScrollTrigger) {
+        animConfig.scrollTrigger = {
+          trigger: el,
+          start: triggerStart,
+          once: true,
+        };
+      }
+
+      gsap.fromTo(lines, { y: "101%" }, animConfig);
     });
 
     return () => ctx.revert();
-  }, [ready, delay, triggerStart]);
+  }, [ready, delay, stagger, triggerStart, useScrollTrigger]);
 
   const childArray = React.Children.toArray(children);
 

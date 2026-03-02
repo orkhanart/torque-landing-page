@@ -187,8 +187,11 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Center: Navigation */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 gap-1">
+          {/* Center: Navigation — fades in on scroll */}
+          <nav
+            className="hidden lg:flex items-center justify-center flex-1 gap-1 transition-opacity duration-300"
+            style={{ opacity: bgOpacity }}
+          >
             {menuItems.map((item) => (
               <NavLink key={item.label} item={item} isActive={pathname === item.href} />
             ))}

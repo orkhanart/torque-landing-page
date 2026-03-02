@@ -66,6 +66,11 @@ const buttonVariants = cva(
           "bg-transparent text-blue border border-blue",
           "hover:bg-blue hover:text-white",
         ],
+        // Aqua: Cyan bg, dark text (for dark backgrounds)
+        aqua: [
+          "bg-aquamarine text-black border border-aquamarine",
+          "hover:bg-aquamarine-dark hover:border-aquamarine-dark",
+        ],
         // Destructive
         destructive: [
           "bg-red-600 text-white border border-red-600",

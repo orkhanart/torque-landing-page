@@ -10,8 +10,10 @@ const FooterAsciiLogo = dynamic(
   () => import("@/components/three/FooterAsciiLogo").then(m => ({ default: m.FooterAsciiLogo })),
   { ssr: false }
 );
-import { ArrowUpRight, Mail } from "lucide-react";
+import { Mail, CheckCircle2, ArrowUpRight, Rocket } from "lucide-react";
+import { useForm } from "@formspree/react";
 import { Button } from "@/components/ui/button";
+import IntegrationRequestModal from "./IntegrationRequestModal";
 import { SCRAMBLE_CHARS } from "@/app/data/stats";
 
 const TORQUE_TEXT = "TORQUE";
@@ -56,6 +58,8 @@ function ScrambleLetter({ char }: { char: string }) {
 }
 
 const Footer = () => {
+  const [state, handleSubmit] = useForm("mqapdody");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const currentYear = new Date().getFullYear();
   const productLinks = [
     { label: "Platform", href: "/platform" },
@@ -95,7 +99,7 @@ const Footer = () => {
       </div> */}
 
       {/* Footer Content */}
-      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] pt-24 pb-16 flex-1">
+      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
@@ -166,21 +170,84 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* CTA Column */}
+          {/* Start Building Column */}
           <div>
             <h4 className="font-mono text-xs uppercase tracking-widest text-white/50 mb-6">
-              Get Started
+              Start Building
             </h4>
-            <p className="text-white/60 text-sm mb-6">
-              Ready to engineer protocol equilibrium?
+            <p className="text-white/60 text-sm mb-4">
+              Deploy programmable growth on Solana.
             </p>
-            <Button
-              href="https://app.torque.so"
-              variant="inverse-outline"
-            >
+            <Button variant="inverse-outline" href="https://app.torque.so">
               Launch App
               <ArrowUpRight className="w-4 h-4 ml-2" />
             </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA + Newsletter Section */}
+      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] py-10 border-t border-white/10 mt-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 lg:gap-8 items-end">
+          {/* CTA */}
+          <div className="lg:col-span-3 max-w-xl">
+            <div className="inline-flex items-center gap-2 mb-3 font-mono text-[10px] uppercase tracking-wider text-white/40">
+              <Rocket className="w-3 h-3" />
+              Ready to Deploy?
+            </div>
+            <h2 className="font-display text-2xl sm:text-3xl font-medium text-white leading-[1.1] tracking-tight mb-4">
+              Ready to engineer{" "}
+              <span className="text-white/40">protocol equilibrium?</span>
+            </h2>
+            <p className="text-base text-white/60 mb-6">
+              Torque exists to replace &ldquo;vibes-based&rdquo; marketing with deterministic, programmable ROI. No waste. Just growth.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <Button variant="inverse" onClick={() => setIsModalOpen(true)}>
+                Deploy Logic
+                <ArrowUpRight className="w-4 h-4 ml-2" />
+              </Button>
+              <Button variant="inverse-outline" href="/primitives">
+                Explore Primitives
+                <ArrowUpRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h4 className="font-mono text-xs uppercase tracking-widest text-white/50 mb-4">
+              Stay in the loop
+            </h4>
+            {state.succeeded ? (
+              <div className="flex items-center gap-2 text-white/80 text-sm">
+                <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
+                You&apos;re subscribed.
+              </div>
+            ) : (
+              <>
+                <p className="text-white/60 text-sm mb-3">
+                  Protocol updates, zero noise.
+                </p>
+                <form onSubmit={handleSubmit} className="flex gap-2">
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="you@example.com"
+                    className="flex-1 min-w-0 h-10 px-3 bg-white/5 border border-white/20 rounded-[3px] text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-white/50 transition-colors"
+                  />
+                  <input type="hidden" name="_subject" value="Newsletter signup" />
+                  <button
+                    type="submit"
+                    disabled={state.submitting}
+                    className="h-10 px-4 bg-white text-black text-sm font-medium rounded-[3px] hover:bg-white/90 transition-colors disabled:opacity-50 whitespace-nowrap"
+                  >
+                    {state.submitting ? "..." : "Subscribe"}
+                  </button>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -210,6 +277,10 @@ const Footer = () => {
         </div>
       </div>
 
+      <IntegrationRequestModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </footer>
   );
 };
