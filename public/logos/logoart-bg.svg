@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 1594.3 1917.4">
+  <defs>
+    <clipPath id="clippath">
+      <rect x="42.2" y="50.8" width="1509.9" height="1815.9"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="535.2" y1="86.2" x2="426.5" y2="914.3" gradientTransform="translate(0 1919.1) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f2a3a1"/>
+      <stop offset="1" stop-color="#f2a3a1" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient1" x1="1203.6" y1="1015.3" x2="1097.2" y2="1860.4" gradientTransform="translate(0 1919.1) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5561aa" stop-opacity="0"/>
+      <stop offset="1" stop-color="#5560a9"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#clippath)">
+    <path style="isolation:isolate;opacity:.35;fill:url(#linear-gradient)" d="M78.7,1375.4l736.9-425.5v850.9L78.7,1375.4Z"/>
+    <path style="isolation:isolate;opacity:.35;fill:url(#linear-gradient1)" d="M814,952.8V101s737.7,425.9,737.7,425.9l-737.7,425.9Z"/>
+  </g>
+</svg>

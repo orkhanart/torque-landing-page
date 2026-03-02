@@ -37,9 +37,11 @@ function makeHelicoid(segs: number): ParametricGeometry {
 // =============================================================================
 interface TorqueHelicoidProps {
   className?: string;
+  /** "light" = blue text on white bg (default), "dark" = white text on transparent bg */
+  variant?: "light" | "dark";
 }
 
-export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
+export function TorqueHelicoid({ className = "", variant = "light" }: TorqueHelicoidProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const scroll = useRef(0);
@@ -53,9 +55,10 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
     if (!w || !h) return;
 
     // ---- Renderer (offscreen canvas, AsciiEffect reads from it) ----
-    const renderer = new THREE.WebGLRenderer({ antialias: false });
+    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: variant === "dark" });
     renderer.setSize(w, h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    if (variant === "dark") renderer.setClearColor(0x000000, 0);
 
     // ---- ASCII Effect ----
     const ascii = new AsciiEffect(renderer, " .,:;+*?%T#@", {
@@ -69,6 +72,7 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
     el.appendChild(ascii.domElement);
 
     // Style the ASCII DOM output
+    const isDark = variant === "dark";
     Object.assign(ascii.domElement.style, {
       position: "absolute",
       top: "0",
@@ -76,14 +80,16 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
       width: "100%",
       height: "100%",
       overflow: "hidden",
-      color: "#0000FF",
+      color: isDark ? "#ffffff" : "#0000FF",
       backgroundColor: "transparent",
-      textShadow: "0 0 3px rgba(0,0,255,0.35), 0 0 8px rgba(0,0,255,0.15)",
+      textShadow: isDark
+        ? "0 0 3px rgba(255,255,255,0.25), 0 0 8px rgba(255,255,255,0.1)"
+        : "0 0 3px rgba(0,0,255,0.35), 0 0 8px rgba(0,0,255,0.15)",
     });
 
     // ---- Scene ----
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
+    scene.background = isDark ? null : new THREE.Color(0xffffff);
 
     // ---- Camera ----
     const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
@@ -180,13 +186,23 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
     });
 
     const mesh = new THREE.Mesh(geo, mat);
+    // Dark variant: rotate 90° on X so the helicoid lies horizontal (fills wide footer)
+    if (isDark) mesh.rotation.x = Math.PI / 2;
     scene.add(mesh);
+
+    // Dark variant: pull camera back + widen FOV so it fills the full footer
+    if (isDark) {
+      camera.fov = 65;
+      camera.position.set(0, 0, 3.2);
+      camera.updateProjectionMatrix();
+    }
 
     // ---- Animation Loop ----
     const clock = new THREE.Clock();
     let raf = 0;
     let dead = false;
     const targetMouse = new THREE.Vector2();
+    const baseRotX = isDark ? Math.PI / 2 : 0;
 
     const tick = () => {
       if (dead) return;
@@ -200,7 +216,7 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
       uScroll.value += (scroll.current - uScroll.value) * 0.05;
 
       mesh.rotation.y += 0.003;
-      mesh.rotation.x = Math.sin(t * 0.2) * 0.1 + mouse.current.y * 0.3;
+      mesh.rotation.x = baseRotX + Math.sin(t * 0.2) * 0.1 + mouse.current.y * 0.3;
 
       // Camera parallax from mouse
       camera.position.x +=
@@ -209,10 +225,12 @@ export function TorqueHelicoid({ className = "" }: TorqueHelicoidProps) {
         (mouse.current.y * 0.3 - camera.position.y) * 0.02;
       camera.lookAt(0, 0, 0);
 
-      // Fade on scroll
-      ascii.domElement.style.opacity = String(
-        Math.max(0, 1 - scroll.current * 1.5)
-      );
+      // Fade on scroll (only in light/hero mode)
+      if (!isDark) {
+        ascii.domElement.style.opacity = String(
+          Math.max(0, 1 - scroll.current * 1.5)
+        );
+      }
 
       ascii.render(scene, camera);
     };

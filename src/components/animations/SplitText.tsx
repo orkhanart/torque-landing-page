@@ -64,7 +64,7 @@ export function SplitText({
   return (
     <Tag ref={containerRef as React.RefObject<never>} className={className}>
       {childArray.map((child, i) => (
-        <span key={i} className="block overflow-hidden">
+        <span key={i} className="block overflow-hidden pb-2">
           <span
             className="split-line-inner block"
             style={{ transform: "translateY(101%)" }}

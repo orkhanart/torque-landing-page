@@ -95,10 +95,11 @@ export default function Navbar() {
   const [menuHeight, setMenuHeight] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const [bgOpacity, setBgOpacity] = useState(0);
   const symbolRef = useRef<HTMLImageElement>(null);
   const pathname = usePathname();
 
-  // Rotate symbol on scroll
+  // Rotate symbol on scroll + fade in glass background
   useEffect(() => {
     let ticking = false;
 
@@ -109,6 +110,8 @@ export default function Navbar() {
             const rotation = window.scrollY * 0.15;
             symbolRef.current.style.transform = `rotate(${rotation}deg)`;
           }
+          // Fade in bg over first 200px of scroll
+          setBgOpacity(Math.min(1, window.scrollY / 200));
           ticking = false;
         });
         ticking = true;
@@ -138,11 +141,17 @@ export default function Navbar() {
       <GlassFilterSVG />
 
       <header className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000] w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] lg:w-[calc(100%-6rem)]">
-        {/* Glass background layer */}
-        <GlassBackground />
+        {/* Glass background layer — fades in on scroll */}
+        <GlassBackground opacity={bgOpacity} />
 
         {/* Content container */}
-        <div className="relative flex items-center h-14 px-6 w-full rounded-[3px] border border-white/30 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04)]">
+        <div
+          className="relative flex items-center h-14 px-6 w-full rounded-[3px] border shadow-[0_8px_32px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-150"
+          style={{
+            borderColor: `rgba(255,255,255,${bgOpacity * 0.3})`,
+            boxShadow: `0 8px 32px rgba(0,0,0,${bgOpacity * 0.08}), 0 2px 8px rgba(0,0,0,${bgOpacity * 0.04})`,
+          }}
+        >
           {/* Left: Logo */}
           <Link
             href="/"
@@ -211,9 +220,9 @@ export default function Navbar() {
 // =============================================================================
 // Glass Background Component
 // =============================================================================
-function GlassBackground() {
+function GlassBackground({ opacity = 1 }: { opacity?: number }) {
   return (
-    <div className="absolute inset-0 rounded-[3px] overflow-hidden">
+    <div className="absolute inset-0 rounded-[3px] overflow-hidden transition-opacity duration-150" style={{ opacity }}>
       <div
         className="absolute inset-0 backdrop-blur-2xl"
         style={{ filter: "url(#glass-filter)" }}

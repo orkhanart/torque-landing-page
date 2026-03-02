@@ -34,7 +34,9 @@
       "WebFetch(domain:medium.com)",
       "Bash(head:*)",
       "Bash(pnpm add:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "WebFetch(domain:www.ibm.com)",
+      "WebFetch(domain:juanfernandopacheco.com)"
     ],
     "deny": []
   }

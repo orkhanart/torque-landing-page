@@ -13,10 +13,10 @@ const logos = [
 export default function TrustBar({ trailing }: { trailing?: React.ReactNode }) {
   return (
     <section className="w-full py-8 overflow-hidden bg-transparent">
-      <div className="w-full">
+      <div className="w-full flex flex-col items-center">
         <p
           data-animate="fade-up"
-          className="font-mono text-xs uppercase tracking-wider text-black/40 mb-8"
+          className="font-mono text-xs uppercase tracking-wider text-black/40 mb-8 text-center"
         >
           Trusted by leading protocols
         </p>
@@ -24,7 +24,7 @@ export default function TrustBar({ trailing }: { trailing?: React.ReactNode }) {
         {/* Animated logos */}
         <div
           data-animate="fade-up"
-          className="flex items-center gap-8 md:gap-12"
+          className="flex items-center justify-center gap-8 md:gap-12"
         >
           {logos.map((logo) => (
             <div

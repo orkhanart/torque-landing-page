@@ -3,7 +3,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { FaXTwitter } from "react-icons/fa6";
+
+const FooterAsciiLogo = dynamic(
+  () => import("@/components/three/FooterAsciiLogo").then(m => ({ default: m.FooterAsciiLogo })),
+  { ssr: false }
+);
 import { ArrowUpRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SCRAMBLE_CHARS } from "@/app/data/stats";
@@ -69,10 +75,15 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full overflow-hidden relative bg-blue">
+    <footer className="w-full overflow-hidden relative bg-blue min-h-[700px]">
 
-      {/* Big TORQUE Text */}
-      <div className="relative z-10 w-full" data-animate="fade-in">
+      {/* ASCII Hexa Logo background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
+        <FooterAsciiLogo />
+      </div>
+
+      {/* Big TORQUE Text — hidden */}
+      {/* <div className="relative z-10 w-full" data-animate="fade-in">
         <div
           className="text-[20vw] font-bold leading-[0.85] tracking-[-0.05em] text-white/10 select-none overflow-hidden"
           style={{ fontFamily: "'Unbounded', sans-serif" }}
@@ -81,10 +92,10 @@ const Footer = () => {
             <ScrambleLetter key={i} char={char} />
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Footer Content */}
-      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] py-16">
+      <div className="relative z-10 w-full px-6 md:px-8 lg:px-[4.5rem] pt-24 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1">
