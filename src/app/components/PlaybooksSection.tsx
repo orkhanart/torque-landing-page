@@ -29,7 +29,7 @@ const visualComponents: Record<Playbook["visualType"], React.ComponentType<{ col
 
 export default function PlaybooksSection() {
   return (
-    <section className="w-full py-20 md:py-32 bg-white border-t border-black/10">
+    <section className="w-full py-32 md:py-52 bg-white">
       <div className="w-full px-6 md:px-12 lg:px-20">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">

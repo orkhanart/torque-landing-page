@@ -76,7 +76,7 @@ function SolutionCard({ icon: Icon, title, subtitle, filename, visual: Visual, d
 // =============================================================================
 export default function Solutions() {
   return (
-    <div className="relative z-10 w-full py-20 md:py-32 bg-white border-t border-black/10">
+    <div className="relative z-10 w-full py-32 md:py-52 bg-white">
       <div className="relative w-full px-6 md:px-12 lg:px-20">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">

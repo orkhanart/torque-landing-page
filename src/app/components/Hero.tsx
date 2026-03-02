@@ -268,7 +268,7 @@ const Hero = () => {
               {/* Stats Row */}
               <div
                 ref={statsRef}
-                className="flex items-start justify-center gap-8 md:gap-12"
+                className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 md:gap-12"
               >
                 {heroStats.map((stat, index) => (
                   <div key={index} className="flex flex-col items-center" style={{ opacity: 0 }}>

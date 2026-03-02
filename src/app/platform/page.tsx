@@ -58,7 +58,7 @@ export default function PlatformPage() {
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-white pt-24 md:pt-32">
+      <main className="relative z-10 min-h-screen bg-white pt-24 md:pt-32">
         {/* Page Header */}
         <header className="w-full px-6 md:px-12 lg:px-20 pb-12 md:pb-16 border-b border-black/10">
           <div className="max-w-4xl">
@@ -243,6 +243,7 @@ export default function PlatformPage() {
         </section>
       </main>
 
+      <div className="h-screen" />
       <Footer />
     </>
   );

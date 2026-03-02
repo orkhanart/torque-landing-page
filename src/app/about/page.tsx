@@ -105,7 +105,7 @@ export default function AboutPage() {
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-white pt-24 md:pt-32">
+      <main className="relative z-10 min-h-screen bg-white pt-24 md:pt-32">
         {/* Page Header + Backed Side-by-Side */}
         <header className="w-full px-6 md:px-12 lg:px-20 pb-12 md:pb-16 border-b border-black/10">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
@@ -177,6 +177,7 @@ export default function AboutPage() {
         <CTASection />
       </main>
 
+      <div className="h-screen" />
       <Footer />
     </>
   );

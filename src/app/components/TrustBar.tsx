@@ -24,7 +24,7 @@ export default function TrustBar({ trailing }: { trailing?: React.ReactNode }) {
         {/* Animated logos */}
         <div
           data-animate="fade-up"
-          className="flex items-center justify-center gap-8 md:gap-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-12"
         >
           {logos.map((logo) => (
             <div

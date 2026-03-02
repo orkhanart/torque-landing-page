@@ -211,12 +211,15 @@ function JoinForm() {
 
 export default function JoinPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <Navbar />
-      <main className="flex-grow flex flex-col items-center justify-center px-6 py-20">
-        <JoinForm />
-      </main>
+    <>
+      <div className="relative z-10 flex flex-col min-h-screen bg-background">
+        <Navbar />
+        <main className="flex-grow flex flex-col items-center justify-center px-6 py-20">
+          <JoinForm />
+        </main>
+      </div>
+      <div className="h-screen" />
       <Footer />
-    </div>
+    </>
   );
 }

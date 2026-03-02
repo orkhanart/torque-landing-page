@@ -31,7 +31,7 @@ const CircuitPattern = dynamic(
 export default function GrowthStack() {
   return (
     <section id="growth-stack" className="w-full bg-white">
-      <div className="w-full px-6 md:px-12 lg:px-20 py-12 md:py-20">
+      <div className="w-full px-6 md:px-12 lg:px-20 py-32 md:py-52">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 md:mb-10">
           <div className="max-w-2xl">

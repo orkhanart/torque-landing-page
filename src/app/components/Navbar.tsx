@@ -95,10 +95,11 @@ export default function Navbar() {
   const [menuHeight, setMenuHeight] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
-  const [bgOpacity, setBgOpacity] = useState(0);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
   const symbolRef = useRef<HTMLImageElement>(null);
   const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [bgOpacity, setBgOpacity] = useState(isHome ? 0 : 1);
 
   // Rotate symbol on scroll + fade in glass background + detect footer
   useEffect(() => {
@@ -110,8 +111,10 @@ export default function Navbar() {
             const rotation = window.scrollY * 0.15;
             symbolRef.current.style.transform = `rotate(${rotation}deg)`;
           }
-          // Fade in bg over first 200px of scroll
-          setBgOpacity(Math.min(1, window.scrollY / 200));
+          // Fade in bg over first 200px of scroll (homepage only)
+          if (isHome) {
+            setBgOpacity(Math.min(1, window.scrollY / 200));
+          }
           // Hide navbar when scrolled into the footer reveal zone
           const distanceFromBottom =
             document.documentElement.scrollHeight - window.scrollY - window.innerHeight;
@@ -124,7 +127,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHome]);
 
   useEffect(() => {
     if (isMenuOpen) {

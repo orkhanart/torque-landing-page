@@ -454,9 +454,9 @@ export function ChromeHexaLogo() {
       updateInputSmooth(input);
       manip.update();
 
-      // Smooth-lerp scroll + rotation
-      smoothScroll += (scrollTarget - smoothScroll) * 0.08;
-      smoothRotation += (rotationTarget - smoothRotation) * 0.08;
+      // Track scroll directly — just enough smoothing to prevent jitter
+      smoothScroll += (scrollTarget - smoothScroll) * 0.25;
+      smoothRotation += (rotationTarget - smoothRotation) * 0.25;
 
       // Auto-orbit: spins while exploded, fades out as logo assembles
       orbitAngle += 0.5 * dt * smoothScroll;
